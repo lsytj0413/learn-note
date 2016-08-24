@@ -11,6 +11,58 @@ class ServerException(Exception):
     pass
 
 
+class case_no_file(object):
+    '''
+    路径不存在
+    '''
+
+    def test(self, handler):
+        return not os.path.exists(handler.full_path)
+
+    def act(self, handler):
+        raise ServerException("'{0}' not found".format(handler.path))
+
+
+class case_exsiting_file(object):
+    '''
+    路径是文件
+    '''
+
+    def test(self, handler):
+        return os.path.isfile(handler.full_path)
+
+    def act(self, handler):
+        handler.handle_file(handler.full_path)
+
+
+class case_always_fail(object):
+    '''
+    默认处理类
+    '''
+
+    def test(self, handler):
+        return True
+
+    def act(self, handler):
+        raise ServerException("Unknown object '{0}'".format(handler.path))
+
+
+class case_directory_index_file(object):
+    '''
+    根目录
+    '''
+
+    def index_path(self, handler):
+        return os.path.join(handler.full_path, 'index.html')
+
+    def test(self, handler):
+        return os.path.isdir(handler.full_path) and \
+            os.path.isfile(self.index_path(handler))
+
+    def act(self, handler):
+        handler.handle_file(self.index_path(handler))
+
+
 class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     '''
     处理请求并返回页面
@@ -25,19 +77,26 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     </html>
     """
 
+    Cases = [
+        case_no_file(),
+        case_exsiting_file(),
+        case_directory_index_file(),
+        case_always_fail()
+    ]
+
     # 处理一个GET请求
     def do_GET(self):
         try:
-            full_path = os.getcwd() + self.path
+            self.full_path = os.getcwd() + self.path
 
-            if not os.path.exists(full_path):
-                raise ServerException("'{0}' not found".format(self.path))
-            elif os.path.isfile(full_path):
-                self.handle_file(full_path)
-            else:
-                raise ServerException("Unknown object '{0}'".format(self.path))
+            for case in self.Cases:
+                handler = case
+                if handler.test(self):
+                    handler.act(self)
+                    break
 
         except Exception as msg:
+            print msg
             self.handle_error(msg)
 
     def handle_file(self, full_path):
