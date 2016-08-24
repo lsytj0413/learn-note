@@ -11,7 +11,31 @@ class ServerException(Exception):
     pass
 
 
-class case_no_file(object):
+class base_case(object):
+    '''
+    条件处理基类
+    '''
+
+    def handle_file(self, handler, full_path):
+        try:
+            with open(full_path, 'rb') as reader:
+                content = reader.read()
+            handler.send_content(content)
+        except IOError as msg:
+            msg = "'{0}' cannot be read: {1}".format(full_path, msg)
+            handler.handle_error(msg)
+
+    def index_path(self, handler):
+        return os.path.join(handler.full_path, 'index.html')
+
+    def test(self, handler):
+        assert False, 'Not implemented.'
+
+    def act(self, handler):
+        assert False, 'Not implemented.'
+
+
+class case_no_file(base_case):
     '''
     路径不存在
     '''
@@ -23,7 +47,7 @@ class case_no_file(object):
         raise ServerException("'{0}' not found".format(handler.path))
 
 
-class case_exsiting_file(object):
+class case_exsiting_file(base_case):
     '''
     路径是文件
     '''
@@ -32,10 +56,10 @@ class case_exsiting_file(object):
         return os.path.isfile(handler.full_path)
 
     def act(self, handler):
-        handler.handle_file(handler.full_path)
+        self.handle_file(handler, handler.full_path)
 
 
-class case_always_fail(object):
+class case_always_fail(base_case):
     '''
     默认处理类
     '''
@@ -47,23 +71,20 @@ class case_always_fail(object):
         raise ServerException("Unknown object '{0}'".format(handler.path))
 
 
-class case_directory_index_file(object):
+class case_directory_index_file(base_case):
     '''
     根目录
     '''
-
-    def index_path(self, handler):
-        return os.path.join(handler.full_path, 'index.html')
 
     def test(self, handler):
         return os.path.isdir(handler.full_path) and \
             os.path.isfile(self.index_path(handler))
 
     def act(self, handler):
-        handler.handle_file(self.index_path(handler))
+        self.handle_file(handler, self.index_path(handler))
 
 
-class case_cgi_file(object):
+class case_cgi_file(base_case):
     '''
     脚本文件处理
     '''
@@ -74,7 +95,12 @@ class case_cgi_file(object):
 
     def act(self, handler):
         # 运行脚本
-        handler.run_cgi(handler.full_path)
+        self.run_cgi(handler)
+
+    def run_cgi(self, handler):
+        import subprocess
+        data = subprocess.check_output(["python", handler.full_path])
+        handler.send_content(data)
 
 
 class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
@@ -111,7 +137,6 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                     break
 
         except Exception as msg:
-            print msg
             self.handle_error(msg)
 
     def handle_file(self, full_path):
@@ -133,11 +158,6 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(page)))
         self.end_headers()
         self.wfile.write(page)
-
-    def run_cgi(self, full_path):
-        import subprocess
-        data = subprocess.check_output(["python", full_path])
-        self.send_content(data)
 
 
 # -----------------------------------------------------------------
