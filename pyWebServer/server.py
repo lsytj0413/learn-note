@@ -63,6 +63,20 @@ class case_directory_index_file(object):
         handler.handle_file(self.index_path(handler))
 
 
+class case_cgi_file(object):
+    '''
+    脚本文件处理
+    '''
+
+    def test(self, handler):
+        return os.path.isfile(handler.full_path) and \
+            handler.full_path.endswith('.py')
+
+    def act(self, handler):
+        # 运行脚本
+        handler.run_cgi(handler.full_path)
+
+
 class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     '''
     处理请求并返回页面
@@ -79,6 +93,7 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     Cases = [
         case_no_file(),
+        case_cgi_file(),
         case_exsiting_file(),
         case_directory_index_file(),
         case_always_fail()
@@ -118,6 +133,11 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(page)))
         self.end_headers()
         self.wfile.write(page)
+
+    def run_cgi(self, full_path):
+        import subprocess
+        data = subprocess.check_output(["python", full_path])
+        self.send_content(data)
 
 
 # -----------------------------------------------------------------
