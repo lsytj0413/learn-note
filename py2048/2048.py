@@ -14,6 +14,7 @@ actions = [
     'Exit'
 ]
 
+
 letter_codes = [ord(ch) for ch in 'WASDRQwasdrq']
 action_dict = dict(zip(letter_codes, actions * 2))
 
@@ -24,11 +25,14 @@ def get_user_action(keyboard):
         char = keyboard.getch()
     return action_dict[char]
 
+
 def transpose(field):
     return [list(row) for row in zip(*field)]
 
+
 def invert(field):
     return [row[::-1] for row in field]
+
 
 class GameField(object):
     def __init__(self, height=4, width=4, win=2048):
@@ -168,7 +172,6 @@ class GameField(object):
         cast(help_string2)
 
 
-
 def main(stdscr):
 
     def init():
@@ -214,5 +217,6 @@ def main(stdscr):
     while state != 'Exit':
         stdscr.addstr(state + '\n')
         state = state_actions[state]()
+
 
 curses.wrapper(main)
