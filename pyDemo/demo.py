@@ -191,6 +191,8 @@ else:pass
 3. 序列和映射规则: __len__, __getitem__, __setitem__, __delitem__
 4. 可以子类化内建类型
 5. property
+6. 类方法和静态方法
+7. attr
 """
 
 def checkIndex(key):
@@ -238,3 +240,44 @@ class Rectangle(object):
         return self.width, self.height
 
     size = property(getSize, setSize)
+
+
+class MyClass(object):
+
+    @staticmethod
+    def smeth():
+        print 'staticmethod'
+
+    @classmethod
+    def cmeth(cls):
+        print 'classmethod', cls
+
+MyClass.smeth()
+MyClass.cmeth()
+
+
+"""
+__getattribute__(self, name): 当特性name被访问时使用, 新式类, 同时拦截对__dict__的访问, 在该函数中访问与self相关的属性时, 使用super函数是唯一安全的路径
+__getattr__(self, name): 当特性name被访问且对象没有相应的特性时使用
+__setattr__(self, name, value): 当试图给特性name赋值时调用
+__delattr__(self, name): 当试图删除特性name时调用
+"""
+
+class Rectangle2(object):
+
+    def __init__(self):
+        self.width = 0
+        self.height = 0
+
+    def __setattr__(self, name, value):
+        if name == 'size':
+            self.width, self.height = value
+        else:
+            self.__dict__[name] = value # 避免递归死循环
+
+    def __getattr__(self, name):
+        if name == 'size':
+            return self.width, self.height
+        else:
+            raise AttributeError
+
