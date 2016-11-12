@@ -142,5 +142,99 @@ hello_2_wrapper('xxx', 'yyy', 'zzz')
 """
 面向对象:
 
+1. 私有化: Python并不直接支持该特性, 可以在它的名字前加上双下划线即可, 类定义中所有以双下划线开始的名字都被翻译成前面加上单下划线和类名的形式
+2. 类的定义就是执行代码块. 类作用域内的变量可以被所有实例访问
+3. issubclass, 新式类可以使用type(s)查看实例所属的类
+4. hasattr, getattr, setattr
+5. 新式类, 使用super
+"""
+
+class A(object):
+
+    __a = 0
+
+    def __init__(self):
+        self.__b = 1
+
+print A._A__a
+print A()._A__b
+
+class B(object):
+    i = 0
+
+print B.i
+v1 = B()
+print v1.i
+v2 = B()
+print v2.i
+
+B.i = 10
+print v1.i
+print v2.i
 
 """
+异常:
+
+try:pass
+except:pass
+finally:pass
+else:pass
+
+1. 引发异常: raise
+"""
+
+"""
+魔法方法
+
+1. 在名称前后都有两个下划线
+2. __init__, 构造方法
+3. 序列和映射规则: __len__, __getitem__, __setitem__, __delitem__
+4. 可以子类化内建类型
+5. property
+"""
+
+def checkIndex(key):
+    if not isinstance(key, (int, long)):
+        raise TypeError
+    if key < 0:
+        raise IndexError
+
+class ArithmeticSequence(object):
+
+    def __init__(self, start=0, step=1):
+        self.start = start
+        self.step = step
+        self.changed = {}
+
+    def __getitem__(self, key):
+        checkIndex(key)
+
+        try:
+            return self.changed[key]
+        except KeyError:
+            return self.start + key*self.step
+
+    def __setitem__(self, key, value):
+        checkIndex(key)
+
+        self.changed[key] = value
+
+s = ArithmeticSequence()
+print s[4]
+s[4] = 2
+print s[4]
+
+
+class Rectangle(object):
+
+    def __init__(self):
+        self.width = 0
+        self.height = 0
+
+    def setSize(self, s):
+        self.width, self.height = s
+
+    def getSize(self):
+        return self.width, self.height
+
+    size = property(getSize, setSize)
