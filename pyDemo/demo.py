@@ -241,6 +241,10 @@ class Rectangle(object):
 
     size = property(getSize, setSize)
 
+o = Rectangle()
+print o.size
+o.size = (5, 10)
+print o.size
 
 class MyClass(object):
 
@@ -281,3 +285,71 @@ class Rectangle2(object):
         else:
             raise AttributeError
 
+o = Rectangle2()
+print o.size
+o.size = (5, 10)
+print o.size
+
+"""
+迭代器:
+
+1. __iter__方法返回一个迭代器, 实现了方法则代表对象是可迭代的
+2. 迭代器是实现了next方法的对象, python3中则是__next__
+"""
+
+class Fibs(object):
+
+    def __init__(self):
+        self.a = 0
+        self.b = 1
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        self.a, self.b = self.b, self.a + self.b
+        return self.a
+for f in Fibs():
+    if f > 10:
+        break
+    print f
+
+"""
+生成器
+
+生成器是一种用普通的函数语法定义的迭代器. 任何包含yield语句的函数都是生成器, 每次产生一个值(yield), 函数都会被冻结在该点, 并等待重新唤醒
+生成器推导式相似于列表推导式, 返回的是生成器而不是列表, 外围使用() 而不是 []. 生成器推导式可以在当前圆括号内直接使用, 不用增加另外的括号
+
+当生成器函数被调用时函数体中的代码不会被执行, 而是返回一个迭代器. 每次请求一个值, 就会执行生成器中的代码.
+
+生成器方法:
+1. 访问生成器的send方法, 向生成器发送消息
+2. throw方法: 在生成器内部引发一个异常(yield表达式中)
+3. close方法: 停止生成器, 引发一个GeneratorExit异常. 在生成器close之后再次使用则引发RuntimeError异常
+"""
+
+def flatten(nested):
+    try:
+        try:
+            nested + ""
+        except TypeError:
+            pass
+        else:
+            raise TypeError
+
+        for sublist in nested:
+            for e in flatten(sublist):
+                yield e
+    except TypeError:
+        yield nested
+
+print list(flatten([[[1], 2], 3, 4, [5, [6, 7]], 8]))
+
+def repeator(value):
+    while True:
+        new  = (yield value)
+        if new is not None:
+            value = new
+r = repeator(42)
+print r.next()
+print r.send('Hello world!')
