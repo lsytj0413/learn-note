@@ -353,3 +353,46 @@ def repeator(value):
 r = repeator(42)
 print r.next()
 print r.send('Hello world!')
+
+"""
+模块和包
+
+1. 模块是一个文件. 导入一次和导入多次效果相同
+2. 包是另一类模块, 可以包含其他模块. 当模块存储在文件中时, 包就是模块所在的目录, 而且它必须包含一个 __init__.py文件.
+
+假设有以下包:
+~/python/drawing/
+~/python/drawing/__init__.py
+~/python/drawing/colors.py
+~/python/drawing/shapes.py
+
+则:
+import drawing               # __init__.py模块可用
+import drawing.colors        # colors模块可用
+from drawing import shapes   # shapes可用
+
+__all__ 变量: 定义模块公有接口. 如果没有设置__all__, 则import *会导入模块中所有不以下划线开头的全局名称
+__file__属性: 模块路径
+
+一些标准库:
+1. sys
+2. os
+3. fileinput: 轻松遍历文件所有行
+4. 集合set(语言内建), frozenset(不可变集合)
+5. heapq, 堆
+6. collections.deque, 双端队列
+7. time
+8. random
+9. shelve, 简单存储
+10. re, 正则表达式
+11. functools, difflib, hashlib, csv, timeit, profile, trace, datetime, itertools, logging, getopt, optparse, cmd
+"""
+
+"""
+文件和流
+
+上下文管理器: 一种支持__enter__和__exit__这两个方法的对象, __enter__无参, 返回值绑定到as之后的变量, __exit__带三个参数(异常类型, 异常对象和异常回溯), 如果返回false则异常不被处理
+
+1. 使用fileinput实现懒惰行迭代
+2. 文件对象是可迭代的
+"""
