@@ -408,3 +408,38 @@ __file__属性: 模块路径
 print map(lambda x: x+2, [1, 2, 3])
 print reduce(lambda x, y: x + y, [1, 2, 3, 4, 5])
 print filter(lambda x: x > 2, [2, 4, 5, 6, 7, 1, 3, 1, 2])
+
+"""
+装饰器
+
+函数对象的__name__属性可以拿到函数的名字.
+在代码运行期间动态增加功能的方式称为装饰器, 本质上是一个返回函数的高阶函数
+"""
+
+def log(fn):
+    def wrapper(*arg, **kw):
+        print 'call {}'.format(fn.__name__)
+        return fn(*arg, **kw)
+    return wrapper
+
+@log
+def now():
+    print 'now'
+now()
+print now.__name__
+
+import functools
+def log2(text):
+    def decorator(fn):
+        @functools.wraps(fn)
+        def wrapper(*arg, **kw):
+            print 'call {}, {}'.format(fn.__name__, text)
+            return fn(*arg, **kw)
+        return wrapper
+    return decorator
+
+@log2('log2text')
+def now2():
+    print 'now2'
+now2()
+print now2.__name__
