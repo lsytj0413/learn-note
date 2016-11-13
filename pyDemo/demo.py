@@ -443,3 +443,13 @@ def now2():
     print 'now2'
 now2()
 print now2.__name__
+
+"""
+偏函数: 科里化
+
+functools模块的功能
+"""
+
+import functools
+int2 = functools.partial(int, base=2)
+print int2('1000')
