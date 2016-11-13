@@ -396,3 +396,15 @@ __file__属性: 模块路径
 1. 使用fileinput实现懒惰行迭代
 2. 文件对象是可迭代的
 """
+
+"""
+高阶函数
+
+1. map, reduce
+2. filter
+3. 匿名函数: 只能有一个表达式, 不能有return
+"""
+
+print map(lambda x: x+2, [1, 2, 3])
+print reduce(lambda x, y: x + y, [1, 2, 3, 4, 5])
+print filter(lambda x: x > 2, [2, 4, 5, 6, 7, 1, 3, 1, 2])
