@@ -453,3 +453,11 @@ functools模块的功能
 import functools
 int2 = functools.partial(int, base=2)
 print int2('1000')
+
+"""
+类装饰器
+"""
+
+"""
+元类
+"""
