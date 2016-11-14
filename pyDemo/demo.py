@@ -472,7 +472,14 @@ def bar():
 
 bar()
 
+"""
+MRO
+
+http://www.360doc.com/content/16/0719/18/34574201_576833790.shtml
+"""
 
 """
 元类
+
+http://blog.jobbole.com/21351/
 """
