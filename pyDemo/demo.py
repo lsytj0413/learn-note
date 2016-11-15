@@ -511,4 +511,32 @@ print A.__mro__
 元类
 
 http://blog.jobbole.com/21351/
+
+在Python中, 类也是一种对象. 只要你使用class关键字, Python解释器在执行时
+就会创建一个对象. 这个类对象自身拥有创建对象实例的能力.
+
+可以在函数中创建类(通过class关键字), 也可以通过type函数.
+type(类名, 父类的元组（针对继承的情况，可以为空），包含属性的字典（名称和值）)
+
 """
+
+class ObjectCreator(object):
+    pass
+
+print ObjectCreator
+print hasattr(ObjectCreator, 'new_attr')
+print id(ObjectCreator)
+
+def choose_class(name):
+    if name == 'Foo':
+        class Foo(object):
+            pass
+        return Foo
+    else:
+        class Bar(object):
+            pass
+        return Bar
+print choose_class('Foo')
+
+MyShinyClass = type('MyShinyClass', (object, ), {})
+print MyShinyClass
