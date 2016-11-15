@@ -459,7 +459,7 @@ print int2('1000')
 """
 class Foo(object):
     def __init__(self, func):
-    self._func = func
+        self._func = func
 
     def __call__(self):
         print ('class decorator runing')
@@ -476,7 +476,36 @@ bar()
 MRO
 
 http://www.360doc.com/content/16/0719/18/34574201_576833790.shtml
+
+MRO: Method Resolution Order, 方法解析顺序. 当使用python中的多重继承时, 解决二义性问题
+
+在python新式类中, MRO的顺序C3算法. 采用拓扑排序访问顺序.
+
+解决单调性: 保证从根到叶, 从左到右的访问顺序
+解决重写: 先访问子类, 再访问父类
+
+首先找入度为0的点，只有一个A，把A拿出来，把A相关的边剪掉，再找下一个入度为0的点，有两个点（B,C）,取最左原则，拿B，这是排序是AB，然后剪B相关的边，这时候入度为0的点有E和C，取最左。这时候排序为ABE，接着剪E相关的边，这时只有一个点入度为0，那就是C，取C，顺序为ABEC。剪C的边得到两个入度为0的点（DF），取最左D，顺序为ABECD，然后剪D相关的边，那么下一个入度为0的就是F，然后是object。那么最后的排序就为ABECDFobject。
 """
+
+class D(object):
+    pass
+
+class E(object):
+    pass
+
+class F(object):
+    pass
+
+class C(D, F):
+    pass
+
+class B(E, D):
+    pass
+
+class A(B, C):
+    pass
+
+print A.__mro__
 
 """
 元类
