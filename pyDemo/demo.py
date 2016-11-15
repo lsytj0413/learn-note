@@ -517,7 +517,13 @@ http://blog.jobbole.com/21351/
 
 可以在函数中创建类(通过class关键字), 也可以通过type函数.
 type(类名, 父类的元组（针对继承的情况，可以为空），包含属性的字典（名称和值）)
+你可以看到，在Python中，类也是对象，你可以动态的创建类。这就是当你使用关键字class时Python在幕后做的事情，而这就是通过元类来实现的。
 
+什么是元类:
+元类就是用来创建类的东西. type函数实际上是一个元类.
+Python会在类的定义中寻找__metaclass__属性，如果找到了，Python就会用它来创建类Foo，如果没有找到，就会用内建的type来创建这个类。
+你可以在__metaclass__中放置些什么代码呢？答案就是：可以创建一个类的东西。那么什么可以用来创建一个类呢？type，或者任何使用到type或者子类化type的东东都可以。
+元类的主要目的就是为了当创建类时能够自动地改变类。通常，你会为API做这样的事情，你希望可以创建符合当前上下文的类。假想一个很傻的例子，你决定在你的模块里所有的类的属性都应该是大写形式。有好几种方法可以办到，但其中一种就是通过在模块级别设定__metaclass__。
 """
 
 class ObjectCreator(object):
@@ -538,5 +544,48 @@ def choose_class(name):
         return Bar
 print choose_class('Foo')
 
-MyShinyClass = type('MyShinyClass', (object, ), {})
+MyShinyClass = type('MyShinyClass', (object, ), {'bar': True})
 print MyShinyClass
+print MyShinyClass.__class__
+
+# 元类会自动将你通常传给‘type’的参数作为自己的参数传入
+def upper_attr(future_class_name, future_class_parents, future_class_attr):
+    '''返回一个类对象，将属性都转为大写形式'''
+    #  选择所有不以'__'开头的属性
+    attrs = ((name, value) for name, value in future_class_attr.items() if not name.startswith('__'))
+    # 将它们转为大写形式
+    uppercase_attr = dict((name.upper(), value) for name, value in attrs)
+    # 通过'type'来做类对象的创建
+    return type(future_class_name, future_class_parents, uppercase_attr)
+
+__metaclass__ = upper_attr  #  这会作用到这个模块中的所有类
+
+
+# 请记住，'type'实际上是一个类，就像'str'和'int'一样
+# 所以，你可以从type继承
+# class UpperAttrMetaClass(type):
+#     # __new__ 是在__init__之前被调用的特殊方法
+#     # __new__是用来创建对象并返回之的方法
+#     # 而__init__只是用来将传入的参数初始化给对象
+#     # 你很少用到__new__，除非你希望能够控制对象的创建
+#     # 这里，创建的对象是类，我们希望能够自定义它，所以我们这里改写__new__
+#     # 如果你希望的话，你也可以在__init__中做些事情
+#     # 还有一些高级的用法会涉及到改写__call__特殊方法，但是我们这里不用
+#     def __new__(upperattr_metaclass, future_class_name, future_class_parents, future_class_attr):
+#         attrs = ((name, value) for name, value in future_class_attr.items() if not name.startswith('__'))
+#         uppercase_attr = dict((name.upper(), value) for name, value in attrs)
+#         return type(future_class_name, future_class_parents, uppercase_attr)
+
+class UpperAttrMetaclass(type):
+
+    def __new__(cls, name, bases, dct):
+        attrs = ((name, value) for name, value in dct.items() if not name.startswith('__'))
+        uppercase_attr = dict((name.upper(), value) for name, value in attrs)
+        return super(UpperAttrMetaclass, cls).__new__(cls, name, bases, uppercase_attr)
+
+class Foo(object):
+    # 我们也可以只在这里定义__metaclass__，这样就只会作用于这个类中
+    __metaclass__ = UpperAttrMetaclass
+    bar = 'bip'
+
+print hasattr(Foo, 'BAR')
