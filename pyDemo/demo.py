@@ -453,3 +453,209 @@ functools模块的功能
 import functools
 int2 = functools.partial(int, base=2)
 print int2('1000')
+
+"""
+类装饰器
+"""
+class Foo(object):
+    def __init__(self, func):
+        self._func = func
+
+    def __call__(self):
+        print ('class decorator runing')
+        self._func()
+        print ('class decorator ending')
+
+@Foo
+def bar():
+    print ('bar')
+
+bar()
+
+"""
+MRO
+
+http://www.360doc.com/content/16/0719/18/34574201_576833790.shtml
+
+MRO: Method Resolution Order, 方法解析顺序. 当使用python中的多重继承时, 解决二义性问题
+
+在python新式类中, MRO的顺序C3算法. 采用拓扑排序访问顺序.
+
+解决单调性: 保证从根到叶, 从左到右的访问顺序
+解决重写: 先访问子类, 再访问父类
+
+首先找入度为0的点，只有一个A，把A拿出来，把A相关的边剪掉，再找下一个入度为0的点，有两个点（B,C）,取最左原则，拿B，这是排序是AB，然后剪B相关的边，这时候入度为0的点有E和C，取最左。这时候排序为ABE，接着剪E相关的边，这时只有一个点入度为0，那就是C，取C，顺序为ABEC。剪C的边得到两个入度为0的点（DF），取最左D，顺序为ABECD，然后剪D相关的边，那么下一个入度为0的就是F，然后是object。那么最后的排序就为ABECDFobject。
+"""
+
+class D(object):
+    pass
+
+class E(object):
+    pass
+
+class F(object):
+    pass
+
+class C(D, F):
+    pass
+
+class B(E, D):
+    pass
+
+class A(B, C):
+    pass
+
+print A.__mro__
+
+"""
+元类
+
+http://blog.jobbole.com/21351/
+
+在Python中, 类也是一种对象. 只要你使用class关键字, Python解释器在执行时
+就会创建一个对象. 这个类对象自身拥有创建对象实例的能力.
+
+可以在函数中创建类(通过class关键字), 也可以通过type函数.
+type(类名, 父类的元组（针对继承的情况，可以为空），包含属性的字典（名称和值）)
+你可以看到，在Python中，类也是对象，你可以动态的创建类。这就是当你使用关键字class时Python在幕后做的事情，而这就是通过元类来实现的。
+
+什么是元类:
+元类就是用来创建类的东西. type函数实际上是一个元类.
+Python会在类的定义中寻找__metaclass__属性，如果找到了，Python就会用它来创建类Foo，如果没有找到，就会用内建的type来创建这个类。
+你可以在__metaclass__中放置些什么代码呢？答案就是：可以创建一个类的东西。那么什么可以用来创建一个类呢？type，或者任何使用到type或者子类化type的东东都可以。
+元类的主要目的就是为了当创建类时能够自动地改变类。通常，你会为API做这样的事情，你希望可以创建符合当前上下文的类。假想一个很傻的例子，你决定在你的模块里所有的类的属性都应该是大写形式。有好几种方法可以办到，但其中一种就是通过在模块级别设定__metaclass__。
+"""
+
+class ObjectCreator(object):
+    pass
+
+print ObjectCreator
+print hasattr(ObjectCreator, 'new_attr')
+print id(ObjectCreator)
+
+def choose_class(name):
+    if name == 'Foo':
+        class Foo(object):
+            pass
+        return Foo
+    else:
+        class Bar(object):
+            pass
+        return Bar
+print choose_class('Foo')
+
+MyShinyClass = type('MyShinyClass', (object, ), {'bar': True})
+print MyShinyClass
+print MyShinyClass.__class__
+
+# 元类会自动将你通常传给‘type’的参数作为自己的参数传入
+def upper_attr(future_class_name, future_class_parents, future_class_attr):
+    '''返回一个类对象，将属性都转为大写形式'''
+    #  选择所有不以'__'开头的属性
+    attrs = ((name, value) for name, value in future_class_attr.items() if not name.startswith('__'))
+    # 将它们转为大写形式
+    uppercase_attr = dict((name.upper(), value) for name, value in attrs)
+    # 通过'type'来做类对象的创建
+    return type(future_class_name, future_class_parents, uppercase_attr)
+
+__metaclass__ = upper_attr  #  这会作用到这个模块中的所有类
+
+
+# 请记住，'type'实际上是一个类，就像'str'和'int'一样
+# 所以，你可以从type继承
+# class UpperAttrMetaClass(type):
+#     # __new__ 是在__init__之前被调用的特殊方法
+#     # __new__是用来创建对象并返回之的方法
+#     # 而__init__只是用来将传入的参数初始化给对象
+#     # 你很少用到__new__，除非你希望能够控制对象的创建
+#     # 这里，创建的对象是类，我们希望能够自定义它，所以我们这里改写__new__
+#     # 如果你希望的话，你也可以在__init__中做些事情
+#     # 还有一些高级的用法会涉及到改写__call__特殊方法，但是我们这里不用
+#     def __new__(upperattr_metaclass, future_class_name, future_class_parents, future_class_attr):
+#         attrs = ((name, value) for name, value in future_class_attr.items() if not name.startswith('__'))
+#         uppercase_attr = dict((name.upper(), value) for name, value in attrs)
+#         return type(future_class_name, future_class_parents, uppercase_attr)
+
+class UpperAttrMetaclass(type):
+
+    def __new__(cls, name, bases, dct):
+        attrs = ((name, value) for name, value in dct.items() if not name.startswith('__'))
+        uppercase_attr = dict((name.upper(), value) for name, value in attrs)
+        return super(UpperAttrMetaclass, cls).__new__(cls, name, bases, uppercase_attr)
+
+class Foo(object):
+    # 我们也可以只在这里定义__metaclass__，这样就只会作用于这个类中
+    __metaclass__ = UpperAttrMetaclass
+    bar = 'bip'
+
+print hasattr(Foo, 'BAR')
+
+
+class Field(object):
+    def __init__(self, name, column_type):
+        self.name = name
+        self.column_type = column_type
+    def __str__(self):
+        return '<%s:%s>' % (self.__class__.__name__, self.name)
+
+class StringField(Field):
+    def __init__(self, name):
+        super(StringField, self).__init__(name, 'varchar(100)')
+
+class IntegerField(Field):
+    def __init__(self, name):
+        super(IntegerField, self).__init__(name, 'bigint')
+
+class ModelMetaclass(type):
+    def __new__(cls, name, bases, attrs):
+        if name == 'Model':
+            return type.__new__(cls, name, bases, attrs)
+        mappings = dict()
+        for k, v in attrs.iteritems():
+            if isinstance(v, Field):
+                print('Found mapping: %s==>%s' % (k, v))
+                mappings[k] = v
+        for k in mappings.iterkeys():
+            attrs.pop(k)
+        attrs['__table__'] = name # 假设表名和类名一致
+        attrs['__mappings__'] = mappings # 保存属性和列的映射关系
+        return type.__new__(cls, name, bases, attrs)
+
+class Model(dict):
+    __metaclass__ = ModelMetaclass
+
+    def __init__(self, **kw):
+        super(Model, self).__init__(**kw)
+
+    def __getattr__(self, key):
+        try:
+            return self[key]
+        except KeyError:
+            raise AttributeError(r"'Model' object has no attribute '%s'" % key)
+
+    def __setattr__(self, key, value):
+        self[key] = value
+
+    def save(self):
+        fields = []
+        params = []
+        args = []
+        for k, v in self.__mappings__.iteritems():
+            fields.append(v.name)
+            params.append('?')
+            args.append(getattr(self, k, None))
+        sql = 'insert into %s (%s) values (%s)' % (self.__table__, ','.join(fields), ','.join(params))
+        print('SQL: %s' % sql)
+        print('ARGS: %s' % str(args))
+
+class User(Model):
+    # 定义类的属性到列的映射：
+    id = IntegerField('id')
+    name = StringField('username')
+    email = StringField('email')
+    password = StringField('password')
+
+# 创建一个实例：
+u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
+# 保存到数据库：
+u.save()
