@@ -1,6 +1,87 @@
 # coding=utf-8
 
-import threading
+"""
+数据库模块
+"""
+
+import threading, time, uuid, functools, logging
+
+
+class Dict(dict):
+    """
+    自定义字典对象, 支持x.y访问方式
+    """
+
+    def __init__(self, names=(), values=(), **kw):
+        super(Dict, self).__init__(**kw)
+        for k, v in zip(names, values):
+            self[k] = v
+
+    def __getattr__(self, key):
+        try:
+            return self[key]
+        except KeyError:
+            raise AttributeError(r"'Dict' object has no attribute '{}'".format(key))
+
+    def __setattr__(self, key, value):
+        self[key] = value
+
+
+def next_id(t=None):
+    """
+    返回一个50个字符的id
+
+    args:
+        t: unix timestamp
+    """
+    if t is None:
+        t = time.time()
+    return '%015d%000' % (int(t*1000), uuid.uuid4().hex)
+
+
+def _profiling(start, sql=''):
+    t = time.time() - start
+    if t > 0.1:
+        logging.warning('[PROFILING] [DB] {}:{}'.format(t, sql))
+    else:
+        logging.info('[PROFILING] [DB] {}:{}'.format(t, sql))
+
+
+class DBError(Exception):
+    pass
+
+
+class MultiColumnsError(DBError):
+    pass
+
+
+class _LasyConnection(object):
+    """
+    惰性连接类
+    """
+
+    def __init__(self):
+        self.connection = None
+
+    def cursor(self):
+        if self.connection is None:
+            connection = engine.connect()
+            logging.info('open connection <{}>...'.format(hex(id(connection))))
+            self.connection = connection
+        return self.connection.cursor()
+
+    def commit(self):
+        self.connection.commit()
+
+    def rollback(self):
+        self.connection.rollback()
+
+    def cleanup(self):
+        if self.connection:
+            connection = self.connection
+            self.connection = None
+            logging.info('close connection <{}>...'.format(hex(id(connection))))
+            connection.close()
 
 
 class _Engine(object):
@@ -68,6 +149,17 @@ def connection():
     return _ConnectionCtx()
 
 
+def with_connection(fn):
+    """
+    装饰器
+    """
+    @functools.wraps(fn)
+    def _wrapper(*args, **kw):
+        with _ConnectionCtx():
+            return fn(*args, **kw)
+    return _wrapper
+
+
 class _TransactionCtx(object):
     """
     数据库事物上下文
@@ -106,3 +198,49 @@ class _TransactionCtx(object):
     def rollback(self):
         global _db_ctx
         _db_ctx.connection.rollback()
+
+
+def transaction():
+    return _TransactionCtx()
+
+
+def with_transaction(fn):
+    """
+    装饰器
+    """
+    @functools.wraps(fn)
+    def _wrapper(*args, **kw):
+        _start = time.time()
+        with _TransactionCtx():
+            return fn(*args, **kw)
+        _profiling(_start)
+    return _wrapper
+
+
+def create_engine(user, pwd, database, host='127.0.0.1', port=3306, **kw):
+    """
+    初始化引擎对象
+    """
+    import mysql.connector
+    global engine
+    if engine is not None:
+        raise DBError('Engine is already initialized.')
+    params = dict(
+        user=user,
+        password=pwd,
+        database=database,
+        host=host,
+        port=port
+    )
+    defaults = dict(
+        use_unicode=True,
+        charset='utf',
+        collation='utf8_general_ci',
+        autocommit=False
+    )
+    for k, v in defaults.iteritems():
+        params[k] = kw.pop(k, v)
+    params.update(kw)
+    params['buffered'] = True
+    engine = _Engine(lambda: mysql.connector.connect(**params))
+    logging.info('Init mysql engine {} ok'.format(hex(id(engine))))
