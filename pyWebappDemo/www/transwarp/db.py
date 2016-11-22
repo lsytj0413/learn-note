@@ -212,7 +212,7 @@ def with_transaction(fn):
     def _wrapper(*args, **kw):
         _start = time.time()
         with _TransactionCtx():
-            return fn(*args, **kw)
+            fn(*args, **kw)
         _profiling(_start)
     return _wrapper
 
@@ -244,3 +244,93 @@ def create_engine(user, pwd, database, host='127.0.0.1', port=3306, **kw):
     params['buffered'] = True
     engine = _Engine(lambda: mysql.connector.connect(**params))
     logging.info('Init mysql engine {} ok'.format(hex(id(engine))))
+
+
+def _select(sql, first, *args):
+    """
+    select语句
+    """
+    global _db_ctx
+    cursor = None
+    sql = sql.replace('?', '%s')
+    try:
+        cursor = _db_ctx.connection.cursor()
+        cursor.execute(sql, args)
+        if cursor.description:
+            names = [x[0] for x in cursor.description]
+        if first:
+            values = cursor.fetchone()
+            if not values:
+                return None
+            return Dict(names, values)
+        return [Dict(naems, x) for x in cursor.fetchall()]
+    finally:
+        if cursor:
+            cursor.close()
+
+
+@with_connection
+def select_one(sql, *args):
+    """
+    select一条记录
+    """
+    return _select(sql, True, *args)
+
+
+@with_connection
+def select_int(sql, *args):
+    """
+    select一个int
+    """
+    d = _select(sql, True, *args)
+    if len(d) != 1:
+        raise MultiColumnsError('Except only one column')
+    return d.values()[0]
+
+
+@with_connection
+def select(sql, *args):
+    """
+    select
+    """
+    return _select(sql, False, *args)
+
+
+@with_connection
+def _update(sql, *args):
+    """
+    update语句
+    """
+    global _db_ctx
+    cursor = None
+    sql = sql.replace('?', '%s')
+    try:
+        cursor = _db_ctx.connection.cursor()
+        cursor.execute(sql, args)
+        r = cursor.rowcount
+        if _db_ctx.transactions == 0:
+            _db_ctx.connection.commit()
+        return r
+    finally:
+        if cursor:
+            cursor.close()
+
+
+def insert(table, **kw):
+    """
+    insert into 语句
+    """
+    cols, args = zip(*kw.iteritems())
+    sql = 'insert into `%s` (%s) values (%s)' % (
+        table,
+        ','.join(['`%s`' % col for col in cols]),
+        ','.join(['?' for i in range(len(cols))])
+    )
+    return _update(sql, *args)
+
+
+def update(sql, *args):
+    """
+    udpate 语句
+    """
+    return _update(sql, *args)
