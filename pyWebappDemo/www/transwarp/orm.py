@@ -219,9 +219,8 @@ class Model(dict):
         """
         通过primary_key 获取记录
         """
-        d = db.select_one('select * from %s where %s=?' % (
-            cls.__table__,
-            cls.__primary_key__.name),
+        d = db.select_one('select * from %s where %s=?' % (cls.__table__,
+                                                           cls.__primary_key__.name),
                           pk)
         return cls(**d) if d else None
 
@@ -252,3 +251,23 @@ class Model(dict):
                       *args
         )
         return [cls(**d) for d in L]
+
+    @classmethod
+    def count_all(cls):
+        """
+        返回记录条数
+        """
+        return db.select_int('select count(`%s`) from `%s`' % (cls.__primary_key__.name,
+                                                               cls.__table__
+        ))
+
+    @classmethod
+    def count_by(cls, where, *args):
+        """
+        返回where筛选的记录条数
+        """
+        return db.select_int('select count(`%s`) from `%s` %s' % (cls.__primary_key__.name,
+                                                                  cls.__table__,
+                                                                  where),
+                             *args
+        )
