@@ -295,3 +295,27 @@ class Model(dict):
                                                      pk),
                   *args
         )
+        return self
+
+    def delete(self):
+        """
+        删除记录
+        """
+        self.pre_delete and self.pre_delete()
+        pk = self.__primary_key__.name
+        args = (getattr(self, pk), )
+        db.update('delete from `%s` where `%s`=?' % (self.__table__, pk),
+                  *args
+        )
+        return self
+
+    def insert(self):
+        self.pre_insert and self.pre_insert()
+        params = {}
+        for k, v in self.__mappings__.iteritems():
+            if v.insertable:
+                if not hasattr(self, k):
+                    setattr(self, k, v.default)
+                params[v.name] = getattr(self, k)
+        db.insert('%s' % (self.__table__), **params)
+        return self
