@@ -104,5 +104,12 @@ _RESPONSE_STATUSES = {
     424: 'Failed Dependency',
     426: 'Upgrade Required',
 
-
+    500: 'Internal Server Error',
+    501: 'Not Implemented',
+    502: 'Bad Gateway',
+    503: 'Service Unavailable',
+    504: 'Gateway Timeout',
+    505: 'HTTP Version Not Supported',
+    507: 'Insufficient Storage',
+    510: 'Not Extended',
 }
