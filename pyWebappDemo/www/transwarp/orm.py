@@ -213,3 +213,42 @@ class Model(dict):
 
     def __setattr__(self, key, value):
         self[key] = value
+
+    @classmethod
+    def get(cls, pk):
+        """
+        通过primary_key 获取记录
+        """
+        d = db.select_one('select * from %s where %s=?' % (
+            cls.__table__,
+            cls.__primary_key__.name),
+                          pk)
+        return cls(**d) if d else None
+
+    @classmethod
+    def find_first(cls, where, *args):
+        """
+        查找一条记录
+        """
+        d = db.select_one('select * from %s %s' % (cls.__table__, where),
+                          *args
+        )
+        return cls(**d) if d else None
+
+    @classmethod
+    def find_all(cls, *args):
+        """
+        查找所有记录
+        """
+        L = db.select('select * from `%s`' % (cls.__table__))
+        return [cls(**d) for d in L]
+
+    @classmethod
+    def find_by(cls, where, *args):
+        """
+        通过where条件返回记录
+        """
+        L = db.select('select * from `%s` %s' % (cls.__table__, where),
+                      *args
+        )
+        return [cls(**d) for d in L]
