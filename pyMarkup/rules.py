@@ -24,7 +24,7 @@ class HeadingRule(Rule):
         return not '\n' in block and len(block) <= 70 and not block[-1] == ':'
 
 
-class TitleRule(Rule):
+class TitleRule(HeadingRule):
     """
     文档名称规则类
     """
@@ -57,7 +57,7 @@ class ListItemRule(Rule):
         return True
 
 
-class ListRule(Rule):
+class ListRule(ListItemRule):
     """
     列表规则类
     """

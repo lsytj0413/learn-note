@@ -1,6 +1,10 @@
 # coding=utf-8
 
-from utils import *
+import sys, re
+
+from handlers import *
+from util import *
+from rules import *
 
 
 class Parser(object):
@@ -32,6 +36,32 @@ class Parser(object):
                     if last:
                         break
         self.handler.end('document')
+
+
+class BasicTextParser(Parser):
+    """
+    基础格式文本解析器
+    """
+
+    def __init__(self, handler):
+        super(BasicTextParser, self).__init__(handler)
+
+        self.addRule(ListRule())
+        self.addRule(ListItemRule())
+        self.addRule(TitleRule())
+        self.addRule(HeadingRule())
+        self.addRule(ParagraphRule())
+
+        self.addFilter(r'\*(.+?)\*', 'emphasis')
+        self.addFilter(r'(http://[\.a-zA-Z/]+)', 'url')
+        self.addFilter(r'([\.a-zA-Z]+@[\.a-zA-Z]+[a-zA-Z]+)', 'mail')
+
+
+handler = HTMLRenderer()
+parser = BasicTextParser(handler)
+
+parser.parse(sys.stdin)
+
 
 """
 usage:
