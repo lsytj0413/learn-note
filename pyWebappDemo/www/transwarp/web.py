@@ -159,3 +159,37 @@ _RESPONSE_HEADERS = (
     'X-Powered-By',
     'X-UA-Compatible',
 )
+
+
+_RESPONSE_HEADER_DICT = dict(zip(map(lambda x: x.upper(), _RESPONSE_HEADERS),
+                                 _RESPONSE_HEADERS
+))
+
+
+_HEADER_X_POWERED_BY = ('X-Powered-By', 'transwarp/1.0')
+
+
+class HttpError(Exception):
+    """
+    错误类
+    """
+
+    def __init__(self, code):
+        super(HttpError, self).__init__()
+        self.status = '%d %s' % (code, _RESPONSE_STATUSES[code])
+
+    def header(self, name, value):
+        if not hasattr(self, '_headers'):
+            self._headers = [_HEADER_X_POWERED_BY]
+        self._headers.append((name, value))
+
+    @property
+    def headers(self):
+        if hasattr(self, '_headers'):
+            return self._headers
+        return []
+
+    def __str__(self):
+        return self.status
+
+    __repr__ = __str__
