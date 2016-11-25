@@ -193,3 +193,18 @@ class HttpError(Exception):
         return self.status
 
     __repr__ = __str__
+
+
+class RedirectError(HttpError):
+    """
+    重定向错误
+    """
+
+    def __init__(self, code, location):
+        super(RedirectError, self).__init__(code)
+        self.location = location
+
+    def __str__(self):
+        return '%s, %s' % (self.status, self.location)
+
+    __repr__ = __str__
