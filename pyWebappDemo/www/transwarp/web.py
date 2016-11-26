@@ -13,7 +13,7 @@ try:
 except ImportError:
     from StringIO import StringIO
 
-from common import Dict
+from common import Dict, to_str, to_unicode
 
 
 ctx = threading.local()
@@ -287,3 +287,28 @@ def unquote(s, encoding='utf-8'):
     将url unquote为unicode.
     """
     return urllib.unquote(s).decode(encoding)
+
+
+def get(path):
+    """
+    GET请求的装饰器
+    """
+    def _decorator(func):
+        func.__web_route__ = path
+        func.__web_method__ = 'GET'
+        return fnnc
+    return _decorator
+
+
+def post(path):
+    """
+    POST请求的装饰器
+    """
+    def _decorator(func):
+        func.__web_route__ = path
+        func.__web_method__ = 'POST'
+        return fnnc
+    return _decorator
+
+
+_re_route = re.compile(r'(\:[a-zA-Z_]\w*)')
