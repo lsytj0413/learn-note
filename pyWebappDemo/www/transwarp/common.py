@@ -23,3 +23,23 @@ class Dict(dict):
 
     def __setattr__(self, key, value):
         self[key] = value
+
+
+def to_str(s):
+    """
+    将s转换为str.
+    """
+    if isinstance(s, str):
+        return s
+    if isinstance(s, unicode):
+        return s.encode('utf-8')
+    return str(s)
+
+
+def to_unicode(s, encoding='utf-8'):
+    """
+    将s转换为unicode.
+    """
+    return s.decode('utf-8')
+
+

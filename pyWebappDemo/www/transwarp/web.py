@@ -271,3 +271,19 @@ def seeother(location):
     Temporary Redirect Response.
     """
     return RedirectError(303, location)
+
+
+def quote(s, encoding='utf-8'):
+    """
+    将url转换为str.
+    """
+    if isinstance(s, unicode):
+        s = s.encode(encoding)
+    return urllib.quote(s)
+
+
+def unquote(s, encoding='utf-8'):
+    """
+    将url unquote为unicode.
+    """
+    return urllib.unquote(s).decode(encoding)
