@@ -380,3 +380,41 @@ def _static_file_generator(fpath):
         while block:
             yield block
             block = f.read(BLOCK_SIZE)
+
+
+class StaticFileRoute(object):
+    """
+    静态文件路由类
+    """
+
+    def __init__(self):
+        self.method = 'GET'
+        self.is_static = False
+        self.route = re.compile('^/static/(.+)$')
+
+    def match(self, url):
+        if url.startswith('/static'):
+            return (url[1:], )
+        return None
+
+    def __call__(self, *args):
+        fpath = os.path.join(ctx.application.document_root, args[0])
+        if not os.path.isfile(fpath):
+            raise notfound()
+        fext = os.path.splitext(fpath)[1]
+        ctx.response.content_type = mimetypes.types_map.get(fext.lower(), 'application/octet-stream')
+        return _static_file_generator(fpath)
+
+
+def favicon_handler():
+    return static_file_handler('/favicon.ico')
+
+
+class MultipartFile(object):
+    """
+    多部分文件
+    """
+
+    def __init__(self, storage):
+        self.filename = to_unicode(storage.filename)
+        self.file = storage.file
