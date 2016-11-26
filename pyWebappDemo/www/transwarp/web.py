@@ -208,3 +208,66 @@ class RedirectError(HttpError):
         return '%s, %s' % (self.status, self.location)
 
     __repr__ = __str__
+
+
+def badrequest():
+    """
+    Bad Request Response.
+    """
+    return HttpError(400)
+
+
+def unauthorized():
+    """
+    Unauthorized Response.
+    """
+    return HttpError(401)
+
+
+def forbidden():
+    """
+    Forbidden Response.
+    """
+    return HttpError(403)
+
+
+def notfound():
+    """
+    Not Found Response.
+    """
+    return HttpError(404)
+
+
+def conflict():
+    """
+    Conflict Response.
+    """
+    return HttpError(409)
+
+
+def internalerror():
+    """
+    Internal Error Response.
+    """
+    return HttpError(500)
+
+
+def redirect(location):
+    """
+    Redirect Response.
+    """
+    return RedirectError(301, location)
+
+
+def found(location):
+    """
+    Temporary Redirect Response.
+    """
+    return RedirectError(302, location)
+
+
+def seeother(location):
+    """
+    Temporary Redirect Response.
+    """
+    return RedirectError(303, location)
