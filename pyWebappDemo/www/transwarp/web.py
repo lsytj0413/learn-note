@@ -312,3 +312,34 @@ def post(path):
 
 
 _re_route = re.compile(r'(\:[a-zA-Z_]\w*)')
+
+
+def _build_regex(path):
+    """
+    将urlpath转换为正则表达式
+    """
+    re_list = ['^']
+    var_list = []
+    is_var = False
+    for v in _re_route.split(path):
+        if is_var:
+            var_name = v[1:]
+            var_list.append(var_name)
+            re_list.append(r'(?P<%s>[^\/]+)' % (var_name))
+        else:
+            s = ''
+            for ch in v:
+                if ch >= '0' and ch <= '9':
+                    s = s + ch
+                elif ch  >= 'A' and ch <= 'Z':
+                    s = s + ch
+                elif ch  >= 'a' and ch <= 'z':
+                    s = s + ch
+                else:
+                    s = s + '\\' + ch
+            re_list.append(s)
+        is_var = not is_var
+    re_list.append('$')
+    return ''.join(re_list)
+
+
