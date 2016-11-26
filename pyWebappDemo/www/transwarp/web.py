@@ -343,3 +343,40 @@ def _build_regex(path):
     return ''.join(re_list)
 
 
+class Route(object):
+    """
+    路由类
+    """
+
+    def __init__(self, func):
+        self.path = func.__web_route__
+        self.method = func.__web_method__
+        self.is_static = _re_route.search(self.path) is None
+        if not self.is_static:
+            self.route = re.compile(_build_regex(self.path))
+        self.func = func
+
+    def match(self, url):
+        m = self.route.match(url)
+        if m:
+            return m.groups()
+        return None
+
+    def __call__(self, *args):
+        return self.func(*args)
+
+    def __str__(self):
+        if self.is_static:
+            return 'Route(static, %s, path=%s)' % (self.method, self.path)
+        return 'Route(dynamic, %s, path=%s)' % (self.method, self.path)
+
+    __repr__ = __str__
+
+
+def _static_file_generator(fpath):
+    BLOCK_SIZE = 8192
+    with open(fpath, 'rb') as f:
+        block = f.read(BLOCK_SIZE)
+        while block:
+            yield block
+            block = f.read(BLOCK_SIZE)
