@@ -699,3 +699,34 @@ class Jinja2TemplateEngine(TemplateEngine):
 
     def __call__(self, path, model):
         return self._env.get_template(path).render(**model).encode('utf-8')
+
+
+def __default_error_handler(e, start_response, is_debug):
+    if isinstance(e, HttpError):
+        logging.info('HttpError: %s' % (e.status))
+        headers = e.headers[:]
+        headers.append('Content-Type', 'text/html')
+        start_response(e.status, headers)
+        return '<html><body><h1>%s</h1></body></html>' % (e.status)
+    logging.exception('Exception:')
+    start_response('500 Internal Server Error', [('Content-Type', 'text/html'), _HEADER_X_POWERED_BY])
+    if is_debug:
+        return _debug()
+    return '<html><body><h1>500 Internal Server Error</h1><h3>%s</h3></body></html>' % (str(e))
+
+
+def view(path):
+    """
+    路由处理函数装饰器
+    """
+    def _decorator(func):
+        @functools.wraps(func)
+        def __wrapper(*args, **kw):
+            r = func(*args, **kw)
+            if isinstance(r, dict):
+                logging.info('return Template')
+                return Template(path, **r)
+            raise ValueError('Expect return a dict when using @view() decorator.')
+        return _wrapper
+    return _decorator
+
