@@ -418,3 +418,90 @@ class MultipartFile(object):
     def __init__(self, storage):
         self.filename = to_unicode(storage.filename)
         self.file = storage.file
+
+
+class Request(object):
+    """
+    请求结构
+    """
+
+    def __init__(self, environ):
+        self._environ = environ
+
+    def _parse_input(self):
+        def _convert(item):
+            if isinstance(item, list):
+                return [to_unicode(i.value) for i in item]
+            if item.filename:
+                return MultipartFile(item)
+            return to_unicode(item.value)
+        fs = cgi.FieldStorage(fp=self._environ['wsgi.input'],
+                              environ=self._environ,
+                              keep_blank_values = True
+        )
+        inputs = dict()
+        for key in fs:
+            inputs[key] = _convert(fs[key])
+        return inputs
+
+    def _get_raw_input(self):
+        if not hasattr(self, '_raw_input'):
+            self._raw_input = self._parse_input
+        return self._raw_input
+
+    def __getitem__(self, key):
+        r = self._get_raw_input()[key]
+        if isinstance(r, list):
+            return r[0]
+        return r
+
+    def get(self, key, default=None):
+        r = self._get_raw_input().get(key, default)
+        if isinstance(r, list):
+            return r[0]
+        return r
+
+    def gets(self, key):
+        r = self._get_raw_input()[key]
+        if isinstance(r, list):
+            return r[:]
+        return [r]
+
+    def input(self, **kw):
+        copy = Dict(**kw)
+        raw = self._get_raw_input()
+        for k, v in raw.iteritems():
+            copy[k] = v[0] if isinstance(v, list) else v
+        return copy
+
+    def get_body(self):
+        fp = self._environ['wsgi.input']
+        return fp.read()
+
+    @property
+    def remote_addr(self):
+        return self._environ.get('REMOTE_ADDR', '0.0.0.0')
+
+    @property
+    def document_root(self):
+        return self._environ.get('DOCUMENT_ROOT', '')
+
+    @property
+    def query_string(self):
+        return self._environ.get('QUERY_STRING', '')
+
+    @property
+    def environ(self):
+        return self._environ
+
+    @property
+    def request_method(self):
+        return self._environ['REQUEST_METHOD']
+
+    @property
+    def path_info(self):
+        return urllib.unquote(self._environ.get('PATH_INFO', ''))
+
+    @property
+    def host(self):
+        return self._environ.get('HTTP_HOST', '')
