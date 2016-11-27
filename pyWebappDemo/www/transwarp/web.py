@@ -540,3 +540,43 @@ class Request(object):
 
 
 UTC_0 = UTC('+00:00')
+
+
+class Response(object):
+    """
+    应答结构.
+    """
+
+    def __init__(self):
+        self._status = '200 OK'
+        self._headers = {
+            'CONTENT-TYPE': 'text/html; charset=utf-8'
+        }
+
+    @property
+    def headers(self):
+        L = [[_RESPONSE_HEADER_DICT.get(k, k), v] for k, v in self._headers.iteritems()]
+        if hasattr(self, '_cookies'):
+            for v in self._cookies.itervalues():
+                L.append(('Set-Cookie', v))
+        L.append(_HEADER_X_POWERED_BY)
+        return L
+
+    def header(self, name):
+        key = name.upper()
+        if not key in _RESPONSE_HEADER_DICT:
+            key = name
+        return self._headers.get(key)
+
+    def unset_header(self, name):
+        key = name.upper()
+        if not key in _RESPONSE_HEADER_DICT:
+            key = name
+        if key in self._headers:
+            del self._headers[key]
+
+    def set_header(self, name, value):
+        key = name.upper()
+        if not key in _RESPONSE_HEADER_DICT:
+            key = name
+        self._headers[key] = to_str(value)
