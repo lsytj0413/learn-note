@@ -662,3 +662,40 @@ class Response(object):
                 raise ValueError('Bad response code: %s' % (value))
         else:
             raise TypeError('Bad type of response code.')
+
+
+class Template(object):
+    """
+    模板类
+    """
+
+    def __init__(self, template_name, **kw):
+        self.template_name = template_name
+        self.model = dict(**kw)
+
+
+class TemplateEngine(object):
+    """
+    模板引擎类
+    """
+
+    def __call__(self, path, model):
+        return '<!-- override this mothod to render template -->'
+
+
+class Jinja2TemplateEngine(TemplateEngine):
+    """
+    Jinja2 引擎模板类
+    """
+
+    def __init__(self, templ_dir, **kw):
+        from jinja2 import Enviroment, FileSystemLoader
+        if not 'autoescape' in kw:
+            kw['autoescape'] = True
+        self._env = Enviroment(loader=FileSystemLoader(templ_dir), **kw)
+
+    def add_filter(self, name, fn_filter):
+        self._env.filters[name] = fn_filter
+
+    def __call__(self, path, model):
+        return self._env.get_template(path).render(**model).encode('utf-8')
