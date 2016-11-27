@@ -880,4 +880,47 @@ class WSGIApplication(object):
                 raise notfound()
             return badrequest()
 
-        
+        fn_exec = _build_interceptor_chain(fn_route, *self._interceptors)
+
+        def wsgi(env, start_response):
+            ctx.application = _application
+            ctx.request = Request(env)
+            response = ctx.response = Response()
+            try:
+                r = fn_exec()
+                if isinstance(r, Template):
+                    r = self._template_engine(r.template_name, r.model)
+                if isinstance(r, unicode):
+                    r = r.encode('utf-8')
+                if r is None:
+                    r = []
+                start_response(response.status, response.headers)
+                return r
+            except RedirectError as e:
+                response.set_header('Location', e.location)
+                start_response(e.status, response.headers)
+                return []
+            except HttpError as e:
+                start_response(e.status, response.headers)
+                return ['<html><body><h1>', e.status, '</h1></body></html>']
+            except Exception as e:
+                logging.exception(e)
+                if not debug:
+                    start_response('500 Internal Server Error', [])
+                    return ['<html><body><h1>500 Internal Server Error</h1></body></html>']
+                exc_type, exc_value, exc_traceback = sys.exc_info()
+                fp = StringIO()
+                traceback.print_exception(exc_type, exc_value, exc_traceback, file=fp)
+                stacks = fp.getvalue()
+                fp.close()
+                start_response('500 Internal Server Error', [])
+                return [
+                    r'''<html><body><h1>500 Internal Server Error</h1><div style="font-family:Monaco, Consolas, 'Courier New', mobospace;"><pre>''',
+                    stacks.replace('<', '&lt;').replace('>', '&gt;'),
+                    '</pre></div></body></html>'
+                ]
+            finally:
+                del ctx.application
+                del ctx.request
+                del ctx.response
+        return wsgi
