@@ -505,3 +505,38 @@ class Request(object):
     @property
     def host(self):
         return self._environ.get('HTTP_HOST', '')
+
+    def _get_headers(self):
+        if not hasattr(self, '_headers'):
+            hdrs = {}
+            for k, v in self._environ.iteritems():
+                if k.startwith('HTTP_'):
+                    hdrs[k[5:].replace('_', '-').upper()] = v.decode('utf-8')
+            self._headers = hdrs
+        return self._headers
+
+    @property
+    def headers(self):
+        return dict(**self._get_headers())
+
+    def _get_cookies(self):
+        if not hasattr(self, '_cookies'):
+            cookies = {}
+            cookie_str = self._environ.get('HTTP_COOKIE')
+            if cookie_str:
+                for c in cookie_str.split(';'):
+                    pos = c.find('=')
+                    if pos > 0:
+                        cookies[c[:pos].strip()] = _unquote(c[pos+1:])
+            self._cookies = cookies
+        return self._cookies
+
+    @property
+    def cookies(self):
+        return Dict(**self._get_cookies())
+
+    def cookie(self, name, default=None):
+        return self._get_cookies().get(name, default)
+
+
+UTC_0 = UTC('+00:00')
