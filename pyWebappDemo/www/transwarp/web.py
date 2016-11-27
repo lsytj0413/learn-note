@@ -823,4 +823,61 @@ class WSGIApplication(object):
             if callable(fn) and hasattr(fn, '__web_route__') and hasattr(fn, '__web_method__'):
                 self.add_url(fn)
 
-    
+    def add_url(self, func):
+        self._check_not_running()
+        route = Route(func)
+        if route.is_static:
+            if route.method == 'GET':
+                self._get_static[route.path] = route
+            if route.method == 'POST':
+                self._post_static[route.path] = route
+        else:
+            if route.method == 'GET':
+                self._get_dynamic.append(route)
+            if route.method == 'POST':
+                self._post_dynamic.append(route)
+        logging.info('Add route: %s' % (str(route)))
+
+    def add_interceptor(self, func):
+        self._check_not_running()
+        self._interceptors.append(func)
+        logging.info('Add interceptor: %s' % (str(func)))
+
+    def run(self, port=9000, host='127.0.0.1'):
+        from wsgiref.simple_server import make_server
+        logging.info('application (%s) will start at %s:%s...' % (self._document_root, host, port))
+        server = make_server(host, port, slef.get_wsgi_application(debug=True))
+        server.serve_forever()
+
+    def get_wsgi_application(self, debug=False):
+        self._check_not_running()
+        if debug:
+            self._get_dynamic.append(StaticFileRoute())
+        self._running = True
+
+        _application = Dict(document_root=self._document_root)
+
+        def fn_route():
+            request_method = ctx.request.request_method
+            path_info = ctx.request.path_info
+            if request_method == 'GET':
+                fn = self._get_statis.get(path_info, None)
+                if fn:
+                    return fn()
+                for fn in self._get_dynamic:
+                    args = fn.match(path_info)
+                    if args:
+                        return fn(*args)
+                raise notfound()
+            if request_method == 'POST':
+                fn = self._post_static.get(path_info, None)
+                if fn:
+                    return fn()
+                for fn in self._post_dynamic:
+                    args = fn.match(path_info)
+                    if args:
+                        return fn(*args)
+                raise notfound()
+            return badrequest()
+
+        
