@@ -781,3 +781,46 @@ def _load_module(module_name):
     import_module = module_name[last_dot+1:]
     m = __import__(from_module, globals(), locals(), [import_module])
     return getattr(m, import_module)
+
+
+class WSGIApplication(object):
+    """
+    WSGI 类
+    """
+
+    def __init__(self, document_root=None, **kw):
+        self._running = False
+        self._document_root = document_root
+
+        self._interceptors = []
+        self._template_engine = None
+
+        self._get_static = {}
+        self._post_static = {}
+
+        self._get_dynamic = []
+        self._post_dynamic = []
+
+    def _check_not_running(self):
+        if self._running:
+            raise RuntimeError('Cannot modify WSGIApplication when running.')
+
+    @property
+    def template_engine(self):
+        return self._template_engine
+
+    @template_engine.setter
+    def template_engine(self, engine):
+        self._check_not_running()
+        self._template_engine = engine
+
+    def add_module(self, mod):
+        self._check_not_running()
+        m = mod if type(mod) == types.ModuleType else _load_module(mod)
+        logging.info('Add moduel: %s' % (m.__name__))
+        for name in dir(m):
+            fn = getattr(m, name)
+            if callable(fn) and hasattr(fn, '__web_route__') and hasattr(fn, '__web_method__'):
+                self.add_url(fn)
+
+    
