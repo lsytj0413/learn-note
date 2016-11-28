@@ -895,9 +895,6 @@ class WSGIApplication(object):
                 if r is None:
                     r = []
                 start_response(response.status, response.headers)
-                print "+++++++++++++++++++++++"
-                print response.status
-                print response.headers
                 return r
             except RedirectError as e:
                 response.set_header('Location', e.location)
