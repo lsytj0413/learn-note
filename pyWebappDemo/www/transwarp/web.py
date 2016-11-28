@@ -296,7 +296,7 @@ def get(path):
     def _decorator(func):
         func.__web_route__ = path
         func.__web_method__ = 'GET'
-        return fnnc
+        return func
     return _decorator
 
 
@@ -555,7 +555,7 @@ class Response(object):
 
     @property
     def headers(self):
-        L = [[_RESPONSE_HEADER_DICT.get(k, k), v] for k, v in self._headers.iteritems()]
+        L = [(_RESPONSE_HEADER_DICT.get(k, k), v) for k, v in self._headers.iteritems()]
         if hasattr(self, '_cookies'):
             for v in self._cookies.itervalues():
                 L.append(('Set-Cookie', v))
@@ -689,10 +689,10 @@ class Jinja2TemplateEngine(TemplateEngine):
     """
 
     def __init__(self, templ_dir, **kw):
-        from jinja2 import Enviroment, FileSystemLoader
+        from jinja2 import Environment, FileSystemLoader
         if not 'autoescape' in kw:
             kw['autoescape'] = True
-        self._env = Enviroment(loader=FileSystemLoader(templ_dir), **kw)
+        self._env = Environment(loader=FileSystemLoader(templ_dir), **kw)
 
     def add_filter(self, name, fn_filter):
         self._env.filters[name] = fn_filter
@@ -721,7 +721,7 @@ def view(path):
     """
     def _decorator(func):
         @functools.wraps(func)
-        def __wrapper(*args, **kw):
+        def _wrapper(*args, **kw):
             r = func(*args, **kw)
             if isinstance(r, dict):
                 logging.info('return Template')
@@ -846,7 +846,7 @@ class WSGIApplication(object):
     def run(self, port=9000, host='127.0.0.1'):
         from wsgiref.simple_server import make_server
         logging.info('application (%s) will start at %s:%s...' % (self._document_root, host, port))
-        server = make_server(host, port, slef.get_wsgi_application(debug=True))
+        server = make_server(host, port, self.get_wsgi_application(debug=True))
         server.serve_forever()
 
     def get_wsgi_application(self, debug=False):
@@ -861,7 +861,7 @@ class WSGIApplication(object):
             request_method = ctx.request.request_method
             path_info = ctx.request.path_info
             if request_method == 'GET':
-                fn = self._get_statis.get(path_info, None)
+                fn = self._get_static.get(path_info, None)
                 if fn:
                     return fn()
                 for fn in self._get_dynamic:
@@ -895,6 +895,9 @@ class WSGIApplication(object):
                 if r is None:
                     r = []
                 start_response(response.status, response.headers)
+                print "+++++++++++++++++++++++"
+                print response.status
+                print response.headers
                 return r
             except RedirectError as e:
                 response.set_header('Location', e.location)
@@ -923,4 +926,5 @@ class WSGIApplication(object):
                 del ctx.application
                 del ctx.request
                 del ctx.response
+
         return wsgi

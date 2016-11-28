@@ -155,7 +155,7 @@ class ModelMetaclass(type):
     """
 
     def __new__(cls, name, bases, attrs):
-        if name == 'Modle':
+        if name == 'Model':
             return type.__new__(cls, name, bases, attrs)
         if not hasattr(cls, 'subclasses'):
             cls.subclasses = {}

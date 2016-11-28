@@ -198,7 +198,7 @@ def with_transaction(fn):
     return _wrapper
 
 
-def create_engine(user, pwd, database, host='127.0.0.1', port=3306, **kw):
+def create_engine(user, password, database, host='127.0.0.1', port=3306, **kw):
     """
     初始化引擎对象
     """
@@ -208,14 +208,14 @@ def create_engine(user, pwd, database, host='127.0.0.1', port=3306, **kw):
         raise DBError('Engine is already initialized.')
     params = dict(
         user=user,
-        password=pwd,
+        password=password,
         database=database,
         host=host,
         port=port
     )
     defaults = dict(
         use_unicode=True,
-        charset='utf',
+        charset='utf8',
         collation='utf8_general_ci',
         autocommit=False
     )
@@ -244,7 +244,7 @@ def _select(sql, first, *args):
             if not values:
                 return None
             return Dict(names, values)
-        return [Dict(naems, x) for x in cursor.fetchall()]
+        return [Dict(names, x) for x in cursor.fetchall()]
     finally:
         if cursor:
             cursor.close()
