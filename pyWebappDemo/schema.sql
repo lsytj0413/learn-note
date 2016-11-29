@@ -64,3 +64,16 @@ VALUES (
        1402909113.628,
        ''
 );
+
+
+INSERT INTO blogs (`id`, `user_id`, `user_name`, `user_image`, `name`, `summary`, `content`, `created_at`)
+VALUES (
+       '0010018336417540987fff4508f43fbaed718e263442526000',
+       '0010018336417540987fff4508f43fbaed718e263442526000',
+       'Administrator',
+       '',
+       'testBlog',
+       'testBlogSummary',
+       'testBlogContent',
+       1402909113.628
+);
