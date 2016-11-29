@@ -49,3 +49,27 @@ class APIPermissionError(APIError):
 
     def __init__(self, message=''):
         super(APIPermissionError, self).__init__('permission:forbidden', 'permission', message)
+
+
+def api(func):
+    """
+    api装饰器
+    """
+    @functools.wraps(func)
+    def _wrapper(*args, **kw):
+        try:
+            r = dumps(func(*args, **kw))
+        except APIError as ex:
+            r = json.dumps(dict(error=ex.error,
+                                data=ex.data,
+                                message=ex.message
+            ))
+        except Exception as ex:
+            logging.exception(ex)
+            r = json.dumps(dict(error='internalerror',
+                                data=ex.__class__.__name__,
+                                message=ex.message
+            ))
+        ctx.response.content_type = 'application/json'
+        return r
+    return _wrapper
