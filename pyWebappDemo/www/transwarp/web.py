@@ -273,7 +273,7 @@ def seeother(location):
     return RedirectError(303, location)
 
 
-def quote(s, encoding='utf-8'):
+def _quote(s, encoding='utf-8'):
     """
     将url转换为str.
     """
@@ -282,7 +282,7 @@ def quote(s, encoding='utf-8'):
     return urllib.quote(s)
 
 
-def unquote(s, encoding='utf-8'):
+def _unquote(s, encoding='utf-8'):
     """
     将url unquote为unicode.
     """
@@ -307,7 +307,7 @@ def post(path):
     def _decorator(func):
         func.__web_route__ = path
         func.__web_method__ = 'POST'
-        return fnnc
+        return func
     return _decorator
 
 
@@ -446,7 +446,7 @@ class Request(object):
 
     def _get_raw_input(self):
         if not hasattr(self, '_raw_input'):
-            self._raw_input = self._parse_input
+            self._raw_input = self._parse_input()
         return self._raw_input
 
     def __getitem__(self, key):

@@ -17,7 +17,7 @@ def next_id(t=None):
     """
     if t is None:
         t = time.time()
-    return '%015d%000' % (int(t*1000), uuid.uuid4().hex)
+    return '%015d%s000' % (int(t*1000), uuid.uuid4().hex)
 
 
 def _profiling(start, sql=''):

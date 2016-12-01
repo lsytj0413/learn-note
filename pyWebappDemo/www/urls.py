@@ -80,3 +80,9 @@ def register_user():
     cookie = make_signed_cookie(user.id, user.password, None)
     ctx.response.set_cookie(_COOKIE_NAME, cookie)
     return user
+
+
+@view('register.html')
+@get('/register')
+def register():
+    return dict()
