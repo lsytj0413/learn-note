@@ -86,3 +86,9 @@ def register_user():
 @get('/register')
 def register():
     return dict()
+
+
+@view('signin.html')
+@get('/signin')
+def signin():
+    return dict()
