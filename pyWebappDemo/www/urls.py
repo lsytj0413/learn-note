@@ -112,3 +112,50 @@ def authenticate():
     ctx.response.set_cookie(_COOKIE_NAME, cookie, max_age=max_age)
     user.password = '******'
     return user
+
+
+def parse_signed_cookie(cookie_str):
+    try:
+        L = cookie_str.split('-')
+        if len(L) != 3:
+            return None
+        id, expires, md5 = L
+        if int(expires) < time.time():
+            return None
+        user = User.get(id)
+        if user is None:
+            return None
+        if md5 != hashlib.md5('%s-%s-%s-%s' % (id, user.password, expires, _COOKIE_KEY)).hexdigest():
+            return None
+        return user
+    except:
+        return None
+
+
+def check_admin():
+    user = ctx.request.user
+    if user and user.admin:
+        return
+    raise APIPermissionError('No permission.')
+
+
+@interceptor('/')
+def user_interceptor(next):
+    logging.info('try to bind user from session cookie...')
+    user = None
+    cookie = ctx.request.cookies_get(_COOKIE_NAME)
+    if cookie:
+        logging.info('parse session cookie...')
+        user = parse_signed_cookie(cookie)
+        if user:
+            logging.info('bind user <%s> to session...' % (user.email))
+    ctx.request.user = user
+    return next()
+
+
+@interceptor('/manage/')
+def manage_interceptor(next):
+    user = ctx.request.user
+    if user and user.admin:
+        return next()
+    raise seeother('/signin')
