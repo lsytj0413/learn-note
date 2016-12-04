@@ -183,3 +183,13 @@ def api_create_blog():
     )
     blog.insert()
     return blog
+
+
+@view('manage_blog_edit.html')
+@get('/manage/blogs/create')
+def manage_blogs_create():
+    return dict(id=None,
+                action='/api/blogs',
+                redirect='/manage/blogs',
+                user=ctx.request.user
+    )
