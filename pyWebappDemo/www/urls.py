@@ -215,3 +215,32 @@ class Page(object):
             self.limit = self.page_size
         self.has_next = self.page_index < self.page_count
         self.has_previous = self.page_index > 1
+
+
+def _get_page_index():
+    page_index = 1
+    try:
+        page_index = int(ctx.request.get('page', '1'))
+    except ValueError:
+        pass
+    return page_index
+
+
+def _get_blogs_by_page():
+    total = Blog.count_all()
+    page = Page(total, _get_page_index())
+    blogs = Blog.find_by('order by created_at desc limit ?, ?', page.offset, page.limit)
+    return blogs, page
+
+
+@api
+@get('/api/blogs')
+def api_get_blogs():
+    blogs, page = _get_blogs_by_page()
+    return dict(blogs=blogs, page=page)
+
+
+@view('manage_blog_list.html')
+@get('/manage/blogs')
+def manage_blogs():
+    return dict(page_index=_get_page_index(), user=ctx.request.user)
