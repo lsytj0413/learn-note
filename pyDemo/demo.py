@@ -681,3 +681,26 @@ print x()
 
 i = [0]
 print x()
+
+
+# 例子
+i = 10
+def demo3_assign_on_int(i):
+    i = 30
+    print i
+demo3_assign_on_int(i)
+print i
+
+i = [1, 2]
+def demo4_assign_on_list(i):
+    i = [0]
+    print i
+demo4_assign_on_list(i)
+print i
+
+i = [1, 2]
+def demo5_modify_on_list(i):
+    i.append(3)
+    print i
+demo5_modify_on_list(i)
+print i
