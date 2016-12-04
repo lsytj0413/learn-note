@@ -159,3 +159,27 @@ def manage_interceptor(next):
     if user and user.admin:
         return next()
     raise seeother('/signin')
+
+
+@api
+@post('/api/blogs')
+def api_create_blog():
+    i = ctx.request.input(name='', summary='', content='')
+    name = i.name.strip()
+    summary = i.summary.strip()
+    content = i.content.strip()
+    if not name:
+        raise APIValueError('name', 'name cannot be empty.')
+    if not summary:
+        raise APIValueError('summary', 'summary cannot be empty.')
+    if not content:
+        raise APIValueError('content', 'content cannot be empty.')
+    user = ctx.request.user
+    blog = Blog(user_id=user.id,
+                user_name=user.name,
+                name=name,
+                summary=summary,
+                content=content
+    )
+    blog.insert()
+    return blog
