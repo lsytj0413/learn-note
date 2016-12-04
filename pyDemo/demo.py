@@ -659,3 +659,25 @@ class User(Model):
 u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
 # 保存到数据库：
 u.save()
+
+
+# 1个例子
+
+i = 10
+def demo1_lambda_on_int(i):
+    return lambda : i
+
+x = demo1_lambda_on_int(i)
+i = 100
+print x()
+
+i = [1, 2]
+def demo2_lambda_on_list(i):
+    return lambda : i
+
+x = demo2_lambda_on_list(i)
+i.append(3)
+print x()
+
+i = [0]
+print x()
