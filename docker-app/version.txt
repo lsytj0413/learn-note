@@ -1,0 +1,234 @@
+<html><head><title></title></head><body><ol><li>1 app主要功能流程优化与bug修复。</li><br/><li> 2 app状态栏改成沉浸式。</li><br/><li>3 优化消息显示。</li></ol></body></html>
+
+岗位职责：
+1. 生产及测试服务器环境塔建，部署，维护。 
+2. 监控及分析生产环境服务性能，保障服务稳定安全可用。 
+3. 内部开发环境部署及维护。 
+4. 生产及开发环境数据库维护，数据备份，安全管理，日志分析，性能调优等。 
+5. 配合开发人员对系统及服务进行调优。 
+6. 诊断系统故障，异常事件的协调处理。 
+7、负责公司产品/项目的基线管理、版本管理、发布管理、权限管理、变更管理、配置标识管理等工作；
+8、制定配置管理规范流程，并对流程进行推广、培训和优化；
+9、完善配置管理工具平台，实现操作规范化、自动化、提高工作效率；
+
+任职要求：
+1. 熟悉Linux服务器配置、安装、部署、性能调优.
+2. 有一定的服务器安全保障能力，可以快速消除可修复漏洞.
+3. 熟悉Shell脚本，可以实现功能的自动化.
+4. 熟悉交换机、路由器、防火墙的策略配置、管理及维护.
+4、了解MySQL数据库的管理、备份和维护。
+5、了解Java运行环境配置。
+6、了解负载均衡服务器、缓存服务器的配置。 
+7、了解网络安全相关知识。
+8.交换机、路由器、防火墙的策略配置、管理及维护。
+
+
+
+
+select S.id from song_basic_info as S where S.user_id=10012 or (10012 in (select user_id from medley_participant_map as M where M.role_type!=0 and S.id=M.song_id));
+
+select S.audio_type, sum(1) as count from song_basic_info as S where S.user_id=10012 and S.song_status=1 group by S.audio_type;
+
+
+1: 版本信息(区分Andriod和IOS)，最低支持版本; 数据表加字段，接口加字段    done
+2: 我的动态 -->> 合成状态（没有百分数）; 新接口   done
+3: 主题 ; 待定
+4：举报 ; 加数据表，加接口           done
+5：附近的修改（提供一个接口获取数据(经纬度+歌曲id)）; 加接口   done
+6：推送（ios）    TESTING
+7：附近串烧（待加入，合成中，合成成功）       done
+8：分享原因   -> jianchao
+9：
+
+confd, etcd, keepalived
+
+
+
+>>> def get_ip_address(ifname):
+...     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+...     return socket.inet_ntoa(fcntl.ioctl(
+...             s.fileno(),
+...             0x8915,
+...             struct.pack('256s', ifname[:15])
+...     )[20:24])
+... 
+>>> print get_ip_address('eth1')
+
+
+
+1：使用机器学习来判别一张图是否PS过，以及还原原图
+2：使用机器学习来回复女生照片素颜的样子
+
+
+sudo ./confd -onetime -node=http://127.0.0.1:4001 -config-file=
+/etc/confd/conf.d/nginx.toml -log-level debug
+
+sudo ./confd -interval 10 -node http://127.0.0.1:4001 -config-file /etc/confd/conf.d/nginx.toml
+
+
+
+curl -L "http://127.0.0.1:4001/v2/keys/app/app3" -XPUT -d value="127.0.0.1:4004"
+
+curl -L "http://127.0.0.1:4001/v2/keys/app" -XPUT -d dir=true
+
+curl -L "http://127.0.0.1:4001/v2/keys/app?recursive=true" -XDELETE
+
+docker run -p 10.0.0.32:4004:80 nginx:v3
+
+
+lsytj@lsytj-virtual-machine:~/dockerTest/mynginx$ sudo docker login --username=tangying2729959 registry.cn-hangzhou.aliyuncs.com 
+[sudo] lsytj 的密码： 
+Password: 
+Login Succeeded
+lsytj@lsytj-virtual-machine:~/dockerTest/mynginx$ sudo docker tag b9f399c9b482 registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v1.0.0
+lsytj@lsytj-virtual-machine:~/dockerTest/mynginx$ sudo docker push registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v1.0.0
+The push refers to a repository [registry.cn-hangzhou.aliyuncs.com/rapself/fortest]
+05bc8ac14418: Pushed 
+e03d01018b72: Pushed 
+ee3b1534c826: Pushed 
+b6ca02dfe5e6: Pushed 
+v1.0.0: digest: sha256:11b189d015bf1bd601556123fd7c802e98147fd161bf9e2d04bbed6b7b316418 size: 1155
+lsytj@lsytj-virtual-machine:~/dockerTest/mynginx$ ls
+Dockerfile
+lsytj@lsytj-virtual-machine:~/dockerTest/mynginx$ vim Dockerfile 
+lsytj@lsytj-virtual-machine:~/dockerTest/mynginx$ docker build -t fortest:v2.0.0 .
+WARNING: Error loading config file:/home/lsytj/.docker/config.json - stat /home/lsytj/.docker/config.json: permission denied
+Sending build context to Docker daemon 2.048 kB
+Step 1 : FROM nginx
+ ---> 19146d5729dc
+Step 2 : RUN echo '<h1>Hello, Docker2!</h1>' > /usr/share/nginx/html/index.html
+ ---> Running in d635b65ebace
+ ---> df39de40a175
+Removing intermediate container d635b65ebace
+Successfully built df39de40a175
+lsytj@lsytj-virtual-machine:~/dockerTest/mynginx$ docker images
+WARNING: Error loading config file:/home/lsytj/.docker/config.json - stat /home/lsytj/.docker/config.json: permission denied
+REPOSITORY                                          TAG                 IMAGE ID            CREATED             SIZE
+fortest                                             v2.0.0              df39de40a175        6 seconds ago       181.6 MB
+fortest                                             v1                  b9f399c9b482        10 days ago         181.6 MB
+nginx                                               v3                  b9f399c9b482        10 days ago         181.6 MB
+registry.cn-hangzhou.aliyuncs.com/rapself/fortest   v1.0.0              b9f399c9b482        10 days ago         181.6 MB
+nginx                                               latest              19146d5729dc        13 days ago         181.6 MB
+centos                                              latest              67591570dd29        2 weeks ago         191.8 MB
+ubuntu                                              14.04               3f755ca42730        2 weeks ago         188 MB
+figtest_web                                         latest              893f814dccea        3 months ago        683.1 MB
+redis                                               3-alpine            5bd8336e208d        4 months ago        29.67 MB
+redis                                               3.2-alpine          5bd8336e208d        4 months ago        29.67 MB
+redis                                               3.2.3-alpine        5bd8336e208d        4 months ago        29.67 MB
+redis                                               alpine              5bd8336e208d        4 months ago        29.67 MB
+redis                                               3-32bit             c239de27c5dd        4 months ago        190.9 MB
+redis                                               3.2-32bit           c239de27c5dd        4 months ago        190.9 MB
+redis                                               3.2.3-32bit         c239de27c5dd        4 months ago        190.9 MB
+redis                                               32bit               c239de27c5dd        4 months ago        190.9 MB
+redis                                               3                   50e38ce0458f        4 months ago        185 MB
+redis                                               3.2                 50e38ce0458f        4 months ago        185 MB
+redis                                               3.2.3               50e38ce0458f        4 months ago        185 MB
+redis                                               latest              50e38ce0458f        4 months ago        185 MB
+python                                              2.7                 6b494b5f019c        4 months ago        676.1 MB
+swarm                                               latest              942fd5fd357e        4 months ago        19.47 MB
+redis                                               3.2.2-alpine        bf00bce24717        5 months ago        29.03 MB
+redis                                               3.2.2-32bit         c262964b4bd2        5 months ago        190.9 MB
+redis                                               3.2.2               2d43368b2632        5 months ago        185 MB
+redis                                               3.0-32bit           df075219a352        5 months ago        185.6 MB
+redis                                               3.0.7-32bit         df075219a352        5 months ago        185.6 MB
+redis                                               3.0                 22d1a4cb1939        5 months ago        177.6 MB
+redis                                               3.0.7               22d1a4cb1939        5 months ago        177.6 MB
+redis                                               3.2.1-alpine        2aabafe89cbf        6 months ago        29.02 MB
+redis                                               3.0-alpine          2f10be0361c7        6 months ago        21.9 MB
+redis                                               3.0.7-alpine        2f10be0361c7        6 months ago        21.9 MB
+redis                                               3.2.1-32bit         b2f020281f1c        6 months ago        192.1 MB
+redis                                               3.2.1               4465e4bcad80        6 months ago        185.7 MB
+redis                                               3.2.0-alpine        8a8bdae38335        6 months ago        29.07 MB
+redis                                               3.2.0-32bit         1644fab76a05        6 months ago        200.3 MB
+redis                                               3.2.0               43c923d57784        6 months ago        193.9 MB
+redis                                               2-32bit             19865a7ae96c        6 months ago        203 MB
+redis                                               2.8-32bit           19865a7ae96c        6 months ago        203 MB
+redis                                               2.8.23-32bit        19865a7ae96c        6 months ago        203 MB
+redis                                               2                   481995377a04        6 months ago        186.3 MB
+redis                                               2.8                 481995377a04        6 months ago        186.3 MB
+redis                                               2.8.23              481995377a04        6 months ago        186.3 MB
+redis                                               3.0.6-alpine        56ddc4d21480        11 months ago       15.95 MB
+redis                                               3.0.6-32bit         31ca0c154901        12 months ago       159 MB
+redis                                               3.0.6               d4deec2c521c        12 months ago       151.3 MB
+redis                                               2.6-32bit           62b0a5c3ea45        12 months ago       158.2 MB
+redis                                               2.6.17-32bit        62b0a5c3ea45        12 months ago       158.2 MB
+redis                                               2.6                 a081f7d44c38        12 months ago       150.2 MB
+redis                                               2.6.17              a081f7d44c38        12 months ago       150.2 MB
+redis                                               3.0.5-32bit         7be9d725c0c4        13 months ago       116.5 MB
+redis                                               3.0.5               c72f1dae54bf        13 months ago       109.2 MB
+redis                                               3.0.4-32bit         282f1ef81629        14 months ago       116.6 MB
+redis                                               3.0.4               1354e0977d77        14 months ago       109.3 MB
+redis                                               2.8.22-32bit        b6353e3bb411        14 months ago       116.3 MB
+redis                                               2.8.22              eaa6aada6f42        14 months ago       109 MB
+redis                                               3.0.3-32bit         c83a058481ca        16 months ago       116.6 MB
+redis                                               3.0.3               a70b69767606        16 months ago       109.3 MB
+redis                                               2.8.21-32bit        6f2b6a4332f1        16 months ago       116.4 MB
+redis                                               2.8.21              fb83b0b93a51        16 months ago       109 MB
+redis                                               3.0.2-32bit         911993f01d97        17 months ago       116.8 MB
+redis                                               3.0.2               5191b3931369        17 months ago       109.5 MB
+redis                                               3.0.1               40ca38c72667        19 months ago       111 MB
+redis                                               2.8.20              992c435ae08c        19 months ago       110.8 MB
+redis                                               3.0.0               6b81c9436dd1        20 months ago       111.1 MB
+redis                                               2.8.19              dd9fe7db5236        20 months ago       110.8 MB
+redis                                               2.8.18              5f9a9a936de2        2 years ago         110.9 MB
+redis                                               2.8.17              01aaba7226f1        2 years ago         110.8 MB
+redis                                               2.8.9               21b6de66f00a        2 years ago         110.8 MB
+redis                                               2.8.8               049bd43003fb        2 years ago         110.7 MB
+redis                                               2.8.7               d5a8a191604b        2 years ago         110.6 MB
+redis                                               2.8.6               5d22b4a9012a        2 years ago         110.6 MB
+redis                                               2.8.16              8b6103fd7b3e        2 years ago         110.7 MB
+redis                                               2.8.15              dbb560009c50        2 years ago         110.7 MB
+redis                                               2.8.14              4aad650df84a        2 years ago         110.7 MB
+redis                                               2.8.13              c4f8a05f3aff        2 years ago         110.7 MB
+redis                                               2.8.12              98bc726ecd17        2 years ago         110.6 MB
+redis                                               2.8.11              2fb854cb3f76        2 years ago         110.8 MB
+redis                                               2.8.10              33fe9dbeb30c        2 years ago         110.8 MB
+learn/tutorial                                      latest              a7876479f1aa        3 years ago         128 MB
+lsytj@lsytj-virtual-machine:~/dockerTest/mynginx$ sudo docker tag df39de40a175 registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v2.0.0
+[sudo] lsytj 的密码： 
+lsytj@lsytj-virtual-machine:~/dockerTest/mynginx$ sudo docker push registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v2.0.0
+The push refers to a repository [registry.cn-hangzhou.aliyuncs.com/rapself/fortest]
+553bf86afaec: Pushed 
+e03d01018b72: Layer already exists 
+ee3b1534c826: Layer already exists 
+b6ca02dfe5e6: Layer already exists 
+v2.0.0: digest: sha256:552004d57e9c78acbbbcb5d8d7ee0cf886bc146352ec95c9258c580cd4df37e3 size: 1155
+
+
+
+1：一个集群上可以跑多个应用的多个服务
+2：一个应用可以对应多个服务
+3：可以绑定二级域名到简单路由配置中，然后使用二级域名访问服务（设置集群根域名，https://help.aliyun.com/document_detail/35072.html?spm=5176.doc26004.6.566.eYoa8F）
+
+sudo docker rmi -f $(docker images -q redis)
+
+
+            select S.id
+            from song_basic_info as S
+            where S.user_id=10001
+                  and S.audio_type=2
+                  and S.song_status=1
+                  and S.id not in (select M.song_id
+                                   from activity_user_map as M
+                                   where M.user_id = 10001
+                                  )
+            order by S.id DESC
+            limit 10
+            offset 0
+
+
+
+vim specific_daemon
+
+
+
+用户 user
+作品 opus
+评论 comment
+统计 statistics
+榜单 rank
+搜索 search
+附近 lbs
+活动 activity
+其他 rest
+接口 api
