@@ -81,3 +81,7 @@ supervisord -c app.conf
 
 注意: 需要取消掉uwsgi.conf中的daemonize
 
+docker build -t python:v2.7.12 .
+
+--no-install-recommends
+
