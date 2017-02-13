@@ -1,23 +1,23 @@
-docker使用
+docker浣跨敤
 
-1：拉取基础镜像
+1锛氭媺鍙栧熀纭�闀滃儚
 docker pull ubuntu:14.04
 
-(删除使用 docker rmi)
+(鍒犻櫎浣跨敤 docker rmi)
 
 sudo docker rmi -f $(docker images -q redis)
 
-2: 启动容器
+2: 鍚姩瀹瑰櫒
 
 docker run -it --rm ubuntu:14.04 /bin/bash
 
-3: 更换阿里云源
+3: 鏇存崲闃块噷浜戞簮
 
 cd /etc/apt
 mv source.list source.list.bak
 vi source.list
 
-写入:
+鍐欏叆:
 deb http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ trusty-security main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ trusty-updates main restricted universe multiverse
@@ -34,7 +34,7 @@ apt-get install vim python uwsgi python-pip uwsgi-plugin-python
 
 pip install flask
 
-4: 配置uwsgi
+4: 閰嶇疆uwsgi
 
 [uwsgi]
 plugins = python
@@ -54,13 +54,13 @@ log-maxsize = 5000000
 master-as-root = true
 
 
-启动:
+鍚姩:
 uwsgi xxx.ini
 
 uwsgi --stop xxx.pid
 
 
-5: 配置supervisor
+5: 閰嶇疆supervisor
 
 apt-get install supervisor
 
@@ -79,7 +79,7 @@ stderr_logfile=/var/log/uwsgi/supervisor_chihu_err.log
 
 supervisord -c app.conf
 
-注意: 需要取消掉uwsgi.conf中的daemonize
+娉ㄦ剰: 闇�瑕佸彇娑堟帀uwsgi.conf涓殑daemonize
 
 docker build -t python:v2.7.12 .
 
