@@ -76,6 +76,7 @@ autostart=true
 autorestart=true
 stdout_logfile=/var/log/uwsgi/supervisor_chihu.log
 stderr_logfile=/var/log/uwsgi/supervisor_chihu_err.log
+stdout_logfile=/dev/stdout
 
 supervisord -c app.conf
 
