@@ -1,3 +1,13 @@
+# docker-app
+
+docker-app是一个使用docker构建简单的python flask应用的实例.
+
+例子包含三个部分, 包括构建一个python运行环境, 一个uwsgi运行环境, 再加上一个app运行镜像.
+
+# 如何使用docker
+
+
+
 # 如何使用
 
 ## python
