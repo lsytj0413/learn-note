@@ -18,6 +18,34 @@ docker常用的命令介绍如下:
 docker pull ubuntu:16.04
 `
 
+## 查看镜像 ##
+
+使用 **docker images** 命令可以查看本机上已经存在的镜像列表.
+
+`
+docker images
+`
+
+## 删除镜像 ##
+
+使用 **docker rmi** 命令可以删除本机上已经存在的镜像.
+
+删除单个镜像:
+
+```
+docker rmi <image ID>
+```
+
+或者删除所有名为 xxx 的镜像:
+
+```
+sudo docker rmi $(sudo docker image -q xxx)
+```
+
+## 启动容器 ##
+
+
+
 
 # 如何使用
 
