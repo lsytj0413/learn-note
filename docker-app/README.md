@@ -171,3 +171,33 @@ stdout_logfile_maxbytes=0
 nodaemon=true                ; (start in foreground if true;default false)
 ```
 
+## 使用python获取本机ip ##
+
+```
+def get_ip_address(ifname):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    return socket.inet_ntoa(fcntl.ioctl(
+            s.fileno(),
+            0x8915,
+            struct.pack('256s', ifname[:15])
+    )[20:24])
+
+print get_ip_address('eth1')
+```
+
+## etcd简介 ##
+
+etcd是一个类似于 **zookeeper** 的分布式下的一致的键值存储服务. 可以用于分布式环境下的配置管理, 服务发现等.
+
+## confd 使用示例 ##
+
+confd是一个自动配置管理工具, 可用于微服务架构下的配置自动更新.
+
+```
+sudo ./confd -onetime -node=http://127.0.0.1:4001 -config-file=
+/etc/confd/conf.d/nginx.toml -log-level debug
+sudo ./confd -interval 10 -node http://127.0.0.1:4001 -config-file /etc/confd/conf.d/nginx.toml
+curl -L "http://127.0.0.1:4001/v2/keys/app/app3" -XPUT -d value="127.0.0.1:4004"
+curl -L "http://127.0.0.1:4001/v2/keys/app" -XPUT -d dir=true
+curl -L "http://127.0.0.1:4001/v2/keys/app?recursive=true" -XDELETE
+```

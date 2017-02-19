@@ -1,34 +1,5 @@
-confd, etcd, keepalived
-
-
->>> def get_ip_address(ifname):
-...     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-...     return socket.inet_ntoa(fcntl.ioctl(
-...             s.fileno(),
-...             0x8915,
-...             struct.pack('256s', ifname[:15])
-...     )[20:24])
-... 
->>> print get_ip_address('eth1')
-
-
 1：使用机器学习来判别一张图是否PS过，以及还原原图
 2：使用机器学习来回复女生照片素颜的样子
 
-
-sudo ./confd -onetime -node=http://127.0.0.1:4001 -config-file=
-/etc/confd/conf.d/nginx.toml -log-level debug
-
-sudo ./confd -interval 10 -node http://127.0.0.1:4001 -config-file /etc/confd/conf.d/nginx.toml
-
-
-
-curl -L "http://127.0.0.1:4001/v2/keys/app/app3" -XPUT -d value="127.0.0.1:4004"
-
-curl -L "http://127.0.0.1:4001/v2/keys/app" -XPUT -d dir=true
-
-curl -L "http://127.0.0.1:4001/v2/keys/app?recursive=true" -XDELETE
-
-docker run -p 10.0.0.32:4004:80 nginx:v3
 
 
