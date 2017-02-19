@@ -121,18 +121,53 @@ sudo docker push registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v1.0.0
 | uwsgi | 构建一个安装有 uwsgi 和 supervisor 的运行环境镜像 |
 | app | 构建一个示例 flask app 运行镜像 |
 
-## app
+# 其他内容 #
 
-### 构建app镜像
+## uwsgi使用介绍 ##
 
-cd app
-docker build -t app:v1 .
+1. 启动uwsgi
 
-### 运行app
+```
+uwsgi xxx.ini
+```
 
-docker run -p :8084:8084 app:v1
+2. 停止uwsig
 
-### 测试
+```
+uwsgi --stop xxx.pid
+```
 
-wget http://localhost:8084
-wget http://localhost:8084/hello
+## supervisor使用介绍 ##
+
+1. 生成默认配置
+
+```
+echo_supervisord_config > app.conf
+```
+
+2. 增加应用的配置
+
+```
+[program:app]
+command = /usr/bin/uwsgi --ini /etc/uwsgi/apps-enabled/app.ini
+stopsignal=QUIT
+autostart=true
+autorestart=true
+# stdout_logfile=/var/log/uwsgi/supervisor_app.log
+# stderr_logfile=/dev/stdout
+
+stdout_logfile=/dev/stdout
+redirect_stderr=true
+stdout_logfile_maxbytes=0
+```
+
+3. 其他
+
+如果需要结合uwsgi使用, 则需要注释掉 uwsgi.conf 中的 daemonize.
+
+如果需要结合docker使用, 则需要修改supervisor的以下配置项:
+
+```
+nodaemon=true                ; (start in foreground if true;default false)
+```
+
