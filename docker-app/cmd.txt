@@ -1,12 +1,5 @@
 docker使用
 
-1：拉取基础镜像
-docker pull ubuntu:14.04
-
-(删除使用 docker rmi)
-
-sudo docker rmi -f $(docker images -q redis)
-
 2: 启动容器
 
 docker run -it --rm ubuntu:14.04 /bin/bash

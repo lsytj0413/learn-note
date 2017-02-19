@@ -92,7 +92,25 @@ docker rm <container ID>
 sudo docker rm $(sudo docker ps -aq)
 ```
 
+## 构建镜像 ##
 
+使用 **docker build** 命令从 **Dockerfile** 构建镜像.
+
+进入 **Dockerfile** 所在目录, 执行以下命令:
+
+```
+docker build -t ubuntu:16.04 .
+docker tag <image ID> new:16.04
+docker push new:16.04
+```
+
+例如通过以下命令使用阿里云docker仓库:
+
+```
+sudo docker tag b9f399c9b482 registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v1.0.0
+sudo docker login --username=tangying2729959 registry.cn-hangzhou.aliyuncs.com 
+sudo docker push registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v1.0.0
+```
 
 # 如何使用
 
