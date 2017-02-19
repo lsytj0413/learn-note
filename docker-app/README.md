@@ -44,6 +44,53 @@ sudo docker rmi $(sudo docker image -q xxx)
 
 ## 启动容器 ##
 
+使用 **docker run** 命令启动容器.
+
+```
+docker run ubuntu:16.04
+```
+
+使用 **-p** 参数进行端口映射, 使用 **-e** 端口设置环境变量, 使用 **-it** 参数通过命令行交互, 使用 **--rm** 参数在容器退出时自动删除.
+
+## 查看运行中的容器 ##
+
+使用 **docker ps** 命令查看运行中的容器.
+
+```
+docker ps -a
+```
+
+## 进入运行中的容器 ##
+
+使用 **docker exec** 命令进入运行中的容器.
+
+```
+docker exec -it <container id> /bin/bash
+```
+
+## 停止容器 ##
+
+使用 **docker kill** 命令停止运行中的容器.
+
+```
+docker kill <container id>
+```
+
+## 删除容器 ##
+
+使用 **docker rm** 命令删除已经停止的容器.
+
+删除单个容器:
+
+```
+docker rm <container ID>
+```
+
+或者删除所有的已停止容器:
+
+```
+sudo docker rm $(sudo docker ps -aq)
+```
 
 
 
