@@ -121,13 +121,6 @@ sudo docker push registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v1.0.0
 | uwsgi | 构建一个安装有 uwsgi 和 supervisor 的运行环境镜像 |
 | app | 构建一个示例 flask app 运行镜像 |
 
-## uwsgi
-
-### 构建uwsgi 镜像
-
-cd uwsgi
-docker build -t uwsgi:v1 .
-
 ## app
 
 ### 构建app镜像
