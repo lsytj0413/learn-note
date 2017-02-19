@@ -112,35 +112,14 @@ sudo docker login --username=tangying2729959 registry.cn-hangzhou.aliyuncs.com
 sudo docker push registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v1.0.0
 ```
 
-# 如何使用
 
-## python
+# 内容分类
 
-### 构建python镜像
-
-cd python
-docker build -t python:v2.7.12 .
-
-### 查看镜像
-
-docker images
-
-### 执行镜像
-
-docker run -it --rm python:v2.7.12 /bin/bash
-
-### 停止容器
-
-docker ps -a
-docker stop <container id>
-
-### 删除容器
-
-docker rm <container id>
-
-### 删除镜像
-
-docker rmi <image id>
+| 目录 | 描述 |
+|:--|:--|
+| python | 构建一个基于Ubuntu16.04 的python2.7.12 运行环境镜像 |
+| uwsgi | 构建一个安装有 uwsgi 和 supervisor 的运行环境镜像 |
+| app | 构建一个示例 flask app 运行镜像 |
 
 ## uwsgi
 

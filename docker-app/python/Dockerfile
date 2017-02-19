@@ -1,5 +1,6 @@
 # 构建一个安装了Python以及pip的ubuntu16.04镜像
 
+# 基础镜像
 FROM ubuntu:16.04
 
 # 使用阿里云的UBUNTU源
