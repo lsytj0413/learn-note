@@ -1,9 +1,31 @@
-# coding=utf-8
+# Python知识点 #
 
-"""
-一些Python的代码
-"""
+## 基础 ##
 
+### 语句与表达式 ###
+
+语句与表达式的区别如下:
+
+1. 表达式是对某件事的描述, 例如 2*2 是表达式
+2. 语句是指做某件事, 即告诉计算机做什么, 而且语句一般改变了事物.
+
+### 通用序列操作 ###
+
+1. 索引
+2. 分片
+3. 加法
+4. 乘法
+5. 成员资格
+6. 长度, 最小值和最大值
+
+### 列表操作 ###
+
+1. 元素赋值
+2. 删除元素, del l[x]
+3. 分片赋值, name[1:3] = list('python')
+4. append, count, extend, index, insert, pop, remove, reverse, sort
+
+```
 # 1.3
 names = list('python')
 print names[1::2]
@@ -14,8 +36,33 @@ print names
 names = list('python')
 names[1::2] = list('cpp')
 print names
+```
 
+### 字符串操作 ###
 
+1. find
+2. join
+3. lower
+4. replace
+5. split
+6. strip
+7. translate
+
+### 字典操作 ###
+
+1. clear
+2. copy, deepcopy
+3. fromkeys
+4. get
+5. has_key, python3中应该使用in
+6. items, iteritems
+7. keys, iterkeys
+8. pop, popitem
+9. setdefault
+10. update
+11. values, itervalues
+
+```
 # 1.5
 names = {
     '1': 1,
@@ -24,16 +71,42 @@ names = {
 for k, v in names.iteritems():
     print k, v
     pass
+```
 
+## 高级特性 ##
+
+### 迭代工具 ###
+
+1. zip, 同时迭代多个序列
+2. enumerate, 按索引迭代
+3. reversed, sorted, 翻转和排序迭代
+
+```
 # 2.1
+
 print zip([1, 2, 3], [2, 3, 4, 5], [7, 8])
 print list(enumerate([5, 6, 7, 8]))
+```
 
+### 列表推导式 ###
+
+1. [ xx for yy in zz if jj]
+
+```
 # 2.2
+
 print [x*x for x in range(10) if x % 3 == 0]
 print [(x, y) for x in range(3) for y in range(3)]
+```
 
+### 函数 ###
+
+1. 默认值和关键字参数
+2. 收集参数
+
+```
 # 2.3
+
 def hello_1(name, g = 'Hello'):
     print g, name
 
@@ -65,7 +138,19 @@ hello_2('xxx', 'yyy')
 hello_2('xxx', 'yyy', 'zzz')
 hello_2_wrapper('xxx', 'yyy')
 hello_2_wrapper('xxx', 'yyy', 'zzz')
+```
 
+## 面向对象 ##
+
+### 类 ###
+
+1. 私有化: Python并不直接支持该特性, 可以在它的名字前加上双下划线即可, 类定义中所有以双下划线开始的名字都被翻译成前面加上单下划线和类名的形式
+2. 类的定义就是执行代码块. 类作用域内的变量可以被所有实例访问
+3. issubclass, 新式类可以使用type(s)查看实例所属的类
+4. hasattr, getattr, setattr
+5. 新式类, 使用super
+
+```
 # 3.1
 class A(object):
 
@@ -89,7 +174,34 @@ print v2.i
 B.i = 10
 print v1.i
 print v2.i
+```
 
+### 异常 ###
+
+1. 引发异常: raise
+
+```
+try:
+    pass
+except:
+    pass
+finally:
+    pass
+else:
+    pass
+```
+
+### 魔法方法 ###
+
+1. 在名称前后都有两个下划线
+2. __init__, 构造方法
+3. 序列和映射规则: __len__, __getitem__, __setitem__, __delitem__
+4. 可以子类化内建类型
+5. property
+6. 类方法和静态方法
+7. attr
+
+```
 # 3.3
 def checkIndex(key):
     if not isinstance(key, (int, long)):
@@ -154,8 +266,17 @@ class MyClass(object):
 
 MyClass.smeth()
 MyClass.cmeth()
+```
+
+### 属性 ###
+
+1. __getattribute__(self, name): 当特性name被访问时使用, 新式类, 同时拦截对__dict__的访问, 在该函数中访问与self相关的属性时, 使用super函数是唯一安全的路径
+2. __getattr__(self, name): 当特性name被访问且对象没有相应的特性时使用
+3. __setattr__(self, name, value): 当试图给特性name赋值时调用
+4. __delattr__(self, name): 当试图删除特性name时调用
 
 
+```
 # 3.4
 class Rectangle2(object):
 
@@ -179,7 +300,14 @@ o = Rectangle2()
 print o.size
 o.size = (5, 10)
 print o.size
+```
 
+### 迭代器 ###
+
+1. __iter__方法返回一个迭代器, 实现了方法则代表对象是可迭代的
+2. 迭代器是实现了next方法的对象, python3中则是__next__
+
+```
 # 3.5
 class Fibs(object):
 
@@ -197,8 +325,23 @@ for f in Fibs():
     if f > 10:
         break
     print f
+```
 
+### 生成器 ###
+
+生成器是一种用普通的函数语法定义的迭代器. 任何包含yield语句的函数都是生成器, 每次产生一个值(yield), 函数都会被冻结在该点, 并等待重新唤醒
+生成器推导式相似于列表推导式, 返回的是生成器而不是列表, 外围使用() 而不是 []. 生成器推导式可以在当前圆括号内直接使用, 不用增加另外的括号
+
+当生成器函数被调用时函数体中的代码不会被执行, 而是返回一个迭代器. 每次请求一个值, 就会执行生成器中的代码.
+
+生成器方法:
+1. 访问生成器的send方法, 向生成器发送消息
+2. throw方法: 在生成器内部引发一个异常(yield表达式中)
+3. close方法: 停止生成器, 引发一个GeneratorExit异常. 在生成器close之后再次使用则引发RuntimeError异常
+
+```
 # 3.6
+
 def flatten(nested):
     try:
         try:
@@ -224,12 +367,69 @@ def repeator(value):
 r = repeator(42)
 print r.next()
 print r.send('Hello world!')
+```
 
+## 其他 ##
+
+### 模块和包 ###
+
+1. 模块是一个文件. 导入一次和导入多次效果相同
+2. 包是另一类模块, 可以包含其他模块. 当模块存储在文件中时, 包就是模块所在的目录, 而且它必须包含一个 __init__.py文件.
+
+假设有以下包:
+~/python/drawing/
+~/python/drawing/__init__.py
+~/python/drawing/colors.py
+~/python/drawing/shapes.py
+
+则:
+import drawing               # __init__.py模块可用
+import drawing.colors        # colors模块可用
+from drawing import shapes   # shapes可用
+
+__all__ 变量: 定义模块公有接口. 如果没有设置__all__, 则import *会导入模块中所有不以下划线开头的全局名称
+__file__属性: 模块路径
+
+### 标准库 ###
+
+1. sys
+2. os
+3. fileinput: 轻松遍历文件所有行
+4. 集合set(语言内建), frozenset(不可变集合)
+5. heapq, 堆
+6. collections.deque, 双端队列
+7. time
+8. random
+9. shelve, 简单存储
+10. re, 正则表达式
+11. functools, difflib, hashlib, csv, timeit, profile, trace, datetime, itertools, logging, getopt, optparse, cmd
+
+### 文件和流 ###
+
+上下文管理器: 一种支持__enter__和__exit__这两个方法的对象, __enter__无参, 返回值绑定到as之后的变量, __exit__带三个参数(异常类型, 异常对象和异常回溯), 如果返回false则异常不被处理
+
+1. 使用fileinput实现懒惰行迭代
+2. 文件对象是可迭代的
+
+### 高阶函数 ###
+
+1. map, reduce
+2. filter
+3. 匿名函数: 只能有一个表达式, 不能有return
+
+```
 # 4.4
 print map(lambda x: x+2, [1, 2, 3])
 print reduce(lambda x, y: x + y, [1, 2, 3, 4, 5])
 print filter(lambda x: x > 2, [2, 4, 5, 6, 7, 1, 3, 1, 2])
+```
 
+### 装饰器 ###
+
+函数对象的__name__属性可以拿到函数的名字.
+在代码运行期间动态增加功能的方式称为装饰器, 本质上是一个返回函数的高阶函数
+
+```
 # 4.5
 def log(fn):
     def wrapper(*arg, **kw):
@@ -258,12 +458,22 @@ def now2():
     print 'now2'
 now2()
 print now2.__name__
+```
 
+### 偏函数 ###
+
+functools模块的功能
+
+```
 # 4.6
 import functools
 int2 = functools.partial(int, base=2)
 print int2('1000')
+```
 
+### 类装饰器 ###
+
+```
 # 4.7
 class Foo(object):
     def __init__(self, func):
@@ -279,7 +489,22 @@ def bar():
     print ('bar')
 
 bar()
+```
 
+### MRO ###
+
+http://www.360doc.com/content/16/0719/18/34574201_576833790.shtml
+
+MRO: Method Resolution Order, 方法解析顺序. 当使用python中的多重继承时, 解决二义性问题
+
+在python新式类中, MRO的顺序C3算法. 采用拓扑排序访问顺序.
+
+解决单调性: 保证从根到叶, 从左到右的访问顺序
+解决重写: 先访问子类, 再访问父类
+
+首先找入度为0的点，只有一个A，把A拿出来，把A相关的边剪掉，再找下一个入度为0的点，有两个点（B,C）,取最左原则，拿B，这是排序是AB，然后剪B相关的边，这时候入度为0的点有E和C，取最左。这时候排序为ABE，接着剪E相关的边，这时只有一个点入度为0，那就是C，取C，顺序为ABEC。剪C的边得到两个入度为0的点（DF），取最左D，顺序为ABECD，然后剪D相关的边，那么下一个入度为0的就是F，然后是object。那么最后的排序就为ABECDFobject。
+
+```
 # 4.8
 class D(object):
     pass
@@ -300,7 +525,26 @@ class A(B, C):
     pass
 
 print A.__mro__
+```
 
+### 元类 ###
+
+http://blog.jobbole.com/21351/
+
+在Python中, 类也是一种对象. 只要你使用class关键字, Python解释器在执行时
+就会创建一个对象. 这个类对象自身拥有创建对象实例的能力.
+
+可以在函数中创建类(通过class关键字), 也可以通过type函数.
+type(类名, 父类的元组（针对继承的情况，可以为空），包含属性的字典（名称和值）)
+你可以看到，在Python中，类也是对象，你可以动态的创建类。这就是当你使用关键字class时Python在幕后做的事情，而这就是通过元类来实现的。
+
+什么是元类:
+元类就是用来创建类的东西. type函数实际上是一个元类.
+Python会在类的定义中寻找__metaclass__属性，如果找到了，Python就会用它来创建类Foo，如果没有找到，就会用内建的type来创建这个类。
+你可以在__metaclass__中放置些什么代码呢？答案就是：可以创建一个类的东西。那么什么可以用来创建一个类呢？type，或者任何使用到type或者子类化type的东东都可以。
+元类的主要目的就是为了当创建类时能够自动地改变类。通常，你会为API做这样的事情，你希望可以创建符合当前上下文的类。假想一个很傻的例子，你决定在你的模块里所有的类的属性都应该是大写形式。有好几种方法可以办到，但其中一种就是通过在模块级别设定__metaclass__。
+
+```
 # 4.9
 class ObjectCreator(object):
     pass
@@ -435,48 +679,4 @@ class User(Model):
 u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
 # 保存到数据库：
 u.save()
-
-
-# 1个例子
-
-i = 10
-def demo1_lambda_on_int(i):
-    return lambda : i
-
-x = demo1_lambda_on_int(i)
-i = 100
-print x()
-
-i = [1, 2]
-def demo2_lambda_on_list(i):
-    return lambda : i
-
-x = demo2_lambda_on_list(i)
-i.append(3)
-print x()
-
-i = [0]
-print x()
-
-
-# 例子
-i = 10
-def demo3_assign_on_int(i):
-    i = 30
-    print i
-demo3_assign_on_int(i)
-print i
-
-i = [1, 2]
-def demo4_assign_on_list(i):
-    i = [0]
-    print i
-demo4_assign_on_list(i)
-print i
-
-i = [1, 2]
-def demo5_modify_on_list(i):
-    i.append(3)
-    print i
-demo5_modify_on_list(i)
-print i
+```
