@@ -9,7 +9,6 @@
 ```
 docker build -t uwsgi:v1.0.0
 ```
-
 2. 运行容器
 
 ```
