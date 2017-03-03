@@ -1,12 +1,13 @@
 # coding=utf-8
 
 import collections
-import operator
 import dis
-import sys
-import types
 import inspect
-
+import operator
+import sys
+import sysconfig
+import types
+import unittest
 
 Block = collections.namedtuple("Block", "type, handler, stack_height")
 
@@ -16,7 +17,6 @@ class VirtualMachineError(Exception):
 
 
 class VirtualMachine(object):
-
     def __init__(self):
         self.frames = []
         self.frame = None
@@ -27,13 +27,15 @@ class VirtualMachine(object):
         '''
         入口
         '''
-        frame = self.make_frame(code,
-                                global_names=global_names,
-                                local_names=local_names
-        )
+        frame = self.make_frame(
+            code, global_names=global_names, local_names=local_names)
         self.run_frame(frame)
 
-    def make_frame(self, code, callargs={}, global_names=None, local_names=None):
+    def make_frame(self,
+                   code,
+                   callargs={},
+                   global_names=None,
+                   local_names=None):
         if global_names is not None:
             global_names = global_names
             if local_names is None:
@@ -60,9 +62,9 @@ class VirtualMachine(object):
     def pop_frame(self):
         self.frames.pop()
         if self.frames:
-           self.frame = self.frames[-1]
+            self.frame = self.frames[-1]
         else:
-           self.frame = None
+            self.frame = None
 
     def run_frame(self, frame):
         self.push_frame(frame)
@@ -111,7 +113,7 @@ class VirtualMachine(object):
 
         byte_name = dis.opname[byteCode]
         if byteCode >= dis.HAVE_ARGUMENT:
-            arg = f.code_obj.co_code[f.last_instruction : f.last_instruction + 2]
+            arg = f.code_obj.co_code[f.last_instruction:f.last_instruction + 2]
             f.last_instruction += 2
 
             arg_val = ord(arg[0]) + (ord(arg[1]) * 256)
@@ -142,12 +144,11 @@ class VirtualMachine(object):
                     self.binaryOperator(byte_name[7:])
                 else:
                     raise VirtualMachineError(
-                        'unsupported bytecode type: {}'.format(byte_name)
-                    )
+                        'unsupported bytecode type: {}'.format(byte_name))
             else:
                 why = bytecode_fn(*argument)
         except:
-            self.last_instruction = sys.exc_info()[:2] + (None,)
+            self.last_instruction = sys.exc_info()[:2] + (None, )
             why = 'exception'
 
         return why
@@ -195,7 +196,7 @@ class VirtualMachine(object):
             self.push_block('except-handler')
             exctype, value, tb = self.last_exception
             self.push(tb, value, exctype)
-            self.push(tb, value, exctype) # yes, twice
+            self.push(tb, value, exctype)  # yes, twice
             why = None
             self.jump(block.handler)
             return why
@@ -210,6 +211,7 @@ class VirtualMachine(object):
             self.jump(block.handler)
             return why
         return why
+
     def byte_LOAD_CONST(self, const):
         self.push(const)
 
@@ -237,8 +239,7 @@ class VirtualMachine(object):
             val = self.frame.f_locals[name]
         else:
             raise UnboundLocalError(
-                "local variable '%s' referenced before assignment" % name
-            )
+                "local variable '%s' referenced before assignment" % name)
         self.push(val)
 
     def byte_STORE_FAST(self, name):
@@ -257,19 +258,19 @@ class VirtualMachine(object):
     ## Operators
 
     BINARY_OPERATORS = {
-        'POWER':    pow,
+        'POWER': pow,
         'MULTIPLY': operator.mul,
         'FLOOR_DIVIDE': operator.floordiv,
-        'TRUE_DIVIDE':  operator.truediv,
-        'MODULO':   operator.mod,
-        'ADD':      operator.add,
+        'TRUE_DIVIDE': operator.truediv,
+        'MODULO': operator.mod,
+        'ADD': operator.add,
         'SUBTRACT': operator.sub,
-        'SUBSCR':   operator.getitem,
-        'LSHIFT':   operator.lshift,
-        'RSHIFT':   operator.rshift,
-        'AND':      operator.and_,
-        'XOR':      operator.xor,
-        'OR':       operator.or_,
+        'SUBSCR': operator.getitem,
+        'LSHIFT': operator.lshift,
+        'RSHIFT': operator.rshift,
+        'AND': operator.and_,
+        'XOR': operator.xor,
+        'OR': operator.or_,
     }
 
     def binaryOperator(self, op):
@@ -321,7 +322,7 @@ class VirtualMachine(object):
 
     def byte_LIST_APPEND(self, count):
         val = self.pop()
-        the_list = self.frame.stack[-count] # peek
+        the_list = self.frame.stack[-count]  # peek
         the_list.append(val)
 
     ## Jumps
@@ -379,7 +380,7 @@ class VirtualMachine(object):
         self.push(fn)
 
     def byte_CALL_FUNCTION(self, arg):
-        lenKw, lenPos = divmod(arg, 256) # KWargs not supported here
+        lenKw, lenPos = divmod(arg, 256)  # KWargs not supported here
         posargs = self.popn(lenPos)
 
         func = self.pop()
@@ -402,7 +403,6 @@ class VirtualMachine(object):
 
 
 class Frame(object):
-
     def __init__(self, code_obj, global_names, local_names, prev_frame):
         self.code_obj = code_obj
         self.f_globals = global_names
@@ -422,22 +422,12 @@ class Frame(object):
         self.last_instruction = 0
 
 
-
 class Function(object):
 
     __slots__ = [
-        'func_code',
-        'func_name',
-        'func_defaults',
-        'func_globals',
-        'func_locals',
-        'func_dict',
-        'func_closure',
-        '__name__',
-        '__dict__',
-        '__doc__',
-        '_vm',
-        '_func'
+        'func_code', 'func_name', 'func_defaults', 'func_globals',
+        'func_locals', 'func_dict', 'func_closure', '__name__', '__dict__',
+        '__doc__', '_vm', '_func'
     ]
 
     def __init__(self, name, code, globs, defaults, closure, vm):
@@ -452,9 +442,7 @@ class Function(object):
         self.func_closure = closure
         self.__doc__ = code.co_consts[0] if code.co_consts else None
 
-        kw = {
-            'argdefs': self.func_defaults
-        }
+        kw = {'argdefs': self.func_defaults}
 
         if closure:
             kw['closure'] = tuple(make_cell(0) for _ in closure)
@@ -463,18 +451,15 @@ class Function(object):
 
     def __call__(self, *args, **kwargs):
         callargs = inspect.getcallargs(self._func, *args, **kwargs)
-        frame = self._vm.make_frame(
-            self.func_code, callargs, self.func_globals, {}
-        )
+        frame = self._vm.make_frame(self.func_code, callargs,
+                                    self.func_globals, {})
         return self._vm.run_frame(frame)
 
 
-
-
-
 def make_cell(value):
-    fn = (lambda x: lambda : x)(value)
+    fn = (lambda x: lambda: x)(value)
     return fn.__closure__[0]
+
 
 if __name__ == '__main__':
     code = """
@@ -493,8 +478,6 @@ loop()
     vm = VirtualMachine()
     vm.run_code(code_obj)
 
-
-
 # what_to_execute = {
 #     "instructions": [("LOAD_VALUE", 0),
 #                      ("STORE_NAME", 0),
@@ -508,7 +491,6 @@ loop()
 #     "numbers": [1, 2],
 #     "names": ['a', 'b']
 # }
-
 
 # class Interpreter(object):
 
@@ -582,7 +564,6 @@ loop()
 #                 bytecode_method()
 #             else:
 #                 bytecode_method(arg)
-
 
 # # run
 # interpreter = Interpreter()
