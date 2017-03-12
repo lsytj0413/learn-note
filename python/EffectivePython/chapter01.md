@@ -329,3 +329,57 @@ next(roots)
 2. 由生成器表达式所返回的迭代器, 可以逐次产生输出值, 避免占用大量内存
 3. 生成器表达式也可以互相组合
 4. 串在一起的生成器表达式执行很快
+
+## 第10条: 尽量使用enumerate取代range ##
+
+### 介绍 ###
+
+enumerate可以把各种迭代器包装成生成器, 生成器每次产生一对输出值, 其中前者表示循环下标, 后者表示从迭代器中获取到的下一个序列元素.
+
+```
+flavor_list = ['vanilla', 'chocolate', 'pecan', 'strawberry']
+for i, flavor in enumerate(flavor_list):
+    print('%d: %s' % (i + 1, flavor))
+```
+
+还可以指定enumerate函数开始计数的值, 
+
+```
+for i, flavor in enumerate(flavor_list, 1):
+    print('%d: %s' % (i, flavor))
+```
+
+### 要点 ###
+
+1. enumerate函数提供了一种简便的写法, 可以在遍历迭代器时获知每个元素的索引
+2. 尽量用enumerate来改写那种将range和下标访问结合的序列遍历代码
+3. 可以给enumerate提供第二个参数, 以指定开始计数时的起始值
+
+## 第11条: 用zip函数同时遍历两个迭代器 ##
+
+### 介绍 ###
+
+在Python3中的zip函数, 可以把两个或两个以上的迭代器封装为生成器, 以便稍后求值. 该生成器会从每个迭代器中获取下一个值, 并把这些值汇聚成元组返回.
+
+```
+for name, count in zip(names, letters):
+    if count > max_letters:
+        longest_name = name
+        max_letters = count
+```
+
+内置的zip函数有两个问题:
+
+1. Python2中的zip函数并不是生成器, 而它会将所有迭代器的产生值汇聚成元组返回, 这可能会占用大量的内存. 如果在Python2中需要zip来遍历数据量非常大的迭代器, 应该使用itertools模块中的izip函数
+2. 如果迭代器的长度不同, zip会在任意一个迭代器耗尽时结束. 若不能确定zip所封装的列表是否等长, 可以考虑用itertools模块的zip\_longest函数(在Python2中为 izip\_longest).
+
+### 要点 ###
+
+1. zip可以平行的遍历多个迭代器
+2. Python3中zip为生成器, Python2中不是
+3. 如果迭代器长度不同, zip会在最短的迭代器长度时终止
+4. itertools模块的zip_longest函数可以遍历长度不等的迭代器
+
+## 第12条: 不要在for和while循环后面写else块 ##
+
+## 第13条: 合理利用try/except/else/finally结构中的每个代码块 ##
