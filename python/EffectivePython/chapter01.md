@@ -200,3 +200,70 @@ assert a is b
 1. 当start索引为0, 或end索引为序列长度时, 应该将其省略
 2. 切片操作不会计较start与end索引是否越界
 3. 对list赋值时如果使用切片操作, 就会把原列表中处在相关范围内的值替换为新值, 即使长度不同也依然可以替换
+
+## 第6条: 在单次切片操作中, 不要同时指定 start, end和stride ##
+
+### 介绍 ###
+
+Python提供了 somelist[start:end:stride] 形式的写法, 来实现步进式的切割.
+
+```
+a = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
+odds = a[::2]        # ['red', 'yellow', 'blue']
+evens = a[1::2]      # ['orange', 'green', 'purple']
+```
+
+但是, 采用 stride方式进行切片时, 经常会出现不符合预期的结果. 例如:
+
+```
+x = b'mongoose'
+y = x[::-1]        # 'esoognom'
+```
+但是这种技巧对于编码成UTF-8的unicode字符无效.
+
+当切割列表时, 如果指定了stride, 那么代码可能会相当难以阅读, 当stride为负值时尤其如此.
+
+我们不应该把stride和start, end写在一起, 如果必须使用stride, 尽量采用正值, 同时省略start和end. 如果一定要配合start和end, 可以考虑步进式切片:
+
+```
+b = a[::2]
+c = b[1:-1]
+```
+上述方法会多产生一份拷贝, 如果程序对执行时间或者内存使用量要求特别严格, 则应该考虑用Python的itertools模块的islice方法.
+
+### 要点 ###
+
+1. 既有start和end, 又有stride的切割操作可能会令人费解
+2. 尽量使用stride为正数, 且没有start和end索引的切割操作
+3. 如果需要同时指定start, end和stride, 可以拆为两条语句或使用内置的itertools模块的islice函数.
+
+## 第7条: 用列表推导来取代map和filter ##
+
+### 介绍 ###
+
+Python提供了一种精炼的写法, 可以根据一份列表在制作另外一份.
+
+```
+a = range(1, 11)
+squares = [x**2 for x in a]
+```
+对于简单的情况来说, 列表推导比内置的map函数更清晰. 而且列表推导可以直接过滤原列表中的元素:
+
+```
+even_squares = [x**2 for x in a if x % 2 == 0]
+```
+
+字典和列表也有类似的推导机制.
+
+```
+chile_ranks = {'ghost': 1, 'habanero': 2, 'cayenne': 3}
+rank_dict = {rank: name for name, rank in chile_ranks.items()}
+chile_len_set = {len(name) for name in rank_dict.values()}
+```
+
+### 要点 ###
+
+1. 列表推导比内置的map和filter函数更清晰, 因为它无需额外的lambda函数
+2. 列表推导可以过滤输入列表中的元素
+3. 字典与集合也支持列表推导
+
