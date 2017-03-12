@@ -126,3 +126,77 @@ def to_str(val):
 1. 在Python3中不能混同操作 bytes和str
 2. 使用辅助函数进行字符类型的转换
 3. 在读取或写入文件二进制数据时, 总是应该采用二进制模式开启文件
+
+## 第4条: 用辅助函数来取代复杂的表达式 ##
+
+### 介绍 ###
+
+表达式如果变得比较复杂, 那就应该考虑将其拆分成小块, 并把这些逻辑移入到辅助函数中, 这会令代码更加易读.
+
+例如以下代码:
+
+```
+red = my_values.get('red', [''])[0] or 0
+green = my_values.get('green', [''])[0] or 0
+cap = my_values.get('cap', [''])[0] or 0
+```
+
+使用if/else重构后:
+
+```
+red = my_values.get('red', [''])
+red = int(red[0]) if red[0] else 0
+
+green = my_values.get('green', [''])
+red = int(green[0]) if green[0] else 0
+
+cap = my_values.get('cap', [''])
+red = int(cap[0]) if cap[0] else 0
+```
+
+使用辅助函数重构后:
+
+```
+def get_first_int(values, key, default=0):
+    found = values.get(key, [''])
+    if found[0]:
+        fount = int(found[0])
+    else:
+        found = default
+    return found
+    
+red = get_first_int(my_values, 'red') 
+green = get_first_int(my_values, 'green') 
+cap = get_first_int(my_values, 'cap') 
+```
+
+### 要点 ###
+
+1. 将复杂表达式移入辅助函数中, 特别是需要反复使用的相同逻辑
+2. 使用if/else表达式, 要比用or或and这样的表达式更加清晰
+
+## 第5条: 了解切割序列的方法 ##
+
+### 介绍 ###
+
+Python提供了切片操作, 能轻易的访问由序列中的某些元素所构成的子集. 切割操作还延伸到了实现乐 \_\_getitem\_\_ 和 \_\_setitem\_\_ 这两个特殊方法的Python类上.
+
+切片操作的基本写法为: somelist[start:end]. 如果需要从列表开头获取切片, 则应该把start留空; 如果需要取到列表结尾, 则应该把end留空.
+
+在指定切片起止索引时, 如果需要从后往前算, 则可以使用负值来表示偏移.
+
+在赋值操作时对左侧列表使用切片操作, 会把该列表中处在指定范围内的对象替换为新值. 
+如果此时没有指定起止索引, 则系统会把右侧的新值复制一份, 并用这份拷贝来替换左侧列表的全部内容, 而不会重新分配新的列表.
+
+```
+a = [1, 2, 3]
+b = a
+a[:] = [101, 102, 103]
+assert a is b
+```
+
+### 要点 ###
+
+1. 当start索引为0, 或end索引为序列长度时, 应该将其省略
+2. 切片操作不会计较start与end索引是否越界
+3. 对list赋值时如果使用切片操作, 就会把原列表中处在相关范围内的值替换为新值, 即使长度不同也依然可以替换
