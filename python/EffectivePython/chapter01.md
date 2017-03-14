@@ -382,4 +382,89 @@ for name, count in zip(names, letters):
 
 ## 第12条: 不要在for和while循环后面写else块 ##
 
+### 介绍 ###
+
+Python可以在循环内部的语句块后面接else块:
+
+```
+for i in range(0, 3):
+    print('Loop %d' % (i))
+else:
+    print('Else block!')
+```
+
+这种else块会在循环执行完成之后立刻执行. 
+
+当混淆内部使用break语句提前跳出时, 会导致程序不执行else块. 而且, 如果for循环要遍历的序列是空的, 也会导致else块的执行.
+
+### 要点 ###
+
+1. Python可以在for或while循环内部的语句块后面接else块
+2. 只有当循环主体没有执行break语句时, else块才会执行
+3. 不要使用这种else块语法, 因为它既不直观, 也容易让人误解
+
 ## 第13条: 合理利用try/except/else/finally结构中的每个代码块 ##
+
+### 介绍 ###
+
+Python的异常处理有4种时机, 可以使用 try, except, else和finally块来表述.
+
+1. finally块
+
+如果即要异常向上传播, 又要在异常发生时执行清理动作, 可以使用try/finally块, 例如常见的关闭文件句柄:
+
+```
+handle = open('xxx')
+try:
+    data = handle.read()
+finally:
+    handle.close()
+```
+
+2. else块
+
+try/except/else结构可以清晰的描述哪些异常会自己处理, 哪些异常会传播到上一级. 如果try块没有发生异常, 则会执行else块. 
+这种结构可以尽量缩减try块内的代码量, 使其更易读.
+
+```
+def load_json_key(data, key):
+    try:
+        result_dict = json.loads(data)
+    except ValueError as ex:
+        raise KeyError from ex
+    else:
+        return result_dict[key]
+```
+
+3. 混合使用
+
+可以使用完整的结构获取到完整的机制.
+
+```
+UNDEFINED = object()
+
+def divide_json(path):
+    handle = open(path, 'r+')
+    try:
+        data = handle.read()
+        op = json.loads(data)
+        value = (
+            op['numerator'] / 
+            op['denominator'])
+    except ZeroDivisionError as e:
+        return UNDEFINED
+    else:
+        op['result'] = value
+        result = jaon.dumps(op)
+        handle.seek(0)
+        handle.write(result)
+        return value
+    finally:
+        handle.close()
+```
+
+### 要点 ###
+
+1. 无论try块是否发生异常, 都可以使用finally块执行清理动作
+2. else块可以缩减try块的代码量, 并把没有异常发生时所需要执行的代码与try/except代码块隔开
+3. 顺利运行try块之后, 如有代码需要在finally块之前执行, 可以放在else块中
