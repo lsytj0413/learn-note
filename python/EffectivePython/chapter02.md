@@ -4,7 +4,45 @@
 
 ### 介绍 ###
 
+编写工具函数时, Python程序员会返回None这个特殊值.
+
+```
+def divide(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return None
+```
+
+当分母是0时, 该函数会返回None表示这种错误情况. 但是这种情况可能会出现问题, 因为使用者可能不会去判断函数的返回值时None; 
+而是会假定, 只要返回了和False等效的结果即表示出错:
+
+```
+result = divide(0, 5)
+if not result:
+    print('Invalid inputs')
+```
+可见, 令函数返回None可能会使调用它的人写出错误的代码, 有两种办法可以减少这种错误:
+
+1. 返回一个二元组, 分别表示操作结果以及返回值
+
+这种方式需要调用者解析返回的元组, 但是调用者可以通过下划线为名称的变量来跳过操作结果部分.
+
+2. 把异常抛出到上一级函数, 使得调用者必须处理它.
+
+```
+def divide(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError as e:
+        raise ValueError('Invalid inputs') from e
+```
+函数的提供者需要将这种抛出异常的行为写入开发文档. 这样, 调用者无需判断函数的返回值, 这样的代码也比较清晰.
+
 ### 要点 ###
+
+1. 返回None来表示特殊意义的函数, 很容易使调用者犯错
+2. 函数在遇到特殊情况时应该抛出异常, 并将这种行为写入开发文档
 
 ## 第15条: 了解如何在闭包里使用外围作用域中的变量 ##
 
