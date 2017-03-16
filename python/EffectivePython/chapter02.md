@@ -201,7 +201,91 @@ def index_words_iter(text):
 
 ### 介绍 ###
 
+如果函数接受的参数是一个列表, 则有可能需要在这个列表上多次迭代.
+例如, 假设数据集是每个城市的人数, 现在要统计每个城市的人数占总人数的百分比:
+
+```
+def normalize(numbers):
+    total = sum(numbers)
+    result = []
+    for value in numbers:
+        percent = 100 * value / total
+        result.append(percent)
+    return result
+```
+当numbers是一个列表时, 可以得到正确的结果. 为扩大函数应用范围, 现在把人数放在文件里, 然后从文件中读取数据, 使用生成器来实现此功能:
+
+```
+def read_visits(data_path):
+    with open(data_path) as f:
+        for line in f:
+            yield int(line)
+```
+
+但是当使用上面的函数来调用 normalize时, 却每个产生任何结果.
+这是因为迭代器只能产生一轮结果, 在抛出过StopIteration异常的迭代器或生成器上面继续迭代第二轮是不会有结果的.
+
+而且normalize函数还不会抛出错误, 这是因为for循环, list构造器以及Python标准库里的其他许多函数都认为在正常的操作过程中完全可能出现StopIteration异常.
+
+为解决这个问题, 可以明确的用该迭代器制作一份列表, 即将迭代器遍历一次并复制到新的列表里.
+
+```
+def normalize(numbers):
+    numbers = list(numbers)
+    total = sum(numbers)
+    result = []
+    for value in numbers:
+        percent = 100 * value / total
+        result.append(percent)
+    return result
+```
+
+这种写法的问题在于, 如果待复制的迭代器中含有大量数据, 则可能会消耗大量内存. 一种解决办法通过参数来接受一个返回新的迭代器的函数:
+
+```
+def normalize_func(get_iter):
+    total = sum(get_iter())
+    result = []
+    for value in get_iter():
+        percent = 100 * value / total
+        result.append(percent)
+    return result
+```
+可以这样调用该函数:
+
+```
+percentages = normalize_func(lambda : read_visits(path))
+```
+以上方法能够达到想要的效果, 但是显得比较生硬.
+使用一种新编的迭代器协议的容器内也能达到效果: Python在for循环及相关表达式中遍历某种容器时, 就需要依靠这个迭代器协议.
+在执行类似for x in foo 这样的语句时, Python实际上会调用iter(foo), 内置的iter函数又会调用foo.\_\_iter\_\_这个特殊方法,
+这个方法必须返回迭代器对象, 而那个迭代器对象则实现了名为 \_\_next\_\_的特殊方法, 此后for循环会在迭代器对象上返回调用内置的next函数, 直至其耗尽并产生StopIteration异常.
+
+```
+class ReadVisits(object):
+    def __init__(self, data_path):
+        self.data_path = data_path
+        
+    def __iter__(self):
+        with open(self.data_path) as f:
+            for line in f:
+                yield int(line)
+                
+percentages = normalize(ReadVisits(path))
+```
+我们可以修改normalize函数以确保调用者传进来的参数不是迭代器本身:
+
+```
+if iter(numbers) is iter(numbers):
+    raise TypeError("Must supply a container")
+```
+
 ### 要点 ###
+
+1. 当在输入的迭代器参数上多次迭代时可能会导致奇怪的行为并错失某些值
+2. Python迭代器协议, 描述了容器和迭代器应该如何与iter和next内置函数, for循环以及相关表达式相互配合
+3. 把\_\_iter\_\_方法实现为生成器, 即可定义为自己的容器类型
+4. 如果需要判断某个值是迭代器还是容器, 可以拿该值为参数两次调用iter函数, 若结果相同则是迭代器, 调用内置的next函数即可令该迭代器前进一步
 
 ## 第18条: 用数量可变的位置参数减少视觉杂讯 ##
 
