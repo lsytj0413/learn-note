@@ -158,7 +158,44 @@ def sort_priority(values, group):
 
 ### 介绍 ###
 
+很多时候当我们需要将一系列结果返回的时候, 一般都是将结果存放在一份列表里.
+例如, 查出字符串中每个词的首字母在整个字符串中的索引并返回:
+
+```
+def index_words(text):
+    result = []
+    if text:
+        result.append(0)
+    for index, letter in enumerate(text):
+        if letter == ' ':
+            result.append(index + 1)
+    return result
+```
+但是这个函数有两个问题:
+
+1. 这段代码比较拥挤. 每次找到新结果都需要调用append, 但是我们真正应该强调的应该是append的那个值, 而不是对append方法的调用. 函数的首尾还各有一行代码来创建及返回result结果列表.
+
+所以这个函数改用生成器来实现更好. 生成器是使用yield表达式的函数, 调用生成器函数时, 它不会真的运行, 而是会返回迭代器.
+每次在这个迭代器上面调用内置的next函数时, 迭代器会把生成器推进到下一个yield表达式那里, 生成器传给yield的每一个值都会由迭代器返回给调用者.
+
+```
+def index_words_iter(text):
+    if text:
+        yield 0
+    for index, letter in enumerate(text):
+        if letter == ' ':
+            yield index + 1
+```
+
+2. index_worlds函数将结果都放在列表里, 如果输出量太大则会将内存耗尽, 而使用生成器可以应对任意长度的输入数据.
+
+使用生成器函数的时候应该注意, 函数返回的迭代器是有状态的, 不应该反复使用它.
+
 ### 要点 ###
+
+1. 生成器对比把结果收集到列表中返回的函数更加清晰
+2. 由生成器返回的迭代器可以把生成器函数体中传给yield表达式的值逐次产生出来
+3. 生成器可以产生一系列输出, 但无论输入量有多大都不会影响它在执行时所耗的内存
 
 ## 第17条: 在参数上面迭代时, 要多加小心 ##
 
