@@ -373,4 +373,63 @@ def log(message, when=None):
 
 ### 介绍 ###
 
+假设要实现一个计算两数相除的函数:
+
+```
+def safe_division(number, divisor, ignore_overflow,
+                 ignore_zero_division):
+    try:
+        return number / divisor
+    except OverflowError:
+        if ignore_overflow:
+            return 0
+        else:
+            raise
+    except ZeroDivisionError:
+        if ignore_zero_division:
+            return float('inf')
+        else:
+            raise
+```
+该函数使用了两个Boolean参数, 来分别决定是否应该跳过除法计算过程中的异常. 但是这个函数有个问题,
+调用者使用该函数的时候, 很可能分不清这两个参数从而导致难以排查BUG, 惨用关键字参数可以提升代码可读性.
+
+```
+def safe_division(number, divisor,
+                 ignore_overflow=False,
+                 ignore_zero_division=False):
+```
+但是这种写法还是有缺陷, 由于这些关键字参数都是可选的, 所以没办法确保函数的调用者一定会使用关键字来明确指定这些参数的值.
+
+对于这种复杂的函数来说, 最好是能够保证调用者必须以清晰的调用代码来确保调用该函数的意图.
+
+1. Python3中的关键字参数指定
+
+在Python3中提供了一种只能以关键字形式来指定的参数, 从而确保调用该函数的代码读起来会比较明确:
+
+```
+def safe_division(number, divisor, *,
+                 ignore_overflow=False,
+                 ignore_zero_division=False):
+```
+在参数列表中的 *号, 标志着位置参数完结, 之后的参数都只能以关键字形式来指定.
+
+2. Python2中的关键字参数指定
+
+在Python2中没有明确的语法来定义只能以关键字形式指定的参数. 我们可以在参数列表中使用 **操作符, 并且令函数在遇到无效的调用时抛出TypeError.
+
+```
+def safe_division_d(number, divisor, **kwargs):
+   ignore_overflow = kwargs.pop('ignore_overflow', False)
+   ignore_zero_div = kwargs.pop('ignore_zero_div', False)
+   if kwargs:
+       raise TypeError('Unexpected **kwargs: %r' % (kwargs))
+   #
+```
+
 ### 要点 ###
+
+1. 关键字参数能够使函数的调用的意图更加明确
+2. 可以声明只能以关键字形式指定的参数, 以确保调用者必须通过关键字来指定
+3. Python3有明确的语法来定义只能以关键字形式指定的参数
+4. Python2可以接受 **kwargs参数, 并手工抛出TypeError异常, 以实现Python3中的类似只能以关键字形式指定的参数的功能
