@@ -341,7 +341,33 @@ Python中的所有位置参数都可以按照关键字参数. 采用关键字参
 
 ### 介绍 ###
 
+有些时候我们会使用参数的默认值:
+
+```
+def log(message, when=datetime.now()):
+    print('%s: %s' % (when, message))
+```
+但是这样有一个缺点: 就是输出的时间戳是一样的, 因为datetime.now只在函数定义的时候执行了一次.
+
+在Python中若想正确实现动态默认值, 习惯上是把默认值设置为None, 并在文档字符串里面把None所对应的实际行为描述出来.
+
+```
+def log(message, when=None):
+    """
+    Log a message with a timestamp.
+    
+    Args:
+        message: Message to print
+        when: datetime of when the message occurred. Defaults to the present time.
+    """
+    print('%s: %s' % (when, message))
+```
+如果参数的实际默认值是可变类型, 那就一定要用None作为形式上的默认值.
+
 ### 要点 ###
+
+1. 参数的默认值只会在程序加载模块并读到本函数的定义时评估一次, 对于可变类型可能会导致奇怪的行为
+2. 对于以动态值作为实际默认值的关键字参数来说, 应该把形式上的默认值写为None, 并在文档字符串里面描述默认值所对应的实际行为
 
 ## 第21条: 用只能以关键字形式指定的参数来确保代码明晰 ##
 
