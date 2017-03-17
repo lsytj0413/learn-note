@@ -5,7 +5,7 @@
 
 以下是各章节的内容:
 
-- [第一章](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter01.md)
+- [第一章: 用Pythonic方式思考](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter01.md)
 
     - 第1条: 确认自己所用的Python版本
     - 第2条: 遵循PEP8风格指南
@@ -21,7 +21,7 @@
     - 第12条: 不要在for和while循环后面写else块
     - 第13条: 合理利用try/except/else/finally结构中的每个代码块
 
-- [第二章](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter02.md)
+- [第二章: 函数](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter02.md)
 
     - 第14条: 尽量用异常来表示特殊情况, 而不要返回None
     - 第15条: 了解如何在闭包里使用外围作用域中的变量
@@ -31,3 +31,13 @@
     - 第19条: 用关键字参数来表达可选的行为
     - 第20条: 用None和文档字符串来描述具有动态默认值的参数
     - 第21条: 用只能以关键字形式指定的参数来确保代码明晰
+
+- [第三章: 类与继承](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter03.md)
+
+    - 第22条: 尽量用辅助类来维护程序的状态, 而不要用字典和元组
+    - 第23条: 简单的接口应该接受函数, 而不是类的实例
+    - 第24条: 以 @classmethod形式的多态取通用地构建对象
+    - 第25条: 用super初始化父类
+    - 第26条: 只在使用Mix-in组件制作工具类时进行多重继承
+    - 第27条: 多用public属性, 少用private属性
+    - 第28条: 继承collections.abc 以实现自定义的容器类型
