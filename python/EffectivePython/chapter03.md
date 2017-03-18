@@ -304,7 +304,34 @@ def mapreduce(worker_class, input_class, config):
 
 ### 介绍 ###
 
+在Python中子类可以直接调用父类的 \_\_init\_\_方法来初始化父类, 但是这种写法有以下的问题:
+
+1. 调用顺序不固定
+2. 在钻石型继承之中, 会使顶部的公共基类多次执行 \_\_init\_\_方法
+
+在Python2中增加了内置 super函数, 并且重新定义了方法解析顺序(MRO) 以解决这一问题, MRO以标准的流程来安排超类之间的初始化顺序(C3算法, 拓扑排序).
+
+内置的super函数可以正常运作, 但是在Python2中有两个问题值得注意:
+
+1. super语句有点麻烦, 必须指定当前类和self对象, 并且还要指定方法名称和方法参数
+2. 调用super时必须写出当前类的名称, 在修改类名称时必须修改这一条语句
+
+Python3中的super函数调用方式没有这些问题.
+
+```
+class Explicit(MyBaseClass):
+    def __init__(self, value):
+        super(__class__, self).__init__(value * 2)
+
+class Implicit(MyBaseClass):
+    def __init__(self, value):
+        super().__init__(value * 2)
+```
+
 ### 要点 ###
+
+1. Python采用标准的方法解析顺序来解决超类初始化次序以及钻石继承问题
+2. 总是应该使用内置的super函数来初始化父类
 
 ## 第26条: 只在使用Mix-in组件制作工具类时进行多重继承 ##
 
