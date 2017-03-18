@@ -124,7 +124,50 @@ class Gradebook(object):
 
 ### 介绍 ###
 
+Python有许多内置的API都允许调用者传入函数(Hook)以定制其行为. 例如list类型的sort方法接受可选的key参数, 用以指定每个索引位置间应该如何排序.
+
+```
+names = ['Socrates', 'Archimedes', 'POlato']
+names.sort(key=lambda x: len(x))
+```
+用函数作为Hook是比较合适的, 因为它们很容易就能描述这个挂钩的功能, 而且比定义一个类要简单.
+
+例如要定制defaultdict类的行为, 在字典里找不到待查询的键时打印一条信息, 并返回0, 以作为该键所对应的值:
+
+```
+def log_missing():
+    print('Key added')
+    return 0
+    
+current = {'green': 12}
+result = defaultdict(log_missing, current)
+```
+提供log_missing这样的函数可以使API更容易构建, 也更易测试, 因为它能够把附带的效果与确定的行为分离开.
+
+例如要统计字典中遇到多少个缺失的键:
+
+```
+def increment_with_report(current, increments):
+    added_count = 0
+    
+    def missing():
+        nonlocal added_count
+        added_count += 1
+        return 0
+        
+    result = defaultdict(missing, current)
+    for key, amount in increments:
+        result[key] += amount
+    return result, added_count
+```
+上面的代码使用了闭包函数来隐藏状态, 这样的缺点就是读起来要比无状态的函数难懂, 也可以定义一个小型的类来封装状态.
+
 ### 要点 ###
+
+1. 对于连接各种Python组件的简单接口, 通常应该给其传入函数而不是某个类的实例
+2. Python中的函数和方法都可以像一级类那样引用
+3. 通过名为 \_\_call\_\_的特殊方法, 可以使类的实例像普通的Pyhton函数那样得到调用
+4. 如果要用函数来保存状态, 就应该定义新的类并实现 \_\_call\_\_方法, 而不要定义带状态的闭包
 
 ## 第24条: 以 @classmethod形式的多态取通用地构建对象 ##
 
