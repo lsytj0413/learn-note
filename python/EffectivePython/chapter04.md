@@ -259,7 +259,53 @@ class BrokenDictionaryDB(object):
 
 ### 介绍 ###
 
+在构建复杂的类体系时, 我们可能需要确保类的风格协调一致, 确保某些方法得到了覆写, 或是确保类属性之间具备某些严格的关系, 元类提供了一种可靠的验证方式, 当开发者定义新的类时, 都会运行验证代码以确保这个新类符合预订的规范.
+
+定义元类的时候要从type中继承, 而对于使用该元类的其他类来说, Pyhton默认会把那些类的class语句体中所含有的相关内容都发送给元类的 \_\_new\_\_ 方法, 我们就可以在系统构建那种类型之前先修改那个类的信息.
+
+```
+class Meta(type):
+    def __new__(meta, name, bases, class_dict):
+        return type.__new__(meta, name, bases, class_dict)
+
+# Python3
+class MyClass(object, metaclass=Meta):
+    stuff = 123
+    def foo(self):
+        pass
+        
+# Python2
+class MyClassInPython2(object):
+    __metaclass__ = Meta
+```
+
+为了在定义某个类的时候确保该类的所有参数都有效, 我们可以把相关的验证逻辑添加到 Meta.\_\_new\_\_ 方法中.
+
+例如, 定义一个验证多边形的基类与元类.
+
+```
+class ValidatePolygon(type):
+    def __new__(meta, name, bases, class_dict):
+        # 跳过对多边形类的基类的验证
+        if bases != (object, ):
+            if class_dict['sides'] < 3:
+                raise ValueError('Polygons need 3+ sides')
+        return type.__new__(meta, name, bases, class_dict)
+        
+class Polygon(object, metaclass=ValidatePolygon):
+    sides = None
+    
+class Triangle(Polygon):
+    sides = 3
+```
+
+假如我们尝试定义一种边数小于3的多边形子类, 那么class语句体刚一结束, 元类中的验证代码立刻就会拒绝这个class.
+
 ### 要点 ###
+
+1. 通过元类, 我们可以在生成子类对象之前, 先验证子类的定义是否合乎规范
+2. Python2和Python3指定元类的语法略有不同
+3. Pyhton系统把子类的整个class语句体处理完毕之后, 就会调用其元类的 \_\_new\_\_ 方法
 
 ## 第34条: 用元类来注册子类 ##
 
