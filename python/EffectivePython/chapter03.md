@@ -337,7 +337,39 @@ class Implicit(MyBaseClass):
 
 ### 介绍 ###
 
+我们应该尽量避开多重继承, 若一定要利用多重继承所带来的便利性以及封装性, 那就考虑编写 Mix-in类.
+Mix-in是一种小型的类, 只定义了其他类可能需要的一套附加方法, 而不定义自己的实例属性, 此外也不要求调用自己的 \_\_init\_\_构造器.
+
+例如要把内存中的Python对象转换为字典形式, 以便将其序列化:
+
+```
+class ToDictMixin(object):
+    def to_dict(self):
+        return self._traverse_dict(self.__dict__)
+    def _traverse_dict(self, instance_dict):
+        output = {}
+        for key, value in instance_dict.items():
+            output[key] = self._traverse(key, value)
+        return output
+    def _traverse(self, key, value):
+        if isinstance(value, ToDictMixin):
+            return value.to_dict()
+        elif isinstance(value, dict):
+            return self._traverse_dict(value)
+        elif isinstance(value, list):
+            return [self._traverse(key, i) for i in value]
+        elif hasattr(value, '__dict__'):
+            return self._traverse_dict(value.__dict__)
+        else:
+            return value
+```
+mix-in的最大优势在于, 使用者可以随时安插这些通用的功能, 并在必要的时候覆写它们.
+
 ### 要点 ###
+
+1. 能用mix-in组件实现的效果, 就不要用多重继承来做
+2. 将各功能实现为可插拔的mix-in组件, 然后令相关的类继承自己需要的那些组件即可定制该类实例所应具备的行为
+3. 把简单的行为封装到mix-in组件里, 然后就可以用多个mix-in组合出复杂的行为
 
 ## 第27条: 多用public属性, 少用private属性 ##
 
