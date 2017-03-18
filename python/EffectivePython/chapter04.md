@@ -200,6 +200,41 @@ class Grade(object):
 
 ### 介绍 ###
 
+如果某个类定义了 \_\_getattr\_\_ , 同时系统在该类对象的实例字典中又找不到待查询的属性, 那么系统就会调用这个方法.
+
+```
+class LazyDB(object):
+    def __getattr__(self, name):
+        value = 'Value for %s' % (name)
+        setattr(self, name, value)
+        return value
+```
+
+然后给LazyDB添加记录功能, 把程序对 \_\_getattr\_\_ 的调用行为记录下来:
+
+```
+class LoggingLazyDB(LazyDB):
+    def __getattr__(self, name):
+        print('Called __getattr__(%s)' % (name))
+        return super().__getattr__(name)     # 避免递归调用
+```
+
+程序每次访问对象的属性时, Pyhton系统都会调用 \_\_getattribute\_\_ 方法, 即使属性字典里已经有了该属性.
+
+```
+class ValidatingDB(object):
+    def __getattribute__(self, name):
+         print('Called __getattribute__(%s)' % (name))
+         try:
+             return super().__getattribute__(name)
+         except AttributeError:
+             value = 'Value for %s' % (name)
+             setattr(self, name, value)
+             return value
+```
+
+我们经常会使用 hasattr函数来判断对象是否已经拥有了相关的属性, 并用内置 getattr 函数来获取属性值. 这些函数会先在实例字典中搜索待查询的属性, 然再调用 \_\_getattr\_\_ .
+
 ### 要点 ###
 
 ## 第33条: 用元类来验证子类 ##
