@@ -44,13 +44,47 @@ class RixedResistance(Resistor):
 1. 编写新类时, 应该用简单的public属性来定义其接口, 而不要手工实现set和get方法
 2. 如果访问对象的某个属性时, 需要表现出特殊的行为, 那就用 @property 来定义这种行为
 3. @property 方法应该遵循最小惊讶原则, 而不应该产生奇怪的副作用
-4. @property方法需要执行得迅速一些
+4. @property方法需要执行得迅速一些, 耗时或复杂的工作应该放在普通的方法里面
 
 ## 第30条: 考虑用 @property 来替代属性重构 ##
 
 ### 介绍 ###
 
+Python内置的 @property 修饰器, 使调用者能够轻松的访问该类的实例属性. 它也可以把简单的数值属性迁移为实时计算的属性.
+
+假设要用纯Python对象实现带有配额的漏桶(漏桶算法), 把当前剩余的配额以及重置配额的周期放在Bucket类里:
+
+```
+class Bucket(object):
+    def __init__(self, period):
+        self.period_delta = timedelta(seconds=period)
+        self.reset_time = datetime.now()
+        self.max_quota = 0
+        self.quota_consumed = 0
+        
+    @property
+    def quota(self):
+        return self.max_quota - self.quota_consumed
+        
+    @quota.setter
+    def quota(slef, amount):
+        delta = self.max_quota - amount
+        if amount == 0:
+            self.quota_consumed = 0
+            self.max_quota = 0
+        elif delta < 0:
+            assert self.quota_consumed == 0
+            self.max_quota = amount
+        else:
+            assert self.max_quota >= self.quota_consumed
+            self.quota_consumed += delta
+```
+
 ### 要点 ###
+
+1. @property 可以为现有的实例属性添加新的功能
+2. 可以用 @property 来逐步完善数据模型
+3. 如果 @property 用的太过频繁, 那就应该考虑彻底重构该类并修改相关的调用代码
 
 ## 第31条: 用描述符来改写需要复用的 @property 方法 ##
 
