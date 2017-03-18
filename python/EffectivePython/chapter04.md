@@ -235,7 +235,20 @@ class ValidatingDB(object):
 
 我们经常会使用 hasattr函数来判断对象是否已经拥有了相关的属性, 并用内置 getattr 函数来获取属性值. 这些函数会先在实例字典中搜索待查询的属性, 然再调用 \_\_getattr\_\_ .
 
+使用 \_\_getattribute\_\_ 和 \_\_setatttr\_\_ Hook方法时需要注意, 每次访问对象属性时它们都会触发, 而这可能并不是你想要的结果.
+
+```
+class BrokenDictionaryDB(object):
+    def __getattribute__(self, name):
+        return self._data[name]
+```
+上面这段代码会在访问 self.\_data时再次调用 \_\_getattribute\_\_ , 并导致无限循环.
+
 ### 要点 ###
+
+1. 通过 \_\_getattr\_\_ 和 \_\_setattr\_\_ , 我们可以用惰性的方式来加载并保存对象的属性
+2. 要理解 \_\_getattr\_\_ 与 \_\_getattribute\_\_ 的区别: 前者只会在待访问的属性缺失时触发, 而后者会在每次访问属性时触发
+3. 如果要在 \_\_getattribute\_\_ 和 \_\_setatttr\_\_ 方法中访问实例属性, 那么应该直接通过 super() 来做, 以避免无限递归
 
 ## 第33条: 用元类来验证子类 ##
 
