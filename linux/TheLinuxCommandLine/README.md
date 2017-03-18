@@ -5,4 +5,4 @@
 以下是各章节的内容:
 
 - 第一部分: 学习Shell
-    - [第一章: shell是什么](https://github.com/lsytj0413/practice/linux/TheLinuxCommandLine/chapter01.md)
+    - [第一章: shell是什么](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter01.md)
