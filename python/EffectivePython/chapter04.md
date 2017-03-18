@@ -90,7 +90,111 @@ class Bucket(object):
 
 ### 介绍 ###
 
+Python内置的 @property 修饰器有个明显的缺点: 就是不便于复用, 受它修饰的这些方法, 无法为同一个类中的其他属性所复用, 而且与之无关的类也无法复用这些方法.
+
+```
+class Homework(object):
+    def __init__(self):
+        self._grade = 0
+    @property
+    def grade(self):
+        return self._grade
+    @grade.setter
+    def grade(self, value):
+        if not (0 <= value <= 100):
+            raise ValueError('Grade must be between 0 and 100')
+        self._grade = grade
+```
+
+现在假设要把这套验证逻辑放在考试成绩上面, 而考试成绩又是多个科目的小成绩组成, 每一科都要单独计分:
+
+```
+class Exam(object):
+    def __init__(self):
+        self._writing_grade = 0
+        self._math_grade = 0
+    @staticmethod
+    def _check_grade(value):
+        if not (0 <= value <= 100):
+            raise ValueError('Grade must be between 0 and 100')
+    @property
+    def writing_grade(self):
+        return self._writing_grade
+    @writing_grade.setter
+    def writing_grade(self, value):
+        self._check_grade(value)
+        self._writing_grade = value
+    @property
+    def math_grade(self):
+        return self._math_grade
+    @math_grade.setter
+    def math_grade(self, value):
+        self._check_grade(value)
+        self._math_grade = value
+```
+这种写法不够通用, 需要反复编写 @property 代码和 \_check\_grade方法.
+
+还有一种方式能够更好的实现上述要求, 那就是采用Python的描述符. Python会通过描述符协议来对访问操作进行一定的转义.
+描述符类可以提供 \_\_get\_\_ 和 \_\_set\_\_ 方法, 使得开发者无需再编写例行代码, 即可复用分数验证功能.
+
+```
+class Grade(object):
+    def __get__(*args, **kwargs):
+        #
+    def __set__(*args, **kwargs):
+        #
+        
+class Exam(object):
+    math_grade = Grade()
+    writing_grade = Grade()
+    
+exam = Exam()
+exam.writing_grade = 40
+# 转义之后的代码
+# Exam.__dict__['writing_grade'].__set__(exam, 40)
+```
+
+之所以会有这样的转义, 关键就在于object类的 \_\_getattribute\_\_ 方法. 简单来说, 如果Exam实例没有名为 writing_grade 的属性,
+那么Python就会转向Exam类, 并在该类中寻找同名的属性, 而如果这个类属性实现了 \_\_get\_\_ 和 \_\_set\_\_ 方法的对象, 那么Python就会默认对象遵从描述符协议.
+
+我们可以使用以下的 Grade类来实现Homework类的分数验证逻辑:
+
+```
+class Grade(object):
+    def __init__(self):
+        self._value = 0
+    def __get__(self, instance, instance_type):
+        return self._value
+    def __set__(self, instance, value):
+        if not (0 <= value <= 100):
+            raise ValueError('Grade must be between 0 and 100')
+        self._value = value
+```
+不幸的是, 上面这种实现方式是错误的, 它会导致不符合预期的行为. 在多个Exam实例上面分别操作某一属性, 就会导致错误的结果. 因为对于 writing_grade 这个类属性来说, 它只会在程序的生命期中构建一次.
+
+为解决这个问题, 我们需要把每个Exam实例所对应的值记录到 Grade中.
+
+```
+class Grade(object):
+    def __init__(self):
+        self._values = {}
+    def __get__(self, instance, instance_type):
+        if instance is None: return self
+        return self._values.get(instance, 0)
+    def __set__(self, instance, value):
+        if not (0 <= value <= 100):
+            raise ValueError('Grade must be between 0 and 100')
+        self._values[instance] = value
+```
+上面这种方式简单而且正确, 但是它会泄漏内存. 因为 values字典会保存指向 Exam实例的引用, 从而导致该实例的引用计数不能降为0, 垃圾回收器无法将其回收.
+
+使用WeakKeyDictionary的特殊字典来解决此问题, 如果运行期系统发现这种字典所持有的引用是整个程序里面的最后一个引用, 那么系统就会自动将该实例从字典的键中移除.
+
 ### 要点 ###
+
+1. 如果想复用 @property 方法及其验证机制, 那么可以自己定义描述符类
+2. WeakKeyDictionary 可以保证描述符类不会泄漏内存
+3. 通过描述符协议来实现属性的获取和设置操作时, 不要纠结与 \_\_getattribute\_\_ 的方法具体运作细节.
 
 ## 第32条: 用 \_\_getattr\_\_, \_\_getattribute\_\_ 和 \_\_setattr\_\_ 实现按需生成的属性 ##
 
