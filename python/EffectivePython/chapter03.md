@@ -169,11 +169,136 @@ def increment_with_report(current, increments):
 3. 通过名为 \_\_call\_\_的特殊方法, 可以使类的实例像普通的Pyhton函数那样得到调用
 4. 如果要用函数来保存状态, 就应该定义新的类并实现 \_\_call\_\_方法, 而不要定义带状态的闭包
 
-## 第24条: 以 @classmethod形式的多态取通用地构建对象 ##
+## 第24条: 以 @classmethod形式的多态去通用地构建对象 ##
 
 ### 介绍 ###
 
+在Python中类同对象一样也是支持多态的, 多态使得继承体系中的各个类都能以各自所独有的方式来实现某个方法.
+
+例如为实现一套 MapReduce 流程, 先定义公共基类来表示输入的数据:
+
+```
+class InputData(object):
+    def read(self):
+        raise NotImplementedError
+```
+现在编写子类以便从磁盘文件里读取数据:
+
+```
+class PathInputData(InputData):
+    def __init__(self, path):
+        super().__init__()
+        self.path = path
+    def read(self):
+        return open(self.path).read()
+```
+
+然后为MapReduce工作线程定义一套类似的抽象接口, 以便用标准的方式来处理输入的数据:
+
+```
+class Worker(object):
+    def __init__(self, input_data):
+        self.input_data = input_data
+        self.result = None
+    def map(self):
+        raise NotImplementedError
+    def reduce(self, other):
+        raise NotImplementedError
+```
+
+接下来定义具体的Worker子类:
+
+```
+class LineCountWorker(Worker):
+    def map(self):
+        data = self.input_data.read()
+        self.result = data.count('\n')
+    def reduce(self, other):
+        self.result += other.result
+```
+以上的MapReduce实现方式有一个问题, 就是如何把这些组件拼接起来.
+例如可以手工构建相关对象并把它们联系起来:
+
+```
+def generate_inputs(data_dir):
+    for name in os.listdir(data_dir):
+        yield PathInputData(os.path.join(data_dir, name))
+        
+def create_workers(input_list):
+    workers = []
+    for input_data in input_list:
+        workers.append(LineCountWorker(input_data))
+    return workers
+    
+def execute(workers):
+    threads = [Thread(target=w.map) for w in workers]
+    for thread in threads: thread.start()
+    for thread in threads: thread.join()
+    
+    first, rest = workers[0], workers[1:]
+    for worker in rest:
+        first.reduce(worker)
+    return first.result
+    
+def mapreduce(data_dir):
+    inputs = generate_inputs(data_dir)
+    workers = create_workers(inputs)
+    return execute(workers)
+```
+
+但是这种写法有个很严重的问题, 那就是MapReduce函数不够通用. 如果要编写新的InputData或Worker子类, 那就得重写generate\_inputs, create\_workers和mapreduce函数以便与之匹配.
+
+解决这个问题的最佳方案, 是使用 @classmethod形式的多态.
+
+首先修改InputData类, 添加通用的generate_inputs类方法:
+
+```
+class GenericInputData(object):
+    def read(self):
+        raise NotImplementedError
+    @classmethod
+    def generate_inputs(cls, config):
+        raise NotImplementedError
+        
+class PathInputData(GenericInputData):
+    def read(self):
+        return open(self.path).read()
+    @classmethod
+    def generate_inputs(cls, config):
+        data_dir = config['data_dir']
+        for name in os.listdir(data_dir):
+            yield cls(os.path.join(data_dir, name))
+```
+
+然后实现 GenericWorker类:
+
+```
+class GenericWorker(object):
+    def map(self):
+        raise NotImplementedError
+    def reduce(self, other):
+        raise NotImplementedError
+    @classmethod
+    def create_workers(cls, input_class, config):
+        workers = []
+        for input_data in input_class.generate_inputs(config):
+            workers.append(cls(input_data))
+        return workers
+```
+
+最后重写 mapreduce函数, 令其变得完全通用:
+
+```
+def mapreduce(worker_class, input_class, config):
+    workers = worker_class.create_workers(input_class, config)
+    return execute(workers)
+```
+
 ### 要点 ###
+
+1. 在Python程序中, 每个类只能有一个构造器, 即 \_\_init\_\_方法
+2. 通过 @classmethod机制, 可以使用一种与构造器相仿的方式来构造类的对象
+3. 通过类方法多态机制, 我们能够以更加通用的方式来构建并拼接具体的子类
 
 ## 第25条: 用super初始化父类 ##
 
