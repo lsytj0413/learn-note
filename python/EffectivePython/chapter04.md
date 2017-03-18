@@ -384,4 +384,48 @@ class Meta(type):
 
 ### 介绍 ###
 
+元类还有一个更有用处的功能, 那就是可以在某个类刚定义好的但是尚未使用的时候提前修改或注解类的属性. 这种写法通常会与描述符搭配起来, 令这些属性可以更加详细的了解自己在外围类中的使用方式.
+
+例如, 要定义新类来表示客户数据库里的某一行, 同时在类的相关属性与数据库表的每一列之间建立对应关系.
+
+```
+class Field(object):
+    def __init__(self, name):
+        self.name = name
+        self.internal_name = '_' + name
+    def __get__(self, instance, instance_type):
+        if instance is None: return self
+        return getattr(instance, self.internal_name)
+    def __set__(self, instance, instance_type):
+        setattr(instance, self.internal_name, value)
+        
+# 表示数据行的类
+class Customer(object):
+    first_name = Field('first_name')
+    last_name = Field('last_name')
+    prefix = Field('prefix')
+    suffix = Field('suffix')
+```
+
+但是上面的代码有些重复, 因为需要重复把字段名传给Field的构造器. 我们可以使用元类改写:
+
+```
+class Meta(type):
+    def __new__(meta, name, bases, class_dict):
+        for key, value in class_dict.items():
+            if isinstance(value, Field):
+                value.name = key
+                value.internal_name = '_' + key
+        cls = type.__new__(meta, name, bases, class_dict)
+        return cls
+        
+# 数据库行的基类
+class DatabaseRow(object, metaclass=Meta):
+    pass
+```
+
 ### 要点 ###
+
+1. 借助元类, 我们可以在某个类完全定义好之前, 率先修改该类的属性
+2. 描述符与元类能够有效的组合起来, 以便对某种行为做出修饰器, 或在程序运行时探查相关信息
+3. 如果把元类与描述符相结合, 那就可以在不使用weakref模块的前提下避免内存泄漏
