@@ -41,3 +41,13 @@
     - 第26条: 只在使用Mix-in组件制作工具类时进行多重继承
     - 第27条: 多用public属性, 少用private属性
     - 第28条: 继承collections.abc 以实现自定义的容器类型
+
+- [第四章: 元类及属性](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter04.md)
+
+    - 第29条: 用纯属性取代get和set方法
+    - 第30条: 考虑用 @property 来替代属性重构
+    - 第31条: 用描述符来改写需要复用的 @property 方法
+    - 第32条: 用 \_\_getattr\_\_, \_\_getattribute\_\_ 和 \_\_setattr\_\_ 实现按需生成的属性
+    - 第33条: 用元类来验证子类
+    - 第34条: 用元类来注册子类
+    - 第35条: 用元类来注解类的属性
