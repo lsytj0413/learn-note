@@ -311,7 +311,74 @@ class Triangle(Polygon):
 
 ### 介绍 ###
 
+元类还有一个元类, 就是在程序中自动注册类型.
+
+例如, 需要将Python对象表示为JSON格式的序列化数据:
+
+```
+class Serializable(object):
+    def __init__(self, *args):
+        self.args = args
+    def serialize(self):
+        return json.dumps({'args': self.args})
+        
+class Point2D(Serializable):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.x = x
+        self.y = y
+```
+
+然后构建一个反序列化的基类:
+
+```
+class Deserializable(Serializable):
+    @classmethod
+    def deserialize(cls, json_data):
+        params = json.loads(json_data)
+        return cls(*params['args'])
+```
+这种方法的缺点是, 我们必须提前知道序列化的数据是什么类型, 然后才能对其做反序列化操作. 理想的方案是, 有很多类都可以把本类对象转换为JSON格式的序列化字符串, 但是只需要一个公用的反序列化函数, 就可以将任意的JSON字符串还原成相应的Python对象.
+
+```
+class BetterSerializable(object):
+    def __init__(self, *args):
+        self.args = args
+    def serialize(self):
+        return json.dumps({
+            'class': self.__class__.__name__,
+            'args': self.args
+        })
+        
+registry = {}
+
+def register_class(target_class):
+    registry[target_class.__name__] = target_class
+
+def deserialize(data):
+    params = json.loads(data)
+    name = params['class']
+    target_class = registry[name]
+    return target_class(*params['args'])
+```
+在这种方案中, 我们必须用register\_class 把将来可能要执行反序列化操作的那些类都注册一遍, 但是开发者可能会忘记调用 registry\_class 函数.
+我们应该保证程序会自动调用 register\_class 函数将新的子类注册好, 这个功能可以通过元类来实现.
+
+```
+class Meta(type):
+    def __new__(meta, name, bases, class_dict):
+        cls = type.__new__(meta, name, bases, class_dict)
+        register_class(cls)
+        return cls
+```
+这个元类可以自动实现类的注册, 以确保每一个子类都不会遗漏.
+这种方案, 适用于序列化和反序列化操作, 也适用于数据库的对象关系映射, 插件系统和系统挂钩.
+
 ### 要点 ###
+
+1. 在构建模块化的Python程序时, 类的注册是一种很有用的模式
+2. 开发者每次从基类中继承子类时, 基类的元素都可以自动运行注册代码
+3. 通过元类来实现类的注册, 可以确保所有子类都不会遗漏, 从而避免后续的错误
 
 ## 第35条: 用元类来注解类的属性 ##
 
