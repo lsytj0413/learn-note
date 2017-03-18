@@ -244,6 +244,11 @@ class BrokenDictionaryDB(object):
 ```
 上面这段代码会在访问 self.\_data时再次调用 \_\_getattribute\_\_ , 并导致无限循环.
 
+1. \_\_getattribute\_\_(self, name): 当特性name被访问时使用, 新式类, 同时拦截对\_\_dict\_\_的访问, 在该函数中访问与self相关的属性时, 使用super函数是唯一安全的路径
+2. \_\_getattr\_\_(self, name): 当特性name被访问且对象没有相应的特性时使用
+3. \_\_setattr\_\_(self, name, value): 当试图给特性name赋值时调用
+4. \_\_delattr\_\_(self, name): 当试图删除特性name时调用
+
 ### 要点 ###
 
 1. 通过 \_\_getattr\_\_ 和 \_\_setattr\_\_ , 我们可以用惰性的方式来加载并保存对象的属性
