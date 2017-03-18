@@ -403,5 +403,52 @@ Python之所以不从语法上严格保证private字段的私密性:
 
 ### 介绍 ###
 
+假设要创建一种自定义的列表类型, 并提供统计各元素出现频率的方法:
+
+```
+class FrequencyList(list):
+    def __init__(self, members):
+        super().__init__(members)
+    def frequency(self):
+        counts = {}
+        for item in self:
+            counts.setdefault(item, 0)
+            counts[item] += 1
+        return counts
+```
+上面的类获得了由list所提供的全部标准功能.
+
+现在假设要编写这么一种对象, 它本身不属于list子类, 但用起来却和list一样, 也可能通过下标访问其中的元素. 假如要令下面这个表示二叉树节点的类, 也能够像list或tuple等序列那样来访问:
+
+```
+class BinaryNode(object):
+    def __init__(self, value, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
+```
+
+Python会用一些名称比较特殊的实例方法, 来实现与容器有关的行为. 用下标访问序列中元素时Python会转换为对 \_\_getitem\_\_ 方法的调用.
+
+```
+class IndexableNode(BinaryNode):
+    def _search(self, count, index):
+        # return (found, count)
+    def __getitem__(self, index):
+        found, _ = self._search(0, index)
+        if not found:
+            raise IndexError('Index out of range')
+        return found.value
+```
+
+然而只实现 \_\_getitem\_\_ 方法是不够的, 它并不能使该类型支持我们想要的每一种序列操作. 例如想要内置的len函数正常运作, 就必须实现 \_\_len\_\_ 方法. 还有很多其他的方法.
+
+为了在编写Python程序时方便的实现容器, 可以使用内置的 collections.abc 模块, 该模块定义了一系列抽象基类, 如果忘记实现某个方法, 该模块便会指出这个错误.
+
+如果子类已经实现了抽象基类所要求的每个方法, 那么基类就会自动提供剩下的方法.
+
 ### 要点 ###
 
+1. 如果要定义的子类比较简单, 就可以直接从Python的容器类型继承
+2. 想正确实现自定义的容器类型, 可能需要编写大量的特殊方法
+3. 编写自制的容器类型时, 可以从collections.abc 模块的抽象基类中继承, 那些基类能够确保我们的子类具备适当的接口及行为
