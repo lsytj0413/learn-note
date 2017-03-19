@@ -118,7 +118,90 @@ class Counter(object):
 
 ### 介绍 ###
 
+我们可以使用线程安全的方式来对生产者-消费者队列进行建模:
+
+```
+class MyQueue(object):
+    def __init__(self):
+        self.items = deque()
+        self.lock = Lock()
+    def put(self, item):
+        with self.lock():
+            self.items.append(item)
+    def get(self):
+        with self.lock:
+            return self.item.popleft()
+            
+# worker线程
+class Worker(Thread):
+    def __init__(self, func, in_queue, out_queue):
+        super().__init__()
+        self.func = func
+        self.in_queue = in_queue
+        self.out_queue = out_queue
+        self.polled_count = 0
+        self.work_done = 0
+    def run(self):
+        while True:
+            self.polled_count += 1
+            try:
+                item = self.in_queue.get()
+            except IndexError:
+                sleep(0.01)
+            else:
+                retult = self.func(item)
+                self.out_queue.put(result)
+                self.work_done += 1
+                
+# 启动队列与工作线程
+download_queue = MyQueue()
+resize_queue = MyQueue()
+upload_queue = MyQueue()
+done_queue = MyQueue()
+threads = [
+    Worker(download, download_queue, resize_queue),
+    Worker(resize, resize_queue, upload_queue),
+    Worker(upload, upload_queue, done_queue)
+    ]
+```
+这个范例程序可以正常运行, 但是有几个问题:
+
+1. 在run中需要捕获IndexError异常, 在线程的工作进度不匹配时会多次出现
+2. 为了判断所有的任务是否都彻底处理完毕, 我们必须再编写一个循环来判断done_queue中任务的数量
+3. 没有办法通知worker线程的run函数退出
+4. 如果任务中的某个阶段发生迟滞, 则可能导致程序崩溃
+
+我们可以使用Queue类来弥补自编队列的缺陷, Queue类的get方法会持续阻塞, 直到有新的数据加入; 我们也可以使用Queue类来限定队列中待处理的最大任务数据; 还可以通过task_done方法来追踪工作的进度.
+
+```
+class ClosableQueue(Queue):
+    SENTINEL = object()
+    def close(self):
+        self.put(self.SENTINEL)
+    def __iter__(self):
+        while True:
+            item = slef.get()
+            try:
+                if item is self.SENTINEL:
+                    return
+                yield item
+            finally:
+                slef.task_done()
+                
+class StoppableWorker(Thread):
+    def __init__(self, func, in_queue, out_queue):
+        #
+    def run(self):
+        for item in self.in_queue:
+            result = self.func(item)
+            self.out_queue.put(result)
+```
+
 ### 要点 ###
+
+1. 管线是一种优秀的处理方式, 它可以把处理流程划分为若干阶段, 并使用多条Python线程来同时执行这些任务
+2. 构建并发式的管线时, 要注意许多问题: 比如如何防止持续等待, 如何停止工作线程, 如何防止内存膨胀等
+3. 可以使用Queue类来构建优秀的管线
 
 ## 第40条: 考虑用协程来并发地运行多个函数 ##
 
