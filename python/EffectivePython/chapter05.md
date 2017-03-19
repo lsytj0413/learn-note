@@ -83,7 +83,36 @@ def run_md5(input_stdin):
 
 ### 介绍 ###
 
+假设使用Counter类来进行计数:
+
+```
+class Counter(object):
+    def __init__(self):
+        self.count = 0
+    def increment(self, offset):
+        self.count += offset
+        
+# 工作线程
+def worker(counter):
+    counter.increment(1)
+```
+在多线程情况下count的计数会出现数据竞争而导致错误, 为了防止此类的数据竞争行为, Python在内置的threading模块里提供了一套健壮的工具, 例如Lock类来进行数据保护.
+
+```
+class Counter(object):
+    def __init__(self):
+        self.lock = Lock()
+        self.count = 0
+    def increment(self, offset):
+        with self.lock()
+            self.count += offset
+```
+
 ### 要点 ###
+
+1. 虽然Python有全局解释器锁, 但是在编写自己的程序时依然要设法防止多个线程争用同一份数据
+2. 如果在不加锁的情况下允许多条线程修改同一个对象, 那么程序的数据结构可能会遭到破坏
+3. 在Python内置的threading模块中有个类名叫 Lock, 它用标准的方式实现了互斥锁
 
 ## 第39条: 用Queue来协调各线程之间的工作 ##
 
