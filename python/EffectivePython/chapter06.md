@@ -289,7 +289,22 @@ bisect模块中的bisect_left等函数提供了高效的二分折半搜索算法
 
 ### 介绍 ###
 
+Decimal类解决了IEEE754浮点数产生的精度问题, 而且开发者还可以更加精确的控制该类的舍入行为. Decimal类提供了一个内置的函数可以按照开发者所要求的精度和舍入方式来准确的调整数值.
+
+```
+rate = Decimal('1.45')
+seconds = Decimal('222')
+cost = rate * seconds / Decimal('60')
+
+rounded = cost.quantize(Decimal('0.01'), rounding=ROUND_UP)
+```
+
+Decimal在精度方面仍有局限, 如果需要精度不受限制的方式来表达有理数, 那么可以考虑用内置的fractions模块的Fraction类.
+
 ### 要点 ###
+
+1. 对于编程中可能用到的每一种数值, 我们都可以拿对应的Python内置类型或者内置模块中的类来表示
+2. Decimal类非常适合用在那种对精度要求很高, 且对舍入行为要求很严的场合
 
 ## 第48条: 学会安装由Python开发者社区所构建的模块 ##
 
