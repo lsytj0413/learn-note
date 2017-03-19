@@ -51,3 +51,12 @@
     - 第33条: 用元类来验证子类
     - 第34条: 用元类来注册子类
     - 第35条: 用元类来注解类的属性
+
+- [第五章: 并发及并行](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter05.md)
+
+    - 第36条: 用subprocess模块来管理子进程
+    - 第37条: 可以用线程来执行阻塞式I/O, 但不要用它做平行计算
+    - 第38条: 在线程中使用Lock来防止数据竞争
+    - 第39条: 用Queue来协调各线程之间的工作
+    - 第40条: 考虑用协程来并发地运行多个函数
+    - 第41条: 考虑用concurrent.futures来实现真正的并行计算
