@@ -360,4 +360,54 @@ def composed():
 
 ### 介绍 ###
 
+我们可以通过内置的concurrent.futures模块来利用另一个名叫multiprocessing的内置模块, 以实现可以利用多个CPU核心的并行计算, 解决性能问题. 这种做法会以子进程的形式平行的运行多个Python解释器, 从而令Python程序能够利用多核心CPU来提升执行速度.
+
+先编写一个查找最大公约数的方法:
+
+```
+def gcd(pair):
+    a, b = pair
+    low = min(a, b)
+    for i in range(low, 0, -1):
+        if a % i == 0 and b % i == 0:
+            return i
+```
+
+假设需要求取各组数据的最大公约数, 我们可以采用多线程方式:
+
+```
+numbers = []  # 数据
+pool = ThreadPoolExecutor(max_workers=2)
+results = list(pool.map(gcd, numbers))
+```
+上面这个版本的程序可能会比单线程的程序运行得还要慢, 因为线程的启动以及与线程池的通行都会有开销.
+
+利用concurrent.futures可以提升整体的速度:
+
+```
+numbers = []  # 数据
+pool = ProcessPoolExecutor(max_workers=2)
+results = list(pool.map(gcd, numbers))
+```
+
+ProcessPoolExecutor会逐步完成以下操作:
+
+1. 把numbers列表中的每一项输入数据都传给map
+2. 用pickle模块对数据进行序列化
+3. 通过本地套接字将序列化之后的数据从主解释器所在的进程发送到子解释器所在的进程
+4. 在子进程中用pickle对数据进行反序列化操作, 将其还原为Python对象
+5. 引入包含gcd函数的那个Python模块
+6. 各子进程平行的对各自的数据数据运行gcd函数
+7. 对运行结果进行序列化操作
+8. 将这些数据通过socket复制到主进程中
+9. 主进程对数据进行反序列化操作, 将其还原为Python对象
+10. 把每个子进程得出的结果合并到一份列表, 并返回给调用者
+
+使用这套方案一般需要满足两个条件: 一是运行的函数不需要与程序中的其他部分共享状态, 二是在进程中传递的数据量小.
+
 ### 要点 ###
+
+1. 把引发CPU性能瓶颈的那部分代码用C语言扩展模块来改写, 即可在尽量发挥Python特性的前提下有效提升程序的执行速度. 但是这样做的工作量比较大, 而且可能会引入BUG.
+2. multiprocsssing模块提供了一些强大的工具, 对于某些类型的任务来说开发者只需要编写少量代码, 即可实现平行计算
+3. 若想利用强大的multiprocessing模块, 最恰当的方式是通过concurrent.futures模块以及ProcessPoolExecutor类来使用它
+4. multiprocsssing模块所提供的那些高级功能都特别复杂, 所以开发者尽量不要直接使用它们
