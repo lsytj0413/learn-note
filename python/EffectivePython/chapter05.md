@@ -207,7 +207,154 @@ class StoppableWorker(Thread):
 
 ### 介绍 ###
 
+Python可以使用线程来运行多个函数, 但是线程有以下的缺点:
+
+1. 为了确保数据安全, 必须用特殊的工具来协调线程, 会令程序变得难于扩展和维护
+2. 线程需要占用大量的内存, 大约8MB
+3. 线程的启动开销大
+
+Python的协程可以避免上述问题, 协程的实现方式实际上是对生成器的扩展. 协程的工作原理是这样的: 每当生成器函数执行到yield表达式的时候, 消耗生成器的那段代码就通过send函数给生成器回传一个值, 而生成器在收到了经由send函数所传进来的这个值之后会将其视为yield表达式的执行结果.
+
+```
+def my_coroutine():
+    while True:
+        received = yield
+        print('Received:', received)
+        
+it = my_coroutine()
+# 先调用next函数以便将生成器推进到yield表达式处
+next(it)
+it.send('First')
+it.send('Second')
+```
+使用生成器可以模拟线程的行为.
+
+下面使用一个生命游戏的例子来演示协程的协同运作效果. 游戏很简单, 在一个二维表格中每个细胞都处于生存或空白的状态.
+
+```
+# 状态定义
+ALIVE = '*'
+EMPTY = '_'
+
+# 查询对象
+Query = namedtuple('Query', ('y', 'x'))
+
+# 查询周边细胞的状态生成器
+def count_neighbors(y, x):
+    n_ = yield Query(y + 1, x + 0)
+    ne = yield Query(y + 1, x + 1)
+    # e_, se, s_, sw, w_, nw
+    neighbors_states = [n_, ne, e_, se, s_, sw, w_, nw]
+    count = 0
+    for state in neighbors_states:
+        if state == ALIVE:
+            count += 1
+    return count
+
+Transition = namedtuple('Transition', ('y', 'x', 'state'))
+
+# 状态迁移生成器
+def stop_cell(y, x):
+    state = yield Query(y, x)
+    # 组合生成器协程
+    neighbors = yield from count_neighbors(y, x)
+    next_state = game_logic(state, neighbors)
+    yield Transition(y, x, next_state)
+    
+# 游戏逻辑函数
+def game_logic(state, neighbors):
+    if state == ALIVE:
+        # 若本细胞存活且周围存活数不等于3则本细胞下一轮转换为死亡
+        if neighbors < 2:
+            return EMPTY
+        elif neighbors > 3:
+            return EMPTY
+    else:
+        # 若本细胞死亡且周围存活数刚好等于3, 则本细胞下一轮转换为存活
+        if neighbors == 3:
+            return ALIVE
+    return state
+
+TICK = object()
+
+# 推进所有细胞状态转换
+def simulate(height, width):
+    while True:
+        for y in range(height):
+            for x in range(width):
+                yield from step_cell(y, x)
+        yiled TICK
+        
+# 定义整个网络
+class Grid(object):
+    def __init__(self, height, width):
+        self.height = height
+        self.width = width
+        self.rows = []
+        for _ in range(self.height):
+            self.rows.append([EMPTY] * self.width)
+            
+    def query(self, y, x):
+        return self.rows[y % self.height][x % self.width]
+    def assign(self, y, x, state):
+        self.rows[y % self.height][x % self.width] = state
+        
+def live_a_generation(grid, sim):
+    progeny = Grid(grid.height, grid.width)
+    item = next(sim)
+    while item is not TICK:
+        if isinstance(item, Query):
+            state = grid.query(item.y, item.x)
+            item = sim.send(state)
+        else:
+            progeny.assign(item.y, item.x, item.state)
+            item = next(sim)
+    return progeny
+```
+
+#### Python2中的协程 ####
+
+Python2中没有 yield from 表达式, 这代表需要把两个生成器协程组合起来, 那就需要再委派给另一个协程:
+
+```
+def delegated():
+    yield 1
+    yield 2
+    
+def composed():
+    yield 'A'
+    for value in delegated():
+        yield value
+    yield 'B'
+```
+Python2中也不支持在生成器中编写带返回值的return语句, 为了通过try/except/finally代码块正确的实现出与Python3相同的行为, 我们需要定义自己的异常类型, 并在需要返回某个值的时候抛出该异常.
+
+```
+class MyReturn(Exception):
+    def __init__(self, value):
+        self.value = value
+        super(MyReturn, self).__init__()
+        
+def delegated():
+    yield 1
+    raise MyReturn(2)
+    yield 'Not reached'
+    
+def composed():
+    try:
+        for value in delegated():
+            yield value
+    except MyReturn as e:
+        output = e.value
+    yield output * 4
+```
+
 ### 要点 ###
+
+1. 协程提供了一种有效的方式, 令程序看上去好像能够同时运行大量函数
+2. 对于生成器内的yield表达式来说, 外部代码通过send方法传给生成器的那个值就是该表达式所要具备的值
+3. 协程是一种强大的工具, 它可以把程序的核心逻辑同程序外部环境交互时所使用的代码相分离
+4. Python2不支持yield from 表达式, 也不支持从生成器内通过return语句向外部返回某个值
 
 ## 第41条: 考虑用concurrent.futures来实现真正的并行计算 ##
 
