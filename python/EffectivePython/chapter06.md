@@ -128,7 +128,79 @@ copyreg.pickle(BetterGameState, pickle_game_state)
 
 ### 介绍 ###
 
+协调世界时(UTC) 是一种标准的时间表述方式, 它与时区无关, 有些计算机用某一时刻与UNIX时间原点之间相差的秒数来表示那个时刻所对应的时间. 但这中方式对用户不太友好, 需要寻找一种在UTC与当地时间进行转换的方式.
+
+Python提供了两种时间转换方式, 旧的方式是使用内置的time模块, 比较容易出错; 新的方式是使用内置的datetime模块, 效果非常好.
+
+#### time模块 ####
+
+在内置time模块中有个localtime函数可以把UNIX时间戳转换为与宿主计算机的时区相符的当地时间.
+
+```
+from time import localtime, strftime
+
+now = 1407694710
+local_tuple = localtime(now)
+time_format = '%Y-%m-%d %H:%M:%S'
+time_str = strftime(time_format, local_tuple)
+```
+
+也可以将当地时间转换为UNIX时间戳.
+
+```
+from time import mktime, strptime
+
+time_tuple = strptime(time_str, time_format)
+utc_now = mktime(time_tuple)
+```
+
+如何把某个时区的当地时间转换为另一个时区的当地时间, 但是直接通过time, localtime和strptime等函数的返回值进行转换不是一个好办法. 许多操作系统都提供了时区配置文件, 如果时区信息发生变化, 它们就会自动更新.
+
+但是time模块依赖操作系统而运作, 它的实际行为取决于底层C函数如何与宿主操作系统相交互.
+
+#### datetime模块 ####
+
+datetime可以把UTC格式的当前时间转换为本地时间。
+
+```
+from datetime import datetime, timezone
+
+now = datetime(2014, 8, 10, 18, 18, 30)
+now_utc = now.replace(tzinfo=timezone.utc)
+now_local = now_utc.astimezone()
+```
+
+也可以把本地时间转换为UTC格式的UNIX时间戳.
+
+```
+time_str = '2014-08-10 11:18:30'
+now = datetime.strptime(time_str, time_format)
+time_tuple = now.timetuple()
+utc_now = mktime(time_tuple)
+```
+
+与time模块不同的是, datetime模块提供了一套机制, 能够把某一种当地时间可靠的转换为另外一种当地时间. 然而在默认情况下, 只能通过datetime中的tzinfo类及相关方法来使用这套时区操作机制, 因为它并没有提供UTC之外的时区定义.
+
+我们可以使用pytz模块填补这一个空缺. 为了有效的使用pytz模块, 应该把当地时间转换为UTC, 然后针对UTC值进行datetime操作, 然后再把UTC转换回当地时间.
+
+```
+# 获取UTC时间
+arrival_nyc = '2014-05-01 21:33:24'
+nyc_dt_naive = datetime.strptime(arrival_nyc, time_format)
+eastern = pytz.timezone('US/Eastern')
+nyc_dt = eastern.localize(nyc_dt_naive)
+utc_dt = pytz.utc.normalize(nyc_dt.astimezone(pytz.utc))
+
+# 转换回旧金山当地时间
+pacific = pytz.timezone('US/Pacific')
+sf_dt = pacific.normalize(utc_dt.astimezone(pacific))
+```
+
 ### 要点 ###
+
+1. 不要用time模块在不同时区之间进行转换
+2. 如果要在不同时区之间进行可靠的转换操作, 就应该把内置的datetime模块和开发者社区提供的pytz模块搭配起来使用
+3. 开发者总是应该把时间表示成UTC格式然后对其进行转换操作, 然后再转换回本地时间
 
 ## 第46条: 使用内置算法与数据结构 ##
 
