@@ -60,3 +60,13 @@
     - 第39条: 用Queue来协调各线程之间的工作
     - 第40条: 考虑用协程来并发地运行多个函数
     - 第41条: 考虑用concurrent.futures来实现真正的并行计算
+
+- [第六章: 内置模块](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter06.md)
+
+    - 第42条: 用functools.wraps定义函数修饰器
+    - 第43条: 考虑以contextlib和with语句来改写可复用的try/finally代码
+    - 第44条: 用copyreg实现可靠的pickle操作
+    - 第45条: 应该用datetime模块来处理本地时间, 而不是用time模块
+    - 第46条: 使用内置算法与数据结构
+    - 第47条: 在重视精确度的场合, 应该使用decimal
+    - 第48条: 学会安装由Python开发者社区所构建的模块
