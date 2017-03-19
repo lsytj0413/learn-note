@@ -77,7 +77,52 @@ with debug_logging(logging.DEBUG):
 
 ### 介绍 ###
 
+内置的pickle模块能够将Python对象序列化为字节流, 也能把这些字节反序列化为Python的内置对象. pickle的设计目标是提供一种二进制流, 使开发者能够在自己所控制的各程序之间传递Python对象.
+
+pickle序列化的结果如果在不同版本间传递, 比如如果新版本增加了新的属性, 老的版本的字节反序列化的结果却不会出现新加的属性. 要解决这个问题, 开发者可以使用 copyreg模块注册一些函数来负责Python对象的序列化操作.
+
+1. 为缺失的属性提供默认值
+
+```
+class GameState(object):
+    def __init__(self, level=0, lives=4, points=6):
+        self.level = level
+        self.lives = lives
+        self.points = points
+        
+def pickle_game_state(game_state):
+    kwargs = game_state.__dict__
+    return unpickle_game_state, (kwargs, )
+
+def unpickle_game_state(kwargs):
+    return GameState(**kwargs)
+    
+copyreg.pickle(GameState, pickle_game_state)
+```
+
+2. 用版本号来管理类
+
+通过上面的实现方式, 可以解决增加字段的问题, 但是无法解决移除字段的问题. 因为移除过字段之后, 对旧版本的反序列化操作会传入无效的关键字参数.
+
+解决办法是, 在pickle时向数据中增加一个代表版本号的参数, 反序列时通过版本号来选择不同的操作.
+
+3. 固定的引入路径
+
+在使用pickle模块时, 当类的名称改变之后原有的数据会无法进行反序列化操作, 因为序列化之后的数据会把该对象的引入路径写入数据中.
+
+我们可以给函数指定一个固定的标识符, 令它采用这个标识符来对数据进行unpickle操作, 使得我们在反序列化操作的时候能把原来的数据迁移到名称不同的其他类上面.
+
+```
+copyreg.pickle(BetterGameState, pickle_game_state)
+```
+
+使用这种copyreg之后, 序列化之后的数据不再包含对象所属类的引入路径, 而是包含unpickle\_game\_state 函数的路径. 所以在这种情况下不能修改这个函数的引入路径.
+
 ### 要点 ###
+
+1. 内置的pickle模块只适合在彼此信任的程序之间传递数据
+2. 如果用法比较复杂, 那么pickle模块的功能也许就会出现问题
+3. 我们可以把内置的copyreg模块和pickle结合使用, 以便为旧的数据添加缺失的属性值, 进行类的版本管理, 并给序列化之后的数据提供固定的引入路径
 
 ## 第45条: 应该用datetime模块来处理本地时间, 而不是用time模块 ##
 
