@@ -37,7 +37,41 @@ def fibonacci(n):
 
 ### 介绍 ###
 
+开发者可以用内置的contextlib模块来处理自己所编写的对象和函数, 使它们能够支持with语句. 该模块提供了名为contextmanager的修饰器, 一个简单的函数只需经过contextmanager修饰即可用在with语句中. 如果按标准方式来做就需要定义新的类, 并提供名为 \_\_enter\_\_ 和 \_\_ext\_\_ 的特殊方法.
+
+```
+def my_function():
+    logging.debug('Some debug data')
+    logging.error('Error log here')
+    logging.debug('More debug data')
+    
+# 定义一个临时修改日志级别的修饰器
+@contextmanager
+def debug_logging(level):
+    logger = logging.getLogger()
+    old_level = logger.getEffectiveLevel()
+    logger.setLevel(level)
+    try:
+        yield
+    finally:
+        logger.setLevel(old_level)
+```
+yield表达式所在的地方, 就是with块中的语句所要展开执行的地方. with块所抛出的任何异常都会由yield表达式重新抛出.
+
+```
+with debug_logging(logging.DEBUG):
+    my_function()
+```
+
+传给with语句的那个情境管理器本身也可以返回一个对象, 开发者可以通过with复合语句中的as关键字来指定一个局部变量, Python会把那个对象赋值给这个局部变量.
+
+我们只需要在情境管理器中通过yield语句返回一个值即可.
+
 ### 要点 ###
+
+1. 可以用with语句来改写try/finally块中的逻辑, 以便提升复用度并使代码更加整洁
+2. 内置的contextlib模块提供了名为contextmanager的修饰器, 开发者只需要用它来修饰自己的函数即可令该函数支持with语句
+3. 情境管理器可以通过yield语句向with语句返回一个值, 这个值会赋值给as关键字所指定的变量
 
 ## 第44条: 用copyreg实现可靠的pickle操作 ##
 
