@@ -206,7 +206,84 @@ sf_dt = pacific.normalize(utc_dt.astimezone(pacific))
 
 ### 介绍 ###
 
+Python的标准程序库里面, 内置了各种算法与数据结构.
+
+#### 双向队列 ####
+
+collections模块中的deque类是一种双向队列, 从该队列的头部或尾部插入或移除一个元素, 只需要消耗常数级别的时间, 适合用来表示先进先出的队列.
+
+```
+fifo = deque()
+fifo.append(1)
+x = fifo.popleft()
+```
+
+#### 有序字典 ####
+
+标准的字典是无序的, 这是因为其快速哈希表的实现方式导致的.
+
+collections模块中的OrderedDict类是一种特殊的字典, 它能够按照键的插入顺序来保留键值对在字典中的次序.
+
+```
+a = OrderedDict()
+a['foo'] = 1
+a['bar'] = 2
+```
+
+#### 带默认值的字典 ####
+
+collections模块中的defaultdict类是一种带默认值的字典, 如果字典里面没有这个键, 那么它就会把某个默认值与这个键自动关联起来.
+
+```
+stats = defaultdict(int)
+stats['my_counter'] += 1
+```
+
+#### 堆队列 ####
+
+堆是一种数据结构, 很适合用来实现优先级队列. heapq模块提供了heappush, heappop和nsmallest等一些函数, 能够在标准的list类型之中创建堆结构.
+
+```
+a = []
+heappush(a, 5)
+heappush(a, 3)
+heappush(a, 7)
+heappush(a, 4)
+
+# 按照优先级从高到低弹出(数值较小的优先级较高)
+print(heappop(a))
+print(heappop(a))
+print(heappop(a))
+print(heappop(a))
+```
+
+#### 二分查找 ####
+
+bisect模块中的bisect_left等函数提供了高效的二分折半搜索算法, 能够在一系列排序好的元素之间搜寻某个值.
+
+#### 与迭代器有关的工具 ####
+
+内置的itertools模块中, 包含大量的函数, 可以用来组合并操控迭代器. 这个函数分为三大类:
+
+- 连接迭代器的函数
+    - chain: 将多个迭代器按顺序连成一个迭代器
+    - cycle: 无限的重复某个迭代器中的各个元素
+    - tee: 把一个迭代器拆分成多个平行的迭代器
+    - zip_longest: 与内置的zip函数相似, 但是可以应对长度不同的迭代器
+- 从迭代器中过滤元素的函数
+    - islice: 在不进行复制的前提下, 根据索引值来切割迭代器
+    - takewhile: 在判定函数为True的时候从迭代器中逐个返回元素
+    - dropwhile: 从判定函数初次为False的地方开始, 逐个返回迭代器中的元素
+    - filterfalse: 从迭代器中逐个返回能令判断函数为False的所有元素, 效果与filter相反
+- 把迭代器中的元素组合起来的函数
+    - product: 根据迭代器中的元素计算迪卡尔积, 并将其返回
+    - permutations: 用迭代器中的元素构建长度为N的各种有序排列, 并将所有排列形式返回给调用者
+    - combination: 用迭代器中的元素构建长度为N的各种无序组合, 并将所有排列形式返回给调用者
+
 ### 要点 ###
+
+1. 应该用Python内置的模块来描述各种算法和数据结构
+2. 开发者不应该自己去重新实现那些功能
 
 ## 第47条: 在重视精确度的场合, 应该使用decimal ##
 
