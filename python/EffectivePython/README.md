@@ -5,7 +5,7 @@
 
 以下是各章节的内容:
 
-- [第一章](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter01.md)
+- [第一章: 用Pythonic方式思考](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter01.md)
 
     - 第1条: 确认自己所用的Python版本
     - 第2条: 遵循PEP8风格指南
@@ -21,7 +21,7 @@
     - 第12条: 不要在for和while循环后面写else块
     - 第13条: 合理利用try/except/else/finally结构中的每个代码块
 
-- [第二章](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter02.md)
+- [第二章: 函数](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter02.md)
 
     - 第14条: 尽量用异常来表示特殊情况, 而不要返回None
     - 第15条: 了解如何在闭包里使用外围作用域中的变量
@@ -31,3 +31,42 @@
     - 第19条: 用关键字参数来表达可选的行为
     - 第20条: 用None和文档字符串来描述具有动态默认值的参数
     - 第21条: 用只能以关键字形式指定的参数来确保代码明晰
+
+- [第三章: 类与继承](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter03.md)
+
+    - 第22条: 尽量用辅助类来维护程序的状态, 而不要用字典和元组
+    - 第23条: 简单的接口应该接受函数, 而不是类的实例
+    - 第24条: 以 @classmethod形式的多态去通用地构建对象
+    - 第25条: 用super初始化父类
+    - 第26条: 只在使用Mix-in组件制作工具类时进行多重继承
+    - 第27条: 多用public属性, 少用private属性
+    - 第28条: 继承collections.abc 以实现自定义的容器类型
+
+- [第四章: 元类及属性](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter04.md)
+
+    - 第29条: 用纯属性取代get和set方法
+    - 第30条: 考虑用 @property 来替代属性重构
+    - 第31条: 用描述符来改写需要复用的 @property 方法
+    - 第32条: 用 \_\_getattr\_\_, \_\_getattribute\_\_ 和 \_\_setattr\_\_ 实现按需生成的属性
+    - 第33条: 用元类来验证子类
+    - 第34条: 用元类来注册子类
+    - 第35条: 用元类来注解类的属性
+
+- [第五章: 并发及并行](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter05.md)
+
+    - 第36条: 用subprocess模块来管理子进程
+    - 第37条: 可以用线程来执行阻塞式I/O, 但不要用它做平行计算
+    - 第38条: 在线程中使用Lock来防止数据竞争
+    - 第39条: 用Queue来协调各线程之间的工作
+    - 第40条: 考虑用协程来并发地运行多个函数
+    - 第41条: 考虑用concurrent.futures来实现真正的并行计算
+
+- [第六章: 内置模块](https://github.com/lsytj0413/practice/blob/master/python/EffectivePython/chapter06.md)
+
+    - 第42条: 用functools.wraps定义函数修饰器
+    - 第43条: 考虑以contextlib和with语句来改写可复用的try/finally代码
+    - 第44条: 用copyreg实现可靠的pickle操作
+    - 第45条: 应该用datetime模块来处理本地时间, 而不是用time模块
+    - 第46条: 使用内置算法与数据结构
+    - 第47条: 在重视精确度的场合, 应该使用decimal
+    - 第48条: 学会安装由Python开发者社区所构建的模块
