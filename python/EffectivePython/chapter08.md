@@ -147,4 +147,42 @@ stats.print_stats()
 
 ### 介绍 ###
 
+CPython中内存管理是通过引用计数来处理的, 另外还内置了循环检测器使得垃圾回收机制能够把那些自我引用的对象清理掉.
+
+调试内存状态的第一种办法是使用内置的gc模块.
+
+```
+import gc
+found_objects = gc.get_objects()
+for obj in found_objects[:3]:
+    print(repr(obj))
+```
+gc模块不能告诉我们对象到底是如何分配出来的. Python3.4 推出了一个名为tracemalloc的内置模块, 可以解决这个问题.
+
+```
+import tracemalloc
+
+# 保存10个栈帧
+tracemalloc.start(10)
+
+time1 = tracemalloc.take_snapshot()
+import waste_memory
+x = waste_memory.run()
+time2 = tracemalloc.task_snapshot()
+
+stats = time2.compare_to(time1, 'lineno')
+for stat in stats[:3]:
+    print(stat)
+    
+# 打印分配内存操作时的完整堆栈信息
+stats = time2.compare_to(time1, 'traceback')
+top = stats[0]
+print('\n'.join(top.traceback.format()))
+```
+
 ### 要点 ###
+
+1. Python程序的内存使用情况和内存泄漏情况是很难判断的
+2. 可以通过gc模块来了解程序中的对象, 但是并不能看出这些对象究竟是如何分配出来的
+3. 内置的tracemalloc模块提供了许多强大的工具, 使得我们可以找出导致内存使用量增大的根源
+4. 只有Python3.4及后续版本才支持tracemalloc模块
