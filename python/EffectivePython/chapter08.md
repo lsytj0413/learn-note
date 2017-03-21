@@ -97,7 +97,51 @@ import pdb; pdb.set_trace()
 
 ### 介绍 ###
 
+Python提供了内置的性能分析工具可以计算出程序中某个部分的执行时间, 在总体执行时间中所占的比率, 通过这些数据可以找到最为显著的性能瓶颈并把注意力放在优化这部分代码上面.
+
+```
+def insert_sort(data):
+    #
+    insert_value(result, value)
+    # 
+    
+def insert_value(array, value):
+    pass
+    
+from random import randint
+
+data = [randing(0, max_size) for _ in range(max_size)]
+test = lambda: insert_sote(data)
+
+# 利用cProfile模块的Profile对象运行函数
+profile = Profile()
+profile.runcall(test)
+
+# 输出性能统计数据
+stats = Stats(profile)
+stats.strip_dirs()
+stats.sort_stats('cumulative')
+stats.print_stats()
+```
+
+上面的代码会输出一张表格, 其中的信息是按照函数来分组的. 性能统计中的每一列的意义是:
+
+| 列名称 | 含义 |
+|:--:|:--|
+| ncalls | 该函数在性能分析期间的调用次数 |
+| tottime | 执行该函数所花的总秒数, 本函数调用其他函数所耗费的时间不计入 |
+| tottime percall | 每次调用该函数所花的平均秒数, 调用其他函数所耗费的时间不计入, 值相当于 tottime/ncalls |
+| cumtime | 执行该函数及其中全部函数调用操作所花的总秒数 |
+| cumtime percall | 每次调用该函数及集中全部函数调用操作所花的平均秒数, 值相当于 cumtime/ncalls |
+
+有些时候一个函数会被多个地方调用, 我们可以通过 stats.print\_callers() 函数来打印出来调用者.
+
 ### 要点 ###
+
+1. 优化程序之前一定要先进行性能分析
+2. 做性能分析时应该使用cProfile而不是profile麻婆块, 前者能够给出更为精确的性能分析数据
+3. 可以通过Profile对象的runcall方法来分析程序的性能
+4. 可以用Stats对象来筛选性能分析数据
 
 ## 第59条: 用tracemalloc来掌握内存的使用及泄漏情况 ##
 
