@@ -138,3 +138,11 @@ less filename
 | /var/log | 日志文件, 最有用的是 /var/log/messages |
 
 ## 3.5 符号链接 ##
+
+有些时候我们会看到如下的目录信息:
+
+```
+lrwxrwxrwx  1 root root          28 7月  12  2016 yaml2obj-3.8 -> ../lib/llvm-3.8/bin/yaml2obj*
+```
+
+该条目的第一个字母是l, 而且看起来像是有两个文件名, 这种特殊的文件叫做符号链接.
