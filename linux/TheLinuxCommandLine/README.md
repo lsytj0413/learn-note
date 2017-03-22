@@ -9,3 +9,4 @@
     - [第二章: 导航](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter02.md)
     - [第三章: Linux系统](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter03.md)
     - [第四章: 操作文件与目录](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter04.md)
+    - [第五章: 命令的使用](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter05.md)
