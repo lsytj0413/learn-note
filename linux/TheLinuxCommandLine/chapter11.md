@@ -63,8 +63,8 @@ login shell读取的启动文件如下表:
 |:--|:--|
 | /etc/profile | 适用于所有用户的全局配置脚本 |
 | ~/.bash_profile | 用户个人的启动文件, 可扩展或重写全局配置脚本中的参数 |
-| ~/.bash_login | 若~/.bash_profile缺失则bash尝试读取此脚本 |
-| ~/.profile | 若~/.bash_profile和~/.bash_login都缺失, 则bash尝试读取此文件, 在基于Debian的Linux版本中这是默认值 |
+| \~/.bash_login | 若\~/.bash_profile缺失则bash尝试读取此脚本 |
+| \~/.profile | 若\~/.bash_profile和\~/.bash_login都缺失, 则bash尝试读取此文件, 在基于Debian的Linux版本中这是默认值 |
 
 non-login shell读取的启动文件如下表:
 
@@ -79,7 +79,7 @@ non-login shell读取的启动文件如下表:
 
 ### 11.2.2 启动文件中有什么 ###
 
-一个常见的 .bashrc 文件如下:
+一个常见的 .bashrc 文件如下(来自UBUNTU 16.04 TLS):
 
 ```
 # ~/.bashrc: executed by bash(1) for non-login shells.
