@@ -207,7 +207,6 @@ export PATH=$PATH:/home/soren/gosrc/lib/bin
 # export https_proxy=$http_proxy
 # export ftp_proxy=$http_proxy
 # export rsync_proxy=$http_proxy
-
 ```
 文件中以 [#] 开头的行是注释行, 使用 export 命令导出环境变量, 以及通过if读取 ~/.bash_aliases文件和设定PATH变量的值.
 
@@ -216,8 +215,44 @@ export PATH=$PATH:/home/soren/gosrc/lib/bin
 
 ### 11.3.1 用户应当修改哪些文件 ###
 
+一般来说, 在PATH中添加目录或定义额外的环境变量, 则需要将这些更改放入到 .bash_profile或其他等效文件中, 其他修改则应录入 .bashrc 文件中.
+
 ### 11.3.2 文本编辑器 ###
+
+文本编辑器大概分为两类: 图形界面的和基于文本的.
+
+对于图形界面的, 例如GNOME中配备的编辑器叫做gedit, 而KDE中是kedit, kwrite和kate(复杂度递增).
+
+对于基于文本的, 常见的是 nano, vi 和 emacs.
 
 ### 11.3.3 使用文本编辑器 ###
 
+nano是第一个基于文本的编辑器, 例如我们用nano来编辑 .bashrc 文件:
+
+```
+nano .bashrc
+```
+nano 的屏幕显示内容分为三个部分: 顶端的标题, 中间的可编辑文本以及底部的命令菜单.
+
+在nano中, 可以按下 Ctrl-X[即 ^X]退出程序, 按Ctrl-O完成保存, 使用方向键移动光标到目标区域即可进行编辑. 例如输入以下内容:
+
+```
+# 设置umask值
+umask 0002
+# 使shell的历史记录功能忽略与上一条录入的命令重复的命令
+export HISTCONTROL=ignoredups
+# 时命令历史记录规模从默认的500行增加到1000行
+export HISTSIZE=1000
+# 创建新命令 [l.], 显示以 [.] 开头的目录条目
+alias l.='ls -d .* --color=auto'
+# 创建新命令 [ll], 以长列表形式显示目录列表
+alias ll='ls -l --color=auto'
+```
+
 ### 11.3.4 激活我们的修改 ###
+
+因为只有在启动shell时才会读取 .bashrc, 所以对它的修改只有在关闭shell终端会话并重启时才会生效, 也可以使用以下命令让bash重新读取该文件:
+
+```
+source .bashrc
+```
