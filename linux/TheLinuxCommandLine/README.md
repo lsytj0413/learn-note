@@ -15,3 +15,5 @@
     - [第八章: 高级键盘技巧](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter08.md)
     - [第九章: 权限](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter09.md)
     - [第十章: 进程](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter10.md)
+- 第二部分: 配置与环境
+    - [第十一章: 环境](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter11.md)
