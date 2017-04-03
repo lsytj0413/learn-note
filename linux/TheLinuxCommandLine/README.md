@@ -18,3 +18,4 @@
 - 第二部分: 配置与环境
     - [第十一章: 环境](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter11.md)
     - [第十二章: VI简介](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter12.md)
+    - [第十三章: 定制提示符](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter13.md)
