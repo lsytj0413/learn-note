@@ -19,3 +19,5 @@
     - [第十一章: 环境](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter11.md)
     - [第十二章: VI简介](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter12.md)
     - [第十三章: 定制提示符](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter13.md)
+- 第三部分: 常见任务和主要工具
+    - [第十四章: 软件包管理](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter14.md)
