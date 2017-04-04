@@ -52,7 +52,43 @@ UUID=902b5bdd-e2da-4ad5-b324-b483b989d68f none            swap    sw            
 
 ### 15.1.1 查看已挂载的文件系统列表 ###
 
+mount命令用于文件系统挂载, 不带任何参数输入该命令会调出目前已经挂载的文件系统列表. 列表的格式是: device on mount\_point type filesystem\_type(options).
+
+```
+# 挂载光盘
+mkdir /mnt/cdrom
+mount -t iso9660 /dev/hdc /mnt/cdrom
+cd /mnt/cdrom
+
+# 卸载光盘
+# 首先将工作目录修改为非 /mnt/cdrom目录, 否则会导致卸载失败
+cd /mnt
+umount /dev/hdc
+```
+
 ### 15.1.2 确定设备名称 ###
+
+在 /dev 目录下存在所有设备的相关信息, 命名的固定模式如下:
+
+| 模式 | 设备 |
+|:--|:--|
+| /dev/fd* | 软盘驱动器 |
+| /dev/hd* | 较旧系统上的IDE硬盘, 一般主板上有两个IDE通道, 并且每个通道有两个驱动器附着点, 第一个叫做主设备, 第二个叫做从设备. /dev/hda代表第一个通道上的主设备, /dev/hdb 代表第一个通道上的从设备, /dev/hda1代表该硬盘上的第一块分区, 以此类推 |
+| /dev/lp* | 打印机设备 |
+| /dev/sd* | SCSI硬盘, 在最近的Linux系统中, 内核把所有的类硬盘设备都作为SCSI硬盘, 命名规则与/dev/hd* 设备类似 |
+| /dev/sr* | 光驱(CD/DV播放机和刻录机)
+
+另外经常看到的像 /dev/cdrom, /dev/dvd, /dev/floppy 这样的符号链接, 它们都是指向实际的设备文件的.
+
+可以用以下的方法来命名插入系统的可移动设备:
+
+```
+tailf /var/log/messages
+# 插入可移动设备, 可能会看到如下的日志输出:
+# sdb: sdb1
+# [sdb] Attached SCSI removable disk
+```
+可以看到设备名是 /dev/sdb, /dev/sdb1是指向此设备的第一个分区.
 
 ## 15.2 创建新的文件系统 ##
 
