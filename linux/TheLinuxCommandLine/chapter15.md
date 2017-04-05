@@ -149,18 +149,84 @@ mkfs -t msdos /dev/fd0
 
 ## 15.5 直接从/向设备转移数据 ##
 
+dd命令可以将数据块从一个地方复制到另一个地方, 格式如下:
+
+```
+dd if=input_file of=output_file [bs=block_size [count=blocks]]
+```
+
+例如, 将U盘/dev/sdb的数据复制到 /dev/sdc,
+
+```
+dd if=/dev/sdb of=/dev/sdc
+# 或者复制到文件
+dd if=/dev/sdb of=flash_drive.img
+```
+
 ## 15.6 创建CD-ROM映像 ##
+
+向CD-ROM(CD-R或是CD-RW)写入数据包括两个步骤, 首先创建一个ISO映像文件, 即CD-ROM文件系统映像; 然后将此映像文件写入到CD-ROM介质中.
 
 ### 15.6.1 创建一个CD-ROM文件映像副本 ###
 
+使用dd命令将CD光盘设备制作为ISO文件:
+
+```
+dd if=/dev/cdrom of=ubuntu.iso
+```
+该方法同样适用于数据类DVD, 但不适用于音频DVD, 因为音频DVD不使用文件系统实现存储, 对于音频CD可以使用cdrdao命令.
+
 ### 15.6.2 从文件集合中创建映像文件 ###
+
+genisoimage命令通常用于创建包含一个目录内容的ISO映像文件, 首先创建一个目录包含有所有希望加入映像文件的文件, 然后使用该命令创建映像文件即可.
+
+```
+genisoimage -o cd-rom.iso -R -J ~/cd-rom-files
+```
+-R选项添加了允许ROck Ridge延伸的元数据, 此延伸允许在Linux中使用较长文件名以及POSIX风格的文件; -J选项允许Joliet延伸, 此延伸允许在Windows中使用较长文件名.
 
 ## 15.7 向CD-ROM写入映像文件 ##
 
 ### 15.7.1 直接挂载ISO映像文件 ###
 
+```
+mkdir /mnt/iso_image
+mount -t iso9660 -o loop image.iso /mnt/iso_image
+```
+
 ### 15.7.2 擦除可读写CD-ROM ###
+
+```
+wodim dev=/dev/cdrw blank=fast
+```
 
 ### 15.7.3 写入映像文件 ###
 
+```
+wodim dev=/dev/cdrw image.iso
+```
+wodim还支持很多选项, 常见的-v选项强调输出显示详细信息, -dao 选项则决定光盘刻录采用一次刻录模式, 该模式一般用户光盘商业化生产. wodim默认模式是一次轨道模式, 用户录制音乐曲目.
+
 ## 15.8 附加认证 ##
+
+可以使用md5sum命令生成校验和, 以确保文件的内容没有发生变化.
+
+```
+md5sum image.iso
+```
+
+md5sum还可用于验证新刻录的光学介质. 通常只计算光学介质中包含该映像文件部分的校验和, 常用的计算方法如下: 计算映像文件中包含的2K字节块的数量(光学介质总是以2K字节的块为单位进行擦写),
+然后从光学介质中读取同样多数量的块, 计算这些块的校验和.
+
+某些光学介质不需要计算块数量, 例如一次刻录的CD-R可以直接使用以下命令进行计算:
+
+```
+md5sum /dev/cdrom
+```
+
+但也有许多类型的介质如DVD, 需要精确计算块的数量:
+
+```
+md5sum dvd-image.iso;
+dd if=/dev/dvd bs=2048 count=$(( $(stat -c "%s" dvd-image.iso) / 2048 )) | md5sum
+```
