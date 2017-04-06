@@ -23,3 +23,4 @@
     - [第十四章: 软件包管理](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter14.md)
     - [第十五章: 存储介质](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter15.md)
     - [第十六章: 网络](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter16.md)
+    - [第十七章: 文件搜索](https://github.com/lsytj0413/practice/blob/master/linux/TheLinuxCommandLine/chapter17.md)
