@@ -80,9 +80,45 @@ default         sc.10086.com    0.0.0.0         UG        0 0          0 wlp2s0
 
 ### 16.2.1 ftp-采用FTP传输文件 ###
 
+ftp是不安全的, 因为它以明文的方式传送账户名以及密码, 所以几乎所有的FTP协议进行网络文件传输都是由匿名的FTP服务器处理, 匿名服务器允许任何人使用anonymous登录名以及无意义的密码登录.
+
+```
+ftp fileserver
+# 以下进入ftp命令行
+anonymous
+[空密码]
+cd pub/cd_images/Ubuntu-8.04
+ls
+lcd Desktop
+get ubuntu-8.04-desktop-i386.iso
+bye
+```
+
+每条命令的含义与解释如下:
+
+| 命令 | 含义 |
+|:--|:--|
+| ftp fileserver | 启动ftp并与fileserver连接 |
+| anonymous | 登录名 |
+| [空密码] | 在登录名后输入, 可以输入空白, 否则尝试 user@example.com这样的格式 |
+| cd pub/cd_images/Ubuntu-8.04 | 进入远程系统中的目录 |
+| ls | 列出目录列表 |
+| lcd Desktop | 切换到本地系统的 Desktop 目录 |
+| get ubuntu-8.04-desktop-i386.iso | 下载文件到本地 |
+| bye | 注销登录并退出ftp, 同quit或exit命令 |
+| help | 显示命令列表 |
+
 ### 16.2.2 lftp-更好的ftp ###
 
+lftp也是一个ftp客户端, 包括更多的功能, 例如多协议支持, 下载失败时自动重新尝试, 后台进程支持, Tab键完成文件名输入等.
+
 ### 16.2.3 wget-非交互式网络下载工具 ###
+
+wget 是另一个用于文件下载的命令行程序, 即可以用于从网站上下载内容, 也可以从FTP站点下载, 单个文件, 多个文件甚至整个网站都可以被下载.
+
+```
+wget http://linuxcommand.org/index.php
+```
 
 ## 16.3 与远程主机的安全通信 ##
 
