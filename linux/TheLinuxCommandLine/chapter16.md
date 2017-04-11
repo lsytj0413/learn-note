@@ -177,3 +177,11 @@ xload
 ```
 
 ### 16.3.2 scp和sftp-安全传输文件 ###
+
+OpenSSH软件包包含了里两个使用SSH加密隧道进行网络间文件复制的命令, 其中scp与cp命令相似, sftp是ftp的安全版本.
+
+```
+scp remote-sys:document.txt .
+```
+
+sftp命令的使用方式同ftp, 不过它并不需要远程主机运行ftp服务器, 只需要ssh服务器即可.
