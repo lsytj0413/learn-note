@@ -75,7 +75,86 @@ bzip2还有 bzip2recover 命令, 用于恢复损坏的 .bz2 文件.
 
 ## 18.2 文件归档 ##
 
+归档是与压缩操作配合使用的一个常用文件管理任务, 归档是一个聚集众多文件并将它们组合为一个大文件的过程.
+
 ### 18.2.1 tar-磁带归档工具 ###
+
+tar命令是类UNIX系统中用于归档文件的经典工具, 是 tap archive的缩写. 经常看到的以 .tar 和 .tgz 结尾的文件, 分别是用普通的tar命令归档的文件和用gzip归档的文件. tar 归档可以由多个独立的文件, 一个或多个目录层次或者前两者的混合组合而成, 用法如下:
+
+```
+tar mode[options] pathname ...
+```
+
+常用的操作模式如下表:
+
+| 模式 | 描述 |
+|:--|:--|
+| c | 创建文件和/或目录列表的归档文件 |
+| x | 从归档中提取文件 |
+| t | 在归档文件末尾追加指定路径名 |
+| r | 列出归档文件的内容 |
+
+```
+# 创建归档文件
+tar cf playground.tar playground
+# 查看备份文件
+tar tvf playground.tar
+# 提取归档文件
+mkdir foo & cd foo
+tar xf ../playground.tar
+```
+除非是以超级用户的身份执行该命令, 不然从归档文件中提取出来的文件和目录的所有权属于执行归档操作的用户而不是文件的原始作者.
+
+tar命令默认的路径名是相对路径而不是绝对路径, tar命令创建归档文件时会简单的通过移除路径名前面的斜杠来实现相对路径.
+
+```
+tar cf playground2.tar ~/playground
+# 提取归档文件
+cd foo
+tar xf ../playground2.tar
+```
+此时的提取归档时是在foo目录下创建了一个 home 目录.
+
+例如备份主目录并复制到另一个系统:
+
+```
+tar cf /media/BigDisk/home.tar /home
+cd /
+tar xf /media/BigDisk/home.tar
+```
+
+从归档中提取文件时, 可以限制只提取某些文件, 格式如下:
+
+```
+tar xf archive.tar pathname
+```
+在命令后面添加要提取的文件的路径名, 可以确保只恢复指定的文件, 而且可以指定多个路径名. 指定的路径名必须是存储在归档文件中的完整, 准确的相对路径名.
+在指定路径名时通常不支持通配符, 但是GNU版本的tar命令(在Linux发行版中该版本最常见)通过使用 --wildcards选项而支持通配符.
+
+```
+cd foo
+tar xf ../playground2.tar --wildcards 'home/me/playground/dir-*/file-A'
+```
+创建归档时通常辅助以find命令:
+
+```
+find playground -name 'file-A' -exec tar rf playground.tar '{}' '+'
+find playground -name 'file-A' | tar cf - --files-from=- | gzip > playground.tgz
+```
+在tar命令中, 如果文件名前面明确指定有连字符[-], 则表示是标准输入输出的文件(这是一个惯例, 其他许多命令也采用连字符表示标准输入输出), --files-from选项(同 -T ) 则指定了tar命令从文件中而不是命令行中读取文件路径名列表. tgz是经gzip压缩的tar归档文件的后缀, 有时也用 .tar.gz 为后缀.
+
+现代GNU版本的tar命令提供 gzip+z和 bzip2+j 选项创建压缩归档文件.
+
+```
+find playground -name 'file-A' | tar czf playground.tgz -T -
+find playground -name 'file-A' | tar cjf playground.tbz -T -
+```
+
+可以利用tar命令在系统之间传输网络文件:
+
+```
+ssh remote-sys 'tar cf - Documents' | tar xf -
+```
 
 ### 18.2.2 zip-打包压缩工具 ###
 
