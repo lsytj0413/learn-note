@@ -60,6 +60,19 @@ zcat foo.txt.gz | less
 
 ### 18.1.2 bzip2-牺牲速度以换取高质量的数据压缩 ###
 
+bzip2与gzip命令功能相仿, 但使用不同的压缩算法, 该算法具有高质量的数据压缩能力, 但却降低了压缩速度. 多数情况下用法与gzip相似, 只是用bzip2压缩后的文件以 .bz2 为后缀.
+
+```
+ls -l /etc > foo.txt
+ls -l foo.txt
+bzip2 foo.txt
+ls -l foo.txt.bz2
+bunzip2 foo.txt.bz2
+```
+前面讨论的gzip的所有选项(除 -r选项), bzip2都支持. 两者的压缩级别选项有些许不同, 同时解压缩文件的专用工具是 bunzip2 额 bzcat 命令.
+
+bzip2还有 bzip2recover 命令, 用于恢复损坏的 .bz2 文件.
+
 ## 18.2 文件归档 ##
 
 ### 18.2.1 tar-磁带归档工具 ###
