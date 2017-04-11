@@ -10,7 +10,53 @@
 
 ## 18.1 文件压缩 ##
 
+压缩算法一般分为两大类: 无损压缩和有损压缩. 在下面的讨论中仅仅设计无损压缩.
+
 ### 18.1.1 gzip-文件压缩与解压缩 ###
+
+gzip命令用于压缩一个或多个文件, 执行命令后原文件会被压缩文件取代, 执行gunzip命令则可以将压缩文件还原为原文件.
+
+```
+ls -l /etc > foo.txt
+# 压缩, 生成foo.txt.gz文件, foo.txt被删除
+gzip foo.txt
+# 解压缩foo.txt.gz文件
+gunzip foo.txt
+```
+
+gzip常用的选项如下表:
+
+| 选项 | 功能描述 |
+|:--|:--|
+| -c | 将输出内容写道标准输出并且保持原文件, 同 --stdout或 --to-stdout选项 |
+| -d | 解压缩, 加上此命令后则等同 gunzip命令, 同 --decompress或 --uncompress 选项 |
+| -f | 强制压缩, 即使压缩版本已经存在, 同 --force 选项 |
+| -h | 显示帮助信息, 同 --help 选项 |
+| -l | 列出所有压缩文件的压缩统计, 同 --list 选项 |
+| -r | 如果操作参数有一个或多个目录, 则递归压缩包含在目录中的文件, 同 --recursive 选项 |
+| -t | 检验压缩文件的完整性, 同 --test 选项 |
+| -v | 在压缩时显示详细信息, 同 --verbose 选项 |
+| -number | 设定压缩级别, number为 1(速度最快, 压缩比最小) 到9(速度最慢, 压缩比最大), 其中1等于 --fast, 9等于 --best, 默认级别为6 |
+
+```
+gzip foo.txt
+gzip -tv foo.txt.gz
+gzip -d foo.txt.gz
+
+ls -l /etc | gzip > foo.txt.gz
+# gunzip默认解压缩后最为 .gz 的文件
+gunzip foo.txt
+# 只查看压缩文本文件的内容
+gunzip -c foo.txt | less
+```
+
+可以利用zcat命令联合gzip, 效果等同于带有 -c 选项的gunzip. zcat 的功能与cat命令相同, 只是它的操作对象是压缩文件.
+
+```
+zcat foo.txt.gz | less
+```
+
+同样也有zless命令, 与less管道功能相同.
 
 ### 18.1.2 bzip2-牺牲速度以换取高质量的数据压缩 ###
 
