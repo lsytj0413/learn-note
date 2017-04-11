@@ -173,4 +173,55 @@ find ~ -iname '*.jpg' -print0 | xargs --null ls -l
 
 ### 17.2.3 返回到playground文件夹 ###
 
+本节使用一个find命令的实例来介绍find命令的应用.
+
+首先, 创建一个包含很多目录和文件的文件夹:
+
+```
+# 创建100个目录
+mkdir -p playground/dir-{00{1..9},0{10..99},100}
+# 每个目录下创建一些文件
+touch playground/dir-{00{1..9},0{10..99},100}/file-{A..Z}
+```
+
+查找名为 file-A 的文件:
+
+```
+find playground -type f -name 'file-A'
+```
+find命令不会产生排序的结果, 其输出顺序是由在存储设备中的布局决定的.
+
+创建一个新文件:
+
+```
+touch playground/timestamp
+# 使用stat命令输出系统掌握的文件所有信息及属性
+stat playground/timestamp
+
+# 再次touch文件查看时间更新
+touch playground/timestamp
+stat playground/timestamp
+```
+
+更新名为file-B的文件的时间:
+
+```
+find playground -type f -name 'file-B' -exec touch '{}' ';'
+```
+
+按时间查找文件(即file-B):
+
+```
+find playground -type f -newer playground/timestamp
+```
+
+查找具有不安全访问权限的文件, 并修改权限:
+
+```
+find playground \( -type f -not -perm 0600 \) -or \( -type d -not -perm 0700 \)
+# 修改权限
+find playground \( -type f -not -perm 0600 -exec chmod 0600 '{}' ';' \) -or \( -type d -not -perm 0700 -exec chmod 0700 '{}' ';' \)
+```
+注意: 一般来说将以上的命令拆分为两个, 分别针对文件和针对目录更为易读与理解.
+
 ### 17.2.4 option选项 ###
