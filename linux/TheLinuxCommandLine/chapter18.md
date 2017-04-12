@@ -158,6 +158,46 @@ ssh remote-sys 'tar cf - Documents' | tar xf -
 
 ### 18.2.2 zip-打包压缩工具 ###
 
+zip程序既是文件压缩工具也是文件归档工具. Linux用户主要使用zip程序与Windows系统交换文件, 而不是将其用于压缩或是归档文件. 命令的格式如下:
+
+```
+zip options zipfile file...
+```
+
+例如:
+
+```
+zip -r playground.zip playground
+```
+使用 -r 选项让zip命令递归压缩, 否则只会保留playground目录而不包括目录中的内容. zip命令会自动添加 .zip 后缀.
+
+zip使用两种存储方式向归档文件中添加文件, 一是不对文件进行压缩直接存储, 而是压缩后存储.
+
+可以使用unzip命令提取内容:
+
+```
+cd foo
+unzip ../playground.zip
+unzip ../playground.zip playground/dir-087/file-Z
+```
+
+如果指定的归档文件已经存在, 那么zip命令会更新而不是取代该文件. 这表示原来存在的归档文件会保留, 只是增加一些新文件, 原有匹配文件则被替换.
+
+使用 -l 选项, unzip只会列出归档文件的内容而不会提取文件, 可以使用 -v 选项得到更详细的列表.
+
+zip 命令也可以利用标准输入输出, 可以用 -@ 选项将多个文件送至zip进行压缩.
+
+```
+find playground -name 'file-A' | zip -@ file-A.zip
+ls -l /etc | zip ls-etc.zip -
+```
+
+unzip命令不支持标准输入输出, 当指定 -p 选项后, unzip命令便会将输出结果以标准形式输出:
+
+```
+unzip -p ls-etc.zip | less
+```
+
 ## 18.3 同步文件和目录 ##
 
 ### 18.3.1 rsync-远程文件, 目录的同步 ###
