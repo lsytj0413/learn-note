@@ -200,6 +200,38 @@ unzip -p ls-etc.zip | less
 
 ## 18.3 同步文件和目录 ##
 
+将一个或多个目录与本地系统或是远程系统上的其他目录进行同步, 是维护系统备份文件的常用方法.
+
 ### 18.3.1 rsync-远程文件, 目录的同步 ###
+
+针对类UNIX系统, 完成这一同步任务最合适的工具是 rsync命令. 该命令通过运用 rsync 远程更新协议同步本地系统与远程系统上的目录, 该协议允许 rsync 命令快速检测到本地和远程系统上的两个目录之间的不同,
+从而以最少数量的复制动作完成两个目录之间的同步. 该命令的格式如下:
+
+```
+rsync options source destination
+```
+
+这里的source和destination是下列选项之一:
+
+- 一个本地文件或目录
+- 一个远程文件或目录, 形式为 [user@]host:path
+- 一个远程rsync服务器, 由 rsync://[user@]host[:port]/path 指定
+
+source和destinaion 之间必须有一个本地文件, 因为 rsync 不支持远程系统与远程系统之间的复制.
+
+在本地系统进行同步的实例如下:
+
+```
+rm -rf foo/*
+# -a选项: 递归归档并保留文件属性, -v选项: 详细输出
+rsync -av playground foo
+```
+
+备份系统到外部硬盘的实例如下:
+
+```
+mkdir /media/BigDisk/backup
+sudo rsync -av --delete /etc /home /usr/local /media/BigDisk/backup
+```
 
 ### 18.3.2 在网络上使用rsync命令 ###
