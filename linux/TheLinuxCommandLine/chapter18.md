@@ -235,3 +235,19 @@ sudo rsync -av --delete /etc /home /usr/local /media/BigDisk/backup
 ```
 
 ### 18.3.2 在网络上使用rsync命令 ###
+
+远程复制有两种方式.
+
+方法之一是针对已安装了rsync命令以及诸如ssh等远程shell程序的系统. 假定本地网络有另一个具有足够可利用硬盘空间的系统, 同时希望利用远程系统而非外部设备进行备份操作,
+假设远程系统已经有一个用于存放备份的 /backup 目录, 则命令如下:
+
+```
+sudo rsync -av --delete --rsh=ssh /etc /home /usr/local remote-sys:/backup
+```
+
+
+方法之二是使用rsync服务器同步网络文件, 通过配置rsync运行一个守护进程监听进来的同步请求.
+
+```
+rsync -av --delete rsync://rsync.gtlib.gatech.edu/fedora-linux-core/development/i386/os fedora-devel
+```
