@@ -5,11 +5,16 @@
 FROM ubuntu:16.04
 
 # 作者
-MAINTAINER soren
+MAINTAINER sorenyang@foxmail.com
 
 # 使用阿里云的UBUNTU源
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak
 COPY ./sources.list /etc/apt/sources.list
+
+# 更新包
+RUN apt-get update \
+    && apt-get -y upgrade \
+    && rm -rf /var/lib/apt/lists/*
 
 # 启动命令行
 CMD ["/bin/bash"]
