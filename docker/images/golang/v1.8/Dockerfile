@@ -9,8 +9,8 @@ MAINTAINER sorenyang@foxmail.com
 
 # 首先添加ppa源
 # 然后安装golang1.8
-RUN apt update \
-    && apt install -y --no-install-recommends python-software-properties \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends software-properties-common \
     && add-apt-repository -y ppa:longsleep/golang-backports \
     && apt-get update \
     && apt-get install -y --no-install-recommends golang-go \
