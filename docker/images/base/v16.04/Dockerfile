@@ -13,7 +13,7 @@ COPY ./sources.list /etc/apt/sources.list
 
 # 更新包
 RUN apt-get update \
-    && apt-get -y upgrade \
+    && apt-get -y --no-install-recommends upgrade \
     && rm -rf /var/lib/apt/lists/*
 
 # 启动命令行
