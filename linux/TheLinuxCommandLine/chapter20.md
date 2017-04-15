@@ -183,7 +183,44 @@ expand distros.txt | cut -c 23-
 
 ### 20.3.2 paste-合并文本行 ###
 
+paste命令是cut命令的逆向操作, 用于向文本文件中增加一个或更多的文本列, 该命令读取多个文件并将每个文件中提取出的字段组合为一个整体输出到标准输出流.
+
+例如, 将distros.txt 文件按照发行版本的时间顺序排序:
+
+```
+# 首先按照时间排序
+sort -k 3.7nbr -k 3.1nbr -k3.4nbr distros.txt > distros-by-date.txt
+# 提取系统名称和发行版本号到新文件
+cut -f 1,2 distros-by-date.txt > distros-versions.txt
+# 提取发行时间到新文件
+cut -f 3 distros-by-date.txt > distros-dates.txt
+# 合并文件, 把发行时间置于开头
+paste distros-dates.txt distros-versions.txt
+```
+
 ### 20.3.3 join-连接两文件中具有相同字段的行 ###
+
+join与paste命令类似, 也是向文件增加列, 是一个基于共享关键字字段将多个文件的数据拼接在一起的操作.
+
+首先创建两个具有共享字段的文件作为演示, 利用 distros-by-date.txt 文件生成两个附属文件:
+
+```
+# 一个包含发行时间和系统名的文件
+cut -f 1,2 distros-by-date.txt > distros-names.txt
+paste distros-dates.txt distros-names.txt > distros-key-name.txt
+
+# 一个包含发行时间和版本号的文件
+cut -f 2,2 distros-by-date.txt > distros-vernums.txt
+paste distros-dates.txt distros-vernums.txt > distros-key-vernums.txt
+```
+
+此时这两个文件具有公共字段发行时间, 然后使用join合并文件:
+
+```
+join distros-key-names.txt distros-key-vernums.txt | head
+```
+
+默认情况下, join使用空格作为输入字段的界定符, 以单个空格作为输出字段的界定符, 可以通过指定参数选项改变这一默认属性.
 
 ## 20.4 文本比较 ##
 
