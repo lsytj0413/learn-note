@@ -391,6 +391,34 @@ echo "front" | sed '1s/front/back/'
 | addr1,+n | addr1行及其之后的n行 |
 | addr! | 除addr之外的所有行 |
 
+一些地址表示实例如下:
+
+```
+# 输出1到5行
+sed -n '1,5p' distros.txt
+
+# 使用正则表达式
+sed -n '/SUSE/p' distros.txt
+
+# 否定形式
+sed -n '/SUSE/!p' distros.txt
+```
+
+sed的常用编辑指令如下表:
+
+| 命令 | 功能描述 |
+|:--|:--|
+| = | 输出当前行号 |
+| a | 在当前行后附加文本 |
+| d | 删除当前行 |
+| i | 在当前行前输入文本 |
+| p | 打印当前行, 默认sed会输出每一行且只编辑文件内部匹配地址的行, 当指定 -n 选项时默认操作会被覆盖 |
+| q | 退出sed并不再处理其他行, 如果没有指定 -n 选项则会输出当前行 |
+| Q | 直接退出sed不再处理行 |
+| s/regexp/replacement/ | 将regexp的内容替换为 replacement |
+| y/set1/set2 | 将字符集set1替换为字符集set2, 与tr类似, 但是sed命令要求字符集等长 |
+
+
 ### 20.5.3 aspell-交互式拼写检查工具 ###
 
 ## 20.6 本章结尾语 ##
