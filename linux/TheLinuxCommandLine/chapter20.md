@@ -418,6 +418,39 @@ sed的常用编辑指令如下表:
 | s/regexp/replacement/ | 将regexp的内容替换为 replacement |
 | y/set1/set2 | 将字符集set1替换为字符集set2, 与tr类似, 但是sed命令要求字符集等长 |
 
+例如将 distros.txt 文件中的 MM/DD/YYYY格式的时间形式修改为 YYYY-MM-DD形式:
+
+```
+sed 's/\([0-9]\{2\}\)\/\([0-9]\{2\}\)\/\([0-9]\{4\}\)$/\3-\1-\2/' distros.txt
+```
+
+其中使用了BRE中的回参考特性, 即如果replacement中出现了 \n 转义字符, 并且n为 1到9的数字, 那么此转义字符就是指前面正则表达式中与之对应的子表达式, 只要简单的将表达式置于小括号中即可称为子表达式.
+另外还使用反斜杠来避免正则表达式中的斜杠让sed混淆, 而且因为sed默认情况下只接受基本正则表达式, 所以用反斜杠对某些元字符进行转义.
+
+sed的s命令还可以在替换字符串后紧跟可选择标志符, 例如使用 g 标志符让sed对每行的所有匹配项进行替换操作, 默认只替换第一个匹配项.
+
+sed命令还可以使用 -f 选项建立更复杂的命令脚本文件, 例如编写以下内容的脚本 distros.sed :
+
+```
+# sed script to produce Linux distributions report
+
+1 i\
+\
+Linux Distributions Report\
+
+s/\([0-9]\{2\}\)\/\([0-9]\{2\}\)\/\([0-9]\{4\}\)$/\3-\1-\2/
+y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/
+```
+
+按照如下命令运行:
+
+```
+sed -f distros.sed distros.txt
+```
+
+该命令脚本的第3～6行是要插入文本的内容, 其中i命令后紧跟转义回车符(由反斜杠和回车符组成, 中间不能有空格), 可确保文本流中的嵌入回车符不会告诉编译器已经到了行末尾.
+
+第8行实现小写字母到大写字母的转换, sed中的y命令不支持字符范围和POSIX字符类.
 
 ### 20.5.3 aspell-交互式拼写检查工具 ###
 
