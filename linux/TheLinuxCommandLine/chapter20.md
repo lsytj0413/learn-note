@@ -318,6 +318,13 @@ diff -u file1.txt file2.txt
 
 ### 20.4.3 patch-对原文件进行diff操作 ###
 
+patch命令用于更新文本文件, 利用diff命令的输出结果将较旧版本的文件升级成较新版本.
+
+```
+diff -Naur file1.txt file2.txt > patchfile.txt
+patch < patchfile.txt
+```
+
 ## 20.5 非交互式文本编辑 ##
 
 ### 20.5.1 tr-替换或删除字符 ###
