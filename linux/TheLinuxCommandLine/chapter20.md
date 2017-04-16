@@ -226,6 +226,18 @@ join distros-key-names.txt distros-key-vernums.txt | head
 
 ### 20.4.1 comm-逐行比较两个已排序文件 ###
 
+comm命令用于文本文件之间的比较, 显示两文件中相异的行以及相同的行.
+
+```
+comm file1.txt file2.txt
+```
+
+comm会输出三列内容, 第一列显示的是第一个文件独有的行, 第二列显示的是第二个文件独有的行, 第三列显示的则是两个文件共有的行. comm命令还支持 -n 选项, 此处的n是1, 2或者3, 表示省略第几行的内容.
+
+```
+comm -12 file1.txt file2.txt
+```
+
 ### 20.4.2 diff-逐行比较文件 ###
 
 ### 20.4.3 patch-对原文件进行diff操作 ###
