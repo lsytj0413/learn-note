@@ -454,6 +454,18 @@ sed -f distros.sed distros.txt
 
 ### 20.5.3 aspell-交互式拼写检查工具 ###
 
+aspell继承自早期的ispell命令, 通常为那些需要拼写检查的程序所用. 它可以智能的检查不同类型文本文件的错误, 包括HTML文件, email消息等. 命令格式如下:
+
+```
+aspell check textfile
+```
+
+aspell在检查模式下是与用户交互的, 在有拼写错误时会有一个显示界面提示用户操作.
+
+除非指定 --dont-backup选项, 否则aspell命令会创建一个包含原文本内容的备份文件, 文件名为原文件名加上 .bak 后缀.
+
+aspell命令可以使用 -H 选项启动 HTML 模式.
+
 ## 20.6 本章结尾语 ##
 
 ## 20.7 附加项 ##
