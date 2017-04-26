@@ -86,6 +86,14 @@ sort -k 1,1 -k 2n distros.txt | sed -f distros-nl.sed | nl
 
 ### 21.1.2 fold-将文本中的行长度设定为指定长度 ###
 
+fold是一个将文本行以指定长度分解的操作, 支持将一个或多个文本文件或是标准输入作为输入参数.
+
+```
+echo "The quick brown fox jumped over the lazy dog." | fold -w 12
+```
+
+在使用fold时如果没有指定宽度参数, 则默认为80, 而且fold在断行时并不会考虑单词边界, 可以添加 -s 选项使fold在到达width字符数前的最后一个有效空格处将原文本行断开.
+
 ### 21.1.3 fmt-简单的文本格式化工具 ###
 
 ### 21.1.4 pr-格式化打印文本 ###
