@@ -96,6 +96,41 @@ echo "The quick brown fox jumped over the lazy dog." | fold -w 12
 
 ### 21.1.3 fmt-简单的文本格式化工具 ###
 
+fmt命令同样会折叠文本, 它即可以处理文件也可以处理标准输入, 并对文本流进行段落格式化, 它可以在保留空白行和缩进的同时对文本进行填充和连接.
+
+```
+fmt -w 50 fmt-info.txt | head
+```
+
+在fmt命令中, 默认情况下, 空白行, 单词之间的空格和缩进都保留在输出结果中; 不同缩进量的连续输入行并不进行拼接; 制表符会在输入中扩展并直接输出.
+
+fmt命令常用的选项如下表:
+
+| 选项 | 功能描述 |
+|:--|:--|
+| -c | 保留段落前两行的缩进, 随后的行都与第二行的缩进对齐 |
+| -p string | 只格式化以前缀字符串string开头的行, 格式化后string的内容会作为每一个格式化行的前缀 |
+| -s | 仅截断行模式, 在此模式下将会只根据指定的列宽截断行, 而短行不会与其他行结合 |
+| -u | 字符间隔统一, 字符之间间隔一个空格字符, 句子之间间隔两个空格字符 |
+| -w width | 默认值为75 |
+
+通过 -p 选项, 我们可以选择性的格式化文件内容, 前提是要格式化的文本行都以相同的字符序列开头.
+
+```
+cat > fmt-code.txt
+# This file contains code with comments.
+
+# This line is a comment.
+# Followed by another comment line.
+# ANd another.
+
+This, on the other hand, is a line of code.
+And another line of code.
+ANd another.
+
+fmt -w 50 -p '# ' fmt-code.txt
+```
+
 ### 21.1.4 pr-格式化打印文本 ###
 
 ### 21.1.5 printf-格式化并打印数据 ###
