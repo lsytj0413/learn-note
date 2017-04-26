@@ -56,7 +56,33 @@ nl常用的选项如下表:
 | rn | 右对齐, 无缩进, 默认选项 |
 | rz | 右对齐, 有缩进 |
 
+用户可以利用nl结合其他工具进行更复杂的任务, 首先利用文本编辑器编辑sed脚本, 并保存为 distros-nl.sed, 内容如下:
 
+```
+# sed script to produce Linux distributions report
+
+1 i\
+\\:\\:\\:
+\
+Linux Distributions Report\
+\
+Name         Ver.           Released\
+----         ----           --------\
+\\:\\:
+s/\([0-9]\{2\}\)\/\([0-9]\{2\}\)\/\([0-9]\{4\}\)$/\3-\1-\2-/
+$ a\
+\\:\
+\
+End Of Report
+```
+
+该脚本文件完成了向原报告中插入nl逻辑页标记以及在报告末尾添加页脚内容的任务, 输入标记时需要使用双斜杠以避免sed将它们解释为转义字符.
+
+然后结合sort, sed和nl创建一个报告文本:
+
+```
+sort -k 1,1 -k 2n distros.txt | sed -f distros-nl.sed | nl
+```
 
 ### 21.1.2 fold-将文本中的行长度设定为指定长度 ###
 
