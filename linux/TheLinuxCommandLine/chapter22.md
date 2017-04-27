@@ -93,6 +93,26 @@ lpr常用的选项如下表:
 
 ### 22.4.2 lp-打印文件(System V类型) ###
 
+lp常用的选项如下表:
+
+| 选项 | 说明 |
+|:--|:--|
+| -d printer | 设置目标打印机 |
+| -n number | 打印number份副本 |
+| -o landscape | 将输出设置为横向 |
+| -o fitplot | 根据页面大小缩放文件 |
+| -o scaling=number | 设置文件缩放比例 |
+| -o cpi=number | 设置每英寸输出字符数位为number, 默认为 10 |
+| -o lpi=number | 设置每英寸输出指定number行, 默认为 6 |
+| -o page-bottom[left/right/top]=points | 设置页边距, 值以点的形式表示, 每英寸有72个点 |
+| -P pages | 指定页列表, 页的表达形式可以为用逗号隔开的页列表或是以 [-] 表示的页范围, 例如 1,3,5,7-10 |
+
+例如设置打印的规格为12CPI(字符/英寸) 和 8LPI(行/英寸), 并且左边距为 0.5 英寸.
+
+```
+ls /usr/bin | pr -4 -w 90 -l 88 | lp -o page-left=36 -o cpi=12 -o lpi=8
+```
+
 ### 22.4.3 另外一个参数选项: a2ps ###
 
 ## 22.5 监测和控制打印任务 ##
