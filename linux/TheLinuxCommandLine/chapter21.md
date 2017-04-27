@@ -213,6 +213,77 @@ flags的可选项如下表:
 
 ### 21.2.1 roff和TEX家族 ###
 
+当今主宰文档格式化领域的主要有两大家族: 即是从原始roff程序延伸而来的nroff和troff, 以及基于Donald Knuth的TEX排版系统.
+
 ### 21.2.2 groff-文档格式化系统 ###
+
+groff其实是GNU实现方式的troff系列程序集, 它还包含一个用于模拟nroff及其他roff家族系列的程序功能的脚本.
+
+man命令是由groff使用mandoc的宏包进行浏览的, 所以以下两条命令等价:
+
+```
+man ls | head
+zcat /usr/share/man/man1/ls.1.gz | groff -mandoc -T ascii | head
+```
+
+groff可以输出多种不同格式的结果, 如果未指定输出格式, 那么PostScript便是其默认输出格式:
+
+```
+zcat /usr/share/man/man1/ls.1.gz | groff -mandoc | head
+
+%!PS-Adobe-3.0
+%%Creator: groff version 1.22.3
+%%CreationDate: Thu Apr 27 12:38:03 2017
+%%DocumentNeededResources: font Times-Roman
+%%+ font Times-Bold
+%%+ font Times-Italic
+%%DocumentSuppliedResources: procset grops 1.22 3
+%%Pages: 4
+%%PageOrder: Ascend
+%%DocumentMedia: Default 595 842 0 () ()
+```
+
+PostScript是一种页面描述语言, 一般用于描述送至类排字机设备打印的页面内容, 可以提取groff命令的输出结果并保存到文件中, 然后启动页面浏览器查看.
+
+```
+zcat /usr/share/man/man1/ls.1.gz | groff -mandoc > ~/桌面/foo.ps
+# 转换为PDF
+ps2pdf ~/桌面/foo.ps ~/桌面/ls.pdf
+```
+
+ps2pdf程序是ghostscript软件包的一个小成员, 该程序在多数支持打印的Linux系统上都有安装.
+
+Linux系统通常包含许多进行文件格式转换的命令行程序, 命名方式通常为format2format, 可以使用以下命令输出程序名列表:
+
+```
+ls /usr/bin/*[[:alpha:]]2[[:alpha:]]*
+```
+
+首先使用表格格式化工具tbl对distros.txt文件中的Linux发行版本列表进行排版, 先修改sed脚本 distros-tbl.sed如下:
+
+```
+# sed script to produce Linux distributions report
+
+1 i\
+.TS\
+center box;\
+cb s s\
+l n c.\
+Linux Distributions Report\
+=\
+Name Version Released\
+_
+s/\([0-9]\{2\}\)\/\([0-9]\{2\}\)\/\([0-9]\{4\}\)$/\3-\1-\2-/
+$ a\
+.TE
+```
+
+然后查看排版输出:
+
+```
+sort -k 1,1 -k 2n distros.txt | sed -f distros-tbl.sed | groff -t -T ascii 2> /dev/null
+```
+
+在groff命令中使用 -t选项表示先用tbl预处理文本流.
 
 ### 21.3 本章结尾语 ###
