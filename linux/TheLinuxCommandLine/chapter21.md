@@ -287,3 +287,5 @@ sort -k 1,1 -k 2n distros.txt | sed -f distros-tbl.sed | groff -t -T ascii 2> /d
 在groff命令中使用 -t选项表示先用tbl预处理文本流.
 
 ### 21.3 本章结尾语 ###
+
+简单的格式化工具, 例如fmt和pr在一些生成短文档的脚本中用途很大, 而像groff这类复杂工具则可以用来排版书籍.
