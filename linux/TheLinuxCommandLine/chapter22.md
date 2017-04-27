@@ -115,6 +115,45 @@ ls /usr/bin | pr -4 -w 90 -l 88 | lp -o page-left=36 -o cpi=12 -o lpi=8
 
 ### 22.4.3 另外一个参数选项: a2ps ###
 
+a2ps是一个格式转换程序, 原来是指将ASCII格式转换为PostScript格式, 并且用于为PostScript打印机上的打印任务准备文本文件, 现在该命令已经可以将任何格式的文件转换为PostScript格式.
+
+```
+ls /usr/bin | pr -3 -t | a2ps -o ~/桌面/ls.ps -L 66
+```
+
+该命令行用pr过滤该文本流, 使用 -t 选项省略页眉页脚.
+
+a2ps命令常用的选项如下表:
+
+| 选项 | 功能描述 |
+|:--|:--|
+| --center-title text | 将中心页标题设置 text |
+| --columns number | 将页分成n列, 默认值为2 |
+| --footer text | 设置页脚内容为text |
+| --guess | 给出输入文件的类型 |
+| --left-footer text | 将左页脚内容设为text |
+| --left-title text | 将左页标题设置为text |
+| --line-numbers=interval | 每interval的间隔对输出文件进行编号 |
+| --list=defaults | 显示默认设置 |
+| --list=topic | 显示topic的设置 |
+| --pages range | 打印range范围内的内容 |
+| --right-footer text | 将右页脚内容设为text |
+| --right-title text | 将右页标题设置为text |
+| --rows number | 将页面分成number行, 默认为1 |
+| -B | 无页眉 |
+| -b text | 设置页眉内容为text |
+| -f size | 使用size点的字体 |
+| -l number | 设置每行有number个字符 |
+| -L number | 设置每页有number行 |
+| -M name | 使用名为name的纸张大小, 例如A4 |
+| -n number | 打印n份副本 |
+| -o file | 将输出内容送至file, 如果指定为1则是标准输出 |
+| -P printer | 使用printer打印机 |
+| -R | 纵向排版 |
+| -r | 横向排版 |
+| -T number | 设置制表符tab作为每一个数字字符的结尾 |
+| -u text | 采用底图(水印)技术打印文本纸张 |
+
 ## 22.5 监测和控制打印任务 ##
 
 ### 22.5.1 lpstat-显示打印系统状态 ###
