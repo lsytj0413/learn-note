@@ -53,6 +53,53 @@ chmod 755 hello_world
 
 ### 24.3.1 长选项名 ###
 
+许多命令都有长短两种选项名称:
+
+```
+ls -ad
+# 等价于
+ls --all --directory
+```
+
+在命令行中输入选项的时候, 短选项更受欢迎; 在书写脚本的时候, 长选项能提供可读性.
+
 ### 24.3.2 缩进和行连接 ###
+
+当使用长命令的时候, 通过把命令在几个文本行中展开, 可以提高命令的可读性:
+
+```
+find playground \( -type f -not -perm 0600 -exec
+chmod 0600 '{}' ';' \) -or \( -type d -not -perm 0711 -exec chmod
+0711 '{}' ';' \)
+```
+
+可以这样书写来提高可读性:
+
+```
+find playground \
+    \( \
+        -type f \
+        -not -perm 0600 \
+        -exec chmod 0600 '{}' ';' \
+    \) \
+    -or \
+    \( \
+        -type d \
+        -not -perm 0711 \
+        -exec chmod 0711 '{}' ';' \
+    \)
+```
+
+可以使用如下方式来配置vim提高脚本书写能力:
+
+:syntax on    打开语法高亮
+
+:set hlsearch    高亮查找结果 
+
+:set tabstop=4    设置tab字符等价的空格数, 默认为8
+
+:set autoindent    自动缩进, 可以使用 Ctrl+d 停止缩进
+
+可以将这些配置写入到 ~/.vimrc 文件中, 使配置永久生效.
 
 ## 24.5 本章结尾语 ##
