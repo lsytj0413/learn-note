@@ -27,6 +27,21 @@ sys_info_page > sys_info_page.html
 
 ## 25.2 第二阶段: 加入一点数据 ##
 
+修改脚本, 增加一个网页标题和报告正文部分:
+
+```
+#!/bin/bash
+# Program to output a system information page
+echo "<HTML>
+    <HEAD>
+        <TITLE>System Information Report</TITLE>
+    </HEAD>
+    <BODY>
+        <H1>System Information Report</H1>
+    </BODY>
+</HTML> "
+```
+
 ## 25.3 变量和常量 ##
 
 ### 25.3.1 创建变量和常量 ###
