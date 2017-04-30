@@ -160,4 +160,73 @@ echo "<HTML>
 
 ## 25.4 here文档 ##
 
+here文档是n另外一种I/O重定向方式, 我们在脚本文件中嵌入正文文本, 然后把它发送给一个命令的标准输入:
+
+```
+command << token
+text
+token
+```
+
+这里的command是一个可以接受标准输入的命令名, token是一个用来指示嵌入文本结束的字符串, 将脚本修改如下:
+
+```
+#!/bin/bash
+# Program to output a system information page
+TITLE="System Information Report For $HOSTNAME"
+CURRENT_TIME=$(date +"%x %r %Z")
+TIME_STAMP="Generated $CURRENT_TIME, by $USER"
+cat << _EOF_
+<HTML>
+    <HEAD>
+        <TITLE>$TITLE</TITLE>
+    </HEAD>
+    <BODY>
+        <H1>$TITLE</H1>
+        <P>$TIME_STAMP</P>
+    </BODY>
+</HTML>
+_EOF_
+```
+
+我们在脚本中使用cat命令和一个here文档, 这个字符串 \_EOF\_ 被选做token, 标志着嵌入文本的结尾, 注意这个token必须在一行中单独出现, 并且文本行中没有末尾的空格.
+
+在很大程度上, 和echo命令一样, 除了默认情况下 here文档中的单引号和双引号会失去它们在shell中的特殊含义, 这就允许我们在here文档中睡衣的嵌入引号.
+
+```
+#!/bin/bash
+# Script to retrieve a file via FTP
+FTP_SERVER=ftp.n1.debian.org
+FTP_PATH=/debian/dists/lenny/main/installer-i386/current/images/cdrom
+REMOTE_FILE=debian-cd_info.tar.gz
+ftp -n << _EOF_
+open $FTP_SERVER
+user annoymous me@linuxbox
+cd $FTP_PATH
+hash
+get $REMOTE_FILE
+bye
+_EOF_
+ls -l $REMOTE_FILE
+```
+
+如果我们把重定向操作符从 [<<] 修改为 [<<-], shell会忽略在此 here文档中开头的tab字符, 从而提高脚本的可读性:
+
+```
+#!/bin/bash
+# Script to retrieve a file via FTP
+FTP_SERVER=ftp.n1.debian.org
+FTP_PATH=/debian/dists/lenny/main/installer-i386/current/images/cdrom
+REMOTE_FILE=debian-cd_info.tar.gz
+ftp -n <<- _EOF_
+    open $FTP_SERVER
+    user annoymous me@linuxbox
+    cd $FTP_PATH
+    hash
+    get $REMOTE_FILE
+    bye
+_EOF_
+ls -l $REMOTE_FILE
+```
+
 ## 25.5 本章结尾语 ##
