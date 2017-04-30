@@ -96,6 +96,68 @@ declare -r TITLE="System Information Report For $HOSTNAME"
 
 ### 25.3.2 为变量和常量赋值 ###
 
+可以使用如下的方式给变量赋值:
+
+```
+variable=value
+```
+
+这里的 *variable* 是变量的名字, *value* 是一个字符串. shell不会在乎变量值的类型, 它把它们都看作是字符串. 通过使用带有 -i 选项的 declare 命令, 可以强制shell把赋值限定为整数, 但是也极少这样做.
+
+在赋值过程中, 变量名和等号以及变量值之间必须没有空格, 这些值是可以展开成字符串的任意值, 以下是一些例子:
+
+```
+# 将变量赋值为字符串 "z"
+a=z
+# 空格需要使用引号包含
+b="a string"
+# 变量扩展
+c="a string and $b"
+# 命令扩展
+d=$(ls -l foo.txt)
+# 算术扩展
+e=$((5 * 7))
+# 转义
+f="\t\ta string\n"
+# 同一行多个赋值
+a=5 b="a string"
+```
+
+在参数展开的过程中, 变量名可能被花括号包含.
+
+```
+# 将文件名从 myfile 修改为 myfile1
+filename="myfile"
+touch $filename
+mv $filename $filename1
+```
+
+以上的命令会出错, 因为shell会把mv命令的第二个参数解释为一个新的变量, 可以使用以下方式来避免这个问题:
+
+```
+# 通过花括号避免shell把末尾的1解释为变量名的一部分
+mv $filename ${filename}1
+```
+
+修改脚本, 将创建日期和时间, 以及创建者的用户名添加到输出的数据中:
+
+```
+#!/bin/bash
+# Program to output a system information page
+TITLE="System Information Report For $HOSTNAME"
+CURRENT_TIME=$(date +"%x %r %Z")
+TIME_STAMP="Generated $CURRENT_TIME, by $USER"
+echo "<HTML>
+    <HEAD>
+        <TITLE>$TITLE</TITLE>
+    </HEAD>
+    <BODY>
+        <H1>$TITLE</H1>
+        <P>$TIME_STAMP</P>
+    </BODY>
+</HTML> "
+```
+
 ## 25.4 here文档 ##
 
 ## 25.5 本章结尾语 ##
