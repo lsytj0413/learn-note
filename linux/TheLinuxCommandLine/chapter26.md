@@ -126,6 +126,37 @@ shell函数的命名规则和变量一样, 一个函数必须至少包含一条�
 
 ## 26.2 局部变量 ##
 
+目前我们所写的脚本中, 所有的变量都是全局变量, 全局变量在整个程序中保持存在. 局部变量只能在定义它们的shell函数中使用, 并且一旦shell函数执行完毕, 它们就不存在了.
+
+局部变量名可以与已存在的变量名相同, 这些变量可以是全局变量, 或者是其他shell函数中的局部变量, 而不必担心潜在的名字冲突.
+
+以下是一个使用局部变量的实例:
+
+```
+#!/bin/bash
+# local-vars: script to demonstrate local variables
+foo=0 # 全局变量
+funct_1 () {
+    local foo # 局部变量
+    foo=1
+    echo "funct_1: foo = $foo"
+}
+
+funct_2 () {
+    local foo # 局部变量
+    foo=2
+    echo "funct_2: foo = $foo"
+}
+
+echo "global:  foo = $foo"
+funct_1
+echo "global: foo = $foo"
+funct_2
+echo "global: foo = $foo"
+```
+
+通过在变量名之前加上单词local来定义局部变量, 在这个shell函数之外这个变量不再存在.
+
 ## 26.3 保持脚本的运行 ##
 
 ## 26.4 本章结尾语 ##
