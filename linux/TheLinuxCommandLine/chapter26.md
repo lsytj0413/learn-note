@@ -49,6 +49,81 @@ cat << _EOF_
 _EOF_
 ```
 
+我们可以使用两种方法来创建这些额外的命令: 第一种我们可以分别编写三个脚本, 并把它们放置到环境变量PATH所列出的目录下; 第二种我们也可以把这些脚本作为shell函数嵌入到我们的程序中. shell函数有两种语法形式:
+
+```
+function name {
+    commands
+    return
+}
+
+and 
+
+name () {
+    commands
+    return
+}
+
+# name是函数名, commands是一系列包含在函数中的命令
+```
+
+一个函数实例如下:
+
+```
+
+#!/bin/bash
+# Shell function demo
+
+function funct {
+    echo "Step 2"
+    return
+}
+
+# Main program starts here
+echo "Step 1"
+funct
+echo "Step 3"
+```
+
+为了使函数调用被识别出是shell函数而不是外部程序的名字, 所以在脚本中shell函数定义必须出现在函数调用之前. 现在修改脚本如下:
+
+```
+#!/bin/bash
+# Program to output a system information page
+TITLE="System Information Report For $HOSTNAME"
+CURRENT_TIME=$(date +"%x %r %Z")
+TIME_STAMP="Generated $CURRENT_TIME, by $USER"
+
+report_uptime () {
+    return
+}
+
+report_disk_space () {
+    return
+}
+
+report_home_space () {
+    return
+}
+
+cat << _EOF_
+<HTML>
+    <HEAD>
+        <TITLE>$TITLE</TITLE>
+    </HEAD>
+    <BODY>
+        <H1>$TITLE</H1>
+        <P>$TIME_STAMP</P>
+        $(report_uptime)
+        $(report_disk_space)
+        $(report_home_space)
+    </BODY>
+</HTML>
+_EOF_
+```
+
+shell函数的命名规则和变量一样, 一个函数必须至少包含一条命令, 这条return命令(可选)满足要求.
+
 ## 26.2 局部变量 ##
 
 ## 26.3 保持脚本的运行 ##
