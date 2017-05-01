@@ -159,4 +159,50 @@ echo "global: foo = $foo"
 
 ## 26.3 保持脚本的运行 ##
 
+通过添加空函数, 程序员称之为 *stub* , 我们可以在早期阶段证明程序的逻辑流程. 当构建一个stub的时候, 最好包含一些为程序员提供反馈信息的代码, 这些信息可以展示正在执行的逻辑流程.
+
+修改脚本如下:
+
+```
+report_uptime () {
+    echo "Function report_uptime executed."
+    return
+}
+
+report_disk_space () {
+    echo "Function report_disk_space executed."
+    return
+}
+
+report_home_space () {
+    echo "Function report_home_space executed."
+    return
+}
+```
+
+现在开始实现一些函数代码, 首先是 report_uptime 函数:
+
+```
+# 使用here文档来输出标题和uptime命令的输出结果, 使用 PRE 标签来保持命令的输出格式
+report_uptime () {
+    cat <<- _EOF_
+    <H2>System Uptime</H2>
+    <PRE>$(uptime)</PRE>
+    _EOF_
+    return
+}
+```
+
+然后是 report\_home\_space函数:
+
+```
+report_home_space () {
+    cat <<- _EOF_
+    <H2>Home Space Utilization</H2>
+    <PRE>$(du -sh /home/*)</PRE>
+    _EOF_
+    return
+}
+```
+
 ## 26.4 本章结尾语 ##
