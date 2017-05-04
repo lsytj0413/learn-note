@@ -167,6 +167,45 @@ test_file () {
 
 ### 27.3.2 字符串表达式 ###
 
+下表中的表达式用来测试字符串的操作:
+
+| 表达式 | 为true的条件 |
+|:--|:--|
+| string | 字符串不为空 |
+| -n string | 字符串长度大于 0 |
+| -z string | 字符串长度等于 0 |
+| string1=string2 或 string1==string2 | 字符串是否相等, 双等号使用更多 | 
+| string1!=string2 | 字符串不相等 |
+| string1>string2 | 在排序时, string1在string2之后 |
+| string1<string2 | 在排序时, string1在string2之前 |
+
+在test命令中, "<" 和 ">" 符号需要使用引号包含(或使用反斜杠转义), 以避免shell将其解释为重定向操作符. 同时, 排序遵从当前语系的排序规则, 但在bash4.0版本及之前是使用的ASCII(POSIX) 排序方式.
+
+下面是一个合并字符串表达式的脚本:
+
+```
+#!/bin/bash
+
+# test-string: evaluate the value of a string
+
+ANSWER=maybe
+
+if [ -z "$ANSWER" ]; then
+    echo "There is no answer." >&2
+    exit 1
+fi
+
+if [ "$ANSWER" == "yes" ]; then
+    echo "The answer is yes."
+elif [ "$ANSWER" = "no" ]; then
+    echo "The answer is no."
+elif [ "$ANSWER" == "maybe" ]; then
+    echo "The answer is maybe."
+else
+    echo "The answer is unknown."
+fi
+```
+
 ### 27.3.3 整数表达式 ###
 
 ## 27.4 更现代的test命令版本 ##
