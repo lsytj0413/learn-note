@@ -59,7 +59,42 @@ if命令根据后面的命令的执行结果来选择是否执行后续的comman
 
 ## 27.3 使用test命令 ##
 
+test命令经常和if命令一起使用, test命令会执行各种检查和比较, 有以下两种等价方式:
+
+```
+test expression
+[ expression ]
+```
+
 ### 27.3.1 文件表达式 ###
+
+下表中的表达式用来评估文件的状态:
+
+| 表达式 | 为true的条件 |
+|:--|:--|
+| file1 -ef file2 | file1和file2拥有相同的信息节点编号, 即通过硬链接指向同一个文件 |
+| file1 -nt file2 | file1比file2新 |
+| file1 -ot file2 | file1比file2旧 |
+| -b file | file存在并且是一个块设备文件 |
+| -c file | file存在并且是一个字符设备文件 |
+| -d file | file存在并且是一个目录 |
+| -e file | file存在 |
+| -f file | file存在并且是一个普通文件 |
+| -g file | file存在并且设置了组ID |
+| -G file | file存在并且属于有效组ID |
+| -k file | file存在并且有 sticky bit属性 |
+| -L file | file存在并且是一个符号链接 |
+| -O file | file存在并且属于有效用户ID |
+| -p file | file存在并且是一个命名管道 |
+| -r file | file存在并且可读(有效用户拥有可读权限) |
+| -s file | file存在并且长度大于0 |
+| -S file | file存在并且是一个网络套接字 |
+| -t fd | fd是一个定向到终端/从终端定向的文件描述符, 可以用来确定标准输入/输出/错误是否被重定向 |
+| -u file | file存在并且设置了setuid位 |
+| -w file | file存在并且可写(有效用户拥有可写权限) |
+| -x file | file存在并且可执行(有效用户拥有执行/搜索权限) |
+
+
 
 ### 27.3.2 字符串表达式 ###
 
