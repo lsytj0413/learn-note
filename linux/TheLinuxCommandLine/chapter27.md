@@ -94,7 +94,76 @@ test expression
 | -w file | file存在并且可写(有效用户拥有可写权限) |
 | -x file | file存在并且可执行(有效用户拥有执行/搜索权限) |
 
+以下的脚本演示了一些表达式的使用:
 
+```
+#!/bin/bash
+
+# test-file: Evaluate the status of a file
+
+FILE=~/.bashrc
+
+if [ -e "$FILE" ]; then
+
+if [ -e "$FILE" ]; then
+    if [ -f "$FILE" ]; then
+        echo "$FILE is a regular file."
+    fi
+    if [ -d "$FILE" ]; then
+        echo "$FILE is a directory."
+    fi
+    if [ -r "$FILE" ]; then
+        echo "$FILE is readable."
+    fi
+    if [ -w "$FILE" ]; then
+        echo "$FILE is writable."
+    fi
+    if [ -x "$FILE" ]; then
+        echo "$FILE is executable/searchable."
+    fi
+else
+    echo "$FILE does not exist"
+    exit 1
+fi
+
+exit
+```
+
+该脚本中有两个需要注意的点:
+
+1. 我们在引号中使用 $FILE 表达式, 尽管引号不是必须的, 但是这可以防止FILE为空的情况. 如果 $FILE 扩展产生一个空值, 将导致一个错误. 使用引号包含则可以确保操作符后面紧跟一个空字符串.
+
+2. 脚本末尾使用exit退出脚本, 该命令接受一个可选参数, 作为脚本的退出状态值.
+
+可以在return命令中包含一个整数, 使shell函数返回一个退出状态. 例如将以上脚本的功能修改为一个shell函数如下:
+
+```
+test_file () {
+
+    FILE=~/.bashrc
+
+    if [ -e "$FILE" ]; then
+        if [ -f "$FILE" ]; then
+            echo "$FILE is a regular file."
+        fi
+        if [ -d "$FILE" ]; then
+            echo "$FILE is a directory."
+        fi
+        if [ -r "$FILE" ]; then
+            echo "$FILE is readable."
+        fi
+        if [ -w "$FILE" ]; then
+            echo "$FILE is writable."
+        fi
+        if [ -x "$FILE" ]; then
+            echo "$FILE is executable/searchable."
+        fi
+    else
+        echo "$FILE does not exist"
+        return 1
+    fi
+}
+```
 
 ### 27.3.2 字符串表达式 ###
 
