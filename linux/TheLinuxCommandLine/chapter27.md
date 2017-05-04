@@ -2,6 +2,36 @@
 
 ## 27.1 使用if ##
 
+在shell中一个简单的分支语句如下:
+
+```
+x=5
+if [ $x = 5 ]; then
+    echo "x equals 5."
+else
+    echo "x does not euqal 5."
+fi
+```
+
+或者直接在命令行中如下输入:
+
+```
+x=5
+if [ $x = 5 ]; then echo "equals 5."; else echo "does not equal 5"; fi
+```
+
+if语句的语法格式如下:
+
+```
+if commands; then
+    commands
+[elif commands; then
+    commands...]
+[else
+    commands]
+fi
+```
+
 ## 27.2 退出状态 ##
 
 ## 27.3 使用test命令 ##
