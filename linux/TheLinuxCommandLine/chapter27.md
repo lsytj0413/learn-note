@@ -208,6 +208,47 @@ fi
 
 ### 27.3.3 整数表达式 ###
 
+下表中的表达式用来进行整数判断的操作:
+
+| 表达式 | 为true的条件 |
+|:--|:--|
+| integer1 -eq integer2 | 相等 |
+| integer1 -ne integer2 | 不相等 |
+| integer1 -le integer2 | integer1小于等于 integer2 |
+| integer1 -lt integer2 | integer1小于integer2 |
+| integer1 -ge integer2 | integer1大于等于integer2 |
+| integer1 -gt integer2 | integer1大于 integer2 |
+
+下面是一个演示脚本:
+
+```
+#!/bin/bash
+
+# test-integer: evaluate the value of an integer.
+
+INT=-5
+
+if [ -z "$INT" ]; then
+    echo "INT is empty." >&2
+    exit 1
+fi
+
+if [ $INT -eq 0 ]; then
+    echo "INT is zero."
+else
+    if [ $INT -lt 0 ]; then
+        echo "INT is negative."
+    else
+        echo "INT is positive."
+    fi
+    if [ $((INT % 2)) -eq 0 ]; then
+        echo "INT is even."
+    else
+        echo "INT is odd."
+    fi
+fi
+```
+
 ## 27.4 更现代的test命令版本 ##
 
 ## 27.5 (())-为整数设计 ##
