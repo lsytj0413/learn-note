@@ -354,6 +354,55 @@ fi
 
 ## 27.6 组合表达式 ##
 
+表达式可以使用逻辑运算符组合起来, test以及 [[]] 命令使用不同的操作符, 如下表:
+
+| Operation | test | [[]]and(()) |
+|:--|:--|:--|
+| AND | -a | && |
+| OR | -o | || |
+| NOT | ! | ! |
+
+以下是一个AND运算的例子.
+
+```
+#!/bin/bash
+
+# test-integer3: determine if an integer is within a
+
+# specified range of values.
+
+MIN_VAL=1
+MAX_VAL=100
+
+INT=50
+
+if [[ "$INT" =~ ^-?[0-9]+$ ]]; then
+    if [[ INT -ge MIN_VAL && INT -le MAX_VAL ]]; then
+    # 等价与 if [ $INT -ge $MIN_VAL -a $INT -le $MAX_VAL]; then
+        echo "$INT is within $MIN_VAL to $MAX_VAL."
+    else
+        echo "$INT is out of range."
+    fi
+else
+    echo "INT is not an integer." >&2
+    exit 1
+fi
+```
+
+也可以使用以下命令来判断INT的值是否在指定的范围之外:
+
+```
+if [[ ! (INT -ge MIN_VAL && INT -le MAX_VAL) ]]; then
+```
+
+在test命令中, 所有的表达式和操作符都被shell看做命令参数(除了 (()) 和 [[]]), 因此在bash中有特殊含义的字符, 如 <, >, (, ) 必须用引号括起来或者进行转义.
+
+```
+if [ ! \( $INT -ge $MIN_VAL && $INT -le $MAX_VAL \) ]; then
+```
+
+test和 [[]] 命令基本上完成相同的功能, test更为传统, 而 [[]] 是bash特有的.
+
 ## 27.7 控制运算符: 另一种方式的分支 ##
 
 ## 27.8 本章结尾语 ##
