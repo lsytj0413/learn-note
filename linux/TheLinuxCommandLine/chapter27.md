@@ -309,6 +309,49 @@ fi
 
 ## 27.5 (())-为整数设计 ##
 
+bash提供了 (()) 复合命令, 可用于操作整数, 该命令支持一套完整的算术计算, 它用于执行算术真值测试, 当算术计算的结果是非零值时, 则算术真值测试为true.
+
+```
+if ((1)); then echo "It is true."; fi
+```
+
+使用 (()) 命令, 简化 test-integer 脚本如下:
+
+```
+#!/bin/bash
+
+# test-integer2a: evaluate the value of an integer.
+
+INT=-5
+
+if [ -z "$INT" ]; then
+    echo "INT is empty." >&2
+    exit 1
+fi
+
+if [[ "$INT" =~ ^-?[0-9]+$ ]]; then
+    if (( $INT == 0 )); then
+        echo "INT is zero."
+    else
+        if (( INT < 0 )); then
+            echo "INT is negative."
+        else
+            echo "INT is positive."
+        fi
+        if (( ((INT % 2)) == 0 )); then
+            echo "INT is even."
+        else
+            echo "INT is odd."
+        fi
+    fi
+else
+    echo "INT is not an integer." >&2
+    exit 1
+fi
+```
+
+(()) 命令只是shell语法的一部分, 而且只能处理整数, 它可以通过名字来识别变量, 并且不需要执行扩展操作.
+
 ## 27.6 组合表达式 ##
 
 ## 27.7 控制运算符: 另一种方式的分支 ##
