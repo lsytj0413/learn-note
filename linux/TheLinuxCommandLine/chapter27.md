@@ -359,7 +359,7 @@ fi
 | Operation | test | [[]]and(()) |
 |:--|:--|:--|
 | AND | -a | && |
-| OR | -o | || |
+| OR | -o | \|\| |
 | NOT | ! | ! |
 
 以下是一个AND运算的例子.
@@ -416,3 +416,22 @@ command1 || command2
 对于OR运算来说, 先执行command1, 只有在它执行失败时才会执行command2.
 
 ## 27.8 本章结尾语 ##
+
+回到 sys\_info\_page脚本, 我们可以检测用户是否具有读取所有家目录的权限, 实现如下:
+
+```
+report_home_page () {
+    if [[ $(id -u) -eq 0 ]]; then
+        cat <<- _EOF_
+    <H2>Home Space Utilization (All Users)</H2>
+    <PRE>$(du -sh /home/*)</PRE>
+_EOF_
+    else
+        cat <<- _EOF_
+    <H2>Home Space Utilization ($USER)</H2>
+    <PRE>$(du -sh $HOME)</PRE>
+_EOF_
+    fi
+    return
+}
+```
