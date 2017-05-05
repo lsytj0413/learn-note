@@ -251,6 +251,62 @@ fi
 
 ## 27.4 更现代的test命令版本 ##
 
+bash的最近版本包含了一个增强的test命令, 语法如下:
+
+```
+[[ expression ]]
+```
+
+expression是一个表达式, [[]] 命令和test命令类似, 只是增加了一个很重要的字符串表达式, 该表达式形式如下:
+
+```
+string1=~regex
+```
+
+如果string1与扩展的正则表达式匹配, 则返回true. 修改前面的整数表达式脚本, 加入验证是否为整数的步骤如下:
+
+```
+#!/bin/bash
+
+# test-integer: evaluate the value of an integer.
+
+INT=-5
+
+if [ -z "$INT" ]; then
+    echo "INT is empty." >&2
+    exit 1
+fi
+
+if [[ "$INT" =~ ^-?[0-9]+$ ]]; then
+    if [ $INT -eq 0 ]; then
+        echo "INT is zero."
+    else
+        if [ $INT -lt 0 ]; then
+            echo "INT is negative."
+        else
+            echo "INT is positive."
+        fi
+        if [ $((INT % 2)) -eq 0 ]; then
+            echo "INT is even."
+        else
+            echo "INT is odd."
+        fi
+    fi
+else
+    echo "INT is not an integer." >&2
+    exit 1
+fi
+```
+
+[[]] 增加的另外一个特性是 == 操作符支持模式匹配, 就像路径名扩展那样, 例如:
+
+```
+FILE=foo.bar
+if [[ $FILE == foo.* ]]; then
+    echo "$FILE matches pattern 'foo.*'"
+fi
+```
+
 ## 27.5 (())-为整数设计 ##
 
 ## 27.6 组合表达式 ##
