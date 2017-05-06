@@ -71,6 +71,18 @@ read var1 var2 var3 var4 var5
 
 ### 28.1.1 选项 ###
 
+可以使用 -p 选项来显示提示符:
+
+```
+read -p "Enter one or more values > " var1 var2
+```
+
+也可以使用 -t 选项加上 -s 选项来提示用户输入密码, 并限制等待时间:
+
+```
+read -t 10 -sp "ENter secret passphrase > " secret_pass
+```
+
 ### 28.1.2 使用IFS间隔输入字段 ###
 
 ## 28.2 验证输入 ##
