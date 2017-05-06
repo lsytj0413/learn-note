@@ -85,6 +85,45 @@ read -t 10 -sp "ENter secret passphrase > " secret_pass
 
 ### 28.1.2 使用IFS间隔输入字段 ###
 
+通常shell会间隔提供给read命令的内容, 在输入行由一个或多个空格将多个单词分隔成为分离的单项, 再由read命令将这些单项赋值给不同的变量.
+此行为是由shell变量IFS(Internal Field Separator) 设定的, IFS的默认值包含了空格, 制表符和换行符, 每一种都可以将字符彼此分隔开.
+
+可以通过改变IFS变量来控制read命令输入的间隔方式, 例如将IFS变量修改为单个冒号即可使用read命令读取 /etc/passwd 文件中的内容, 并将各个字段分隔为不同的变量. 脚本如下:
+
+```
+#!/bin/bash
+
+# read-ifs: read fields from a file
+
+FILE=/etc/passwd
+
+read -p "Enter a username > " user_name
+
+file_info=$(grep "^$user_name:" $FILE)
+
+if [ -n "$file_info" ]; then
+    IFS=":" read user pw uid gid name home shell <<< "$file_info"
+    echo "User =                '$user'"
+    echo "UID =                  '$uid'"
+    echo "GID =                  '$gid'"
+    echo "Full Name =           '$name'"
+    echo "Home Dir =            '$home'"
+    echo "Shell =              '$shell'"
+else
+    echo "No such user '$user_name'" >&2
+    exit 1
+fi
+```
+
+在read命令那一行, shell允许在命令执行前对一到多个变量进行赋值, 并且这些赋值操作只在该行后续命令执行期间内有效.
+<<< 操作符是一条嵌入字符串, 它包含的是一条字符串, 在本例中这个字符串被输送给read命令. 也许有人认为以下的代码也是等价的:
+
+```
+echo "$file_info" | IFS=":" read user pw uid gid name home shell
+```
+
+但是上面的命令不会生效, 因为read命令不可重定向. 更深层的原因是, 在bash或其他shell中, 管道会创造子shell, 子shell复制了shell及pipline执行命令过程中使用到的shell环境. 所以上例中的read命令是在子shell中执行的.
+
 ## 28.2 验证输入 ##
 
 ## 28.3 菜单 ##
