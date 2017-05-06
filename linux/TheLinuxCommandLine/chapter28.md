@@ -175,6 +175,59 @@ fi
 
 ## 28.3 菜单 ##
 
+菜单驱动是一种常见的交互方式, 在菜单驱动的程序会呈现给用户一系列的选项, 并请求用户进行选择.
+
+```
+#!/bin/bash
+
+# read-menu: a menu driven system information program
+
+clear
+echo "
+Please Select:
+
+1. Display System Information
+2. Display Disk Space
+3. Display Home Space Utilization
+0. Quit
+"
+
+read -p "Enter selection [0-3] > "
+
+if [[ $REPLY =~ ^[0-3]$ ]]; then
+    if [[ $REPLY == 0 ]]; then
+        echo "Program terminated."
+        exit
+    fi
+    if [[ $REPLY == 1 ]]; then
+        echo "Hostname: $HOSTNAME"
+        uptime
+        exit
+    fi
+    if [[ $REPLY == 2 ]]; then
+        df -h
+        exit
+    fi
+    if [[ $REPLY == 3 ]]; then
+        if [[ $(id -u) -eq 0 ]]; then
+            echo "Home Space Utilization (All Users)"
+            du -sh /home/*
+        else
+            echo "Home Space Utilization ($USER)"
+            du -sh $HOME
+        fi
+        exit
+    fi
+else
+    echo "Invalid entry." >&2
+    exit 1
+fi
+```
+
 ## 28.4 本章结尾语 ##
 
+学习到本章, 用户已经能够写出很多不同功效的程序, 例如专门的计算程序和易用的命令行工具前端.
+
 ## 28.5 附加项 ##
+
+作为练习, 用户可以使用 test命令替代 [[]] 复合命令来改写本章的程序, 并且使用grep命令处理正则表达式, 然后评估其退出状态.
