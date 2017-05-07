@@ -83,7 +83,72 @@ echo "Program terminated."
 
 ## 29.3 跳出循环 ##
 
+bash提供了两种可用于控制循环内部程序流的内建命令: break命令立即终止循环, 程序从循环后的语句恢复执行; continue命令则会导致程序跳过循环剩余部分, 直接从下一次循环迭代.
+
+使用break以及continue命令重写 read-menu程序如下:
+
+```
+#!/bin/bash
+
+# read-menu: a menu driven system information program
+
+DELAY=3 # Number of seconds to display results
+
+while true; do
+
+    clear
+    cat <<- EOF
+Please Select:
+
+1. Display System Information
+2. Display Disk Space
+3. Display Home Space Utilization
+0. Quit
+EOF
+
+    read -p "Enter selection [0-3] > "
+    if [[ $REPLY =~ ^[0-3]$ ]]; then
+        if [[ $REPLY == 0 ]]; then
+            break
+        fi
+        if [[ $REPLY == 1 ]]; then
+            echo "Hostname: $HOSTNAME"
+            uptime
+            sleep $DELAY
+            continue
+        fi
+        if [[ $REPLY == 2 ]]; then
+            df -h
+            sleep $DELAY
+            continue
+        fi
+        if [[ $REPLY == 3 ]]; then
+            if [[ $(id -u) -eq 0 ]]; then
+                echo "Home Space Utilization (All Users)"
+                du -sh /home/*
+            else
+                echo "Home Space Utilization ($USER)"
+                du -sh $HOME
+            fi
+            sleep $DELAY
+            continue
+        fi
+    else
+        echo "Invalid entry." >&2
+        exit 1
+    fi
+done
+
+echo "Program terminated."
+```
+
 ## 29.4 until ##
+
+until命令与while命令相反, 它在退出状态不为0时终止循环. 使用until命令改写 while-count 脚本如下:
+
+```
+
+```
 
 ## 29.5 使用循环读取文件 ##
 
