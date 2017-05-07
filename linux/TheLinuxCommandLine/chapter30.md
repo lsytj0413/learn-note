@@ -1,6 +1,26 @@
 # 第三十章: 故障诊断 #
 
+本章讲解一些脚本中常见的错误类型以及几种用于追踪和解除错误的有用技巧.
+
 ## 30.1 语法错误 ##
+
+语法错误是一种常见的错误类型, 其中就包括shell语句中一些元素的拼写错误. 在大多数情况下shell会拒绝执行含有此种类型错误的脚本.
+
+我们将使用以下脚本来演示常见的错误类型:
+
+```
+#!/bin/bash
+
+# trouble: script to demonstrate common errors
+
+number=1
+
+if [ $number = 1 ]; then
+    echo "Number is euqal to 1."
+else
+    echo "Number is not euqal to 1."
+fi
+```
 
 ### 30.1.1 引号缺失 ###
 
