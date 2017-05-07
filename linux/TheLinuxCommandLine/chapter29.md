@@ -147,7 +147,17 @@ echo "Program terminated."
 until命令与while命令相反, 它在退出状态不为0时终止循环. 使用until命令改写 while-count 脚本如下:
 
 ```
+#!/bin/bash
 
+# until-count: display a series of numbers
+
+count=1
+
+while [ $count -gt 5 ]; do
+    echo $count
+    count=$(( count + 1 ))
+done
+echo "Finished."
 ```
 
 ## 29.5 使用循环读取文件 ##
