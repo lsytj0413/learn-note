@@ -162,4 +162,38 @@ echo "Finished."
 
 ## 29.5 使用循环读取文件 ##
 
+while和until可以处理标准输入, 这让使用while和until循环处理文件成为可能. 例如显示 distros.txt文件的内容:
+
+```
+#!/bin/bash
+
+# while-read: read lines from a file
+
+while read distro version release; do
+    printf "Distro: %s\tVersion: %s\tReleased: %s\n" \
+           $distro \
+           $version \
+           $release
+done < distros.txt
+```
+
+我们在done语句之后添加重定向操作符, 以便将一份文件重定向到循环中.
+我们也可以把标准输入重定向到循环中:
+
+```
+#!/bin/bash
+
+# while-read2: read lines from a file
+
+sort -k 1,1 -k 2n distros.txt | while read distro version release; do
+        printf "Distro: %s\tVersion: %s\tReleased: %s\n" \
+               $distro \
+               $version \
+               $release
+done
+```
+
+以上的脚本获取sort命令的输出并显示文本流. 需要注意的是, 管道是在子shell中进行循环操作, 当循环终止时, 所有的循环内部新建的变量以及对变量的赋值效果都会消失.
+
 ## 29.6 本章结尾语 ##
+
