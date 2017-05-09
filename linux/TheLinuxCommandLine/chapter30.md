@@ -113,6 +113,41 @@ Number is not euqal to 1.
 
 ### 30.2.1 防御编程 ###
 
+在编程中核实各种假设是非常重要的. 例如需要删除某目录下的文件:
+
+```
+cd $dir_name
+rm *
+```
+
+当在dir_name不存在时会删除当前目录下的文件(因为cd命令会失败, 导致停留在当前工作目录), 这可以肯定基本不是预期的结果. 以下是一种改进方式:
+
+```
+cd $dir_name && rm *
+```
+
+以上代码可以避免dir\_name不存在时的情况, 但是在dir\_name 为空时存在用户的主目录被删除的可能性, 可以使用以下代码继续改进:
+
+```
+[[ -d $dir_name ]] && cd $dir_name && rm *
+```
+
+通常来说, 我们需要在上述情形中给出相应的提示, 并可能需要终止脚本的运行:
+
+```
+if [[ -d $dir_name ]]; then
+    if cd $dir_name; then
+        rm *
+    else
+        echo "cannot cd to '$dir_name'" >&2
+        exit 1
+    fi
+else
+    echo "no such directory: '$dir_name'" >&2
+    exit 1
+fi
+```
+
 ### 30.2.2 输入值验证 ###
 
 ## 30.3 测试 ##
