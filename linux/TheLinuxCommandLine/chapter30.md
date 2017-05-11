@@ -271,4 +271,20 @@ set +x # Turn off tracing
 
 ### 30.4.3 运行过程中变量的检验 ###
 
+可以使用 echo 命令输出变量的值, 已确认运行过程中的变量如预期那样赋值:
+
+```
+#!/bin/bash
+# trouble: script to demonstrate common errors
+number=1
+echo "number=$number" # DEBUG
+set -x # Turn on tracing
+if [ $number = 1 ]; then
+    echo "Number is equal to 1."
+else
+    echo "Number is not equal to 1."
+fi
+set +x # Turn off tracing
+```
+
 ## 30.5 本章结尾语 ##
