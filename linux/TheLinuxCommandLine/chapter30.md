@@ -192,7 +192,25 @@ exit    # TESTING
 
 ### 30.4.1 找到问题域 ###
 
+在一些脚本中, 将问题相关的脚本部分隔离出来是很有必要的. 示例如下:
+
+```
+if [[ -d $dir_name ]]; then
+    if cd $dir_name; then
+        rm *
+    else
+        echo "cannot cd to '$dir_name'" >&2
+        exit 1
+    fi
+# else
+#     echo "no such directory: '$dir_name'" >&2
+#     exit 1
+fi
+```
+
 ### 30.4.2 追踪 ###
+
+
 
 ### 30.4.3 运行过程中变量的检验 ###
 
