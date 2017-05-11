@@ -161,6 +161,25 @@ fi
 
 ### 30.3.1 桩 ###
 
+在脚本开发的最初阶段, 桩就是可用于查看工作进程的重要手段. 例如:
+
+```
+if [[ -d $dir_name ]]; then
+    if cd $dir_name; then
+        echo rm *    # TESTING
+    else
+        echo "cannot cd to '$dir_name'" >&2
+        exit 1
+    fi
+else
+    echo "no such directory: '$dir_name'" >&2
+    exit 1
+fi
+exit    # TESTING
+```
+
+在上述的代码中, 通过echo命令来显示rm命令和扩展的命令参数, 并添加一些测试的注释.
+
 ### 30.3.2 测试用例 ###
 
 ## 30.4 调试 ##
