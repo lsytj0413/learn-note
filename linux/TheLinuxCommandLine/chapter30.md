@@ -210,7 +210,64 @@ fi
 
 ### 30.4.2 追踪 ###
 
+一种追踪技术是通过在脚本中添加通知信息的方式来展示程序执行之处, 例如:
 
+```
+echo "preparing to delete files" >&2
+if [[ -d $dir_name ]]; then
+    if cd $dir_name; then
+echo "deleting files" >&2
+        rm *
+    else
+        echo "cannot cd to '$dir_name'" >&2
+        exit 1
+    fi
+else
+    echo "no such directory: '$dir_name'" >&2
+    exit 1
+fi
+echo "file deletion complete" >&2
+```
+
+将这些追踪信息发送到标准错误, 从而与一般的程序输出区分开. 这些信息所在的行没有进行缩进, 这能使这些代码在需要删除的时候易于查找.
+
+bash也提供了一种追踪的方法, 即直接使用 -x 选或set命令加 -x 选项.
+
+可以在脚本的第一行添加 -x 选项激活对整个脚本的追踪活动:
+
+```
+#!/bin/bash -x
+# trouble: script to demonstrate common errors
+number=1
+if [ $number = 1 ]; then
+    echo "Number is equal to 1."
+else
+    echo "Number is not equal to 1."
+fi
+```
+
+激活追踪之后, 我们就可以看到变量展开的执行情况. 每个输出行开头的加号代表此行是系统的追踪信息, 是追踪信息的默认特征, 由shell的变量PS4设定, 用户可以修改变量值使追踪信息提供更多的帮助信息. 例如包含脚本行号:
+
+```
+export PS4='$LINENO + '
+```
+
+对脚本的某一部分进行追踪, 可以使用 set命令加上 -x 选项:
+
+```
+#!/bin/bash
+# trouble: script to demonstrate common errors
+number=1
+set -x # Turn on tracing
+if [ $number = 1 ]; then
+    echo "Number is equal to 1."
+else
+    echo "Number is not equal to 1."
+fi
+set +x # Turn off tracing
+```
+
+使用 -x 选项来激活追踪, 使用 +x 选项来解除追踪.
 
 ### 30.4.3 运行过程中变量的检验 ###
 
