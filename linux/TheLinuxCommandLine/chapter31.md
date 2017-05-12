@@ -84,4 +84,48 @@ esac
 
 ### 31.1.2 多个模式的组合 ###
 
+可以使用竖线作为分隔符来组合多个模式, 模式之间是或的条件关系. 一个例子如下:
+
+```
+#!/bin/bash
+
+read-menu: a menu driven system information program
+
+clear
+echo "
+Please Select:
+
+A. Display System Information
+B. Display Disk Space
+C. Display Home Space Utilization
+Q. Quit
+"
+
+read -p "Enter selection [A, B, C or Q] > "
+
+case $REPLY in
+    q|Q)         echo "Program terminated."
+                 exit
+                 ;;
+    a|A)         echo "Hostname: $HOSTNAME"
+                 uptime
+                 ;;
+    b|B)         df -h
+                 ;;
+    c|C)         if [[ $(id -u) -eq 0 ]]; then
+                     echo "Home Space Utilization (All Users)"
+                     du -sh /home/*
+                 else
+                     echo "Home Space Utilization ($USER)"
+                     du -sh $HOME
+                 fi
+                 ;;
+    *)           echo "Invalid entry." >&2
+                 exit 1
+                 ;;
+esac
+```
+
+在上例中, 用户即可以输入大写字母进行选择, 也可以输入小写字母进行选择.
+
 ## 31.2 本章结尾语 ##
