@@ -27,6 +27,26 @@ echo "
 
 ### 32.1.1 确定实参的数目 ###
 
+shell还提供了变量 $# 以给出命令行参数的数目. 例如:
+
+```
+#!/bin/bash
+# posit-param: script to view command line parameters
+echo "
+Number of arguments: $#
+\$0 = $0
+\$1 = $1
+\$2 = $2
+\$3 = $3
+\$4 = $4
+\$5 = $5
+\$6 = $6
+\$7 = $7
+\$8 = $8
+\$9 = $9
+"
+```
+
 ### 32.1.2 shift-处理大量的实参 ###
 
 ### 32.1.3 简单的应用程序 ###
