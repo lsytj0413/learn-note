@@ -64,6 +64,25 @@ done
 
 ### 32.1.3 简单的应用程序 ###
 
+一个简单的使用位置参数的程序如下:
+
+```
+#!/bin/bash
+# file_info: simple file information program
+PROGNAME=$(basename $0)
+if [[ -e $1 ]]; then
+    echo -e "\nFile Type:"
+    file $1
+    echo -e "\nFile Status:"
+    stat $1
+else
+    echo "$PROGNAME: usage: $PROGNAME file" >&2
+    exit 1
+fi
+```
+
+这个程序输出了单个特定文件的文件类型和文件状态, 并且使用basename命令移除路径名的起始部分, 只留下基本的文件名.
+
 ### 32.1.4 在shell函数中使用位置参数 ###
 
 ## 32.2 处理多个位置参数 ##
