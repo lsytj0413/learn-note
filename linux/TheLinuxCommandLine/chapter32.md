@@ -106,6 +106,61 @@ shell会自动更新FUNCNAME变量以追踪当前执行的shell函数, 但是变
 
 ## 32.2 处理多个位置参数 ##
 
+shell提供了两种特殊的参数, 它们都能扩展为一个完整的位置参数列, 如下表:
+
+| 参数 | 描述 |
+|:--|:--|
+| $* | 扩展为从1开始的位置参数列, 当包括在双引号内时, 扩展为双引号引用的由全部位置参数构成的字符串, 位置参数由IFS变量的第一个字符间隔开 |
+| $@ | 扩展为从1开始的位置参数列, 当包括在双引号内时, 将每个位置参数扩展为双引号引用的单独单词 |
+
+一个演示程序如下:
+
+```
+#!/bin/bash
+# posit-params3 : script to demonstrate $* and $@
+print_params () {
+    echo "\$1 = $1"
+    echo "\$2 = $2"
+    echo "\$3 = $3"
+    echo "\$4 = $4"
+}
+pass_params () {
+    echo -e "\n" '$* :';      print_params   $*
+    echo -e "\n" '"$*" :';    print_params   "$*"
+    echo -e "\n" '$@ :';      print_params   $@
+    echo -e "\n" '"$@" :';    print_params   "$@"
+}
+pass_params "word" "words with spaces"
+```
+
+输出如下:
+
+```
+[me@linuxbox ~]$ posit-param3
+ $* :
+$1 = word
+$2 = words
+$3 = with
+$4 = spaces
+ "$*" :
+$1 = word words with spaces
+$2 =
+$3 =
+$4 =
+ $@ :
+$1 = word
+$2 = words
+$3 = with
+$4 = spaces
+ "$@" :
+$1 = word
+$2 = words with spaces
+$3 =
+$4 =
+```
+
+$@保持了每个位置参数的完整性, 是大多数情况下最令人满意的方法.
+
 ## 32.3 更完整的应用程序 ##
 
 ## 32.4 本章结尾语 ##
