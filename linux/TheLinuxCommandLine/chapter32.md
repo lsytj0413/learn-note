@@ -49,6 +49,19 @@ Number of arguments: $#
 
 ### 32.1.2 shift-处理大量的实参 ###
 
+为了处理大量的实参, shell提供了shift命令, 每次执行shift命令之后所有的参数均下移一位, 这样就可以只处理一个参数($0) 而完成全部的任务.
+
+```
+#!/bin/bash
+# posit-param2: script to display all arguments
+count=1
+while [[ $# -gt 0 ]]; do
+    echo "Argument $count = $1"
+    count=$((count + 1))
+    shift
+done
+```
+
 ### 32.1.3 简单的应用程序 ###
 
 ### 32.1.4 在shell函数中使用位置参数 ###
