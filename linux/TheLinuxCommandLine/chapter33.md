@@ -74,4 +74,34 @@ done
 
 ## 33.2 for: C语言形式 ##
 
+第二种for命令语法类似于C语言形式, 语法如下:
+
+```
+for (( expression1; expression2; expression3 )); do
+    commands
+done
+```
+
+等价与如下结构:
+
+```
+(( expression1 ))
+while (( expression2 )); do
+    commands
+    (( expression3 ))
+done
+```
+
+其中expression1 用来初始化循环条件, expression2 用来决定循环何时结束, expression3 在每次循环末尾执行.
+
+一个典型的应用如下:
+
+```
+#!/bin/bash
+# simple_counter : demo of C style for command
+for (( i=0; i<5; i=i+1 )); do
+    echo $i
+done
+```
+
 ## 33.3 本章结尾语 ##
