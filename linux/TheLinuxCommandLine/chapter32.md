@@ -85,6 +85,25 @@ fi
 
 ### 32.1.4 在shell函数中使用位置参数 ###
 
+位置参数也可用于shell函数实参的传递, 例子如下:
+
+```
+file_info () {
+  # file_info: function to display file information
+  if [[ -e $1 ]]; then
+      echo -e "\nFile Type:"
+      file $1
+      echo -e "\nFile Status:"
+      stat $1
+  else
+      echo "$FUNCNAME: usage: $FUNCNAME file" >&2
+      return 1
+  fi
+}
+```
+
+shell会自动更新FUNCNAME变量以追踪当前执行的shell函数, 但是变量$0包含的总是命令行第一项的路径全名.
+
 ## 32.2 处理多个位置参数 ##
 
 ## 32.3 更完整的应用程序 ##
