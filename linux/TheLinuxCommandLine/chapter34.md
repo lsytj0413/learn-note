@@ -122,6 +122,49 @@ for i; do
 done
 ```
 
+### 34.1.5 大小写转换 ###
+
+最新的 bash 版本已经支持字符串的大小写转换了, bash 有四个参数展开和 declare 命令的两个选项来支持大小写转换.
+
+这个 declare 命令可以用来把字符串规范成大写或小写字符. 使用 declare 命令, 我们能强制一个变量总是包含所需的格式, 无论如何赋值给它:
+
+```
+#!/bin/bash
+# ul-declare: demonstrate case conversion via declare
+declare -u upper
+declare -l lower
+if [[ $1 ]]; then
+    upper="$1"
+    lower="$1"
+    echo $upper
+    echo $lower
+fi
+```
+
+在上面的脚本中, 我们使用 declare 命令来创建两个变量upper 和 lower. 并设定了它们能够包含的格式.
+
+四个可以执行大小写转换操作的参数展开如下表：
+
+| 格式 | 结果 |
+|:--|:--|
+| ${parameter,,} | 把 parameter 的值全部展开成小写字母 |
+| ${parameter,} | 仅仅把 parameter 的第一个字符展开成小写字母 |
+| ${parameter^^} | 把 parameter 的值全部转换成大写字母 |
+| ${parameter^} | 仅仅把 parameter 的第一个字符转换成大写字母 |
+
+下面的脚本演示了这些展开格式:
+
+```
+#!/bin/bash
+# ul-param - demonstrate case conversion via parameter expansion
+if [[ $1 ]]; then
+    echo ${1,,}
+    echo ${1,}
+    echo ${1^^}
+    echo ${1^}
+fi
+```
+
 ## 34.2 算术计算和扩展 ##
 
 算术扩展的基本形式如下:
