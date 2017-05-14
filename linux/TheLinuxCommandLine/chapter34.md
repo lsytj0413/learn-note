@@ -185,6 +185,43 @@ printf "\n"
 
 ### 34.2.4 赋值 ###
 
+每当赋值给一个变量一个值时, 就是赋值操作.
+
+```
+foo=5
+if (( foo=5 )); then echo "It is true."; fi
+```
+
+shell支持的一些其他赋值语句如下:
+
+| 运算符 | 描述 |
+|:--|:--|
+| parameter=value | 简单赋值 |
+| parameter+=value | 加法, 等价于 parameter=parameter+value |
+| parameter-=value | 减法, 等价于 parameter=parameter-value |
+| parameter*=value | 乘法, 等价于 parameter=parameter*value |
+| parameter/=value | 除法, 等价于 parameter=parameter/value |
+| parameter%=value | 取模, 等价于 parameter=parameter%value |
+| parameter++ | 变量使用后自增, 等价于 parameter=parameter+1 |
+| parameter-- | 变量使用后自减, 等价于 parameter=parameter-1 |
+| ++parameter | 变量使用前自增, 等价于 parameter=parameter+1 |
+| --parameter | 变量使用前自减, 等价于 parameter=parameter-1 |
+
+使用++操作符修改modulo脚本如下:
+
+```
+#!/bin/bash
+# modulo2 : demonstrate the modulo operator
+for ((i = 0; i <= 20; ++i )); do
+    if (((i % 5) == 0 )); then
+        printf "<%d> " $i
+    else
+        printf "%d " $i
+    fi
+done
+printf "\n"
+```
+
 ### 34.2.5 位操作 ###
 
 ### 34.2.6 逻辑操作 ###
