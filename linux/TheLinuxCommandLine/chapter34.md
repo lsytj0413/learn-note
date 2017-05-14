@@ -358,3 +358,23 @@ EOF
 ## 34.4 本章结尾语 ##
 
 ## 34.5 附加项 ##
+
+- 《ash Hackers Wiki》对参数展开有一个很好的论述:
+
+[http://wiki.bash-hackers.org/syntax/pe](http://wiki.bash-hackers.org/syntax/pe)
+
+- 《Bash 参考手册》也介绍了这个:
+
+[http://www.gnu.org/software/bash/manual/bashref.html#Shell-Parameter-Expansion](http://www.gnu.org/software/bash/manual/bashref.html#Shell-Parameter-Expansion)
+
+- Wikipedia 上面有一篇很好的文章描述了位运算:
+
+[http://en.wikipedia.org/wiki/Bit_operation](http://en.wikipedia.org/wiki/Bit_operation)
+
+- 一篇关于三元运算的文章:
+
+[http://en.wikipedia.org/wiki/Ternary_operation](http://en.wikipedia.org/wiki/Ternary_operation)
+
+- 还有一个对计算还贷金额公式的描述, 我们的 loan-calc 脚本中用到了这个公式:
+
+[http://en.wikipedia.org/wiki/Amortization_calculator](http://en.wikipedia.org/wiki/Amortization_calculator)
