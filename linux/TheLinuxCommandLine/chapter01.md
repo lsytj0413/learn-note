@@ -42,3 +42,13 @@
 直接关闭终端窗口或是在shell提示符下输入exit命令, 即可结束终端会话.
 
 一些终端会话会在图形桌面的后台运行, 这叫做虚拟终端. 可以通过按下 Ctrl-Alt-F1 键到 Ctrl-Alt-F6 组合键, 可以访问虚拟终端会话. 按下 Alt和F1～F6键可以在虚拟终端间切换, 按Alt-F7可以返回图形桌面环境.
+
+## 1.5 扩展阅读 ##
+
+- 想了解更多关于 Steve Bourne 的故事, Bourne Shell 之父, 读一下这篇文章:
+
+[http://en.wikipedia.org/wiki/Steve_Bourne](http://en.wikipedia.org/wiki/Steve_Bourne)
+
+- 这是一篇关于在计算机领域里, shells 概念的文章:
+
+[http://en.wikipedia.org/wiki/Shell_(computing)](http://en.wikipedia.org/wiki/Shell_\(computing\))
