@@ -477,3 +477,36 @@ aspell命令可以使用 -H 选项启动 HTML 模式.
 | split | 将文件分成多个部分 |
 | csplit | 基于上下文将文件分块 |
 | sdiff | 左右并排显示文件差异并比较 |
+
+GNU 项目网站包含了本章中所讨论工具的许多在线指南.
+
+- 来自 Coreutils 软件包:
+
+[http://www.gnu.org/software/coreutils/manual/coreutils.html#Output-of-entire-files](http://www.gnu.org/software/coreutils/manual/coreutils.html#Output-of-entire-files)
+
+[http://www.gnu.org/software/coreutils/manual/coreutils.html#Operating-on-sorted-files](http://www.gnu.org/software/coreutils/manual/coreutils.html#Operating-on-sorted-files)
+
+[http://www.gnu.org/software/coreutils/manual/coreutils.html#Operating-on-fields-within-a-line](http://www.gnu.org/software/coreutils/manual/coreutils.html#Operating-on-fields-within-a-line)
+
+[http://www.gnu.org/software/coreutils/manual/coreutils.html#Operating-on-characters](http://www.gnu.org/software/coreutils/manual/coreutils.html#Operating-on-characters)
+
+- 来自 Diffutils 软件包:
+
+[http://www.gnu.org/software/diffutils/manual/html_mono/diff.html](http://www.gnu.org/software/diffutils/manual/html_mono/diff.html)
+
+- sed 工具:
+
+[http://www.gnu.org/software/sed/manual/sed.html](http://www.gnu.org/software/sed/manual/sed.html)
+
+- aspell 工具:
+
+[http://aspell.net/man-html/index.html](http://aspell.net/man-html/index.html)
+
+- 尤其对于 sed 工具, 还有很多其它的在线资源:
+
+[http://www.grymoire.com/Unix/Sed.html](http://www.grymoire.com/Unix/Sed.html)
+
+[http://sed.sourceforge.net/sed1line.txt](http://sed.sourceforge.net/sed1line.txt)
+
+试试用 google 搜索 “sed one liners”, “sed cheat sheets” 关键字.
+

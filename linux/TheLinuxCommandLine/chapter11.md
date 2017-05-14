@@ -256,3 +256,7 @@ alias ll='ls -l --color=auto'
 ```
 source .bashrc
 ```
+
+## 11.4 扩展阅读 ##
+
+bash 手册页的 INVOCATION 部分非常详细地讨论了 bash 启动文件.

@@ -130,3 +130,23 @@ Linux用户可以从其所使用的Linux版本的中心库中获得软件包, �
 |:--|:--|
 | Debian类 | dpkg --search file_name |
 | Red Hat类 | rpm -qf file_name |
+
+## 14.4 扩展阅读 ##
+
+花些时间来了解你所用发行版中的软件包管理系统. 每个发行版都提供了关于自带软件包管理工具的文档. 另外, 这里有一些更普遍的资源:
+
+- Debian GNU/Linux FAQ 关于软件包管理一章对软件包管理进行了概述:
+
+[http://www.debian.org/doc/FAQ/ch-pkgtools.en.html](http://www.debian.org/doc/FAQ/ch-pkgtools.en.html)
+
+- RPM 工程的主页:
+
+[http://www.rpm.org](http://www.rpm.org)
+
+- 杜克大学 YUM 工程的主页:
+
+[http://linux.duke.edu/projects/yum/](http://linux.duke.edu/projects/yum/)
+
+- 了解一点儿背景知识, Wikipedia 上有一篇关于 metadata 的文章:
+
+[http://en.wikipedia.org/wiki/Metadata](http://en.wikipedia.org/wiki/Metadata)

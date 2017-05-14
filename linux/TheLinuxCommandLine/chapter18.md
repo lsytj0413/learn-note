@@ -251,3 +251,9 @@ sudo rsync -av --delete --rsh=ssh /etc /home /usr/local remote-sys:/backup
 ```
 rsync -av --delete rsync://rsync.gtlib.gatech.edu/fedora-linux-core/development/i386/os fedora-devel
 ```
+
+## 18.4 扩展阅读 ##
+
+- 在这里讨论的所有命令的手册文档都相当清楚明白, 并且包含了有用的例子. 另外, GNU 版本的 tar 命令有一个不错的在线文档. 可以在下面链接处找到:
+
+[http://www.gnu.org/software/tar/manual/index.html](http://www.gnu.org/software/tar/manual/index.html)

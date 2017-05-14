@@ -311,3 +311,23 @@ vi file...
   * zR: 打开所有折叠
   * zM: 关闭所有折叠
   * zE: 删除所有折叠标签
+
+## 12.11 扩展阅读 ##
+
+即使把这章所学的内容都加起来, 我们也只是学了 vi 和 vim 的一点儿皮毛而已. 这里有一些在线的资料, 你可以用来继续 vi 学习之旅.
+
+- <学习 vi 编辑器> 是一本来自于 Wikipedia 的 Wikibook, 是一本关于 vi 的简要指南, 并介绍了几个类似 vi 的程序, 其中包括 vim. 它可以在以下链接中得到:
+
+[http://en.wikibooks.org/wiki/Vi](http://en.wikibooks.org/wiki/Vi)
+
+- <The Vim Book>－vim 项目, 一本570页的书籍, 包含了几乎所有的 vim 特性. 你能在下面链接中找到它:
+
+[ftp://ftp.vim.org/pub/vim/doc/book/vimbook-OPL.pdf](ftp://ftp.vim.org/pub/vim/doc/book/vimbook-OPL.pdf)
+
+- Wikipedia 上关于 Bill Joy 的文章, vi 的创始人:
+
+[http://en.wikipedia.org/wiki/Bill_Joy](http://en.wikipedia.org/wiki/Bill_Joy)
+
+- Wikipedia 上关于 Bram Moolenaar 的文章, vim 的作者:
+
+[http://en.wikipedia.org/wiki/Bram_Moolenaar](http://en.wikipedia.org/wiki/Bram_Moolenaar)

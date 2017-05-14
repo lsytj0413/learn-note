@@ -185,3 +185,17 @@ scp remote-sys:document.txt .
 ```
 
 sftp命令的使用方式同ftp, 不过它并不需要远程主机运行ftp服务器, 只需要ssh服务器即可.
+
+## 16.4 扩展阅读 ##
+
+- Linux 文档项目提供了 Linux 网络管理指南, 可以广泛地(虽然过时了)了解网络管理方面的知识:
+
+[http://tldp.org/LDP/nag2/index.html](http://tldp.org/LDP/nag2/index.html)
+
+- Wikipedia 上包含了许多网络方面的优秀文章. 这里有一些基础的:
+
+[http://en.wikipedia.org/wiki/Internet_protocol_address](http://en.wikipedia.org/wiki/Internet_protocol_address)
+
+[http://en.wikipedia.org/wiki/Host_name](http://en.wikipedia.org/wiki/Host_name)
+
+[http://en.wikipedia.org/wiki/Uniform_Resource_Identifier](http://en.wikipedia.org/wiki/Uniform_Resource_Identifier)

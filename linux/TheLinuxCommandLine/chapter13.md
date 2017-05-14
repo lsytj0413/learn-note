@@ -146,3 +146,13 @@ PS1="\[\033[s\033[0;0H\033[0;41m\033[K\033[1;33m\t\033[0m\033[u\]<\u@\h \W>\$ "
 ## 13.5 保存提示符 ##
 
 将提示符存储到 .bashrc 文件中就可以避免每次都输入一长串的代码.
+
+## 13.6 扩展阅读 ##
+
+- <The Bash Prompt HOWTO> 来自于 Linux 文档工程, 对 shell 提示符的用途进行了相当完备的论述. 可在以下链接中得到:
+
+[http://tldp.org/HOWTO/Bash-Prompt-HOWTO/](http://tldp.org/HOWTO/Bash-Prompt-HOWTO/)
+
+- Wikipedia 上有一篇关于 ANSI Escape Codes 的好文章:
+
+[http://en.wikipedia.org/wiki/ANSI_escape_code](http://en.wikipedia.org/wiki/ANSI_escape_code)

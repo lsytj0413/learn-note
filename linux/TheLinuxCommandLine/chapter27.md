@@ -435,3 +435,16 @@ _EOF_
     return
 }
 ```
+
+## 27.9 扩展阅读 ##
+
+bash 手册页中有几部分对本章中涵盖的主题提供了更详细的内容:
+
+- Lists ( 讨论控制操作符 || 和 && )
+- Compound Commands ( 讨论 [[ ]], (( )) 和 if )
+- CONDITIONAL EXPRESSIONS （条件表达式）
+- SHELL BUILTIN COMMANDS ( 讨论 test )
+
+进一步, Wikipedia 中有一篇关于伪代码概念的好文章:
+
+[http://en.wikipedia.org/wiki/Pseudocode](http://en.wikipedia.org/wiki/Pseudocode)

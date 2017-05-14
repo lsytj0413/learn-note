@@ -179,3 +179,11 @@ echo "\$100.00"
 echo -e "Time's up\a"
 echo "Time's up" $'\a'
 ```
+
+## 7.3 扩展阅读 ##
+
+- Bash 手册页有主要段落是关于展开和引用的, 它们以更正式的方式介绍了这些题目.
+
+- Bash 参考手册也包含章节, 介绍展开和引用:
+
+[http://www.gnu.org/software/bash/manual/bashref.html](http://www.gnu.org/software/bash/manual/bashref.html)

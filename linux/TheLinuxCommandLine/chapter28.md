@@ -231,3 +231,7 @@ fi
 ## 28.5 附加项 ##
 
 作为练习, 用户可以使用 test命令替代 [[]] 复合命令来改写本章的程序, 并且使用grep命令处理正则表达式, 然后评估其退出状态.
+
+Bash 参考手册有一章关于内部命令的内容, 其包括了read命令:
+
+[http://www.gnu.org/software/bash/manual/bashref.html#Bash-Builtins](http://www.gnu.org/software/bash/manual/bashref.html#Bash-Builtins)

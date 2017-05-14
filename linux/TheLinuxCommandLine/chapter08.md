@@ -112,3 +112,9 @@ bash也支持以递增方式搜索历史记录, 当搜索历史记录时随着�
 script file
 ```
 如果file未指定则默认为typescript名称.
+
+## 8.4 扩展阅读 ##
+
+- Wikipedia 上有一篇关于计算机终端的好文章:
+
+[http://en.wikipedia.org/wiki/Computer_terminal](http://en.wikipedia.org/wiki/Computer_terminal)

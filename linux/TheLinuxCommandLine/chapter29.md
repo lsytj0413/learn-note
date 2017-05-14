@@ -198,3 +198,13 @@ done
 ## 29.6 本章结尾语 ##
 
 在讲解过循环, 分支, 子进程以及队列之后, 编程过程中使用的主要流控制方法已经都介绍完成.
+
+## 29.7 扩展阅读 ##
+
+- Linux 文档工程中的 Bash 初学者指南一书中介绍了更多的 while 循环实例:
+
+[http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_09_02.html](http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_09_02.html)
+
+- Wikipedia 中有一篇关于循环的文章, 其是一篇比较长的关于流程控制的文章中的一部分:
+
+[http://en.wikipedia.org/wiki/Control_flow#Loops](http://en.wikipedia.org/wiki/Control_flow#Loops)

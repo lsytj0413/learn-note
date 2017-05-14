@@ -114,3 +114,23 @@ alias foo='cd /usr; ls; cd -'
 ```
 
 可以使用unalias来删除别名.
+
+## 5.5 扩展阅读 ##
+
+在网上有许多关于 Linux 和命令行的文档. 以下是一些最好的文档:
+
+- Bash 参考手册是一本 bash shell 的参考指南. 它仍然是一本参考书, 但是包含了很多实例, 而且它比 bash 手册页容易阅读:
+
+[http://www.gnu.org/software/bash/manual/bashref.html](http://www.gnu.org/software/bash/manual/bashref.html)
+
+- Bash FAQ 包含关于 bash经常提到的问题的答案. 这个列表面向 bash 的中高级用户, 但它包含了许多有帮助的信息:
+
+[http://mywiki.wooledge.org/BashFAQ](http://mywiki.wooledge.org/BashFAQ)
+
+- GUN 项目为它的程序提供了大量的文档, 这些文档组成了 Linux 命令行实验的核心. 这里你可以看到一个完整的列表:
+
+[http://www.gnu.org/manual/manual.html](http://www.gnu.org/manual/manual.html)
+
+- Wikipedia 有一篇关于手册页的有趣文章:
+
+[http://en.wikipedia.org/wiki/Man_page](http://en.wikipedia.org/wiki/Man_page)

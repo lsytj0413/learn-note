@@ -193,3 +193,15 @@ umask 0002
 ```
 passwd [user]
 ```
+
+## 9.6 扩展阅读 ##
+
+- Wikipedia 上面有一篇关于 malware(恶意软件)好文章:
+
+[http://en.wikipedia.org/wiki/Malware](http://en.wikipedia.org/wiki/Malware)
+
+还有一系列的命令行程序, 可以用来创建和维护用户和用户组. 更多信息查看以下命令的手册页:
+
+- adduser
+- useradd
+- groupadd

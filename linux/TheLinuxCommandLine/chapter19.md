@@ -276,3 +276,11 @@ cd /usr/share/man
 zgrep -E1 'regex|regular expression' *.gz
 ```
 在上面的命令中使用 zgrep 以便对压缩文件进行搜索.
+
+## 19.11 扩展阅读 ##
+
+有许多在线学习正则表达式的资源, 包括各种各样的教材和速记表. 另外, 关于下面的背景话题, Wikipedia 有不错的文章:
+
+- POSIX: [http://en.wikipedia.org/wiki/Posix](http://en.wikipedia.org/wiki/Posix) 
+
+- ASCII: [http://en.wikipedia.org/wiki/Ascii](http://en.wikipedia.org/wiki/Ascii)

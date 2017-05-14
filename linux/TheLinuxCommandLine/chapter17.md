@@ -235,3 +235,9 @@ option选项用于控制find命令的搜索范围, 可能包含在其他测试�
 | -mindepth levels | 在应用测试条件和行为之前, 设置find程序陷入目录数的最小级别数 |
 | -mount | 引导find程序不去遍历挂载在其他文件系统上的目录 |
 | -noleaf | 引导find不要基于正在搜索类UNIX文件系统的假设来优化搜索, 当扫描DOS/Windows文件系统和CD时会使用此选项 |
+
+## 17.3 扩展阅读 ##
+
+- 程序 locate, updatedb, find 和 xargs 都是 GNU 项目 findutils 软件包的一部分. 这个 GUN 项目提供了大量的在线文档, 这些文档相当出色, 如果你在高安全性的环境中使用这些程序, 你应该读读这些文档.
+
+[http://www.gnu.org/software/findutils/](http://www.gnu.org/software/findutils/)

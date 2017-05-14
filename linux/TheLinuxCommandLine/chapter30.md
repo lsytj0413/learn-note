@@ -290,3 +290,28 @@ set +x # Turn off tracing
 ## 30.5 本章结尾语 ##
 
 调试是一门在实践中成长的技术, 既包括避免BUG, 也包括找到BUG.
+
+## 30.6 扩展阅读 ##
+
+- Wikipedia 上面有两篇关于语法和逻辑错误的短文:
+
+[http://en.wikipedia.org/wiki/Syntax_error](http://en.wikipedia.org/wiki/Syntax_error)
+[http://en.wikipedia.org/wiki/logic_error](http://en.wikipedia.org/wiki/logic_error)
+
+- 网上有很多关于技术层面的 bash 编程的资源:
+
+[http://mywiki.wooledge.org/BashPitfalls](http://mywiki.wooledge.org/BashPitfalls)
+
+[http://tldp.org/LDP/abs/html/gotchas.html](http://tldp.org/LDP/abs/html/gotchas.html)
+
+[http://www.gnu.org/software/bash/manual/html_node/Reserved-Word-Index.html](http://www.gnu.org/software/bash/manual/html_node/Reserved-Word-Index.html)
+
+- 想要学习从编写良好的 Unix 程序中得知的基本概念, 可以参考 Eric Raymond 的《Unix 编程的艺术》这本 伟大的著作. 书中的许多想法都能适用于 shell 脚本:
+
+[http://www.faqs.org/docs/artu/](http://www.faqs.org/docs/artu/)
+
+[http://www.faqs.org/docs/artu/ch01s06.html](http://www.faqs.org/docs/artu/ch01s06.html)
+
+- 对于真正的高强度的调试, 参考这个 Bash Debugger:
+
+[http://bashdb.sourceforge.net/](http://bashdb.sourceforge.net/)
