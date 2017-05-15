@@ -49,6 +49,60 @@ days=([0]=Sun [1]=Mon [2]=Tue [3]=Wed [4]=Thu [5]=Fri [6]=Sat)
 
 ## 35.4 访问数组元素 ##
 
+创建一个脚本, 用于输出特定目录中文件的修改次数, 示例输出如下:
+
+```
+[me@linuxbox ~]$ hours .
+Hour Files Hour Files
+---- ----- ---- ----
+00   0     12   11
+01   1     13   7
+02   0     14   1
+03   0     15   7
+04   1     16   6
+04   1     17   5
+06   6     18   4
+07   3     19   4
+08   1     20   1
+09   14    21   0
+10   2     22   0
+11   5     23   0
+Total files = 80
+```
+
+hours程序输出在指定目录中, 一天中的每个小时有多少文件经过最后一次修改. 该脚本代码如下:
+
+```
+#!/bin/bash
+# hours : script to count files by modification time
+usage () {
+    echo "usage: $(basename $0) directory" >&2
+}
+# Check that argument is a directory
+if [[ ! -d $1 ]]; then
+    usage
+    exit 1
+fi
+# Initialize array
+for i in {0..23}; do hours[i]=0; done
+# Collect data
+for i in $(stat -c %y "$1"/* | cut -c 12-13); do
+    j=${i/#0}
+    ((++hours[j]))
+    ((++count))
+done
+# Display data
+echo -e "Hour\tFiles\tHour\tFiles"
+echo -e "----\t-----\t----\t-----"
+for i in {0..11}; do
+    j=$((i + 12))
+    printf "%02d\t%d\t%02d\t%d\n" $i ${hours[i]} $j ${hours[j]}
+done
+printf "\nTotal files = %d\n" $count
+```
+
+在第三部分代码中, 我们使用stat程序遍历目录中的每个文件来采集数据, 使用cut选项中结果中提取两位小时数, 并且清除hour域中的前导0.
+
 ## 35.5 数组操作 ##
 
 ### 35.5.1 输出数组的所有内容 ###
