@@ -107,14 +107,134 @@ printf "\nTotal files = %d\n" $count
 
 ### 35.5.1 输出数组的所有内容 ###
 
+可以使用下标 * 和 @ 来访问数组中的每个元素, 对于定位参数来说, @ 更为有用.
+
+```
+[me@linuxbox ~]$ animals=("a dog" "a cat" "a fish")
+[me@linuxbox ~]$ for i in ${animals[*]}; do echo $i; done
+a
+dog
+a
+cat
+a
+fish
+[me@linuxbox ~]$ for i in ${animals[@]}; do echo $i; done
+a
+dog
+a
+cat
+a
+fish
+[me@linuxbox ~]$ for i in "${animals[*]}"; do echo $i; done
+a dog a cat a fish
+[me@linuxbox ~]$ for i in "${animals[@]}"; do echo $i; done
+a dog
+a cat
+a fish
+```
+
+对符号 ${animals[*]} 和 ${animals[@]} 加以引用会得到不同的结果, 符号 * 将数组的所有内容放在一个字符串中, 符哈 @ 使用3个字符串来显示数组的真实内容.
+
 ### 35.5.2 确定数组元素的数目 ###
+
+使用参数扩展, 可以采用类似获取字符串长度的方式来确定数组中元素的数目.
+
+```
+[me@linuxbox ~]$ a[100]=foo
+[me@linuxbox ~]$ echo ${#a[@]} # number of array elements
+1
+[me@linuxbox ~]$ echo ${#a[100]} # length of element 100
+3
+```
+
+需要注意的是, 在bash中数组中未初始化的元素不统计到长度中.
 
 ### 35.5.3 查找数组中使用的下标 ###
 
+可以通过参数扩展来实现:
+
+```
+${!array[*]}
+${!array[@]}
+```
+
+引用中含有 @ 的形式更为有用, 因为它将数组的内容扩展成独立的单词.
+
+```
+[me@linuxbox ~]$ foo=([2]=a [4]=b [6]=c)
+[me@linuxbox ~]$ for i in "${foo[@]}"; do echo $i; done
+a
+b
+c
+[me@linuxbox ~]$ for i in "${!foo[@]}"; do echo $i; done
+2
+4
+6
+```
+
 ### 35.5.4 在数组的结尾增加元素 ###
+
+通过使用 += 运算符可以在数组的尾部自动添加元素.
+
+```
+[me@linuxbox~]$ foo=(a b c)
+[me@linuxbox~]$ echo ${foo[@]}
+a b c
+[me@linuxbox~]$ foo+=(d e f)
+[me@linuxbox~]$ echo ${foo[@]}
+a b c d e f
+```
 
 ### 35.5.5 数组排序操作 ###
 
+shell没有直接的方式来实现数组排序, 但是可以使用一些代码来实现:
+
+```
+#!/bin/bash
+# array-sort : Sort an array
+a=(f e d c b a)
+echo "Original array: ${a[@]}"
+a_sorted=($(for i in "${a[@]}"; do echo $i; done | sort))
+echo "Sorted array: ${a_sorted[@]}"
+```
+
 ### 35.5.6 数组的删除 ###
+
+可以使用unset命令来删除数组, 例如:
+
+```
+[me@linuxbox ~]$ foo=(a b c d e f)
+[me@linuxbox ~]$ echo ${foo[@]}
+a b c d e f
+[me@linuxbox ~]$ unset foo
+[me@linuxbox ~]$ echo ${foo[@]}
+[me@linuxbox ~]$
+```
+
+也可以使用unset来删除单个的数组元素:
+
+```
+[me@linuxbox~]$ foo=(a b c d e f)
+[me@linuxbox~]$ echo ${foo[@]}
+a b c d e f
+[me@linuxbox~]$ unset 'foo[2]'
+[me@linuxbox~]$ echo ${foo[@]}
+a b d e f
+```
+
+对数组赋值一个空值并不能清空数组的内容, 而且任何不含下标的数组变量的引用指的是数组中的元素0.
+
+```
+[me@linuxbox ~]$ foo=(a b c d e f)
+[me@linuxbox ~]$ foo=
+[me@linuxbox ~]$ echo ${foo[@]}
+b c d e f
+[me@linuxbox~]$ foo=(a b c d e f)
+[me@linuxbox~]$ echo ${foo[@]}
+a b c d e f
+[me@linuxbox~]$ foo=A
+[me@linuxbox~]$ echo ${foo[@]}
+A b c d e f
+```
 
 ## 35.6 本章结尾语 ##
