@@ -34,6 +34,89 @@ cat foo.txt >> output.txt
 { ls -l; echo "Listing of foo.txt"; cat foo.txt; } | lpr
 ```
 
+在下面的脚本中我们将使用组命令, 看几个与关联数组结合使用的编程技巧.
+这个脚本称为 array-2, 当给定一个目录名, 打印出目录中的文件列表, 伴随着每个文件的文件所有者和组所有者.
+在文件列表的末尾, 脚本打印出属于每个所有者和组的文件数目. 这里我们看到的（为简单起见而缩短的）结果, 是给定脚本的目录为 /usr/bin 的时候:
+
+```
+[me@linuxbox ~]$ array-2 /usr/bin
+/usr/bin/2to3-2.6                 root        root
+/usr/bin/2to3                     root        root
+/usr/bin/a2p                      root        root
+/usr/bin/abrowser                 root        root
+/usr/bin/aconnect                 root        root
+/usr/bin/acpi_fakekey             root        root
+/usr/bin/acpi_listen              root        root
+/usr/bin/add-apt-repository       root        root
+.
+/usr/bin/zipgrep                  root        root
+/usr/bin/zipinfo                  root        root
+/usr/bin/zipnote                  root        root
+/usr/bin/zip                      root        root
+/usr/bin/zipsplit                 root        root
+/usr/bin/zjsdecode                root        root
+/usr/bin/zsoelim                  root        root
+
+File owners:
+daemon  : 1 file(s)
+root    : 1394 file(s) File group owners:
+crontab : 1 file(s)
+daemon  : 1 file(s)
+lpadmin : 1 file(s)
+mail    : 4 file(s)
+mlocate : 1 file(s)
+root    : 1380 file(s)
+shadow  : 2 file(s)
+ssh     : 1 file(s)
+tty     : 2 file(s)
+utmp    : 2 file(s)
+```
+
+脚本代码如下:
+
+```
+#!/bin/bash
+
+# array-2: Use arrays to tally file owners
+
+declare -A files file_group file_owner groups owners
+
+if [[ ! -d "$1" ]]; then
+   echo "Usage: array-2 dir" >&2
+   exit 1
+fi
+
+for i in "$1"/*; do
+   owner=$(stat -c %U "$i")
+   group=$(stat -c %G "$i")
+    files["$i"]="$i"
+    file_owner["$i"]=$owner
+    file_group["$i"]=$group
+    ((++owners[$owner]))
+    ((++groups[$group]))
+done
+
+# List the collected files
+{ for i in "${files[@]}"; do
+printf "%-40s %-10s %-10s\n" \
+"$i" ${file_owner["$i"]} ${file_group["$i"]}
+done } | sort
+echo
+
+ List owners
+echo "File owners:"
+{ for i in "${!owners[@]}"; do
+printf "%-10s: %5d file(s)\n" "$i" ${owners["$i"]}
+done } | sort
+echo
+
+# List groups
+echo "File group owners:"
+{ for i in "${!groups[@]}"; do
+printf "%-10s: %5d file(s)\n" "$i" ${groups["$i"]}
+done } | sort
+```
+
 ### 36.1.2 进程替换 ###
 
 组命令和子shell有一个主要的不同: 子shell在当前shell的子拷贝中执行命令, 而组命令在当前shell里面执行命令. 通常情况下组命令更合适, 除非脚本真的需要子shell.
@@ -115,6 +198,69 @@ Group: me
 ```
 
 ## 36.2 trap ##
+
+bash提供了trap机制来让脚本响应信号, 语法如下:
+
+```
+trap argument signal [signal...]
+```
+
+这里的argument是作为命令被读取的字符串, 而signal是对信号量的说明, 该信号量会触发解释命令的执行. 例如:
+
+```
+#!/bin/bash
+# trap-demo : simple signal handling demo
+trap "echo 'I am ignoring you.'" SIGINT SIGTERM
+for i in {1..5}; do
+    echo "Iteration $i of 5"
+    sleep 5
+done
+```
+
+当脚本收到 SIGTERM或是SIGINT信号时, 脚本定义的trap将执行echo命令.
+
+通常我们使用shell函数来代替命令, 将代码修改如下:
+
+```
+#!/bin/bash
+# trap-demo2 : simple signal handling demo
+exit_on_signal_SIGINT () {
+    echo "Script interrupted." 2>&1
+    exit 0
+}
+exit_on_signal_SIGTERM () {
+    echo "Script terminated." 2>&1
+    exit 0
+}
+trap exit_on_signal_SIGINT SIGINT
+trap exit_on_signal_SIGTERM SIGTERM
+for i in {1..5}; do
+    echo "Iteration $i of 5"
+    sleep 5
+done
+```
+
+类UNIX系统通常在/tmp目录下创建临时文件, 为了给临时文件一个不可预知的文件名, 可以使用如下代码:
+
+```
+tempfile=/tmp/$(basename $0).$$.$RANDOM
+```
+
+这会创建一个包含程序名的文件, 其后是进程ID, 然后是一个1~32767之间的整数.
+
+更好的办法是使用 mktemp程序来命名和创建临时文件:
+
+```
+tempfile=$(mktemp /tmp/foobar.$$.XXXXXXXXXX)
+```
+
+mktemp使用模板作为参数来创建文件名, 该模板包含一系列的X字符, mktemp用随机的字母和数字来替换这些X字符. mktemp构造了一个临时文件名, 同时也创建了这个文件.
+
+如果是普通用户执行的脚本, 较好的做法是避免使用 /tmp 目录, 而在用户主目录下为临时文件创建一个目录, 代码如下:
+
+```
+[[ -d $HOME/tmp ]] || mkdir $HOME/tmp
+```
 
 ## 36.3 异步执行 ##
 
