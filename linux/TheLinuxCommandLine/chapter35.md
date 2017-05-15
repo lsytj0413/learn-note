@@ -257,3 +257,18 @@ echo ${colors["blue"]}
 ```
 
 ## 35.7 本章结尾语 ##
+
+数组和循环有一种天然的姻亲关系, 它们经常被一起使用. 例如:
+
+```
+for ((expr; expr; expr))
+```
+
+形式的循环尤其适合计算数组下标.
+
+## 35.8 扩展阅读 ##
+
+- Wikipedia 上面有两篇关于在本章提到的数据结构的文章:
+
+[http://en.wikipedia.org/wiki/Scalar_(computing)](http://en.wikipedia.org/wiki/Scalar_(computing))
+[http://en.wikipedia.org/wiki/Associative_array](http://en.wikipedia.org/wiki/Associative_array)
