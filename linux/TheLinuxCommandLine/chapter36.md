@@ -352,3 +352,21 @@ cat < pipe1
 可以看到第一个终端中命令的结果出现在第二个终端中, 同时第一个终端中的ls命令结束.
 
 ## 36.5 本章结尾语 ##
+
+## 36.6 扩展阅读 ##
+
+- bash 手册页的 *复合命令* 部分包含了对组命令和子 shell 表示法的详尽描述.
+
+- bash 手册也的 *EXPANSION* 部分包含了一小部分进程替换的内容.
+
+- 《高级 Bash 脚本指南》也有对进程替换的讨论:
+
+[http://tldp.org/LDP/abs/html/process-sub.html](http://tldp.org/LDP/abs/html/process-sub.html)
+
+- 《Linux 杂志》有两篇关于命令管道的好文章. 第一篇源于1997年9月:
+
+[http://www.linuxjournal.com/article/2156](http://www.linuxjournal.com/article/2156)
+
+- 和第二篇源于2009年3月:
+
+[http://www.linuxjournal.com/content/using-named-pipes-fifos-bash](http://www.linuxjournal.com/content/using-named-pipes-fifos-bash)
