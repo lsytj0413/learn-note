@@ -25,6 +25,28 @@ declare -a a
 
 ## 35.3 数组赋值 ##
 
+使用下面的语法可以对数组的单一元素赋值:
+
+```
+name[subscript]=value
+```
+
+这里name是数组名, subscript是大于等于0的整数, value是赋值给数组元素的字符串或整数.
+
+使用下面的语法可以对整个数组赋值:
+
+```
+name=(value1 value2...)
+```
+
+这里name是数组名, 并且将value1, value2...等值依次赋予从索引0开始的数组元素. 也可以通过为每个值指定下标来对特定的元素赋值:
+
+```
+days=(Sun Mon Tue Wed Thu Fri Sat)
+# 等价于
+days=([0]=Sun [1]=Mon [2]=Tue [3]=Wed [4]=Thu [5]=Fri [6]=Sat)
+```
+
 ## 35.4 访问数组元素 ##
 
 ## 35.5 数组操作 ##
