@@ -264,6 +264,53 @@ mktemp使用模板作为参数来创建文件名, 该模板包含一系列的X�
 
 ## 36.3 异步执行 ##
 
+bash提供了wait命令让父脚本暂停, 直到指定的进程(例如子脚本)结束.
+
+### 36.3.1 wait命令 ###
+
+父脚本如下:
+
+```
+#!/bin/bash
+# async-parent : Asynchronous execution demo (parent)
+echo "Parent: starting..."
+echo "Parent: launching child script..."
+async-child &
+pid=$!
+echo "Parent: child (PID= $pid) launched."
+echo "Parent: continuing..."
+sleep 2
+echo "Parent: pausing to wait for child to finish..."
+wait $pid
+echo "Parent: child is finished. Continuing..."
+echo "Parent: parent is done. Exiting."
+```
+
+子脚本如下:
+
+```
+#!/bin/bash
+# async-child : Asynchronous execution demo (child)
+echo "Child: child is running..."
+sleep 5
+echo "Child: child is done. Exiting."
+```
+
+$! 变量的值总是包含后台中最后一次运行的进程ID. 输出如下:
+
+```
+[me@linuxbox ~]$ async-parent
+Parent: starting...
+Parent: launching child script...
+Parent: child (PID= 6741) launched.
+Parent: continuing...
+Child: child is running...
+Parent: pausing to wait for child to finish...
+Child: child is done. Exiting.
+Parent: child is finished. Continuing...
+Parent: parent is done. Exiting.
+```
+
 ## 36.4 命名管道 ##
 
 ### 36.4.1 设置命名管道 ###
