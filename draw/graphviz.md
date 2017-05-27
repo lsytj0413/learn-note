@@ -32,7 +32,7 @@ graphviz包含3种元素, 即图, 顶点和边. 每个元素都可以具有各�
 ### 第一个graphviz图 ###
 
 绘制一个简单的有向图, 包含a, b, c, d四个节点. 其中a指向b, b和c指向d.
-将以下内容保存为 [graph01.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graph01.dot):
+将以下内容保存为 [graph01.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph01.dot):
 
 ```
 digraph graph01 {
@@ -49,13 +49,13 @@ digraph graph01 {
 
 使用dot布局方式, 绘制出来的效果如下图:
 
-![graph01](https://github.com/lsytj0413/learn-note/blob/master/draw/graph01.png)
+![graph01](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph01.png)
 
 默认的顶点中的文字为定义顶点变量的名称, 形状为椭圆. 边的默认样式为黑色实线箭头.
 
 ### 定义顶点和边的样式 ###
 
-在digraph的花括号内, 添加顶点和边的新定义, 保存为 [graph02.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graph02.dot):
+在digraph的花括号内, 添加顶点和边的新定义, 保存为 [graph02.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph02.dot):
 
 ```
   node [shape="record"];
@@ -64,11 +64,11 @@ digraph graph01 {
 
 绘制的效果如下图:
 
-![graph02](https://github.com/lsytj0413/learn-note/blob/master/draw/graph02.png)
+![graph02](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph02.png)
 
 ### 修改顶点和边样式 ###
 
-进一步, 我们将顶点a的颜色修改为淡绿色, 并将c到d的边修改为红色, 将以下内容保存为 [graph03](https://github.com/lsytj0413/learn-note/blob/master/draw/graph03.dot):
+进一步, 我们将顶点a的颜色修改为淡绿色, 并将c到d的边修改为红色, 将以下内容保存为 [graph03](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph03.dot):
 
 ```
 digraph graph03{
@@ -88,5 +88,6 @@ digraph graph03{
 
 绘制的效果如下图:
 
-![graph03](https://github.com/lsytj0413/learn-note/blob/master/draw/graph03.png)
+![graph03](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph03.png)
 
+### 以图片为节点 ###
