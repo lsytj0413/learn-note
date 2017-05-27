@@ -26,3 +26,29 @@ graphviz包含了众多的布局器:
 对于开发人员而言, 经常会用到的图形绘制可能包括: 函数调用关系, 一个复杂的数据结构, 系统的模块组成, 抽象语法树等.
 
 ## 基础知识 ##
+
+graphviz包含3种元素, 即图, 顶点和边. 每个元素都可以具有各自的属性, 用来定义字体, 样式, 颜色和形状等.
+
+### 第一个graphviz图 ###
+
+绘制一个简单的有向图, 包含a, b, c, d四个节点. 其中a指向b, b和c指向d.
+将以下内容保存为 [graph01.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graph01.dot):
+
+```
+digraph graph01 {
+  a;
+  b;
+  c;
+  d;
+
+  a -> b;
+  b -> d;
+  c -> d;
+}
+```
+
+使用dot布局方式, 绘制出来的效果如下图:
+
+![graph01](https://github.com/lsytj0413/learn-note/blob/master/draw/graph01.png)
+
+默认的顶点中的文字为定义顶点变量的名称, 形状为椭圆. 边的默认样式为黑色实线箭头.

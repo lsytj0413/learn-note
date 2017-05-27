@@ -1,0 +1,10 @@
+digraph graph01 {
+  a;
+  b;
+  c;
+  d;
+
+  a -> b;
+  b -> d;
+  c -> d;
+}
