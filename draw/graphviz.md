@@ -55,7 +55,7 @@ digraph graph01 {
 
 ### 定义顶点和边的样式 ###
 
-在digraph的花括号内, 添加顶点和边的新定义, 保存为 [graph02.dot]():
+在digraph的花括号内, 添加顶点和边的新定义, 保存为 [graph02.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graph02.dot):
 
 ```
   node [shape="record"];
@@ -65,3 +65,28 @@ digraph graph01 {
 绘制的效果如下图:
 
 ![graph02](https://github.com/lsytj0413/learn-note/blob/master/draw/graph02.png)
+
+### 修改顶点和边样式 ###
+
+进一步, 我们将顶点a的颜色修改为淡绿色, 并将c到d的边修改为红色, 将以下内容保存为 [graph03](https://github.com/lsytj0413/learn-note/blob/master/draw/graph03.dot):
+
+```
+digraph graph03{
+  node [shape="record"];
+  edge [style="dashed"];
+
+  a [style="filled", color="black", fillcolor="chartreuse"];
+  b;
+  c;
+  d;
+
+  a -> b;
+  b -> d;
+  c -> d [color="red"];
+}
+```
+
+绘制的效果如下图:
+
+![graph03](https://github.com/lsytj0413/learn-note/blob/master/draw/graph03.png)
+
