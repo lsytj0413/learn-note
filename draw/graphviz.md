@@ -91,3 +91,28 @@ digraph graph03{
 ![graph03](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph03.png)
 
 ### 以图片为节点 ###
+
+节点也可以使用图片, 不过需要注意的是, 在使用图片作为节点的时候需要将本来的形状设置为none, 并且将label置为空字符串, 以避免文字对图片的干扰.
+
+将以下内容保存为 [graph04.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph04.dot):
+
+```
+digraph graph04{
+  node [shape="record"];
+  edge [style="dashed"];
+
+
+  a [style="filled", color="black", fillcolor="chartreuse"];
+  b;
+  c [shape="none", image="../img/chrome.png", label=""];
+  d;
+
+  a -> b;
+  b -> d;
+  c -> d [color="red"];
+}
+```
+
+效果图如下:
+
+![graph04](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph04.png)
