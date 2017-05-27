@@ -52,3 +52,16 @@ digraph graph01 {
 ![graph01](https://github.com/lsytj0413/learn-note/blob/master/draw/graph01.png)
 
 默认的顶点中的文字为定义顶点变量的名称, 形状为椭圆. 边的默认样式为黑色实线箭头.
+
+### 定义顶点和边的样式 ###
+
+在digraph的花括号内, 添加顶点和边的新定义, 保存为 [graph02.dot]():
+
+```
+  node [shape="record"];
+  edge [style="dashed"];
+```
+
+绘制的效果如下图:
+
+![graph02](https://github.com/lsytj0413/learn-note/blob/master/draw/graph02.png)
