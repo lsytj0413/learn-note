@@ -319,3 +319,37 @@ digraph graph09{
 ![graph09](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph09.png)
 
 在上例中我们在有些地方使用HTML形式的label语法, 因为使用字符串形式的语法不能正确显示中文, 具体原因待查.
+
+### 状态机 ###
+
+作一个简易有限自动机图, 接受a以及以a结尾的任意长度的字符串.
+将以下内容保存为 [graph10.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph10.dot):
+
+```
+digraph graph10{
+  size = "8.5, 11";
+  fontname = "Verdana";
+  fontsize = 10;
+
+  node [shape=circle, fontname="Verdana", fontsize=10];
+  edge [fontname="Verdana", fontsize=10];
+
+  0 [style=filled, color=lightgrey];
+  2 [shape=doublecircle];
+
+  0 -> 2 [label="a "];
+  0 -> 1 [label="other "];
+  1 -> 2 [label="a "];
+  1 -> 1 [label="other "];
+  2 -> 2 [label="a "];
+  2 -> 1 [label="other "];
+
+  "Machine: a" [shape=plaintext];
+}
+```
+
+效果图如下:
+
+![graph10](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph10.png)
+
+形状值为plaintext的表示不绘制边框, 用于展示纯文本内容, 在绘制指示性的文本时很有用.
