@@ -1,0 +1,16 @@
+digraph graph12{
+  fontname = "Verdana";
+  fontsize = 10;
+
+  node [sbape=circle, fontname="Verdana", fontsize=10];
+  edge [fontname="Verdana", fontsize=10];
+  node [shape="plaintext"];
+
+  mul [label="mul(*)"];
+  add [label="add(+)"];
+
+  add -> 3;
+  add -> 4;
+  mul -> add;
+  mul -> 5;
+}

@@ -392,3 +392,30 @@ digraph graph11{
 效果图如下:
 
 ![graph11](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph11.png)
+
+## 其他实例 ##
+
+使用graphviz绘图的表达式 (3+4)*5 的抽象语法树, 将以下内容保存为 [graph12.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph12.dot):
+
+```
+digraph graph12{
+  fontname = "Verdana";
+  fontsize = 10;
+
+  node [sbape=circle, fontname="Verdana", fontsize=10];
+  edge [fontname="Verdana", fontsize=10];
+  node [shape="plaintext"];
+
+  mul [label="mul(*)"];
+  add [label="add(+)"];
+
+  add -> 3;
+  add -> 4;
+  mul -> add;
+  mul -> 5;
+}
+```
+
+效果图如下:
+
+![graph12](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph12.png)
