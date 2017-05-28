@@ -533,3 +533,13 @@ digraph graph15 {
 效果图如下:
 
 ![graph15](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph15.png)
+
+可以看到, 在代码中有用 {} 括起来的部分, 每一个 rank=same 的block中的所有节点都会在同一条线上.
+
+## 附录 ##
+
+dot脚本很容易被其他语言生成, 而且如果你希望快速的将自己的想法画出来, 那么graphviz是一个不错的选择.
+
+但是graphviz也有一定的局限, 比如绘制时序图就很难实现. 而且graphviz中的节点出现在画布上的位置是不确定的, 依赖于所使用的布局算法, 而不是在脚本中出现的位置.
+
+graphviz的强项在于自动布局, 如果仅用于显示模块间的关系, 子模块与子模块通信的方式, 模块间的逻辑位置等, 那么graphviz完全可以胜任. 但是如果图中节点的位置必须是精确的, 例如节点A必须位于左上角等, 使用graphviz则很难做到.
