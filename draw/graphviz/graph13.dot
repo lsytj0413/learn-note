@@ -1,0 +1,20 @@
+digraph graph13{
+  fontname = "Courier New";
+  fontsize = 10;
+
+  node [fontname="Courier New", fontsize=10, shape=record];
+  edge [fontname="Courier New", fontsize=10];
+
+  Animal [label="{Animal |+ name : String\l+ age : int \l|+ die() : void\l}"];
+  subgraph clusterAnimalImpl{
+    bgcolor="yellow";
+    Dog [label="{Dog||+ bark() : void\l}"];
+    Cat [label="{Cat||+ meow() : void\l}"];
+  };
+
+  edge [arrowhead="empty"];
+
+  Dog -> Animal;
+  Cat -> Animal;
+  Dog -> Cat [arrowhead="none", label="0..*"];
+}

@@ -395,6 +395,8 @@ digraph graph11{
 
 ## 其他实例 ##
 
+### 抽象语法树 ###
+
 使用graphviz绘图的表达式 (3+4)*5 的抽象语法树, 将以下内容保存为 [graph12.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph12.dot):
 
 ```
@@ -419,3 +421,34 @@ digraph graph12{
 效果图如下:
 
 ![graph12](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph12.png)
+
+### UML类图 ###
+
+使用graphviz绘图的简单的UML类图, 将以下内容保存为 [graph13.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph13.dot):
+
+```
+digraph graph13{
+  fontname = "Courier New";
+  fontsize = 10;
+
+  node [fontname="Courier New", fontsize=10, shape=record];
+  edge [fontname="Courier New", fontsize=10];
+
+  Animal [label="{Animal |+ name : String\l+ age : int \l|+ die() : void\l}"];
+  subgraph clusterAnimalImpl{
+    bgcolor="yellow";
+    Dog [label="{Dog||+ bark() : void\l}"];
+    Cat [label="{Cat||+ meow() : void\l}"];
+  };
+
+  edge [arrowhead="empty"];
+
+  Dog -> Animal;
+  Cat -> Animal;
+  Dog -> Cat [arrowhead="none", label="0..*"];
+}
+```
+
+效果图如下:
+
+![graph13](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph13.png)
