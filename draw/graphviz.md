@@ -269,3 +269,53 @@ digraph graph08 {
 ![graph08](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph08.png)
 
 从上例中可以看到, 节点的label属性支持类似于HTML语言中的TABLE形式的定义, 通过行列的数目来定义节点的形状, 从而使节点的组成更加灵活.
+
+### 软件模块组成图 ###
+
+可以使用graphviz绘制软件的模块图, 这些模块之间可以有复杂的关系, 并且部分关系密切的模块应归为一个子系统中.
+将以下内容保存为 [graph09.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph09.dot):
+
+```
+digraph graph09{
+  rankdir = TB;
+  fontname = "Verdana";
+  fontsize = 12;
+
+  node [fontname="Verdana", fontsize=12, shape="record"];
+  edge [fontname="Verdana", fontsize=12];
+
+  subgraph cluster_sl{
+    label="IDP支持层";
+    bgcolor="mintcream";
+    node [shape="Mrecord", color="skyblue", style="filled"];
+    network_mgr [label=<<table><tr><td>网络管理器</td></tr></table>>];
+    log_mgr [label=<<table><tr><td>日志管理器</td></tr></table>>];
+    module_mgr [label=<<table><tr><td>模块管理器</td></tr></table>>];
+    conf_mgr [label=<<table><tr><td>配置管理器</td></tr></table>>];
+    db_mgr [label=<<table><tr><td>数据库管理器</td></tr></table>>];
+    };
+
+  subgraph cluster_md{
+    label="可插拔模块集";
+    bgcolor="lightcyan";
+    node [color="chartreuse2", style="filled"];
+
+    mod_dev [label=<<table><tr><td>开发支持模块</td></tr></table>>];
+    mod_dm [label=<<table><tr><td>数据建模模块</td></tr></table>>];
+    mod_dp [label=<<table><tr><td>部署发布模块</td></tr></table>>];
+    };
+
+ mod_dp -> mod_dev [label="依赖..."];
+ mod_dp -> mod_dm [label="依赖..."];
+ mod_dp -> module_mgr [label="安装...", color="yellowgreen", arrowhead="none"];
+ mod_dev -> mod_dm [label="依赖..."];
+ mod_dev -> module_mgr [label="安装...", color="yellowgreen", arrowhead="none"];
+ mod_dm -> module_mgr [label="安装...", color="yellowgreen", arrowhead="none"];
+}
+```
+
+效果图如下:
+
+![graph09](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph09.png)
+
+在上例中我们在有些地方使用HTML形式的label语法, 因为使用字符串形式的语法不能正确显示中文, 具体原因待查.
