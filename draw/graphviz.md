@@ -116,3 +116,32 @@ digraph graph04{
 效果图如下:
 
 ![graph04](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph04.png)
+
+### 子图的绘制 ###
+
+graphviz支持子图, 即图中的部分节点和边相对对立. 将以下内容保存为 [graph05.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph05.dot):
+
+```
+digraph graph05{
+  node [shape="record"];
+  edge [style="dashed"];
+
+  a [style="filled", color="black", fillcolor="chartreuse"];
+  b;
+
+  subgraph cluster_cd{
+    label="c and d";
+    bgcolor="mintcream";
+    c;
+    d;
+  }
+
+  a -> b;
+  b -> d;
+  c -> d [color="red"];
+}
+```
+
+效果图如下:
+
+![graph05](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph05.png)
