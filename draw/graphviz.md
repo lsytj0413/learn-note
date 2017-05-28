@@ -205,7 +205,7 @@ digraph graph06 {
 在顶点的形状为record的时候, lable属性的语法比较奇怪, 但是使用起来非常灵活. 比如用竖线隔开的串会在绘制出来的节点中展现为一条分隔符, 用尖括号括起来的串称为锚点, 当一个节点具有多个锚点的时候这个特性会非常有用.
 例如节点 st\_table 的type属性指向 st\_hash\_type, 第4个属性指向 st\_table\_entry等, 都是通过锚点来实现的.
 
-也可以使用 circo算法来重新布局, 在 [graph07.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph06.dot) 中添加以下内容:
+也可以使用 circo算法来重新布局, 在 [graph07.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph07.dot) 中添加以下内容:
 
 ```
   layout = "circo";
@@ -214,3 +214,58 @@ digraph graph06 {
 效果图如下:
 
 ![graph07](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph07.png)
+
+### 另一个hash表 ###
+
+将以下内容保存为 [graph08.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph08.dot):
+
+```
+digraph graph08 {
+  fontname = "Verdana";
+  fontsize = 10;
+  rankdir = LR;
+  rotate = 180;
+
+  node [shape="record", width=.1, height=.1];
+  node [fontname="Verdana", fontsize=10, color="skyblue", shape="record"];
+
+  edge [fontname="Verdana", fontsize=10, color="crimson", style="solid"];
+  node [shape="plaintext"];
+
+  st_table [label=<
+            <table border="0" cellborder="1" cellspacing="0" align="left">
+            <tr>
+            <td>st_table</td>
+            </tr>
+            <tr>
+            <td>num_bins=5</td>
+            </tr>
+            <tr>
+            <td>num_entries=3</td>
+            </tr>
+            <tr>
+            <td port="bins">bins</td>
+            </tr>
+            </table>
+  >];
+
+  node [shape="record"];
+  num_bins [label=" <b1> | <b2> | <b3> | <b4> | <b5> ", height=2];
+  node [width=2];
+
+  entry_1 [label="{<e>st_table_entry|<next>next}"];
+  entry_2 [label="{<e>st_table_entry|<next>null}"];
+  entry_3 [label="{<e>st_table_entry|<next>null}"];
+
+  st_table:bins -> num_bins:b1;
+  num_bins:b1 -> entry_1:e;
+  entry_1:next -> entry_2:e;
+  num_bins:b3 -> entry_3:e;
+}
+```
+
+效果图如下:
+
+![graph08](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph08.png)
+
+从上例中可以看到, 节点的label属性支持类似于HTML语言中的TABLE形式的定义, 通过行列的数目来定义节点的形状, 从而使节点的组成更加灵活.

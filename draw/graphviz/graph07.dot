@@ -1,4 +1,4 @@
-digraph graph06 {
+digraph graph07 {
   layout = "circo";
   fontname = "Verdana";
   fontsize = 10;
