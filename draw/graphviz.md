@@ -489,3 +489,47 @@ digraph graph14 {
 效果图如下:
 
 ![graph14](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph14.png)
+
+### 时序图 ###
+
+使用graphviz绘图的简单的时序图, 将以下内容保存为 [graph15.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph15.dot):
+
+```
+digraph graph15 {
+  rankdir="LR";
+  node[shape="point", width=0, height=0];
+  edge[arrowhead="none", style="dashed"]
+
+  {
+    rank="same";
+    edge[style="solided"];
+    LC[shape="plaintext"];
+    LC -> step00 -> step01 -> step02 -> step03 -> step04 -> step05;
+  }
+
+  {
+    rank="same";
+    edge[style="solided"];
+    Agency[shape="plaintext"];
+    Agency -> step10 -> step11 -> step12 -> step13 -> step14 -> step15;
+  }
+
+  {
+    rank="same";
+    edge[style="solided"];
+    Agent[shape="plaintext"];
+    Agent -> step20 -> step21 -> step22 -> step23 -> step24 -> step25;
+  }
+
+  step00 -> step10 [label="sends email new custumer", arrowhead="normal"];
+  step11 -> step01 [label="declines", arrowhead="normal"];
+  step12 -> step02 [label="accepts", arrowhead="normal"];
+  step13 -> step23 [label="forward to", arrowhead="normal"];
+  step24 -> step14;
+  step14 -> step04 [arrowhead="normal"];
+}
+```
+
+效果图如下:
+
+![graph15](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph15.png)
