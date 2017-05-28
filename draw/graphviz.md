@@ -353,3 +353,42 @@ digraph graph10{
 ![graph10](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph10.png)
 
 形状值为plaintext的表示不绘制边框, 用于展示纯文本内容, 在绘制指示性的文本时很有用.
+
+### 模块生命周期图 ###
+
+作一个简易生命周期图, 包括安装, 卸载, 正在启动等状态.
+将以下内容保存为 [graph11.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph11.dot):
+
+```
+digraph graph11{
+  rankdir = TB;
+  fontname = "Verdana";
+  fontsize = 12;
+
+  node [fontname="Verdana", fontsize=12, shape="Mrecord", color="skyblue", style="filled"];
+  edge [fontname="Verdana", fontsize=12, color="darkgreen"];
+
+  installed [label=<<table><tr><td>已安装</td></tr></table>>];
+  resolved [label=<<table><tr><td>已就绪</td></tr></table>>];
+  uninstalled [label=<<table><tr><td>已卸载</td></tr></table>>];
+  starting [label=<<table><tr><td>正在启动</td></tr></table>>];
+  active [label=<<table><tr><td>正在运行</td></tr></table>>];
+  stoping [label=<<table><tr><td>正在停止</td></tr></table>>];
+  start [label="", shape="circle", width=0.5, fixedsize=true, style=filled, color="black"];
+
+  start -> installed [label="安装"];
+  installed -> uninstalled [label="卸载"];
+  installed -> resolved [label="准备"];
+  installed -> installed [label="更新"];
+  resolved -> installed [label="更新"];
+  resolved -> uninstalled [label="卸载"];
+  resolved -> starting [label="启动"];
+  starting -> active [label=""];
+  active -> stoping [label="停止"];
+  stoping -> resolved [label=""];
+}
+```
+
+效果图如下:
+
+![graph11](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph11.png)

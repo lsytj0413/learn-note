@@ -1,0 +1,27 @@
+digraph graph11{
+  rankdir = TB;
+  fontname = "Verdana";
+  fontsize = 12;
+
+  node [fontname="Verdana", fontsize=12, shape="Mrecord", color="skyblue", style="filled"];
+  edge [fontname="Verdana", fontsize=12, color="darkgreen"];
+
+  installed [label=<<table><tr><td>已安装</td></tr></table>>];
+  resolved [label=<<table><tr><td>已就绪</td></tr></table>>];
+  uninstalled [label=<<table><tr><td>已卸载</td></tr></table>>];
+  starting [label=<<table><tr><td>正在启动</td></tr></table>>];
+  active [label=<<table><tr><td>正在运行</td></tr></table>>];
+  stoping [label=<<table><tr><td>正在停止</td></tr></table>>];
+  start [label="", shape="circle", width=0.5, fixedsize=true, style=filled, color="black"];
+
+  start -> installed [label="安装"];
+  installed -> uninstalled [label="卸载"];
+  installed -> resolved [label="准备"];
+  installed -> installed [label="更新"];
+  resolved -> installed [label="更新"];
+  resolved -> uninstalled [label="卸载"];
+  resolved -> starting [label="启动"];
+  starting -> active [label=""];
+  active -> stoping [label="停止"];
+  stoping -> resolved [label=""];
+}
