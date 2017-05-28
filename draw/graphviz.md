@@ -145,3 +145,72 @@ digraph graph05{
 效果图如下:
 
 ![graph05](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph05.png)
+
+需要注意的是, 子图的名称必须以 cluster开头, 否则graphviz无法识别.
+
+## 结构的可视化 ##
+
+在实际的开发中, 经常要用到的是对复杂结构的描述, graphviz提供完善的机制来绘制此类图形.
+
+### hash表 ###
+
+假设一个具有如下结构的hash表:
+
+```
+struct st_hash_type {
+    int (*compare) ();
+    int (*hash) ();
+};
+
+struct st_table_entry {
+    unsigned int hash;
+    char *key;
+    char *record;
+    st_table_entry *next;
+};
+
+struct st_table {
+    struct st_hash_type *type;
+    int num_bins;
+    int num_entries;
+    struct st_table_entry **bins;
+};
+```
+
+可以通过graphviz绘制结构之间的引用关系, 将以下内容保存为 [graph06.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph06.dot):
+
+```
+digraph graph06 {
+  fontname = "Verdana";
+  fontsize = 10;
+  rankdir = TB;
+
+  node [fontname="Verdana", fontsize=10, color="skyblue", shape="record"];
+  edge [fontname="Verdana", fontsize=10, color="crimson", style="solid"];
+
+  st_hash_type [label="{<head>st_hash_type|(*compare)|(*hash)}"];
+  st_table_entry [label="{<head>st_table_entry|hash|key|record|<next>next}"];
+  st_table [label="{st_table|<type>type|num_bins|num_entries|<bins>bins}"];
+
+  st_table:bins -> st_table_entry:head;
+  st_table:type -> st_hash_type:head;
+  st_table_entry:next -> st_table_entry:head [style="dashed", color="forestgreen"];
+}
+```
+
+效果图如下:
+
+![graph06](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph06.png)
+
+在顶点的形状为record的时候, lable属性的语法比较奇怪, 但是使用起来非常灵活. 比如用竖线隔开的串会在绘制出来的节点中展现为一条分隔符, 用尖括号括起来的串称为锚点, 当一个节点具有多个锚点的时候这个特性会非常有用.
+例如节点 st\_table 的type属性指向 st\_hash\_type, 第4个属性指向 st\_table\_entry等, 都是通过锚点来实现的.
+
+也可以使用 circo算法来重新布局, 在 [graph07.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph06.dot) 中添加以下内容:
+
+```
+  layout = "circo";
+```
+
+效果图如下:
+
+![graph07](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph07.png)
