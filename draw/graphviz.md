@@ -53,7 +53,37 @@ digraph g {
 }
 ```
 
+### 无向图 ###
 
+1. 使用 graph 定义无向图
+2. 使用 -- 表述节点之间的关系
+
+### 节点之间的关系 ###
+
+- 在有向图中使用 a -> b 形式, 表示节点 a 指向节点 b ;
+- 在无向图中使用 a -- b 形式, 表示节点 a 和节点 b 连通;
+
+### 定义节点属性 ###
+
+定义属性的格式为:
+
+```
+node [attr1=value1, attr2=value2];
+```
+
+例如定义 a 节点为长方形, 显示文本为 Hello world, 样式为填充, 填充颜色为 #ABACBA
+
+```
+a [shape=box, label="Hello world", style=filled, fillcolor="#ABACBA"];
+```
+
+### 定义关系属性 ###
+
+格式与定义节点属性相似:
+
+```
+a -> b [attr1=value1, attr2=value2];
+```
 
 ## 基础图形 ##
 
