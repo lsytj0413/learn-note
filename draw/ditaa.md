@@ -13,3 +13,21 @@ ditaa 是一个使用java语言编写的命令行工具, 可以将ascii字符组
 ```
 ditaa example.dit [example.png]
 ```
+
+例如使用以下内容, [ditaa01](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa01.dit):
+
+```
++--------+   +-------+    +-------+
+|        | --+ ditaa +--> |       |
+|  Text  |   +-------+    |diagram|
+|Document|   |!magic!|    |       |
+|     {d}|   |       |    |       |
++---|----+   +-------+    +-------+
+    :                         ^
+    |       Lots of work      |
+    +-------------------------+
+```
+
+生成的效果图如下:
+
+![ditaa01.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa01.png)
