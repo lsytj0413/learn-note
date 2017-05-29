@@ -92,3 +92,61 @@ Color codes
 ![ditaa04.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa04.png)
 
 如果定义了颜色的形状中包含文字, 文字的颜色会根据形状的颜色而自动变化. 颜色代码只在闭合的形状中生效, 在其他地方是不生效的.
+
+### 形状 ###
+
+ditaa 支持一些其他的形状, 形状的代码在 {} 中定义, 常见的形状如下表:
+
+| 形状 | 代码 | 图形 |
+|:--|:--|:--|
+| Document | {d} | ![ditaa05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa05.png) |
+| Storage | {s} | ![ditaa06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa06.png) |
+| Input/Output | {io} | ![ditaa07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa07.png) |
+
+#### Document ####
+
+定义内容如下 [ditaa05](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa05.dit):
+
+```
++-----+
+|{d}  |
+|     |
+|     |
++-----+
+```
+
+生成的效果图如下:
+
+![ditaa05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa05.png)
+
+#### Storage ####
+
+定义内容如下 [ditaa06](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa06.dit):
+
+```
++-----+
+|{s}  |
+|     |
+|     |
++-----+
+```
+
+生成的效果图如下:
+
+![ditaa06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa06.png)
+
+#### Input/Output ####
+
+定义内容如下 [ditaa07](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa07.dit):
+
+```
++-----+
+|{io} |
+|     |
+|     |
++-----+
+```
+
+生成的效果图如下:
+
+![ditaa07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa07.png)
