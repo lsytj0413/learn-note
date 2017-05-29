@@ -31,3 +31,19 @@ ditaa example.dit [example.png]
 生成的效果图如下:
 
 ![ditaa01.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa01.png)
+
+## 语法 ##
+
+### 矩形 ###
+
+可以使用 / 以及 \ 来连接转角, ditaa会将这两个字符绘制为圆角, 例如 [ditaa02](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa02.dit):
+
+```
+/--+
+|  |
++--/
+```
+
+生成的效果图如下:
+
+![ditaa02.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa02.png)

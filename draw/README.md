@@ -10,3 +10,5 @@ Graphviz本身是开源的产品, 下载可以到 [这里](http://www.graphviz.o
 ## ditaa ##
 
 [ditaa](http://ditaa.sourceforge.net/) 是一个开源的java写成的命令行工具, 可以把ASCII图转成图形.
+
+[使用手册](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa.md)
