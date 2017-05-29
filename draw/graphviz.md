@@ -1,6 +1,7 @@
 # graphviz #
 
 [官网](http://www.graphviz.org/)
+[User Guide](https://github.com/lsytj0413/learn-note/blob/master/draw/dotguide.pdf):
 
 ## 简介 ##
 
