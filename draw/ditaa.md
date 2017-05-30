@@ -181,3 +181,22 @@ ditaa 支持一些其他的形状, 形状的代码在 {} 中定义, 常见的形
 生成的效果图如下:
 
 ![ditaa09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa09.png)
+
+### 文本 ###
+
+如果文本中包含 *o XXXXX* 格式的内容, 其中 XXXXX 是需要显示的文字, 那么字符 o 会被绘制为一个句点, 一个示例如下 [ditaa10](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa10.dit):
+
+```
+/-----------------\
+| Things to do    |
+|cGRE             |
+| o Cut the grass |
+| o Buy jam       |
+| o Fix car       |
+| o Make website  |
+\-----------------/
+```
+
+生成的效果图如下:
+
+![ditaa10.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa10.png)
