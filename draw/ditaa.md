@@ -150,3 +150,18 @@ ditaa 支持一些其他的形状, 形状的代码在 {} 中定义, 常见的形
 生成的效果图如下:
 
 ![ditaa07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa07.png)
+
+### 线条 ###
+
+所有的包含一个 =(横线) 或者 :(竖线) 的线条会被绘制为虚线, 一个示例如下 [ditaa08](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa08.dit):
+
+```
+----+  /----\  +----+
+    :  |    |  :    |
+    |  |    |  |{s} |
+    v  \-=--+  +---=+
+```
+
+生成的效果图如下:
+
+![ditaa08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa08.png)
