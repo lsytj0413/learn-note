@@ -16,6 +16,8 @@ plantuml 支持的图形有:
 - 对象图 (object diagram)
 - 线框图 (wireframe graphical interface)
 
+[User Guide](https://github.com/lsytj0413/learn-note/blob/master/draw/PlantUML_Guide.pdf)
+
 ### 一个例子 ###
 
 将以下内容保存为 [plantuml01](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml01.pum):
@@ -30,3 +32,5 @@ Alice ->> Bob: asynchronous call
 生成的效果图如下:
 
 ![plantuml01.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml01.png)
+
+## 序列图 ##
