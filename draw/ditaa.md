@@ -165,3 +165,19 @@ ditaa 支持一些其他的形状, 形状的代码在 {} 中定义, 常见的形
 生成的效果图如下:
 
 ![ditaa08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa08.png)
+
+### 线上的链接点 ###
+
+如果 * 字符在一条线上, 而且不是在线的结尾处, 那么它会被绘制为一个链接点, 一个示例如下 [ditaa09](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa09.dit):
+
+```
+*----*
+|    |      /--*
+*    *      |
+|    |  -*--+
+*----*
+```
+
+生成的效果图如下:
+
+![ditaa09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa09.png)
