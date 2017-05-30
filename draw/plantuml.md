@@ -34,3 +34,19 @@ Alice ->> Bob: asynchronous call
 ![plantuml01.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml01.png)
 
 ## 序列图 ##
+
+### 简单例子 ###
+
+将以下内容保存为 [plantuml02](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml02.pum):
+
+```
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+
+Alice -> Bob: Another authentication Request
+Alice <-- Bob: Another authentication Response
+```
+
+生成的效果图如下:
+
+![plantuml02.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml02.png)
