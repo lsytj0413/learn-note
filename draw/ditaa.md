@@ -200,3 +200,12 @@ ditaa 支持一些其他的形状, 形状的代码在 {} 中定义, 常见的形
 生成的效果图如下:
 
 ![ditaa10.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa10.png)
+
+### HTML格式 ###
+
+如果在命令行中使用了 --html 参数, 那么输入的文件应该是一个 HTML 文件, 其中 <pre class="textdiagram"> 标签中的内容会被绘制成图形且保存到 images 目录中, 而且一个包含 <img> 标签的新 HTML 文件被生成.
+
+如果在 pre 标签中设置了 id 参数, 那么 id 的值将作为绘制的图形的文件名, 否则图片文件名将是 ditaa\_digram\_X.png 形式, 其中 X 是数字.
+同样的, 如果没有指定导出文件的名称, 那么新HTML文件的名称将是 xxxx\_processed.html, 其中xxxx是原文件名.
+
+在这个模式中, 已经处理过的文件将被跳过, 可以使用 --overwrite 参数来强制指定重新生成文件.
