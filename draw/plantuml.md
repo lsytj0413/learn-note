@@ -389,3 +389,44 @@ end note
 生成的效果图如下:
 
 ![plantuml17.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml17.png)
+
+### 使用 HTML 进行格式化 ###
+
+可以使用少量的 HTML 标签来格式化文本:
+
+- <b>: 加粗文本
+- <u> 或 <u:#AAAAAA> 或 <u:colorName>: 加下划线
+- <i>: 斜体
+- <s> 或 <s:#AAAAAA> 或 <s:colorName>: 加删除线
+- <w> 或 <w:#AAAAAA> 或 <w:colorName>: 加波浪线
+- <color:#AAAAAA> 或 <color:colorName>: 设置文本颜色
+- <back:#AAAAAA> 或 <back:colorName>: 设置背景颜色
+- <size:nn>: 设置字体大小
+- <img src="file"> 或 <img:file>: 添加图片文件
+- <img src="http://url"> 或 <img:http://url>: 添加互联网图片
+
+将以下内容保存为 [plantuml18](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml18.pum):
+
+```
+participant Alice
+participant "The <b>Famous</b> Bob" as Bob
+
+Alice -> Bob : A <i>well formated</i> message
+note right of Alice
+     This is <back:cadetblue><size:18>displayed</size></back>
+     <u>left of</u> Alice.
+end note
+
+note left of Bob
+     <u:red>This</u> is <color #118888>displayed</color>
+     <b><color purple>left of</color> <s:red>Alice</strike> Bob</b>
+end note
+
+note over Alice, Bob
+     <w:#FF33FF>This is hosted</w> by <img ../img/chrome.png>
+end note
+```
+
+生成的效果图如下:
+
+![plantuml18.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml18.png)
