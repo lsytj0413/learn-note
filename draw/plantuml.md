@@ -274,3 +274,27 @@ end legend
 生成的效果图如下:
 
 ![plantuml13.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml13.png)
+
+### 分割图形 ###
+
+关键词 newpage 用来把图形分割成几个图片, 每一个被分割出的图片可以看作是一个新的页面, 如果要给新的页面一个标题, 可以紧跟在关键词 newpage 之后来设置.
+
+使用这个方法可以方便的在Word里面把比较长的u图形分别打印到几个不同的页面上.
+
+将以下内容保存为 [plantuml14](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml14.pum):
+
+```
+Bliss -> Tia : I love you
+Bliss -> Tia : I miss you
+
+newpage
+
+Bliss -> Tia : Let's go home
+Bliss -> Tia : Quick
+
+newpage
+
+Tia -> Bliss : Give me money
+Tia -> Bliss : No money No love
+```
+
