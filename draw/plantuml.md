@@ -132,3 +132,35 @@ Alice -> Alice : This is a signal to self.\nIt also demonstrates\nmultiline \nte
 生成的效果图如下:
 
 ![plantuml06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml06.png)
+
+### 改变箭头的样式 ###
+
+在用例图中可以通过以下方式来改变箭头的样式:
+
+- 使用 \ 或 / 来替换 \< 或 \> 可以让箭头只显示上半部分或下半部分;
+- 重复输入箭头或斜杠 [>> //] 可以绘制空心箭头
+- 使用双横线 -- 替换单横线 - 可以用来绘制点线
+- 在箭头后面加个 o 可以在箭头前绘制一个圆圈
+- 使用 \<-\> 可用来绘制双向箭头
+
+将以下内容保存为 [plantuml07](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml07.pum):
+
+```
+Bob -> Alice
+Bob ->> Alice
+Bob -\ Alice
+Bob \\- Alice
+Bob //-- Alice
+
+Bob ->o Alice
+Bob o\\-- Alice
+
+Bob <-> Alice
+Bob <<-\\o Alice
+```
+
+生成的效果图如下:
+
+![plantuml07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml07.png)
+
+###  ###
