@@ -238,3 +238,20 @@ Bob <- Alice : Yet Another authentication Response
 生成的效果图如下:
 
 ![plantuml11.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml11.png)
+
+### 标题 ###
+
+要给图形加一个标题可以用 title 关键字来设置.
+
+将以下内容保存为 [plantuml12](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml12.pum):
+
+```
+title Simple Comunication example
+
+Bob -> Alice : Authentication Request
+Bob <- Alice : Authentication Response
+```
+
+生成的效果图如下:
+
+![plantuml12.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml12.png)

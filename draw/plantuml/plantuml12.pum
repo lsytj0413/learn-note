@@ -1,0 +1,4 @@
+title Simple Comunication example
+
+Bob -> Alice : Authentication Request
+Bob <- Alice : Authentication Response
