@@ -298,3 +298,34 @@ Tia -> Bliss : Give me money
 Tia -> Bliss : No money No love
 ```
 
+### 消息分组 ###
+
+有时候可能需要对消息进行分组, 那么可以使用下列的关键字来实现: alt/else, opt, loop, par, break, critical, group(该关键字后面的文字会作为组名显示在图形上).
+
+这些关键字后可以添加一些文本用来显示在头部(除了group), 在组嵌套组的结构里可以用关键字 end 来关闭组或者表示一个组符号的结束符.
+
+将以下内容保存为 [plantuml15](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml15.pum):
+
+```
+Alice -> Bob : Authentication Request
+
+alt successful case
+    Bob -> Alice : Authentication Accepted
+else some kind of failure
+    Bob -> Alice : Authentication Failue
+    group My own label
+          Alice -> Log : Log attack start
+          loop 1000 times
+               Alice -> Bob : DNS Attack
+          end
+          Alice -> Log : Log alice end
+    end
+else Another type of failure
+    Bob -> Alice : Please repeat
+end
+```
+
+生成的效果图如下:
+
+![plantuml15.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml15.png)
+
