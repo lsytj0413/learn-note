@@ -353,3 +353,39 @@ end note
 生成的效果图如下:
 
 ![plantuml16.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml16.png)
+
+### 其他注解方式 ###
+
+通过使用关键字 note left of, note right of 或 note over, 我们还可以把注解放置在与之相关的参与者的左边或是右边, 或者下方.
+
+通过改变注解的背景色, 我们还可以高亮显示一个注解文本块.
+
+如果要使用多行注解, 可以使用关键词 end note 来表示注解的结束.
+
+将以下内容保存为 [plantuml17](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml17.pum):
+
+```
+participant Alice
+participant Bob
+
+note left of Alice #aqua
+     This is displayed
+     left of Alice.
+end note
+
+note right of Alice : This is displayed right of Alice.
+
+note over Alice: This displayed over Alice.
+
+note over Alice, Bob #FFAAAA: This is displayed\n over Bob and Alice
+
+note over Bob, Alice
+     This is yet another
+     example of
+     a long note.
+end note
+```
+
+生成的效果图如下:
+
+![plantuml17.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml17.png)
