@@ -118,3 +118,17 @@ Long --> "Bob()" : ok
 生成的效果图如下:
 
 ![plantuml05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml05.png)
+
+### 发送消息给自己 ###
+
+一个参与者可以给自己发送消息, 消息名如果需要有多行文本, 可以使用 \n 来表示换行.
+
+将以下内容保存为 [plantuml06](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml06.pum):
+
+```
+Alice -> Alice : This is a signal to self.\nIt also demonstrates\nmultiline \ntext
+```
+
+生成的效果图如下:
+
+![plantuml06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml06.png)
