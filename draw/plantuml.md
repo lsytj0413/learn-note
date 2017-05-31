@@ -163,4 +163,17 @@ Bob <<-\\o Alice
 
 ![plantuml07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml07.png)
 
-###  ###
+### 改变箭头的颜色 ###
+
+要改变箭头的颜色, 可以使用 [HTML颜色符号](https://www.w3schools.com/HTML/html_colors.asp).
+
+将以下内容保存为 [plantuml08](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml08.pum):
+
+```
+Bob -[#red]> Alice : hello
+Alice -[#0000ff]-> Bob : ok
+```
+
+生成的效果图如下:
+
+![plantuml08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml08.png)
