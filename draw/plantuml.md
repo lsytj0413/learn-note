@@ -329,3 +329,27 @@ end
 
 ![plantuml15.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml15.png)
 
+### 消息注解 ###
+
+我们可能经常会在消息的左边或者右边使用注解. 要添加注解, 只要使用 note left 或 note right 关键词即可.
+
+将以下内容保存为 [plantuml16](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml16.pum):
+
+```
+Alice -> Bob : hello
+note left: this is a first note
+
+Bob -> Alice : ok
+note right: this is another note
+
+Bob -> Bob : I am thinking
+note left
+     a note
+     can also be defined
+     on several lines
+end note
+```
+
+生成的效果图如下:
+
+![plantuml16.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml16.png)
