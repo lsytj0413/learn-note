@@ -177,3 +177,19 @@ Alice -[#0000ff]-> Bob : ok
 生成的效果图如下:
 
 ![plantuml08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml08.png)
+
+### 消息序号 ###
+
+关键词 autonumber 用来自动的给消息添加上序号.
+
+将以下内容保存为 [plantuml09](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml09.pum):
+
+```
+autonumber
+Bob -> Alice : Authentication Request
+Bob -> Alice : Authentication Response
+```
+
+生成的效果图如下:
+
+![plantuml09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml09.png)
