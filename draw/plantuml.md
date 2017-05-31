@@ -193,3 +193,48 @@ Bob -> Alice : Authentication Response
 生成的效果图如下:
 
 ![plantuml09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml09.png)
+
+如果需要指定一个起始号码, 可以直接在 autonumber 后面加一个数字即可, 如果需要设置自增量, 则再加一个数字.
+
+将以下内容保存为 [plantuml10](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml10.pum):
+
+```
+autonumber
+Bob -> Alice : Authentication Request
+Bob <- Alice : Authentication Response
+
+autonumber 15
+Bob -> Alice : Another authentication Request
+Bob <- Alice : Another authentication Response
+
+autonumber 40 10
+Bob -> Alice : Yet Another authentication Request
+Bob <- Alice : Yet Another authentication Response
+```
+
+生成的效果图如下:
+
+![plantuml10.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml10.png)
+
+也可以为序号指定数字格式, 这个格式化的过程实际上是Java类 DecimalFormat 来执行的, 0表示数字, # 缺省补零位数.
+同样的, 也可以使用一些 HTML 标签来控制数字的样式.
+
+将以下内容保存为 [plantuml11](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml11.pum):
+
+```
+autonumber "<b>[000]"
+Bob -> Alice : Authentication Request
+Bob <- Alice : Authentication Response
+
+autonumber 15 "<b>(<u>##</u>)"
+Bob -> Alice : Another authentication Request
+Bob <- Alice : Another authentication Response
+
+autonumber 40 10 "<font color=red>Message 0  "
+Bob -> Alice : Yet Another authentication Request
+Bob <- Alice : Yet Another authentication Response
+```
+
+生成的效果图如下:
+
+![plantuml11.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml11.png)
