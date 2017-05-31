@@ -255,3 +255,22 @@ Bob <- Alice : Authentication Response
 生成的效果图如下:
 
 ![plantuml12.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml12.png)
+
+### 图形图例 ###
+
+使用 legend 和 end legend 关键字可以设置图形的图例, 图例可以设置为左对齐, 右对齐和居中对齐.
+
+将以下内容保存为 [plantuml13](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml13.pum):
+
+```
+Alice -> Bob : Hello
+
+legend right
+Short
+legend
+end legend
+```
+
+生成的效果图如下:
+
+![plantuml13.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml13.png)
