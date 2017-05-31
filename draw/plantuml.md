@@ -437,3 +437,102 @@ end note
 生成的效果图如下:
 
 ![plantuml18.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml18.png)
+
+### 划分图形 ###
+
+可以使用 == 字符来将图形划分为不同的逻辑部分.
+
+将以下内容保存为 [plantuml19](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml19.pum):
+
+```
+@startuml
+
+== Initialization ==
+
+Alice -> Bob : Authentication Request
+Bob --> Alice : Authentication Response
+
+== Repetition ==
+
+Alice -> Bob : Another authentication Request
+Alice <-- Bob : another authentication Response
+
+@enduml
+```
+
+生成的效果图如下:
+
+![plantuml19.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml19.png)
+
+### 引用 ###
+
+使用 ref 关键字来引用一个图形.
+
+将以下内容保存为 [plantuml20](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml20.pum):
+
+```
+@startuml
+participant Alice
+actor Bob
+
+ref over Alice, Bob : init
+
+Alice -> Bob : hello
+
+ref over Bob
+This can be on
+several lines
+end ref
+@enduml
+```
+
+生成的效果图如下:
+
+![plantuml20.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml20.png)
+
+### 延迟 ###
+
+可以用 ... 字符来指定一个 Delay, 同时可以指定一个消息文本.
+
+将以下内容保存为 [plantuml21](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml21.pum):
+
+```
+@startuml
+
+Alice -> Bob : Authentication Request
+...
+Bob --> Alice : Authentication Response
+... 5 minutes latter...
+Bob --> Alice : Bye !
+
+@enduml
+```
+
+生成的效果图如下:
+
+![plantuml21.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml21.png)
+
+### 空白 ###
+
+可以用 ||| 字符来指定一个 Space, 同时可以指定空白的像素数量.
+
+将以下内容保存为 [plantuml22](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml22.pum):
+
+```
+@startuml
+
+Alice -> Bob: message 1
+Bob --> Alice: ok
+|||
+Alice -> Bob: message 2
+Bob --> Alice: ok
+||45||
+Alice -> Bob: message 3
+Bob --> Alice: ok
+
+@enduml
+```
+
+生成的效果图如下:
+
+![plantuml22.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml22.png)
