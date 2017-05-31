@@ -219,6 +219,8 @@ Bob <- Alice : Yet Another authentication Response
 也可以为序号指定数字格式, 这个格式化的过程实际上是Java类 DecimalFormat 来执行的, 0表示数字, # 缺省补零位数.
 同样的, 也可以使用一些 HTML 标签来控制数字的样式.
 
+使用 autonumber stop 关键字来停止序号, 使用 autonumber resume 'increment' 'format' 来重新启用序号.
+
 将以下内容保存为 [plantuml11](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml11.pum):
 
 ```
@@ -230,7 +232,10 @@ autonumber 15 "<b>(<u>##</u>)"
 Bob -> Alice : Another authentication Request
 Bob <- Alice : Another authentication Response
 
-autonumber 40 10 "<font color=red>Message 0  "
+autonumber stop
+Bob -> Alice : dummy
+
+autonumber resume 1 "<font color=red>Message 0  "
 Bob -> Alice : Yet Another authentication Request
 Bob <- Alice : Yet Another authentication Response
 ```
@@ -362,6 +367,8 @@ end note
 
 如果要使用多行注解, 可以使用关键词 end note 来表示注解的结束.
 
+也可以使用 hnote 和 rnote 关键字来改变注解的形状.
+
 将以下内容保存为 [plantuml17](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml17.pum):
 
 ```
@@ -375,9 +382,9 @@ end note
 
 note right of Alice : This is displayed right of Alice.
 
-note over Alice: This displayed over Alice.
+rnote over Alice: This displayed over Alice.
 
-note over Alice, Bob #FFAAAA: This is displayed\n over Bob and Alice
+hnote over Alice, Bob #FFAAAA: This is displayed\n over Bob and Alice
 
 note over Bob, Alice
      This is yet another
@@ -403,7 +410,7 @@ end note
 - \<back:#AAAAAA\> 或 \<back:colorName\>: 设置背景颜色
 - \<size:nn\>: 设置字体大小
 - \<img src="file"\> 或 \<img:file\>: 添加图片文件
-- \<img src="http://url"\> 或 \<img:http://url\>: 添加互联网图片
+- \<img src="http://url"> 或 \<img:http://url>: 添加互联网图片
 
 将以下内容保存为 [plantuml18](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml18.pum):
 

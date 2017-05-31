@@ -8,9 +8,9 @@ end note
 
 note right of Alice : This is displayed right of Alice.
 
-note over Alice: This displayed over Alice.
+hnote over Alice: This displayed over Alice.
 
-note over Alice, Bob #FFAAAA: This is displayed\n over Bob and Alice
+rnote over Alice, Bob #FFAAAA: This is displayed\n over Bob and Alice
 
 note over Bob, Alice
      This is yet another
