@@ -570,3 +570,33 @@ deactivate A
 生成的效果图如下:
 
 ![plantuml23.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml23.png)
+
+也可以设定嵌套的生命周期, 并且为它设置颜色.
+
+将以下内容保存为 [plantuml24](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml24.pum):
+
+```
+@startuml
+participant User
+
+User -> A: DoWork
+activate A #FFBBBB
+
+A -> A: Internal call
+activate A #DarkSalmon
+
+A -> B: << createRequest >>
+activate B
+
+B --> A:RequestCreated
+deactivate B
+deactivate A
+A -> User: Done
+deactivate A
+
+@enduml
+```
+
+生成的效果图如下:
+
+![plantuml24.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml24.png)
