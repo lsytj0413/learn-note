@@ -600,3 +600,29 @@ deactivate A
 生成的效果图如下:
 
 ![plantuml24.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml24.png)
+
+### 创建参与者 ###
+
+可以使用 create 关键字来临时创建一个参与者.
+
+将以下内容保存为 [plantuml25](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml25.pum):
+
+```
+@startuml
+Bob -> Alice : hello
+
+create Other
+Alice -> Other : new
+
+create control String
+Alice -> String
+note right: You can also put notes!
+
+Alice --> Bob : ok
+
+@enduml
+```
+
+生成的效果图如下:
+
+![plantuml25.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml25.png)
