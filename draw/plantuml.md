@@ -740,3 +740,23 @@ Alice -> Other: hello
 生成的效果图如下:
 
 ![plantuml29.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml29.png)
+
+### 删除页脚 ###
+
+将以下内容保存为 [plantuml30](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml30.pum):
+
+```
+@startuml
+
+hide footbox
+title Footer reomved
+
+Bob -> Alice: hello
+Alice -> Bob: hello
+
+@enduml
+```
+
+生成的效果图如下:
+
+![plantuml30.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml30.png)

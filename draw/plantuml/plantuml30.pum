@@ -1,0 +1,9 @@
+@startuml
+
+hide footbox
+title Footer reomved
+
+Bob -> Alice: hello
+Alice -> Bob: hello
+
+@enduml
