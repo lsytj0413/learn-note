@@ -1,4 +1,11 @@
-title Simple Comunication example
+/' title Simple Comunication example '/
+
+/' title __Simple__ **communication** example \n newline'/
+
+title
+__Simple__ communication example
+on <i>serveral</i> lines and using <font color=red>html</font>
+end title
 
 Bob -> Alice : Authentication Request
 Bob <- Alice : Authentication Response

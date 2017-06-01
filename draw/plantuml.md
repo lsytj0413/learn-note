@@ -247,11 +247,21 @@ Bob <- Alice : Yet Another authentication Response
 ### 标题 ###
 
 要给图形加一个标题可以用 title 关键字来设置.
+在标题中可以使用 creole 格式, 并使用 \n 字符来换行.
+也可以使用 title 和 end title 关键字来定义多行的标题.
+
 
 将以下内容保存为 [plantuml12](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml12.pum):
 
 ```
-title Simple Comunication example
+/' title Simple Comunication example '/
+
+/' title __Simple__ **communication** example \n newline'/
+
+title
+__Simple__ communication example
+on <i>serveral</i> lines and using <font color=red>html</font>
+end title
 
 Bob -> Alice : Authentication Request
 Bob <- Alice : Authentication Response
@@ -682,3 +692,51 @@ Bob x<-]
 生成的效果图如下:
 
 ![plantuml27.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml27.png)
+
+### 模板信息 ###
+
+可以使用 << 和 >> 字符来指定一些模板的信息, 并且可以使用 (X, color) 形式来指定颜色.
+可以通过 guillemet 字符来指定模板信息的包围符号.
+
+将以下内容保存为 [plantuml28](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml28.pum):
+
+```
+@startuml
+
+skinparam guillemet false
+
+participant "Famous Bob" as Bob << Generated >>
+participant Alice << (C,#ADD1B2) Testable >>
+Bob -> Alice: First message
+
+@enduml
+```
+
+生成的效果图如下:
+
+![plantuml28.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml28.png)
+
+### 参与者组合 ###
+
+可以使用 box 和 end box 关键字将多个参与者绘制到一个矩形中.
+
+将以下内容保存为 [plantuml29](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml29.pum):
+
+```
+@startuml
+
+box "Internal Service" #LightBlue
+participant Bob
+participant Alice
+end box
+participant Other
+
+Bob -> Alice: hello
+Alice -> Other: hello
+
+@enduml
+```
+
+生成的效果图如下:
+
+![plantuml29.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml29.png)
