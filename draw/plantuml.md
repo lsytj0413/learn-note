@@ -36,3 +36,7 @@ Alice ->> Bob: asynchronous call
 ## 序列图 ##
 
 [教程](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence.md)
+
+## 用例图 ##
+
+[教程](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase.md)
