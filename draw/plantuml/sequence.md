@@ -796,3 +796,33 @@ deactivate A
 生成的效果图如下:
 
 ![plantuml31.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml31.png)
+
+## 修改间隔 ##
+
+将以下内容保存为 [plantuml32](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml32.pum):
+
+```
+@startuml
+
+skinparam ParticipantPadding 30
+skinparam BoxPadding 10
+
+box "Foo1"
+participant Alice1
+participant Alice2
+end box
+
+box "Foo2"
+participant Bob1
+participant Bob2
+end box
+
+Alice1 -> Bob1 : hello
+Alice1 -> Out : out
+
+@enduml
+```
+
+生成的效果图如下:
+
+![plantuml32.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml32.png)
