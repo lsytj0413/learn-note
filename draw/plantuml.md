@@ -536,3 +536,37 @@ Bob --> Alice: ok
 生成的效果图如下:
 
 ![plantuml22.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml22.png)
+
+### 生命周期 ###
+
+使用 activate 和 deactivate 关键字来声明参与者的生命周期.
+
+将以下内容保存为 [plantuml23](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml23.pum):
+
+```
+@startuml
+participant User
+
+User -> A: DoWork
+activate A
+
+A -> B: << createRequest >>
+activate B
+
+B -> C: DoWork
+activate C
+C --> B: WorkDone
+destroy C
+
+B --> A: RequestCreated
+deactivate B
+
+A -> User: Done
+deactivate A
+
+@enduml
+```
+
+生成的效果图如下:
+
+![plantuml23.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml23.png)
