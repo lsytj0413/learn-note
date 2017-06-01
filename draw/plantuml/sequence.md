@@ -725,3 +725,74 @@ Alice -> Bob: hello
 生成的效果图如下:
 
 ![plantuml30.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml30.png)
+
+## Skinparam ##
+ 
+可以使用 skinparam 命令来修改颜色和字体, 使用方式包括以下几种:
+
+- 在图形的定义中
+- 在一个包含文件中
+- 在一个配置文件中
+ 
+将以下内容保存为 [plantuml31](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml31.pum):
+
+```
+@startuml
+
+/' 
+ ' skinparam sequenceArrowThickness 2
+ ' skinparam roundcorner 20
+ ' skinparam maxmessagesize 60
+ ' skinparam sequenceParticipant underline
+ '/
+
+skinparam backgroundColor #EEEBDC
+skinparam handwritten true
+
+skinparam sequence {
+ArrowColor DeepSkyBlue
+ActorBorderColor DeepSkyBlue
+LifeLineBorderColor blue
+LifeLineBackgroundColor #A9DCDF
+
+ParticipantBorderColor DeepSkyBlue
+ParticipantBackgroundColor DodgerBlue
+ParticipantFontName Impact
+ParticipantFontSize 17
+ParticipantFontColor #A9DCDF
+
+ActorBackgroundColor aqua
+ActorFontColor DeepSkyBlue
+ActorFontSize 17
+ActorFontName Aapex
+}
+
+actor User
+participant "First Class" as A
+participant "Second Class" as B
+participant "Last Class" as C
+
+User -> A: DoWork
+activate A
+
+A -> B : Create Request
+activate B
+
+B -> C : DoWork
+activate C
+
+C --> B : WorkDone
+destroy C
+
+B --> A : Request Created
+deactivate B
+
+A --> User : Done
+deactivate A
+
+@enduml
+```
+
+生成的效果图如下:
+
+![plantuml31.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml31.png)
