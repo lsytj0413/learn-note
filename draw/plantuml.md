@@ -626,3 +626,59 @@ Alice --> Bob : ok
 生成的效果图如下:
 
 ![plantuml25.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml25.png)
+
+### 输入及输出消息 ###
+
+可以将箭头的一部分放置在图形上, 使用 [ 以及 ] 符号即可.
+
+将以下内容保存为 [plantuml26](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml26.pum):
+
+```
+@startuml
+
+[-> A: DoWork
+activate A
+
+A -> A: Internal call
+activate A
+
+A ->]: << createRequest >>
+
+A <--]: RequestCreated
+deactivate A
+[<- A: Done
+deactivate A
+
+@enduml
+```
+
+生成的效果图如下:
+
+![plantuml26.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml26.png)
+
+也可以使用下面的语法.
+将以下内容保存为 [plantuml27](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml27.pum):
+
+```
+@startuml
+[-> Bob
+[o-> Bob
+[o->o Bob
+[x-> Bob
+
+[<- Bob
+[x<- Bob
+
+Bob ->]
+Bob ->o]
+Bob o->o]
+Bob ->x]
+
+Bob <-]
+Bob x<-]
+@enduml
+```
+
+生成的效果图如下:
+
+![plantuml27.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml27.png)
