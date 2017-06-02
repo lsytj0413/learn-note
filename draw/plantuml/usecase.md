@@ -110,3 +110,39 @@ User <|-- Admin
 生成的效果图如下:
 
 ![usecase05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase05.png)
+
+## 注解 ##
+
+可以使用 note left of, note right of, note top of, note bottom of 等关键字来定义一个关联到元素的注解.
+注解也可以使用 note 关键字来定义, 通过 .. 等符号来关联到元素.
+
+将以下内容保存为 [usecase06](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase06.pum):
+
+```
+@startuml
+
+:Main Admin: as Admin
+(Use the application) as (Use)
+
+User -> (Start)
+User --> (Use)
+
+Admin ---> (Use)
+
+note right of Admin : This is an example.
+
+note right of (Use)
+A note can also
+be on several lines
+end note
+
+note "This note is connected\nto several objects." as N2
+(Start) .. N2
+N2 .. (Use)
+
+@enduml
+```
+
+生成的效果图如下:
+
+![usecase06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase06.png)
