@@ -172,3 +172,33 @@ MySql --> (Use)
 生成的效果图如下:
 
 ![usecase07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase07.png)
+
+## 修改箭头方向 ##
+
+默认的, 使用 -- 或 .. 符号定义的箭头方向是竖直的, 也可以使用 - 或 . 符号来定义水平的箭头. 也可以使用 < 来修改反转箭头的连接方向, 也可以使用 left, right, up 和 down 等关键字来定义方向, 可以只使用关键字的一个或二个字母.
+
+一般来说, 应该尽量避免使用这个特性, 因为 graphviz 可以自动的做好这种方向调整.
+
+
+将以下内容保存为 [usecase08](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase08.pum):
+
+```
+@startuml
+
+:user: --> (Use case 1)
+:user: -> (Use case 2)
+
+(Use case 3) <.. :user:
+(Use case 4) <- :user:
+
+:user1: -left-> (dummyLeft)
+:user1: -r-> (dummyRight)
+:user1: -up-> (dummyUp)
+:user1: -do-> (dummyDown)
+
+@enduml
+```
+
+生成的效果图如下:
+
+![usecase08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase08.png)
