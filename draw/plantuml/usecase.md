@@ -179,7 +179,6 @@ MySql --> (Use)
 
 一般来说, 应该尽量避免使用这个特性, 因为 graphviz 可以自动的做好这种方向调整.
 
-
 将以下内容保存为 [usecase08](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase08.pum):
 
 ```
@@ -202,3 +201,28 @@ MySql --> (Use)
 生成的效果图如下:
 
 ![usecase08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase08.png)
+
+## 布局方向 ##
+
+默认的画布布局方向是从上到下, 关键字为 top to bottom, 可以使用 left to right 关键字来将布局方向修改为从左到右.
+
+将以下内容保存为 [usecase09](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase09.pum):
+
+```
+@startuml
+
+/' 
+ ' 'default
+ ' top to bottom direction
+ '/
+
+left to right direction
+user1 --> (Usecase 1)
+user2 --> (Usecase 2)
+
+@enduml
+```
+
+生成的效果图如下:
+
+![usecase09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase09.png)
