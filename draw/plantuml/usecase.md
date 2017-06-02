@@ -226,3 +226,49 @@ user2 --> (Usecase 2)
 生成的效果图如下:
 
 ![usecase09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase09.png)
+
+## Skinparam ##
+
+可以使用 skinparam 命令来修改颜色和字体, 使用方式包括以下几种:
+
+- 在图形的定义中
+- 在一个包含文件中
+- 在一个配置文件中
+
+将以下内容保存为 [usecase10](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase10.pum):
+
+```
+@startuml
+
+skinparam handwritten true
+
+skinparam usecase {
+BackgroundColor DarkSeaGreen
+BorderColor DarkSlateGray
+
+BackgroundColor<< Main >> YellowGreen
+BorderColor<< Main >> YellowGreen
+
+ArrowColor Olive
+ActorBorderColor black
+ActorFontName Courier
+
+ActorBackgroundColor<< Human >> Gold
+}
+
+User << Human >>
+:Main Database: as MySql << Application >>
+(Start) << One Shot >>
+(Use the application) as (Use) << Main >>
+
+User -> (Start)
+User --> (Use)
+
+MySql --> (Use)
+
+@enduml
+```
+
+生成的效果图如下:
+
+![usecase10.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase10.png)
