@@ -272,3 +272,30 @@ MySql --> (Use)
 生成的效果图如下:
 
 ![usecase10.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase10.png)
+
+## 完整实例 ##
+
+将以下内容保存为 [usecase11](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase11.pum):
+
+```
+@startuml
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor customer
+actor clerk
+
+rectangle checkout {
+customer -- (checkout)
+(checkout) .> (payment) : include
+(help) .> (checkout) : extends
+(checkout) -- clerk
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![usecase11.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase11.png)
