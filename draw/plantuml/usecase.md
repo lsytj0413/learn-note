@@ -41,3 +41,29 @@ actor :Last actor: as Men4
 生成的效果图如下:
 
 ![usecase02.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase02.png)
+
+## 描述 ##
+
+可以使用引号来包含多行的描述文本, 也可以使用 --..==__ 等字符来定义一些分隔符.
+
+将以下内容保存为 [usecase03](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase03.pum):
+
+```
+@startuml
+
+usecase UC1 as "You can use
+several lines to define your usecase.
+You can also use separators.
+--
+Several separators are possible.
+==
+And you can add titles:
+..Conclusion..
+This allows large description."
+
+@enduml
+```
+
+生成的效果图如下:
+
+![usecase03.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase03.png)
