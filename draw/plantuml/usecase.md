@@ -146,3 +146,29 @@ N2 .. (Use)
 生成的效果图如下:
 
 ![usecase06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase06.png)
+
+## 模板 ##
+
+可以使用 << 和 >> 符号在参与者旁边定义模板数据.
+
+将以下内容保存为 [usecase07](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase07.pum):
+
+```
+@startuml
+
+User << Human >>
+:Main Database: as MySql << Application >>
+(Start) << One Shot >>
+(Use the application) as (Use) << Main >>
+
+User -> (Start)
+User --> (Use)
+
+MySql --> (Use)
+
+@enduml
+```
+
+生成的效果图如下:
+
+![usecase07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase07.png)
