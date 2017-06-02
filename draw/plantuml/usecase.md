@@ -88,3 +88,25 @@ User --> (Use the application) : A small label
 生成的效果图如下:
 
 ![usecase04.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase04.png)
+
+## 扩展 ##
+
+如果一个参与者是扩展自另一个参与者, 可以使用 <|-- 来定义.
+
+将以下内容保存为 [usecase05](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase05.pum):
+
+```
+@startuml
+
+:Main Admin: as Admin
+(Use the application) as (Use)
+
+User <|-- Admin
+(Start) <|-- (Use)
+
+@enduml
+```
+
+生成的效果图如下:
+
+![usecase05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase05.png)
