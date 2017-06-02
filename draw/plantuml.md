@@ -40,3 +40,7 @@ Alice ->> Bob: asynchronous call
 ## 用例图 ##
 
 [教程](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase.md)
+
+## 类图 ##
+
+[教程](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class.md)
