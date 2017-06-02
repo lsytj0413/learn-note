@@ -67,3 +67,24 @@ This allows large description."
 生成的效果图如下:
 
 ![usecase03.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase03.png)
+
+## 基础实例 ##
+
+可以使用 --> 字符来定义连线, 并通过 : 字符来添加文本标签.
+
+将以下内容保存为 [usecase04](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase04.pum):
+
+```
+@startuml
+
+User -> (Start)
+User --> (Use the application) : A small label
+
+:Main Admin: ---> (Use the application) : This is\nyet another\nlabel
+
+@enduml
+```
+
+生成的效果图如下:
+
+![usecase04.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase/usecase04.png)
