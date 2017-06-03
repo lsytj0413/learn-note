@@ -12,34 +12,34 @@
 
 文章中的标题可以通过 #+TITLE: 来设置标题, 例如:
 
-#+BEGIN_SRC org
+#+BEGIN_EXAMPLE
 #+TITLE: org-mode
-#+END_SRC
+#+END_EXAMPLE
 
 正文中的标题可以通过星号 * 来设置, 星号后包含一个空格, 然后输入标题文本. 一个星号表示一级标题, 两个表示二级标题, 最多十个.
 
-#+BEGIN_SRC org
+#+BEGIN_EXAMPLE
 * 一级标题
 ** 二级标题
 ******** 八级标题
-#+END_SRC
+#+END_EXAMPLE
 
 ** 段落
 
 在 org-mode 中, 如果你需要换行, 可以使用回车两次的方式, 回车一次仅仅是在中间添加一个空格. 也可以在需要换行的地方输入 \\\\.
 
-#+BEGIN_SRC org
+#+BEGIN_EXAMPLE
 段落一
 
 段落二\\
 段落三
-#+END_SRC
+#+END_EXAMPLE
 
 ** 字体
 
 在 org-mode 中, 可以设置字体的效果.
 
-#+BEGIN_SRC org
+#+BEGIN_EXAMPLE
 *粗体*
 /斜体/
 +删除线+
@@ -47,7 +47,7 @@ _下划线_
 下标: H_2 O
 上标: E=mc^2
 等宽字: =git=
-#+END_SRC
+#+END_EXAMPLE
 
 效果如下:
 
@@ -69,7 +69,7 @@ _下划线_
 
 列表包括无序列表, 有序列表以及描述列表, 其中无序列表使用 "-", "+" 或者 "*" 开头, 有序列表使用 "1." 或者 "1)" 开头, 描述列表用 "::" 开头.
 
-#+BEGIN_SRC org
+#+BEGIN_EXAMPLE
 **** Lord of the Rings
    My favorite scenes are (in this order)
    1. The attack of the Rohirrim
@@ -86,7 +86,7 @@ ORG-LIST-END-MARKER
    - Sean Austin :: He plays Sam, Frodo's friend.  I still remember
      him very well from his role as Mikey Walsh in The Goonies.
 ORG-LIST-END-MARKER
-#+END_SRC
+#+END_EXAMPLE
 
 显示效果如下:
 
@@ -110,23 +110,47 @@ ORG-LIST-END-MARKER
 常用的列表和标题快捷键如下表:
 
 #+CAPTION: 快捷键说明表
-| 快捷键 | 说明 |
-|-
-| 折叠类快捷键 | |
-| S-TAB | 循环切换整个文档的大纲状态, 即折叠, 打开下一级, 打开全部 |
-| TAB | 循环切换光标所在的大纲状态 |
-| 移动快捷键 | |
-| C-c C-n/p | 移动到下/上一个标题 |
-| C-c C-f/b | 跳到同一个级别的下/上一个标题 |
-| C-c C-u | 跳到上一级标题 |
-| C-c C-j | 切换到大纲预览状态 |
-| 编辑快捷键 | |
-| M-RET | 插入一个同级别的标题 |
-| M-S-RET | 插入一个同级别的TODO标题 |
-| M-left/right | 将当前标题升/降级 |
-| M-S-left/right | 将当前子树升/降级 |
-| M-S-up/down | 将当前子树上/下移动 |
-| C-c * | 将本行设置为b标题或正文 |
-| C-c C-w | 将子树或者区域移动到另一个标题处, 跨缓冲区 |
-| C-c C-x b | 在新缓冲区显示当前分支 |
-| C-c / | 只列出包含搜索结果的大纲并高亮, 支持多种搜索方式 |
+| 快捷键         | 说明                                                     |
+|----------------+----------------------------------------------------------|
+| 折叠类快捷键   |                                                          |
+| S-TAB          | 循环切换整个文档的大纲状态, 即折叠, 打开下一级, 打开全部 |
+| TAB            | 循环切换光标所在的大纲状态                               |
+| 移动快捷键     |                                                          |
+|----------------+----------------------------------------------------------|
+| C-c C-n/p      | 移动到下/上一个标题                                      |
+| C-c C-f/b      | 跳到同一个级别的下/上一个标题                            |
+| C-c C-u        | 跳到上一级标题                                           |
+| C-c C-j        | 切换到大纲预览状态                                       |
+|----------------+----------------------------------------------------------|
+| 编辑快捷键     |                                                          |
+| M-RET          | 插入一个同级别的标题                                     |
+| M-S-RET        | 插入一个同级别的TODO标题                                 |
+| M-left/right   | 将当前标题升/降级                                        |
+| M-S-left/right | 将当前子树升/降级                                        |
+| M-S-up/down    | 将当前子树上/下移动                                      |
+| C-c *          | 将本行设置为b标题或正文                                  |
+| C-c C-w        | 将子树或者区域移动到另一个标题处, 跨缓冲区               |
+| C-c C-x b      | 在新缓冲区显示当前分支                                   |
+| C-c /          | 只列出包含搜索结果的大纲并高亮, 支持多种搜索方式         |
+
+** 元数据
+
+*** 内容元数据
+
+org-mode 中的内容元数据包含以下几种:
+
+#+BEGIN_EXAMPLE
+s    #+begin_src ... #+end_src
+e    #+begin_example ... #+end_example    : 单行的例子以冒号开头
+q    #+begin_quote ... #+end_quote    通常用于引用, 与默认格式相比左右都会留出缩进
+v    #+begin_verse ... #+end_verse    默认内容不换行, 需要留出空行才换行
+c    #+begin_center ... #+end_center
+l    #+begin_latex ... #+end_latex
+L    #+latex:
+h    #+begin_html ... #+end_html
+H    #+html:
+a    #+begin_ascii ... #+end_ascii
+A    #+ascii:
+i    #+index: line
+I    #+include: line
+#+END_EXAMPLE
