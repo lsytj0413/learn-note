@@ -1,4 +1,4 @@
-#+org-mode
+#+TITLE: org-mode
 
 [[http://orgmode.org][官网]]
 
