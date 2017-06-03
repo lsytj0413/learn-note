@@ -1,0 +1,8 @@
+#+org-mode
+
+[[http://orgmode.org][官网]]
+
+[[https://github.com/lsytj0413/learn-note/blob/master/text/org.pdf][完全版使用手册]]
+
+[[https://github.com/lsytj0413/learn-note/blob/master/text/orgguide.pdf][简明版使用手册]]
+
