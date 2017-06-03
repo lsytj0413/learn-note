@@ -97,10 +97,10 @@ ORG-LIST-END-MARKER
    3. Peter Jackson being shot by Legolas
       - on DVD only
       He makes a really funny face when it happens.
-ORG-LIST-END-MARKER
+   
+
    But in the end, no individual scenes matter but the film as a whole.
    Important actors in this film are:
    - Elijah Wood :: He plays Frodo
    - Sean Austin :: He plays Sam, Frodo's friend.  I still remember
      him very well from his role as Mikey Walsh in The Goonies.
-ORG-LIST-END-MARKER
