@@ -6,3 +6,20 @@
 
 [[https://github.com/lsytj0413/learn-note/blob/master/text/orgguide.pdf][简明版使用手册]]
 
+* 简单操作
+
+** 标题
+
+文章中的标题可以通过 #+TITLE: 来设置标题, 例如:
+
+#+BEGIN_SRC org
+#+TITLE: org-mode
+#+END_SRC
+
+正文中的标题可以通过星号 * 来设置, 星号后包含一个空格, 然后输入标题文本. 一个星号表示一级标题, 两个表示二级标题, 最多十个.
+
+#+BEGIN_SRC org
+* 一级标题
+** 二级标题
+******** 八级标题
+#+END_SRC
