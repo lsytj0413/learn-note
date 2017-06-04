@@ -154,3 +154,92 @@ A    #+ascii:
 i    #+index: line
 I    #+include: line
 #+END_EXAMPLE
+
+- 代码
+
+在上面第一列中的单个字母为快捷键字母, 如输入一个 <s , 然后按下 TAB 键就会展开为:
+
+#+BEGIN_EXAMPLE
+#+BEGIN_SRC 
+
+#+END_SRC
+#+END_EXAMPLE
+
+对代码块还可以加入一些参数, 例如:
+
+#+BEGIN_EXAMPLE
+#+BEGIN_SRC c -n -t -h 7 -w 40
+
+#+END_SRC
+其中:
+c 表示d代码块使用的语言
+-n 表示显示行号
+-t 表示清除格式
+-h 7 表示设置高度为7
+-w 40 表示设置宽度为40
+#+END_EXAMPLE
+
+- 注释
+
+以 # 号开头的行被看作注释, 不会被导出区块, 注释采用的写法如下:
+
+#+BEGIN_EXAMPLE
+#+BEGIN_COMMENT
+    块注释
+    ...
+#+END_COMMENT
+#+END_EXAMPLE
+
+- 表格和图片
+
+对于表格和图片, 可以在前面增加标题和标签的说明, 以方便交叉引用.
+
+#+BEGIN_EXAMPLE
+#+CAPTION: This is the caption for the next table (or link)
+#+END_EXAMPLE
+
+在需要的地方可以通过如下方式引用:
+
+#+BEGIN_EXAMPLE
+\ref{table1}
+#+END_EXAMPLE
+
+- 嵌入 html
+
+对于导出 html 及发布, 嵌入 html 代码是一个有用的特性. 例如使用下面的例子格式化代码块:
+
+#+BEGIN_EXAMPLE
+#+BEGIN_HTML:
+  <div class="cnblogs_Highlighter">
+  <pre class="brush:cpp">
+  int main()
+  {
+    return 0;
+  }
+  </pre>
+  </div>
+#+END_EXAMPLE
+
+相当于在网页中插入 C++ 代码块.
+
+- 包含文件
+
+在导出文档时可以包含其他文件中的内容, 例如包含 .emacs 文件:
+
+#+BEGIN_EXAMPLE
+#+INCLUDE: "~/.emacs" src emacs-lisp
+#+END_EXAMPLE
+
+可选的第二个参数是组织方式, 例如 quote, example 或 src 等; 如果是 src 则第三个参数用来表示格式化语言. 组织方式是可选的, 如果不给处则会被当作 Org 模式的文本处理. 用 C-c 可以访问包含的文件.
+
+*** 文档元数据
+
+#+CAPTION: 文档元数据表
+| 元数据    | 说明                          |
+|-----------+-------------------------------|
+| H:        | 标题层数                      |
+| num:      | 章节(标题)是否自动编号        |
+| toc:      | 是否生成索引                  |
+| creator:  | 是否生成 "create by emacs..." |
+| LINKUP:   | UP: 链接                      |
+| LINKHOME: | HOME: 链接                    |
