@@ -329,3 +329,38 @@ c 表示d代码块使用的语言
 #+END_EXAMPLE
 
 在 Spacemacs 中, 可以在对应行按下 [SPC m t r] 或者 [SPC m t e] 进行计算.
+
+** 链接
+
+*** 自动链接
+
+对于符合链接规则的内容, org-mode 会自动将其视为链接, 包括文件, 网页等:
+
+#+BEGIN_EXAMPLE
+http://www.astro.uva.nl/~dominik            on the web
+file:/home/dominik/images/jupiter.jpg       file, absolute path
+/home/dominik/images/jupiter.jpg            same as above
+file:papers/last.pdf                        file, relative path
+file:projects.org                           another Org file
+docview:papers/last.pdf::NNN                open file in doc-view mode at page NNN
+id:B7423F4D-2E8A-471B-8810-C40F074717E9     Link to heading by ID
+news:comp.emacs                             Usenet link
+mailto:adent@galaxy.net                     Mail link
+vm:folder                                   VM folder link
+vm:folder#id                                VM message link
+wl:folder#id                                WANDERLUST message link
+mhe:folder#id                               MH-E message link
+rmail:folder#id                             RMAIL message link
+gnus:group#id                               Gnus article link
+bbdb:R.*Stallman                            BBDB link (with regexp)
+irc:/irc.com/#emacs/bob                     IRC link
+info:org:External%20links                   Info node link (with encoded space)
+#+END_EXAMPLE
+
+对于文件链接, 可以用 :: 后面增加定位符的方式链接到文件的特定位置, 定位符可以是行号或搜索选项:
+
+#+BEGIN_EXAMPLE
+file:~/code/main.c::255                     进入到 255 行
+file:~/xx.org::My Target                    找到目标‘<<My Target>>’
+file:~/xx.org/::#my-custom-id               查找自定义 id 的项
+#+END_EXAMPLE
