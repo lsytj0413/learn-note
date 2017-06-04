@@ -243,3 +243,41 @@ c 表示d代码块使用的语言
 | creator:  | 是否生成 "create by emacs..." |
 | LINKUP:   | UP: 链接                      |
 | LINKHOME: | HOME: 链接                    |
+
+** 表格
+
+*** 建立和操作表格
+
+在 org-mode 中, 可以通过文本的方式描述表格. 在某一行顶格的位置输入 |, 然后输入第一行第一列的内容, 再输入 |, 以此类推. 当第一行输入完成后按下 TAB, org-mode 会自动把当前行对齐, 
+然后为你创造出表格的下一行. 用 TAB 和 S+TAB 可以在表格中正向或反向移动.
+
+#+BEGIN_EXAMPLE
+#+CAPTION: 表格的标题
+| 1 | one |
+| 2 | two |
+| 3 | This is a long chunk of text |
+| 4 | four |
+#+END_EXAMPLE
+
+如果表格的某一项特别的长, 可以在任意一个表格的空白项输入数字来限制其所在列的长度. 例如:
+
+#+BEGIN_EXAMPLE
+|   | <6>    |
+| 1 | one    |
+| 2 | two    |
+| 3 | This=> |
+| 4 | four   |
+
+这会限制第二列的长度不超过6, 超过的部分会被隐藏. 可以在表格项中输入 C-c 编辑被隐藏的内容, 或者输入 C-c C-c 来将内容隐藏起来.
+#+END_EXAMPLE
+
+也可以在表格的某两行中输入 |- , 然后按下 TAB, org-mode 会创造出一个分割行.
+
+#+BEGIN_EXAMPLE
+|   | <6>    |
+|---+--------|
+| 1 | one    |
+| 2 | two    |
+| 3 | This=> |
+| 4 | four   |
+#+END_EXAMPLE
