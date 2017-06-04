@@ -454,3 +454,23 @@ The Org homepage[fn:1] now looks a lot better than it used to. The Org homepage[
 #+BEGIN_EXAMPLE
 #+TAGS:
 #+END_EXAMPLE
+
+*** tags 查询
+
+一些查询快捷键如下表:
+
+#+CAPTION: 快捷键说明表
+| 快捷键  | 说明                                             |
+|---------+--------------------------------------------------|
+| C-c \   | 用来查找某个 tag 下的所有项目                    |
+| C-c / m | 搜索并按树状结构显示                             |
+| C-c a m | 从所有 agenda file 里建立符合某 tag 的全局性列表 |
+
+查询时支持一些逻辑运算, 如下:
+
+#+BEGIN_EXAMPLE
++   和      a+b   同时有这两个标签
+-   排除    a-b   有 a 但没有 b
+|   或      a|b   有 a 或者有 b
+&   和      a&b   同时有 a 和 b，可以用“+”替代
+#+END_EXAMPLE
