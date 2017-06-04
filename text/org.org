@@ -474,3 +474,23 @@ The Org homepage[fn:1] now looks a lot better than it used to. The Org homepage[
 |   或      a|b   有 a 或者有 b
 &   和      a&b   同时有 a 和 b，可以用“+”替代
 #+END_EXAMPLE
+
+* 导出与发布
+
+** 导出
+
+org-mode 可以导出多种格式, 常用的是文本, 网页和 pdf 格式.
+
+可以使用 [C-c C-c a] 导出文本文件, 使用 [C-c C-e h] 导出 HTML 文件.
+
+** 发布
+
+发布的一些快捷键如下表:
+
+#+CAPTION: 快捷键说明表
+| 快捷键    | 说明                               |
+|-----------+------------------------------------|
+| C-c C-e C | 提示指明一个项目, 将所有的文件发布 |
+| C-c C-e P | 发布包含当前文件的项目             |
+| C-c C-e F | 只发布当前文件                     |
+| C-c C-e E | 发布所有项目                       |
