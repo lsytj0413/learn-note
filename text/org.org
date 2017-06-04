@@ -393,6 +393,7 @@ The Org homepage[fn:1] now looks a lot better than it used to. The Org homepage[
 然后在文档接下来的地方顶格写下:
 
 [fn:1] The link is: http://orgmode.org
+
 [fn:orghome] The link is: http://orgmode.org
 
 按下 C-c C-c 可以在注脚和使用处互相切换.
@@ -407,3 +408,49 @@ The Org homepage[fn:1] now looks a lot better than it used to. The Org homepage[
 
 ------
 
+** 标签
+
+对于信息的管理, 通常有分类(category) 和标签(tag) 两种, 它们的特点如下:
+
+- 通常分类是固定的, 表现为树状结构, 比较清晰, 但是因为结构简单而不能表达复杂信息
+- 标签不固定, 随时可以添加
+
+*** 标记 tags
+
+如果需要文档中的所有标题都具有某些标签, 那么需要定义文档元数据:
+
+#+BEGIN_EXAMPLE
+#+FILETAGS: :Peter:Boss:Secret:
+#+END_EXAMPLE
+
+也可以在正文部分用 C-c C-q 或直接在标题上用 C-c C-c 来创建标签.
+
+*** 预定义 tags
+
+在输入标签时可以从预定义的标签中进行选择. 预定义的方式有两种:
+
+1. 在当前文件头部定义, 这种方式定义的标签只能在当前文件中使用
+
+#+BEGIN_EXAMPLE
+#+TAGS: { 桌面(d) 服务器(s) } 编辑器(e) 浏览器(f) 多媒体(m) 压缩(z)
+#+END_EXAMPLE
+
+每项之间必须使用空格分割, 可以在括号中定义一个快捷键; 花括号里的为标签组, 只能选择一个. 对标签定义进行修改之后需要在定义位置按下 C-c C-c 刷新才能生效.
+
+2. 在配置文件中定义, 可以在所有的 .org 中生效.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-tag-alist '((:startgroup . nil)
+                        ("@work . ?w) ("@home" . ?h)
+                        ("@tennisclub" . ?t)
+                        (:endgroup . nil)
+                        ("laptop" . ?l) ("pc" . ?p)))
+#+END_SRC
+
+默认情况下 org 会维护一个 Tag 列表, 若当前输入的标签不在列表中则自动加入列表以供下次补齐使用.
+
+为了使默认列表, 文件预设 tags 和全局预设 tags 同时生效, 需要在文件中n则该加一个空的 TAGS 定义:
+
+#+BEGIN_EXAMPLE
+#+TAGS:
+#+END_EXAMPLE
