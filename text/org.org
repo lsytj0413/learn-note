@@ -383,3 +383,16 @@ file:~/xx.org/::#my-custom-id               查找自定义 id 的项
 如下方式可以设置到target的链接：
 [[target]] 或 [[target][猛击锚点]]
 #+END_EXAMPLE
+
+** 注脚
+
+在 org-mode 中, 可以为文章添加注脚. 注脚的格式有两种: 一是方括号 + 数字, 二是 方括号 + fn + 数字. 例如在文档中写下以下两句话:
+
+The Org homepage[1] now looks a lot better than it used to. The Org homepage[2] now looks a lot better than it used to.
+
+然后在文档接下来的地方顶格写下:
+
+[1] The link is: http://orgmode.org
+[fn:orghome] The link is: http://orgmode.org
+
+按下 C-c C-c 可以在注脚和使用处互相切换.
