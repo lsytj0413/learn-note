@@ -227,7 +227,8 @@ note left: On last defined class
 
 ## 注解 ##
 
-可以在注解文本中使用以下的 html 标签, 包括 <b>, <u>, <i>, <s>, <del>, <strike>, <font color="#AAAAAA">, <font color="colorName">, <color:#AAAAAA>, <color:colorName>, <size:nn>, <img src="file"> 及 <img:file>.
+可以在注解文本中使用以下的 html 标签, 包括 \<b\>, \<u\>, \<i\>, \<s\>, \<del\>, \<strike\>, \<font color="#AAAAAA"\>, 
+\<font color="colorName"\>, \<color:#AAAAAA\>, \<color:colorName\>, \<size:nn\>, \<img src="file"\> 及 \<img:file\>.
 
 也可以在链接上使用注解, 使用 note left on link, note right on link, note top on link, note bottom on link 的关键字即可.
 
