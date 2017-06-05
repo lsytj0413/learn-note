@@ -160,3 +160,13 @@ This is a guide on Markdown [Markdown][1].
     - Nested One
     - Nested Two
 ```
+
+## 段落 ##
+
+一个段落是指连续的一行或多行文本, 每个段落之间由一个或多个空行进行分割. 一般来说段落不需要使用空格或者TAB键进行缩进.
+
+```
+This is a paragraph. It has two sentences.
+
+This is another paragraph. It also has two sentences.
+```
