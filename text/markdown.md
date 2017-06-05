@@ -53,3 +53,21 @@ If you want to mark something as code, indent it by 4 spaces.
 ```
 Markdown is a `<em>text-to-html</em>` conversion tool for writers.
 ```
+
+## 强调 ##
+
+### 斜体 ###
+
+使用 * 或者 _ 符号将文本包含起来, 那么文本就会被显示为_斜体_.
+
+```
+This is *emphasized* _text_.
+```
+
+### 加黑 ###
+
+使用 ** 或者 __ 符号将文本包含起来, 那么文本就会被显示为 __加黑__.
+
+```
+This is very heavily **emphasized** __text__.
+```
