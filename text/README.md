@@ -7,3 +7,10 @@
 
 [使用手册](https://github.com/lsytj0413/learn-note/blob/master/text/org.org)
 
+## markdown ##
+
+[markdown](https://zh.wikipedia.org/wiki/Markdown) 是一种轻量级标记语言, 创始人为 [John Gruber](https://zh.wikipedia.org/wiki/%E7%B4%84%E7%BF%B0%C2%B7%E6%A0%BC%E9%AD%AF%E4%BC%AF).
+
+markdown 使用允许人们使用易于阅读, 易于撰写的纯文本格式, 并选择性的转换为有效的 HTML文档.
+
+[使用手册](https://github.com/lsytj0413/learn-note/blob/master/text/markdown.md)
