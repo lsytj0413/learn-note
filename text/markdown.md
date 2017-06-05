@@ -32,3 +32,24 @@
 > 
 > 外层引用的第三行。前面需要一个视觉上的空行表示内层嵌套的结束，空行前面的('>')可以有可以没有。
 ```
+
+## 代码 ##
+
+### 代码块 ###
+
+如果将每一行都缩进一个TAB或者4个空格, 那么这些行就会被作为代码块插入文档. 在代码块中的 &符号 以及尖括号在输出为 HTML 时会被转换为相对应的 HTML 实体符号.
+
+```
+If you want to mark something as code, indent it by 4 spaces.
+    <p>This has been indented 4 spaces.</p>
+```
+
+也可以将代码块用 '符号包含, 其中在开始行之前使用3个 '符号, 在结尾行之后使用3个 '符号.
+
+### 代码行 ###
+
+如果需要在某一行中插入一点代码, 那么将代码文本放入反引号之内包含即可.
+
+```
+Markdown is a `<em>text-to-html</em>` conversion tool for writers.
+```
