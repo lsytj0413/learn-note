@@ -16,4 +16,14 @@ This note is <u>also </u>
 And this is hosted by <img:../../img/chrome.png>
 end note
 
+class Dummy
+Dummy --> Foo : A link
+note on link #red: note that is red
+
+Dummy --> Foo2 : Another link
+note right on link #blue
+this is my note on right link
+and in blue
+end note
+
 @enduml

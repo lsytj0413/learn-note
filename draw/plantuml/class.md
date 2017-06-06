@@ -229,6 +229,8 @@ note left: On last defined class
 
 可以在注解文本中使用以下的 html 标签, 包括 <b>, <u>, <i>, <s>, <del>, <strike>, <font color="#AAAAAA">, <font color="colorName">, <color:#AAAAAA>, <color:colorName>, <size:nn>, <img src="file"> 及 <img:file>.
 
+也可以在链接上使用注解, 使用 note left on link, note right on link, note top on link, note bottom on link 的关键字即可.
+
 将以下内容保存为 [usecase09](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class09.pum):
 
 ```
@@ -250,9 +252,60 @@ This note is <u>also </u>
 And this is hosted by <img:../../img/chrome.png>
 end note
 
+class Dummy
+Dummy --> Foo : A link
+note on link #red: note that is red
+
+Dummy --> Foo2 : Another link
+note right on link #blue
+this is my note on right link
+and in blue
+end note
+
 @enduml
 ```
 
 生成的效果图如下:
 
 ![class09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class09.png)
+
+## 抽象类和接口 ##
+
+可以使用 abstract, abstract class 等关键字来定义抽象类, 同样的也可以使用 interface, annotation 和 enum 等关键字来定义对应的类型.
+
+将以下内容保存为 [usecase10](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class10.pum):
+
+```
+@startuml
+
+abstract class AbstractList
+abstract AbstractCollection
+interface List
+interface Collection
+
+List <|-- AbstractList
+Collection <|-- AbstractCollection
+
+Collection <|- List
+AbstractCollection <|- AbstractList
+AbstractList <|-- ArrayList
+
+class ArrayList {
+Object [] elementData
+size ()
+}
+
+enum TimeUnit {
+DAYS
+HOURS
+MINUTES
+}
+
+annotation SuppressWarnings
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class10.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class10.png)
