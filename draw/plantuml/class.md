@@ -50,7 +50,7 @@ Class29 ^-- Class30
 
 ## 标签 ##
 
-可以在类关系的箭头上使用标签文本.
+可以在类关系的箭头上使用标签文本, 并且对箭头两方的类定义文本. 也可以在标签的文本中使用 < 或 > 符号定义一个箭头.
 
 将以下内容保存为 [usecase03](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class03.pum):
 
@@ -60,6 +60,12 @@ Class29 ^-- Class30
 Class01 "1" *-- "many" Class02 : contains
 Class03 o-- Class04 : aggregation
 Class05 --> "1" Class06
+
+Class Car
+
+Driver - Car : drives >
+Car *-- Wheel : have 4 >
+Car -- Person : < owns
 
 @enduml
 ```
