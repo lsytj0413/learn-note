@@ -47,3 +47,23 @@ Class29 ^-- Class30
 生成的效果图如下:
 
 ![class02.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class02.png)
+
+## 标签 ##
+
+可以在类关系的箭头上使用标签文本.
+
+将以下内容保存为 [usecase03](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class03.pum):
+
+```
+@startuml
+
+Class01 "1" *-- "many" Class02 : contains
+Class03 o-- Class04 : aggregation
+Class05 --> "1" Class06
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class03.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class03.png)
