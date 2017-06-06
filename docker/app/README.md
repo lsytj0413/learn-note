@@ -112,6 +112,15 @@ sudo docker login --username=tangying2729959 registry.cn-hangzhou.aliyuncs.com
 sudo docker push registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v1.0.0
 ```
 
+## 避免使用 sudo ##
+
+docker 提供了一个 docker组, 只需要将用户加入 docker组, 然后再执行与 docker 相关的命令就不再需要使用 sudo.
+
+```
+sudo groupadd docker
+sudo gpasswd -a $USER docker
+newgrp docker
+```
 
 # 内容分类
 
