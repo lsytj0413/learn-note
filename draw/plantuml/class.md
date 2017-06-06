@@ -1,1 +1,49 @@
 # 类图 #
+
+## 关系 ##
+
+可以使用 <|--, *--, o-- 这三个符号来定义类之间的关系, 其中的 -- 可以替换为 .. 来实现虚线.
+
+将以下内容保存为 [usecase01](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class01.pum):
+
+```
+@startuml
+
+Class01 <|-- Class02
+Class03 *-- Class04
+Class05 o-- Class06
+Class07 .. Class08
+Class09 -- Class10
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class01.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class01.png)
+
+```
+
+newpage
+
+```
+
+将以下内容保存为 [usecase02](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class02.pum):
+
+```
+@startuml
+
+Class17 ..|> Class18
+Class19 <--* Class20
+Class21 #-- Class22
+Class23 x-- Class24
+Class25 }-- Class26
+Class27 +-- Class28
+Class29 ^-- Class30
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class02.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class02.png)
