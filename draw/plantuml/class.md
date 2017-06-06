@@ -153,3 +153,45 @@ class Dummy {
 生成的效果图如下:
 
 ![class06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class06.png)
+
+## 类体 ##
+
+默认的, 类的方法和属性是会被 plantuml 分组, 但是你也可以使用 --, .., ==, __ 等符号进行手动分组.
+
+将以下内容保存为 [usecase07](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class07.pum):
+
+```
+@startuml
+
+class Foo1 {
+You can use
+several lines
+..
+as you want
+and group
+==
+things together.
+__
+You can have as many groups
+as you want
+--
+End of class
+}
+class User {
+.. Simple Getter ..
++ getName ()
++ getAddress ()
+.. Some setter ..
++ setName ()
+__ private data __
+int age
+-- encrypted --
+String password
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class07.png)
