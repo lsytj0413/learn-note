@@ -224,3 +224,35 @@ note left: On last defined class
 生成的效果图如下:
 
 ![class08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class08.png)
+
+## 注解 ##
+
+可以在注解文本中使用以下的 html 标签, 包括 <b>, <u>, <i>, <s>, <del>, <strike>, <font color="#AAAAAA">, <font color="colorName">, <color:#AAAAAA>, <color:colorName>, <size:nn>, <img src="file"> 及 <img:file>.
+
+将以下内容保存为 [usecase09](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class09.pum):
+
+```
+@startuml
+
+class Foo
+note left: On last defined class
+
+note top of Object
+In java , <size :18>every </size > <u>class </u>
+<b>extends </b>
+<i>this </i> one.
+end note
+
+note as N1
+This note is <u>also </u>
+<b><color:royalBlue >on several </color >
+<s>words </s> lines
+And this is hosted by <img:../../img/chrome.png>
+end note
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class09.png)
