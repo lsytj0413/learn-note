@@ -105,3 +105,29 @@ departureTime : Date
 生成的效果图如下:
 
 ![class04.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class04.png)
+
+## 访问限定 ##
+
+可以使用 -(private), #(protected), ~(package private), +(public) 来定义类中属性的访问限定类型.
+
+将以下内容保存为 [usecase05](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class05.pum):
+
+```
+@startuml
+
+/' 使用下面的代码来隐藏访问限定的图标 '/
+/' skinparam classAttributeIconSize 0 '/
+
+class Dummy {
+-field1
+#field2
+~method1()
++method2()
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class05.png)
