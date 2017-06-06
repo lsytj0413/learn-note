@@ -131,3 +131,25 @@ class Dummy {
 生成的效果图如下:
 
 ![class05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class05.png)
+
+## 抽象和静态 ##
+
+可以定义静态方法和抽象方法, 可以添加在行末和行尾.
+
+将以下内容保存为 [usecase06](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class06.pum):
+
+```
+@startuml
+
+class Dummy {
+/' static=classifier '/
+{static} String id
+{abstract} void methods()
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class06.png)

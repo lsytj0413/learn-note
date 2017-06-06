@@ -1,0 +1,9 @@
+@startuml
+
+class Dummy {
+/' static=classifier '/
+{static} String id
+{abstract} void methods()
+}
+
+@enduml
