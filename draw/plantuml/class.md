@@ -73,3 +73,35 @@ Car -- Person : < owns
 生成的效果图如下:
 
 ![class03.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class03.png)
+
+## 方法 ##
+
+可以在 : 符号之后定义方法, 如果有多个方法可以在类名称之后使用大括号包含的多行文本, 其中每一行文本包含一个方法.
+
+将以下内容保存为 [usecase04](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class04.pum):
+
+```
+@startuml
+
+Object <|-- ArrayList
+
+Object : equals()
+ArrayList : Object[] elementData
+ArrayList : size()
+
+class Dummy {
+String data
+void methods()
+}
+
+class Flight {
+flightNumber : Integer
+departureTime : Date
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class04.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class04.png)
