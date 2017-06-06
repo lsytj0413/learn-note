@@ -195,3 +195,32 @@ String password
 生成的效果图如下:
 
 ![class07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class07.png)
+
+## 模板信息 ##
+
+可以在 class 关键字中定义一些模板信息, 通过 << 和 >> 符号. 可以通过 note left of, note right of, note top of, note bottom of, note left, note right, note top, note bottom 以及单独的 note 关键字来定义一些注解文本, 并通过 .. 符号关联到元素.
+
+将以下内容保存为 [usecase08](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class08.pum):
+
+```
+@startuml
+
+class Object << general >>
+Object <|-- ArrayList
+
+note top of Object : In java, every class\nextends this one.
+
+note "This is a floating note" as N1
+note "This note is connected\nto several objects." as N2
+Object .. N2
+N2 .. ArrayList
+
+class Foo
+note left: On last defined class
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class08.png)
