@@ -386,3 +386,29 @@ show <<Serializable>> fields
 生成的效果图如下:
 
 ![class12.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class12.png)
+
+## 泛型和特殊符号 ##
+
+可以使用 < 和 > 字符来定义类中的泛型. 字符 C, I, E, A 是作为 class, interface, enum 和 abstract 等对象类型的标识, 用户也可以定义自己的标识字符, 通过在模板前增加一个小括号包含的字符和颜色.
+
+将以下内容保存为 [usecase13](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class13.pum):
+
+```
+@startuml
+
+class Foo<? extends Element> {
+int size()
+}
+
+Foo *- Element
+
+class System << (S,#FF7700) Singleton >>
+class Date << (D,orchid) >>
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class13.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class13.png)
+

@@ -17,4 +17,11 @@ hide <<Serializable>> circle
 show Dummy1 methods
 show <<Serializable>> fields
 
+class Foo1
+class Foo2
+
+Foo2 *-- Foo1
+
+hide Foo2
+
 @enduml
