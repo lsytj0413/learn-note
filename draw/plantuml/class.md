@@ -488,3 +488,33 @@ class Class6
 生成的效果图如下:
 
 ![class15.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class15.png)
+
+## 名字空间 ##
+
+可以使用 namespace 关键字来定义名字空间.
+
+将以下内容保存为 [usecase16](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class16.pum):
+
+```
+@startuml
+
+class BaseClass
+namespace net.dummy #DDDDDD {
+.BaseClass <|-- Person
+Meeting o-- Person
+.BaseClass <|- Meeting
+}
+namespace net.foo {
+net.dummy.Person <|- Person
+.BaseClass <|-- Person
+net.dummy.Meeting o-- Person
+}
+
+BaseClass <|-- net.unused.Person
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class16.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class16.png)
