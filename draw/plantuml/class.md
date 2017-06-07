@@ -632,3 +632,40 @@ cancel ()
 生成的效果图如下:
 
 ![class20.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class20.png)
+
+## Skinparam ##
+
+可以使用 skinparam 命令来修改颜色和字体, 使用方式包括以下几种:
+
+- 在图形的定义中
+- 在一个包含文件中
+- 在一个配置文件中
+
+将以下内容保存为 [usecase21](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class21.pum):
+
+```
+@startuml
+
+skinparam class {
+BackgroundColor PaleGreen
+ArrowColor SeaGreen
+BorderColor SpringGreen
+BackgroundColor<<Foo>> Wheat
+BorderColor<<Foo>> Tomato
+}
+
+skinparam stereotypeCBackgroundColor YellowGreen
+skinparam stereotypeCBackgroundColor <<Foo>> DimGray
+
+Class01 <<Foo>>
+Class03 <<Foo>>
+
+Class01 "1" *-- "many" Class02 : contains
+Class03 o-- Class04 : aggregation
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class21.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class21.png)
