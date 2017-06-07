@@ -310,3 +310,79 @@ annotation SuppressWarnings
 生成的效果图如下:
 
 ![class10.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class10.png)
+
+
+## non-letters ##
+
+可以在类名的显示上使用 non-letters 字符串, 通过以下两种方式:
+
+- 使用关键字
+- 使用双引号包含文本
+
+将以下内容保存为 [usecase11](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class11.pum):
+
+```
+@startuml
+
+class "This is my class" as class1
+class class2 as "It works this way too"
+
+class2 *-- "foo/dummy" : use
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class11.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class11.png)
+
+## 隐藏方法或属性 ##
+
+可以使用 hide empty members 命令来隐藏属性或方法, 如果没有属性和方法的话. 除了 empty members 还可以使用如下的命令:
+
+- empty fields 或 empty attributes, 隐藏空的字段
+- empty methods, 隐藏空的方法
+- fields 或 attributes, 隐藏字段(即使字段存在)
+- methods, 隐藏方法(即使存在)
+- members, 隐藏字段和方法, 即使它们存在
+- circle, 隐藏类名前的字符
+- stereotype, 隐藏模板
+
+也可以在 hide 或 show 关键字后使用以下命令:
+
+- class
+- interface
+- enum
+- <<foo1>>, 使用了 foo1模板的类
+- 一个已存在的类名
+
+可以使用多个 hide 或 show 命令.
+
+将以下内容保存为 [usecase12](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class12.pum):
+
+```
+@startuml
+
+class Dummy1 {
++myMethods()
+}
+
+class Dummy2 {
++hiddenMethod()
+}
+
+class Dummy3 <<Serializable>> {
+String name
+}
+
+hide members
+hide <<Serializable>> circle
+show Dummy1 methods
+show <<Serializable>> fields
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class12.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class12.png)
