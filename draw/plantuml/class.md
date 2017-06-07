@@ -412,3 +412,79 @@ class Date << (D,orchid) >>
 
 ![class13.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class13.png)
 
+## 包 ##
+
+可以通过 package 关键字来定义一个包, 此时可以选择定义包的背景色(通过 HTML 颜色名称或颜色值). 包是可以嵌套的, 也可以定义包之间的联系.
+
+将以下内容保存为 [usecase14](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class14.pum):
+
+```
+@startuml
+
+package "Classic Collections" #DDDDDD {
+Object <|-- ArrayList
+}
+
+package net.sourceforge.plantuml {
+Object <|-- Demo1
+Demo1 *-- Demo2
+}
+
+/' 定义包的外形 '/
+/' skinparam packageStyle rectangle '/
+
+package foo1.foo2 {
+}
+package foo1.foo2.foo3 {
+class Object10
+}
+foo1.foo2 +-- foo1.foo2.foo3
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class14.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class14.png)
+
+## 包的风格 ##
+
+可以对不同的包定义不同的显示风格.
+
+将以下内容保存为 [usecase15](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class15.pum):
+
+```
+@startuml
+
+scale 750 width
+
+package foo1 <<Node>> {
+class Class1
+}
+
+package foo2 <<Rectangle>> {
+class Class2
+}
+
+package foo3 <<Folder>> {
+class Class3
+}
+
+package foo4 <<Frame>> {
+class Class4
+}
+
+package foo5 <<Cloud>> {
+class Class5
+}
+
+package foo6 <<Database>> {
+class Class6
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class15.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class15.png)

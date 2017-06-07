@@ -1,0 +1,22 @@
+@startuml
+
+package "Classic Collections" #DDDDDD {
+Object <|-- ArrayList
+}
+
+package net.sourceforge.plantuml {
+Object <|-- Demo1
+Demo1 *-- Demo2
+}
+
+/' 定义包的外形 '/
+/' skinparam packageStyle rectangle '/
+
+package foo1.foo2 {
+}
+package foo1.foo2.foo3 {
+class Object10
+}
+foo1.foo2 +-- foo1.foo2.foo3
+
+@enduml
