@@ -669,3 +669,97 @@ Class03 o-- Class04 : aggregation
 生成的效果图如下:
 
 ![class21.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class21.png)
+
+## 渐变色 ##
+
+可以通过以下的符号分割的两个颜色来定义渐变的背景色: |, /, \, -.
+
+将以下内容保存为 [usecase22](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class22.pum):
+
+```
+@startuml
+
+skinparam backgroundcolor AntiqueWhite/Gold
+skinparam classBackgroundColor Wheat|CornflowerBlue
+
+class Foo #red-green
+
+note left of Foo #blue\9932CC
+this is my
+note on this class
+end note
+
+package example #GreenYellow/LightGoldenRodYellow {
+class Dummy
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class22.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class22.png)
+
+## 布局 ##
+
+可以通过 together 关键字来让对象分布在一起.
+
+将以下内容保存为 [usecase23](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class23.pum):
+
+```
+@startuml
+
+class Bar1
+class Bar2
+
+together {
+class Together1
+class Together2
+class Together3
+}
+
+Together1 - Together2
+Together2 - Together3
+Together2 -[hidden]--> Bar1
+Bar1 -[hidden]> Bar2
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class23.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class23.png)
+
+## 拆分文件 ##
+
+可以通过 page (hpages)x(vpages) 命令将生成的图形拆分为不同的文件, 其中 hpages 表示水平数量, vpages 表示垂直数量.
+
+将以下内容保存为[usecase24](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class24.pum):
+
+```
+@startuml
+
+' Split into 4 pages
+
+page 2x2
+skinparam pageMargin 10
+skinparam pageExternalColor gray
+skinparam pageBorderColor black
+
+class BaseClass
+namespace net.dummy #DDDDDD {
+.BaseClass <|-- Person
+Meeting o-- Person
+.BaseClass <|- Meeting
+}
+
+namespace net.foo {
+net.dummy.Person <|- Person
+.BaseClass <|-- Person
+net.dummy.Meeting o-- Person
+}
+
+BaseClass <|-- net.unused.Person
+
+@enduml
+```
