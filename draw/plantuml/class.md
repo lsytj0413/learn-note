@@ -565,3 +565,32 @@ bar ()- foo
 生成的效果图如下:
 
 ![class18.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class18.png)
+
+## 修改箭头方向 ##
+
+默认的, 使用 -- 的箭头方向是水平的, 可以使用单个 - 符号或者 . 符号来修改为垂直方向. 也可以使用 left, right, up 和 down 等关键字来定义方向, 可以只使用关键字的一个或二个字母.
+
+将以下内容保存为 [usecase19](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class19.pum):
+
+```
+@startuml
+
+Room o- Student
+Room *-- Chair
+
+Student1 -o Room1
+Chair1 --* Room1
+
+foo -left-> dummyLeft
+foo -right-> dummyRight
+foo -up-> dummyUp
+foo -down-> dummyDown
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class19.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class19.png)
+
+## 关联类 ##
