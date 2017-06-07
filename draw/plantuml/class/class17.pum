@@ -1,0 +1,11 @@
+@startuml
+
+set namespaceSeparator ::
+/' 关闭自动名字空间 '/
+/' set namespaceSeparator none '/
+
+class X1::X2::foo {
+some info
+}
+
+@enduml

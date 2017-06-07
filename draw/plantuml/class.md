@@ -518,3 +518,50 @@ BaseClass <|-- net.unused.Person
 生成的效果图如下:
 
 ![class16.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class16.png)
+
+## 自动名字空间 ##
+
+可以使用 set namespaceSeparator 命令来定义自动名字空间的分隔符.
+
+将以下内容保存为 [usecase17](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class17.pum):
+
+```
+@startuml
+
+set namespaceSeparator ::
+/' 关闭自动名字空间 '/
+/' set namespaceSeparator none '/
+
+class X1::X2::foo {
+some info
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class17.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class17.png)
+
+## lollipop interface ##
+
+可以使用以下命令定义 lollipop interface:
+
+- bar ()- foo
+- bar ()-- foo
+- foo -() bar
+
+将以下内容保存为 [usecase18](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class18.pum):
+
+```
+@startuml
+
+class foo
+bar ()- foo
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class18.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class18.png)
