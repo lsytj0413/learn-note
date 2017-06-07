@@ -594,3 +594,41 @@ foo -down-> dummyDown
 ![class19.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class19.png)
 
 ## 关联类 ##
+
+将以下内容保存为 [usecase20](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class20.pum):
+
+```
+@startuml
+
+class Student {
+Name
+}
+
+Student "0..*" - "1..*" Course
+
+(Student, Course) .. Enrollment
+
+class Enrollment {
+drop ()
+cancel ()
+}
+
+class Student1 {
+Name
+}
+
+Student1 "0..*" -- "1..*" Course1
+
+(Student1, Course1) . Enrollment1
+
+class Enrollment1 {
+drop ()
+cancel ()
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![class20.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class20.png)

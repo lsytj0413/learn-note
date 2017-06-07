@@ -1,0 +1,29 @@
+@startuml
+
+class Student {
+Name
+}
+
+Student "0..*" - "1..*" Course
+
+(Student, Course) .. Enrollment
+
+class Enrollment {
+drop ()
+cancel ()
+}
+
+class Student1 {
+Name
+}
+
+Student1 "0..*" -- "1..*" Course1
+
+(Student1, Course1) . Enrollment1
+
+class Enrollment1 {
+drop ()
+cancel ()
+}
+
+@enduml
