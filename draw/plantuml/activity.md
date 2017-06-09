@@ -74,6 +74,7 @@
 if "Some Test" then
 -->[true] "Some Activity"
 --> "Another Activity"
+-right-> (*)
 else
 -->[false] "Something else"
 -->[Ending process] (*)
@@ -85,3 +86,44 @@ endif
 生成的效果图如下:
 
 ![activity04.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity04.png)
+
+默认的, 一个分支的开始是从最后一个活动的 activity 开始的, 但是也可以使它从一个另外的 activity 开始. 而且分支也可以嵌套.
+
+将以下内容保存为[activity05](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity05.pum):
+
+```
+@startuml
+
+(*) --> if "Some Test" then
+
+-->[true] "activity 1"
+
+if "" then
+-> "activity 3" as a3
+else
+if "Other test" then
+-left-> "activity 5"
+else
+--> "activity 6"
+endif
+endif
+
+else
+
+->[false] "activity 2"
+
+endif
+
+a3 --> if "last test" then
+--> "activity 7"
+else
+-> "activity 8"
+
+endif
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity05.png)

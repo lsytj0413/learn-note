@@ -5,6 +5,7 @@
 if "Some Test" then
 -->[true] "Some Activity"
 --> "Another Activity"
+-right-> (*)
 else
 -->[false] "Something else"
 -->[Ending process] (*)
