@@ -19,3 +19,15 @@
 
 ![activity01.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity01.png)
 
+## 文本标签 ##
+
+默认的, 一个箭头是从最后一个使用的 activity 开始的, 而且可以在箭头上使用文本标签.
+
+将以下内容保存为 [activity02](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity02.pum):
+
+```
+```
+
+生成的效果图如下:
+
+![activity02.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity02.png)
