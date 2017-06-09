@@ -59,3 +59,29 @@
 生成的效果图如下:
 
 ![activity03.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity03.png)
+
+## 分支 ##
+
+可以使用 if, then, else 等关键字来定义分支.
+
+将以下内容保存为[activity04](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity04.pum):
+
+```
+@startuml
+
+(*) --> "Initialization"
+
+if "Some Test" then
+-->[true] "Some Activity"
+--> "Another Activity"
+else
+-->[false] "Something else"
+-->[Ending process] (*)
+endif
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity04.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity04.png)
