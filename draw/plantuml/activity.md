@@ -127,3 +127,28 @@ endif
 生成的效果图如下:
 
 ![activity05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity05.png)
+
+## 同步 ##
+
+可以使用 === 字符来定义同步方法.
+
+将以下内容保存为[activity06](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity06.pum):
+
+```
+@startuml
+
+(*) --> ===B1===
+--> "Parallel Activity 1"
+--> ===B2===
+
+===B1=== --> "Parallel Activity 2"
+--> ===B2===
+
+--> (*)
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity06.png)
