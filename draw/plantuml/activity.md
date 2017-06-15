@@ -1,6 +1,8 @@
 # 活动图 #
 
-## 简单例子 ##
+## 稳定版本 ##
+
+### 简单例子 ###
 
 使用 * 符号来表示活动图的起始点和结束点, 可以使用 (*top) 符号来让起始点出现在图的顶点. 使用 --> 符号来表示箭头.
 
@@ -19,7 +21,7 @@
 
 ![activity01.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity01.png)
 
-## 文本标签 ##
+### 文本标签 ###
 
 默认的, 一个箭头是从最后一个使用的 activity 开始的, 而且可以在箭头上使用文本标签.
 
@@ -39,7 +41,7 @@
 
 ![activity02.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity02.png)
 
-## 改变箭头方向 ##
+### 改变箭头方向 ###
 
 可以使用 -> 来表示竖向箭头, 也可以使用以下示例中的方法修改箭头的方向.
 
@@ -60,7 +62,7 @@
 
 ![activity03.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity03.png)
 
-## 分支 ##
+### 分支 ###
 
 可以使用 if, then, else 等关键字来定义分支.
 
@@ -128,7 +130,7 @@ endif
 
 ![activity05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity05.png)
 
-## 同步 ##
+### 同步 ###
 
 可以使用 === 字符来定义同步方法.
 
@@ -153,7 +155,7 @@ endif
 
 ![activity06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity06.png)
 
-## 长描述 ##
+### 长描述 ###
 
 在定义一个 activity 节点的时候可以添加多行的描述, 也可以通过 as 关键字给节点一个短的名称, 以便之后引用.
 
@@ -178,7 +180,7 @@ A1 --> "Short activity <img:../../img/chrome.png>"
 
 ![activity07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity07.png)
 
-## 注解 ##
+### 注解 ###
 
 可以使用 note left, note right, note top 或者 note bottom 等关键字来定义 activity 节点的注解, 如果需要对开始节点定义注解, 可以在图形定义的开头使用注解. 也可以使用 endnote 关键字来定义多行注解.
 
@@ -203,7 +205,7 @@ end note
 
 ![activity08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity08.png)
 
-## 分区 ##
+### 分区 ###
 
 可以使用 partition 关键字来定义不同的分区, 每个分区都可以定义使用 html 颜色值或名称来定义背景色. 默认的, 一个 activity 节点是被自动的放在最后一个使用的分区中.
 
@@ -240,7 +242,7 @@ WavesArmes --> Introduction
 
 ![activity09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity09.png)
 
-## Skinparam ##
+### Skinparam ###
 
 可以使用 skinparam 命令来修改颜色和字体, 使用方式包括以下几种:
 
@@ -278,7 +280,7 @@ FontName Impact
 
 ![activity10.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity10.png)
 
-## 八边形 ##
+### 八边形 ###
 
 可以使用 skinparam activityShape octagon 命令来修改 activity 节点的形状.
 
@@ -300,7 +302,7 @@ skinparam activityShape octagon
 
 ![activity11.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity11.png)
 
-## 完整实例 ##
+### 完整实例 ###
 
 将以下内容保存为[activity12](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity12.pum):
 
@@ -364,3 +366,27 @@ endif
 生成的效果图如下:
 
 ![activity12.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity12.png)
+
+## Beta版 ##
+
+### 简单例子 ###
+
+在之前描述的语法中包含一些限制, 所以从 V7949 版之后提供了新的 beta语法.
+
+在 beta语法中, activity 节点的文本是以 :符号开始, ;符号结束.
+
+将以下内容保存为[activity13](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity13.pum):
+
+```
+@startuml
+
+:Hello world;
+:This is on defined on
+several **lines**;
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity13.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity13.png)
