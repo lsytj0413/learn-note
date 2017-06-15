@@ -239,3 +239,41 @@ WavesArmes --> Introduction
 生成的效果图如下:
 
 ![activity09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity09.png)
+
+## Skinparam ##
+
+可以使用 skinparam 命令来修改颜色和字体, 使用方式包括以下几种:
+
+- 在图形的定义中
+- 在一个包含文件中
+- 在一个配置文件中
+
+将以下内容保存为[activity10](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity10.pum):
+
+```
+@startuml
+
+skinparam backgroundColor #AAFFFF
+skinparam activity {
+StartColor red
+BarColor SaddleBrown
+EndColor Silver
+BackgroundColor Peru
+BackgroundColor<< Begin >> Olive
+BorderColor Peru
+FontName Impact
+}
+
+(*) --> "Climbs on Platform" << Begin >>
+--> === S1 ===
+--> Bows
+--> === S2 ===
+--> WavesArmes
+--> (*)
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity10.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity10.png)
