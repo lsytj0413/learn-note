@@ -13,4 +13,4 @@
 
 该目录中包含与 docker 相关的记录, 包含一些镜像的 Dockerfile, 以及一些使用 docker 的应用示例.
 
-[docker](./docker/README.md)
+[docker](./docker)
