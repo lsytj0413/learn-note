@@ -202,3 +202,40 @@ end note
 生成的效果图如下:
 
 ![activity08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity08.png)
+
+## 分区 ##
+
+可以使用 partition 关键字来定义不同的分区, 每个分区都可以定义使用 html 颜色值或名称来定义背景色. 默认的, 一个 activity 节点是被自动的放在最后一个使用的分区中.
+
+将以下内容保存为[activity09](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity09.pum):
+
+```
+@startuml
+
+partition Conductor {
+(*) --> "Climbs on Platform"
+--> === S1 ===
+--> Bows
+}
+
+partition Audience #LightSkyBlue {
+=== S1 === --> Applauds
+}
+
+partition Conductor {
+Bows --> === S2 ===
+--> WavesArmes
+Applauds --> === S2 ===
+}
+
+partition Orchestra #CCCCEE {
+WavesArmes --> Introduction
+--> "Play music"
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity09.png)
