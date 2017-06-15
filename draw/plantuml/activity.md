@@ -455,3 +455,28 @@ stop
 生成的效果图如下:
 
 ![activity15.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity15.png)
+
+### Repeat ###
+
+使用 repeat 和 repeatwhile 关键字来定义 repeat 循环.
+
+将以下内容保存为[activity16](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity16.pum):
+
+```
+@startuml
+
+start
+
+repeat
+:read data;
+:generate diagrams;
+repeat while (more data?)
+
+stop
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity16.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity16.png)
