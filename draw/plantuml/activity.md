@@ -415,3 +415,43 @@ stop
 生成的效果图如下:
 
 ![activity14.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity14.png)
+
+### 条件 ###
+
+可以使用 if, elseif, then, else, endif 等关键字来定义条件分支.
+
+将以下内容保存为[activity15](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity15.pum):
+
+```
+@startuml
+
+start
+
+if (Graphviz installed?) then (yes)
+:process all\ndiagrams;
+else (no)
+:process only
+__sequence__ and __activity__ diagrams;
+endif
+
+if (condition A) then (yes)
+:Text 1;
+elseif (condition B) then (yes)
+:Text 2;
+stop
+elseif (condition C) then (yes)
+:Text 3;
+elseif (condition D) then (yes)
+:Text 4;
+else (nothing)
+:Text else;
+endif
+
+stop
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity15.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity15.png)
