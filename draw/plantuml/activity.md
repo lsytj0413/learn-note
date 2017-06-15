@@ -160,8 +160,45 @@ endif
 将以下内容保存为[activity07](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity07.pum):
 
 ```
+@startuml
+
+(*) -left-> "this <size:20>activity</size>
+is <b>very</b> <color:red>long2</color>
+and defined on several lines
+that contains many <i>text</i>" as A1
+
+-up-> "Another activity\n on several lines"
+
+A1 --> "Short activity <img:../../img/chrome.png>"
+
+@enduml
 ```
 
 生成的效果图如下:
 
 ![activity07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity07.png)
+
+## 注解 ##
+
+可以使用 note left, note right, note top 或者 note bottom 等关键字来定义 activity 节点的注解, 如果需要对开始节点定义注解, 可以在图形定义的开头使用注解. 也可以使用 endnote 关键字来定义多行注解.
+
+将以下内容保存为[activity08](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity08.pum):
+
+```
+@startuml
+
+(*) --> "Some Activity"
+note right: This activity has to be defined
+"Some Activity" --> (*)
+
+note left
+This note is on
+several lines
+end note
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity08.png)
