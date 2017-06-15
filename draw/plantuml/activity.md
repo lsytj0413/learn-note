@@ -277,3 +277,25 @@ FontName Impact
 生成的效果图如下:
 
 ![activity10.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity10.png)
+
+## 八边形 ##
+
+可以使用 skinparam activityShape octagon 命令来修改 activity 节点的形状.
+
+将以下内容保存为[activity11](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity11.pum):
+
+```
+@startuml
+
+'Default is skinparam activityShape roundBox
+skinparam activityShape octagon
+
+(*) --> "First Activity"
+"First Activity" --> (*)
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity11.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity11.png)
