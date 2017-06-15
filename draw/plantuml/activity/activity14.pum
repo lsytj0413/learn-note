@@ -1,0 +1,12 @@
+@startuml
+
+start
+
+:Hello world;
+:This is on defined on
+several **lines**;
+
+stop
+/' 也可以使用 end 关键字, 这样节点的形状会不同 '/
+
+@enduml

@@ -390,3 +390,28 @@ several **lines**;
 生成的效果图如下:
 
 ![activity13.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity13.png)
+
+### 开始节点和结束节点 ###
+
+可以使用 start 关键字定义开始节点, 使用 stop 或 end 关键字来定义结束节点.
+
+将以下内容保存为[activity14](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity14.pum):
+
+```
+@startuml
+
+start
+
+:Hello world;
+:This is on defined on
+several **lines**;
+
+stop
+/' 也可以使用 end 关键字, 这样节点的形状会不同 '/
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity14.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity14.png)
