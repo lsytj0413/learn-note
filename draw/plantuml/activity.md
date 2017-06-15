@@ -299,3 +299,68 @@ skinparam activityShape octagon
 生成的效果图如下:
 
 ![activity11.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity11.png)
+
+## 完整实例 ##
+
+将以下内容保存为[activity12](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity12.pum):
+
+```
+@startuml
+
+title Servlet Container
+
+(*) --> "ClickServlet.handleRequest()"
+--> "new Page"
+
+if "Page.onSecurityCheck" then
+->[true] "Page.onInit()"
+
+if "isForward?" then
+->[no] "Process controls"
+
+if "continue processing?" then
+-->[yes] ===RENDERING===
+else
+-->[no] ===REDIRECT_CHECK===
+endif
+
+else
+-->[yes] ===RENDERING===
+endif
+
+if "is Post?" then
+-->[yes] "Page.onPost()"
+--> "Page.onRender()" as render
+--> ===REDIRECT_CHECK===
+else
+-->[no] "Page.onGet()"
+--> render
+endif
+
+else
+-->[false] ===REDIRECT_CHECK===
+endif
+
+if "Do redirect?" then
+->[yes] "redirect request"
+--> ==BEFORE_DESTROY===
+else
+if "Do Forward?" then
+-left->[yes] "Forward request"
+--> ==BEFORE_DESTROY===
+else
+-right->[no] "Render page template"
+--> ==BEFORE_DESTROY===
+endif
+
+endif
+
+--> "Page.onDestroy()"
+--> (*)
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity12.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity12.png)
