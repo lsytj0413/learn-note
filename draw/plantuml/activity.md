@@ -152,3 +152,16 @@ endif
 生成的效果图如下:
 
 ![activity06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity06.png)
+
+## 长描述 ##
+
+在定义一个 activity 节点的时候可以添加多行的描述, 也可以通过 as 关键字给节点一个短的名称, 以便之后引用.
+
+将以下内容保存为[activity07](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity07.pum):
+
+```
+```
+
+生成的效果图如下:
+
+![activity07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity07.png)
