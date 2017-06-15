@@ -480,3 +480,28 @@ stop
 生成的效果图如下:
 
 ![activity16.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity16.png)
+
+### while ###
+
+使用 while 和 end while 关键字定义 while 循环.
+
+将以下内容保存为[activity17](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity17.pum):
+
+```
+@startuml
+
+start
+
+while (data available?)
+:read data;
+:generate diagrams;
+endwhile (empty)
+
+stop
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity17.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity17.png)
