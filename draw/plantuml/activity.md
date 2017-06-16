@@ -505,3 +505,34 @@ stop
 生成的效果图如下:
 
 ![activity17.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity17.png)
+
+### parallel ###
+
+使用 fork, fork again 和 end fork 关键字来定义 parallel processing.
+
+将以下内容保存为[activity18](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity18.pum):
+
+```
+@startuml
+
+start
+
+if (multiprocessor?) then (yes)
+fork
+:Treatment 1;
+fork again
+:Treatment 2;
+end fork
+else (monoproc)
+:Treatment 1;
+:Treatment 2;
+endif
+
+stop
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity18.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity18.png)
