@@ -568,3 +568,24 @@ stop
 生成的效果图如下:
 
 ![activity19.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity19.png)
+
+### 颜色 ###
+
+将以下内容保存为[activity20](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity20.pum):
+
+```
+@startuml
+
+start
+
+:starting progress;
+#HotPink:reading configuration files
+These files should edited at this point!;
+#AAAAAA:ending of the process;
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity20.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity20.png)
