@@ -647,3 +647,29 @@ stop
 生成的效果图如下:
 
 ![activity22.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity22.png)
+
+### swimlanes ###
+
+将以下内容保存为[activity23](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity23.pum):
+
+```
+@startuml
+
+|Swimlane1|
+start
+:foo1;
+|#AntiqueWhite|Swimlane2|
+:foo2;
+:foo3;
+|Swimlane1|
+:foo4;
+|Swimlane2|
+:foo5;
+stop
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity23.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity23.png)
