@@ -750,3 +750,50 @@ end split
 生成的效果图如下:
 
 ![activity25.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity25.png)
+
+### 完整实例 ###
+
+将以下内容保存为[activity26](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity26.pum):
+
+```
+@startuml
+
+start
+:ClickServlet.handleRequest();
+:new page;
+if (Page.onSecurityCheck) then (true)
+:Page.onInit();
+if (isForward?) then (no)
+:Process controls;
+if (continue processing?) then (no)
+stop
+endif
+
+if (isPost?) then (yes)
+:Page.onPost();
+else (no)
+:Page.onGet();
+endif
+:Page.onRender();
+endif
+else (false)
+endif
+
+if (do recirect?) then (yes)
+:redirect process;
+else
+if (do forward?) then (yes)
+:Forward request;
+else (no)
+:Render page template;
+endif
+endif
+
+stop
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity26.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity26.png)
