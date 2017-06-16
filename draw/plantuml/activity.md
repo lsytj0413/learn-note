@@ -709,3 +709,44 @@ stop
 生成的效果图如下:
 
 ![activity24.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity24.png)
+
+### SDL ###
+
+可以使用以下字符来修改 activity 节点的形状: |, <, >, /, ], } .
+
+将以下内容保存为[activity25](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity25.pum):
+
+```
+@startuml
+
+:Ready;
+:next(o)|
+:Recerving;
+split
+:nak(i)<
+:ack(o)>
+split again
+:ack(i)<
+:next(o)
+on several line|
+:i := i + 1]
+:ack(o)>
+split again
+:err(i)<
+:nak(o)>
+split again
+:foo/
+split again
+:i > 5}
+
+stop
+
+end split
+:finish;
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity25.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity25.png)
