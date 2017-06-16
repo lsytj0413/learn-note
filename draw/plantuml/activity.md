@@ -619,3 +619,31 @@ endif
 生成的效果图如下:
 
 ![activity21.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity21.png)
+
+### 分组 ###
+
+将以下内容保存为[activity22](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity22.pum):
+
+```
+@startuml
+
+start
+
+partition Initialization {
+:read config file;
+:init internal variable;
+}
+
+partition Running {
+:wait for user interaction;
+:print information;
+}
+
+stop
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity22.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity22.png)
