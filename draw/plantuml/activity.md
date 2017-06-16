@@ -673,3 +673,39 @@ stop
 生成的效果图如下:
 
 ![activity23.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity23.png)
+
+### Detach ###
+
+可以使用 detach 关键字来移除箭头.
+
+将以下内容保存为[activity24](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity24.pum):
+
+```
+@startuml
+
+:start;
+fork
+:foo1;
+:foo2;
+fork again
+:foo3;
+detach
+endfork
+
+if (foo4) then
+:foo5;
+detach
+endif
+
+:foo6;
+detach
+:foo7;
+
+stop
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity24.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity24.png)
