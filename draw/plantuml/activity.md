@@ -589,3 +589,33 @@ These files should edited at this point!;
 生成的效果图如下:
 
 ![activity20.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity20.png)
+
+### 箭头 ###
+
+将以下内容保存为[activity21](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity21.pum):
+
+```
+@startuml
+
+:foo1;
+-> You can put text on arrows;
+if (test) then
+-[#blue]->
+:foo2;
+-[#green,dashed]-> The text can
+多行
+and **very** long...;
+:foo3;
+else
+-[#black,dotted]->
+:foo4;
+endif
+-[#gray,bold]->
+:foo5;
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity21.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity21.png)
