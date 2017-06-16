@@ -536,3 +536,35 @@ stop
 生成的效果图如下:
 
 ![activity18.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity18.png)
+
+### 注解 ###
+
+可以使用 floating 关键字来定义浮动的注解.
+
+将以下内容保存为[activity19](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity19.pum):
+
+```
+@startuml
+
+start
+
+:foo1;
+floating note left: This is a note
+:foo2;
+note right
+This note is on several
+//lines// and can
+contain <b>HTML</b>
+====
+* Calling the method ""foo()"" is prohibited
+end note
+
+
+stop
+
+@enduml
+```
+
+生成的效果图如下:
+
+![activity19.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity19.png)
