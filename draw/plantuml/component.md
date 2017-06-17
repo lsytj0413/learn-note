@@ -132,3 +132,29 @@ frame "Foo" {
 生成的效果图如下:
 
 ![component05.png](./component/component05.png)
+
+## 修改箭头方向 ##
+
+默认的, 使用 -- 的箭头方向是水平的, 可以使用单个 - 符号或者 . 符号来修改为垂直方向. 也可以使用 left, right, up 和 down 等关键字来定义方向, 可以只使用关键字的一个或二个字母.
+
+将以下内容保存为 [component06](./component/component06.pum):
+```
+@startuml
+
+[Component1] --> Interface1
+[Component1] -> Interface2
+
+Interface3 <-- [Component2]
+Interface4 <- [Component2]
+
+[Component4] -left-> left
+[Component4] -right-> right
+[Component4] -up-> up
+[Component4] -down-> down
+
+@enduml
+```
+
+生成的效果图如下:
+
+![component06.png](./component/component06.png)
