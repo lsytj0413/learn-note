@@ -39,7 +39,13 @@ docker rmi <image ID>
 或者删除所有名为 xxx 的镜像:
 
 ```
-sudo docker rmi $(sudo docker image -q xxx)
+sudo docker rmi $(sudo docker images -q xxx)
+```
+
+或者删除所有为 <none> 的镜像:
+
+```
+docker rmi $(docker images -f "dangling=true" -q)
 ```
 
 ## 启动容器 ##
