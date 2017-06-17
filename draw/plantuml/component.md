@@ -89,3 +89,46 @@ end note
 生成的效果图如下:
 
 ![component04.png](./component/component04.png)
+
+## 分组 ##
+
+可以使用  package, folder, frame, cloud, database 等关键字来定义分组.
+
+将以下内容保存为 [component05](./component/component05.pum):
+
+```
+@startuml
+
+package "Some Group" {
+HTTP - [First Component]
+[Another Component]
+}
+
+node "Other Groups" {
+FTP - [Second Component]
+[First Component] --> FTP
+}
+
+cloud {
+[Example 1]
+}
+
+database "MySql" {
+folder "This is my folder" {
+[Folder 3]
+}
+frame "Foo" {
+[Frame 4]
+}
+}
+
+[Another Component] --> [Example 1]
+[Example 1] --> [Folder 3]
+[Folder 3] --> [Frame 4]
+
+@enduml
+```
+
+生成的效果图如下:
+
+![component05.png](./component/component05.png)
