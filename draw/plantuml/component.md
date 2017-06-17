@@ -20,3 +20,25 @@ component [Last\ncomponent] as Comp4
 生成的效果图如下:
 
 ![component01.png](./component/component01.png)
+
+## interface ##
+
+interface 的定义需要使用小括号包含, 也可以使用 interface 关键字定义, 使用 as 关键字定义别名.
+
+将以下内容保存为 [component02](./component/component02.pum):
+
+```
+@startuml
+
+() "First Interface"
+() "Another interface" as Interf2
+
+interface Interf3
+interface "Last\ninterface" as Interf4
+
+@enduml
+```
+
+生成的效果图如下:
+
+![component02.png](./component/component02.png)
