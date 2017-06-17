@@ -42,3 +42,22 @@ interface "Last\ninterface" as Interf4
 生成的效果图如下:
 
 ![component02.png](./component/component02.png)
+
+## 简单例子 ##
+
+对于各个元素之间的关系, 可以使用 .. 符号表示虚线, -- 符号表示实线, > 符号表示箭头.
+
+将以下内容保存为 [component03](./component/component03.pum):
+
+```
+@startuml
+
+DataAccess - [First Component]
+[First Component] ..> HTTP : use
+
+@enduml
+```
+
+生成的效果图如下:
+
+![component03.png](./component/component03.png)
