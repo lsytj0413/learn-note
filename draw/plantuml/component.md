@@ -61,3 +61,31 @@ DataAccess - [First Component]
 生成的效果图如下:
 
 ![component03.png](./component/component03.png)
+
+## 注解 ##
+
+可以使用 note left, note right, note top 或者 note bottom 等关键字来定义注解. 注解也可以使用 note 关键字定义, 然后使用 .. 符号连接到具体的节点.
+
+将以下内容保存为 [component04](./component/component04.pum):
+
+```
+@startuml
+
+interface "Data Access" as DA
+
+DA - [First Component]
+[First Component] ..> HTTP : use
+
+note left of HTTP : Web Service only
+
+note right of [First Component]
+A note can also
+be on several lines
+end note
+
+@enduml
+```
+
+生成的效果图如下:
+
+![component04.png](./component/component04.png)
