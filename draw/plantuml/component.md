@@ -158,3 +158,25 @@ Interface4 <- [Component2]
 生成的效果图如下:
 
 ![component06.png](./component/component06.png)
+
+## UML2 notation ##
+
+可以使用 skinparam componentStype uml2 命令来切换到 UML2 notation.
+
+将以下内容保存为 [component07](./component/component07.pum):
+```
+@startuml
+
+skinparam componentStyle uml2
+
+interface "Data Access" as DA
+
+DA - [First Component]
+[First Component] ..> HTTP : use
+
+@enduml
+```
+
+生成的效果图如下:
+
+![component07.png](./component/component07.png)
