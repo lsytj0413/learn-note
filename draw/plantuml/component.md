@@ -180,3 +180,26 @@ DA - [First Component]
 生成的效果图如下:
 
 ![component07.png](./component/component07.png)
+
+## 长描述文本和颜色 ##
+
+将以下内容保存为 [component08](./component/component08.pum):
+```
+@startuml
+
+component comp1 [
+This component
+has a long comment
+on several lines
+]
+
+component [Web Server] #Yellow
+
+@enduml
+```
+
+生成的效果图如下:
+
+![component08.png](./component/component08.png)
+
+##  ##
