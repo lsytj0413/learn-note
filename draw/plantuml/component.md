@@ -239,3 +239,66 @@ src -> tgt
 生成的效果图如下:
 
 ![component09.png](./component/component09.png)
+
+## skinparam ##
+
+可以使用 skinparam 命令来修改颜色和字体, 使用方式包括以下几种:
+
+- 在图形的定义中
+- 在一个包含文件中
+- 在一个配置文件中
+
+将以下内容保存为 [component10](./component/component10.pum):
+```
+@startuml
+
+skinparam interface {
+backgroundColor RosyBrown
+borderColor orange
+}
+
+skinparam component {
+FontSize 13
+BackgroundColor<<Apache>> Red
+BorderColor<<Apache>> #FF6655
+FontName Courier
+BorderColor black
+BackgroundColor gold
+ArrowFontName Impact
+ArrowColor #FF6655
+ArrowFontColor #777777
+}
+
+() "Data Access" as DA
+
+DA - [First Component]
+[First Component] ..> () HTTP : use
+HTTP - [Web Server] << Apache >>
+
+[AA] <<static lib>>
+[BB] <<shared lib>>
+[CC] <<static lib>>
+
+node node1
+node node2 <<shared node>>
+database Production
+
+skinparam component {
+backgroundColor<<static lib>> DarkKhaki
+backgroundColor<<shared lib>> Green
+}
+
+skinparam node {
+borderColor Green
+backgroundColor Yellow
+backgroundColor<<shared node>> Magenta
+}
+
+skinparam databaseBackgroundColor Aqua
+
+@enduml
+```
+
+生成的效果图如下:
+
+![component10.png](./component/component10.png)

@@ -1,0 +1,47 @@
+@startuml
+
+skinparam interface {
+backgroundColor RosyBrown
+borderColor orange
+}
+
+skinparam component {
+FontSize 13
+BackgroundColor<<Apache>> Red
+BorderColor<<Apache>> #FF6655
+FontName Courier
+BorderColor black
+BackgroundColor gold
+ArrowFontName Impact
+ArrowColor #FF6655
+ArrowFontColor #777777
+}
+
+() "Data Access" as DA
+
+DA - [First Component]
+[First Component] ..> () HTTP : use
+HTTP - [Web Server] << Apache >>
+
+[AA] <<static lib>>
+[BB] <<shared lib>>
+[CC] <<static lib>>
+
+node node1
+node node2 <<shared node>>
+database Production
+
+skinparam component {
+backgroundColor<<static lib>> DarkKhaki
+backgroundColor<<shared lib>> Green
+}
+
+skinparam node {
+borderColor Green
+backgroundColor Yellow
+backgroundColor<<shared node>> Magenta
+}
+
+skinparam databaseBackgroundColor Aqua
+
+@enduml
