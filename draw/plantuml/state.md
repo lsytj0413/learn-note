@@ -191,3 +191,45 @@ note right of NotShooting : This is a note on a composite state
 生成的效果图如下:
 
 ![state06.png](./state/state06.png)
+
+## Skinparam ##
+
+可以使用 skinparam 命令来修改颜色和字体, 使用方式包括以下几种:
+
+- 在图形的定义中
+- 在一个包含文件中
+- 在一个配置文件中
+
+将以下内容保存为 [state07](./state/state07.pum):
+
+```
+@startuml
+
+skinparam backgroundColor LightYellow
+skinparam state {
+StartColor MediumBlue
+EndColor Red
+BackgroundColor Peru
+BackgroundColor<<Warning>> Olive
+BorderColor Gray
+FontName Impact
+}
+
+[*] --> NotShooting
+
+state "Not Shooting State" as NotShooting {
+state "Idle mode" as Idle <<Warning>>
+state "Configuring mode" as Configuring
+[*] --> Idle
+Idle --> Configuring : EvConfig
+Configuring --> Idle : EvConfig
+}
+
+NotShooting --> [*]
+
+@enduml
+```
+
+生成的效果图如下:
+
+![state07.png](./state/state07.png)
