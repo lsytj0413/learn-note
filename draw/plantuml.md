@@ -52,3 +52,11 @@ Alice ->> Bob: asynchronous call
 ## 组件图 ##
 
 [教程](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/component.md)
+
+## 状态图 ##
+
+[教程](./plantuml/state.md)
+
+## 对象图 ##
+
+[教程](./plantuml/object.md)
