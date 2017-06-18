@@ -1,0 +1,13 @@
+@startuml
+
+object user
+
+user : name = "dummy"
+user : id = 123
+
+object user2 {
+name = "object2"
+id = 456
+}
+
+@enduml
