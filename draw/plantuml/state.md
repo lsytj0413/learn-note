@@ -128,3 +128,24 @@ ScrollLockOn --> ScrollLockOff : EvCapsLockPressed
 生成的效果图如下:
 
 ![state04.png](./state/state04.png)
+
+## 箭头方向 ##
+
+也可以使用 left, right, up 和 down 等关键字来定义方向, 可以只使用关键字的一个或二个字母.
+
+将以下内容保存为 [state05](./state/state05.pum):
+
+```
+@startuml
+
+[*] -up-> First
+First -right-> Second
+Second --> Third
+Third -left-> Last
+
+@enduml
+```
+
+生成的效果图如下:
+
+![state05.png](./state/state05.png)
