@@ -202,4 +202,40 @@ component [Web Server] #Yellow
 
 ![component08.png](./component/component08.png)
 
-##  ##
+## sprite ##
+
+将以下内容保存为 [component09](./component/component09.pum):
+```
+@startuml
+
+sprite $businessProcess [16x16/16] {
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFF0FFFFF
+FFFFFFFFFF00FFFF
+FF00000000000FFF
+FF000000000000FF
+FF00000000000FFF
+FFFFFFFFFF00FFFF
+FFFFFFFFFF0FFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+}
+
+rectangle " End to End\nbusiness process" <<$businessProcess>> {
+rectangle "inner process 1" <<$businessProcess>> as src
+rectangle "inner process 2" <<$businessProcess>> as tgt
+src -> tgt
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![component09.png](./component/component09.png)
