@@ -96,3 +96,35 @@ State3 --> [*] : Aborted
 生成的效果图如下:
 
 ![state03.png](./state/state03.png)
+
+## Concurrent ##
+
+可以使用 -- 或 || 符号作为分隔符来在组合状态里定义 Concurrent state.
+
+将以下内容保存为 [state04](./state/state04.pum):
+
+```
+@startuml
+
+[*] --> Active
+
+state Active {
+[*] -> NumLockOff
+NumLockOff --> NumLockOn : EvNumLockPressed
+NumLockOn --> NumLockOff : EvNumLockPressed
+--
+[*] -> CapsLockOff
+CapsLockOff --> CapsLockOn : EvCapsLockPressed
+CapsLockOn --> CapsLockOff : EvCapsLockPressed
+--
+[*] -> ScrollLockOff
+ScrollLockOff --> ScrollLockOn : EvCapsLockPressed
+ScrollLockOn --> ScrollLockOff : EvCapsLockPressed
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![state04.png](./state/state04.png)
