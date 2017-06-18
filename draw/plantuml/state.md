@@ -149,3 +149,45 @@ Third -left-> Last
 生成的效果图如下:
 
 ![state05.png](./state/state05.png)
+
+## 注解 ##
+
+可以使用 note left, note right, note top 或者 note bottom 等关键字来定义注解.
+
+将以下内容保存为 [state06](./state/state06.pum):
+
+```
+@startuml
+
+[*] --> Active
+Active --> Inactive
+
+note left of Active : this is a short \nnote
+
+note right of Inactive
+A note can also
+be defined on
+several lines
+end note
+
+state foo
+note "This is a floating note" as N1
+
+[*] --> NotShooting
+
+state "Not Shooting State" as NotShooting {
+state "Idle mode" as Idle
+state "Configuring mode" as Configuring
+[*] --> Idle
+Idle --> Configuring : EvConfig
+Configuring --> Idle : EvConfig
+}
+
+note right of NotShooting : This is a note on a composite state
+
+@enduml
+```
+
+生成的效果图如下:
+
+![state06.png](./state/state06.png)
