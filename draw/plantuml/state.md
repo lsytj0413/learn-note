@@ -23,3 +23,40 @@ State2 --> [*]
 生成的效果图如下:
 
 ![state01.png](./state/state01.png)
+
+## 组合 ##
+
+使用 state 关键字和 {} 来定义组合的状态.
+
+将以下内容保存为 [state02](./state/state02.pum):
+
+```
+@startuml
+
+scale 360 width
+[*] --> NotShooting
+
+state NotShooting {
+[*] --> Idle
+Idle --> Configuring : EvConfig
+Configuring --> Idle : EvConfig
+}
+
+state Configuring {
+[*] --> NewValueSelection
+NewValueSelection --> NewValuePreview : EvNewValue
+NewValuePreview --> NewValueSelection : EvNewValueRejected
+NewValuePreview --> NewValueSelection : EvNewValueSaved
+
+state NewValuePreview {
+State1 -> State2
+}
+
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![state02.png](./state/state02.png)
