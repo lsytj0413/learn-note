@@ -60,3 +60,16 @@ Alice ->> Bob: asynchronous call
 ## 对象图 ##
 
 [教程](./plantuml/object.md)
+
+## 其他内容 ##
+
+该章节中包含以下内容:
+
+- 通用的命令
+- salt
+- creole
+- 如何修改字体和颜色
+- 预处理
+- 国际化
+
+[教程](./plantuml/rest.md)
