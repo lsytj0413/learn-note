@@ -106,3 +106,116 @@ endlegend
 生成的效果图如下:
 
 ![rest04.png](./rest/rest04.png)
+
+## Salt ##
+
+可以使用 @startsalt, 或者 @startuml salt 来定义 salt 图形.
+
+### 基本图形 ###
+
+可以使用以下符号来定义图形:
+
+- [] 定义按钮
+- () 定义单选框
+- [] 定义复选框
+- " 定义文本
+
+将以下内容保存为[rest05](./rest/rest05.pum):
+
+```
+@startuml
+salt
+{
+Just plain test
+[This is my button]
+() Unchecked radio
+(x) Checked radio
+[] Unchecked box
+[x] Checked box
+"Enter text here    "
+^This is a droplist^
+}
+@enduml
+```
+
+生成的效果图如下:
+
+![rest05.png](./rest/rest05.png)
+
+### grid ###
+
+{ 符号会自动创建表格, 可以使用 | 来划分不同的列. 也可以使用以下符号来定义表格中的线如何显示:
+
+- #: 显示所有的线
+- !: 显示水平线
+- -: 显示竖直线
+- +: 显示边框
+
+将以下内容保存为[rest06](./rest/rest06.pum):
+
+```
+@startsalt
+{-
+Login | "MyName    "
+Password | "****      "
+[Cancel] | [  OK  ]
+}
+@endsalt
+```
+
+生成的效果图如下:
+
+![rest06.png](./rest/rest06.png)
+
+### 分割线 ###
+
+将以下内容保存为[rest07](./rest/rest07.pum):
+
+```
+@startsalt
+{
+Text1
+..
+"Some field"
+==
+Note on usage
+--
+Another text
+--
+[OK]
+}
+@endsalt
+```
+
+生成的效果图如下:
+
+![rest07.png](./rest/rest07.png)
+
+### 树形控件 ###
+
+将以下内容保存为[rest08](./rest/rest08.pum):
+
+```
+@startsalt
+{
+{T
++ World
+++ America
++++ Canada
++++ USA
+++++ New York
+++++ Boston
++++ Mexico
+++ Europe
++++ Italy
++++ Germany
+++++ Berlin
+++ Africa
+}
+}
+@endsalt
+```
+
+生成的效果图如下:
+
+![rest08.png](./rest/rest08.png)
