@@ -84,3 +84,25 @@ Bob -> Alice : Authentication Response
 生成的效果图如下:
 
 ![rest03.png](./rest/rest03.png)
+
+### legend ###
+
+使用 legend 和 end legend 关键字来定义图例, 并且可以使用 center, left 或 right 关键字来定义对齐方式.
+
+将以下内容保存为[rest04](./rest/rest04.pum):
+
+```
+@startuml
+
+Alice -> Bob : Hello
+legend right
+Short
+legend
+endlegend
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest04.png](./rest/rest04.png)
