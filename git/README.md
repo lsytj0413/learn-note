@@ -6,3 +6,4 @@
 
 - [第一章: 介绍](./chapter01.md)
 - [第二章: 安装 Git](./chapter02.md)
+- [第三章: 起步](./chapter03.md)
