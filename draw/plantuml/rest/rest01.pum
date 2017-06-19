@@ -1,0 +1,12 @@
+@startuml
+
+Alice -> Bob : Authentication Request
+
+header
+<font color=red>Warning:</font>
+Do not user in production.
+endheader
+
+center footer Generated for damonstration
+
+@enduml

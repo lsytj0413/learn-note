@@ -1,0 +1,13 @@
+@startuml
+
+title
+<u>Simple</u> communication example
+on <i>several</i> lines and using <back:cadetblue>creole tags</back>
+end title
+
+caption figure 1
+
+Alice --> Bob : Authentication Request
+Bob -> Alice : Authentication Response
+
+@enduml
