@@ -219,3 +219,45 @@ Another text
 生成的效果图如下:
 
 ![rest08.png](./rest/rest08.png)
+
+### Enclosing brackets ###
+
+将以下内容保存为[rest09](./rest/rest09.pum):
+
+```
+@startsalt
+{
+Name | "         "
+Modifiers: | { (X) public | () default | () private | () protected
+[] abstract | [] final | [] static}
+Superclass: | { "java.lang.Object" | [Browse...] }
+}
+@endsalt
+```
+
+生成的效果图如下:
+
+![rest09.png](./rest/rest09.png)
+
+### tabs ###
+
+将以下内容保存为[rest10](./rest/rest10.pum):
+
+```
+@startsalt
+{+
+{/ <b>General | Fullscreen | Behavior | Saving }
+{
+{ Open image in: | ^Smart Mode^ }
+[x] Smooth images when zoomed
+[x] confirm image deletion
+[ ] show hidden images
+}
+[Close]
+}
+@endsalt
+```
+
+生成的效果图如下:
+
+![rest10.png](./rest/rest10.png)
