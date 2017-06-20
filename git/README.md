@@ -1,6 +1,6 @@
 # <Git版本控制管理 读书笔记> #
 
-[《Git版本控制管理》]() 是由 [Jon Loeliger]() 和 [Mattbew McCullougb]() 撰写的, 讲述 Git 如何使用.
+[《Git版本控制管理》](https://book.douban.com/subject/5311565/) 是由 [Jon Loeliger](http://www.oreilly.com/pub/au/3596) 和 [Mattbew McCullougb](http://www.oreilly.com/pub/au/4747) 撰写的, 讲述 Git 如何使用.
 
 以下是各章节的内容:
 

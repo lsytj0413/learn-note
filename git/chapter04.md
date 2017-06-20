@@ -73,15 +73,11 @@ Git 也维护打包文件中每个完整文件的原始 blob 的 SHA1 值.
 首先查看 git init 创建了什么文件:
 
 ```
-mkdir /tmp/hello
-cd /tmp/hello
-git init
-find .
-```
-
-输出如下:
-
-> .
+$ mkdir /tmp/hello
+$ cd /tmp/hello
+$ git init
+$ find .
+.
 ./.git
 ./.git/refs
 ./.git/refs/heads
@@ -105,22 +101,20 @@ find .
 ./.git/info
 ./.git/info/exclude
 ./.git/HEAD
+```
 
 然后创建一些对象:
 
 ```
-echo "hello world" > hello.txt
-git add hello.txt
-find .git/objects
-```
-
-输出如下:
-
-> .git/objects/
+$ echo "hello world" > hello.txt
+$ git add hello.txt
+$ find .git/objects
+.git/objects/
 .git/objects/3b
 .git/objects/3b/18e512dba79e4c8300dd08aeb37f8e728b8dad
 .git/objects/pack
 .git/objects/info
+```
 
 ### 对象, 散列和 blob  ###
 

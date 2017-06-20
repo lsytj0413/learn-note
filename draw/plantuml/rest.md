@@ -321,3 +321,9 @@ Row header 2 | A long cell | *
 生成的效果图如下:
 
 ![rest12.png](./rest/rest12.png)
+
+## Creole ##
+
+可以使用 Creole 引擎来定义文本的风格.
+
+### Emphasized text ###
