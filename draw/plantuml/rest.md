@@ -481,3 +481,30 @@ Information
 生成的效果图如下:
 
 ![rest18.png](./rest/rest18.png)
+
+### table ###
+
+将以下内容保存为[rest19](./rest/rest19.pum):
+
+```
+@startuml
+
+skinparam titleFontSize 14
+
+title
+Example of simple table
+
+|= |= table |= header |
+| a | table | row |
+|<#FF8080> red |<#80FF80> green |<#8080FF> blue |
+<#yellow>| b | table | row |
+end title
+
+[*] --> State1
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest19.png](./rest/rest19.png)
