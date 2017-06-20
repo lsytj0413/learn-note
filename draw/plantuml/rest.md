@@ -351,3 +351,31 @@ end note
 生成的效果图如下:
 
 ![rest13.png](./rest/rest13.png)
+
+### List ###
+
+将以下内容保存为[rest14](./rest/rest14.pum):
+
+```
+@startuml
+
+object demo {
+* Bullet list
+* Second item
+** Sub item
+}
+
+legend
+# Numbered list
+# Second item
+## Sub item
+## Another sub item
+# Third item
+end legend
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest14.png](./rest/rest14.png)
