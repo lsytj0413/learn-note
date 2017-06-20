@@ -303,3 +303,21 @@ Refactor | New | Open File | - | Close | Close All }
 生成的效果图如下:
 
 ![rest11.png](./rest/rest11.png)
+
+### 表格 ###
+
+将以下内容保存为[rest12](./rest/rest12.pum):
+
+```
+@startsalt
+{#
+. | Column 2 | Column 3
+Row header 1 | Value 1 | Value 2
+Row header 2 | A long cell | *
+}
+@endsalt
+```
+
+生成的效果图如下:
+
+![rest12.png](./rest/rest12.png)
