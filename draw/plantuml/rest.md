@@ -379,3 +379,57 @@ end legend
 生成的效果图如下:
 
 ![rest14.png](./rest/rest14.png)
+
+### Escape character ###
+
+可以使用 ~ 符号来转义 creole 中的特殊字符.
+
+将以下内容保存为[rest15](./rest/rest15.pum):
+
+```
+@startuml
+
+object demo {
+This is not ~___underscored__.
+This is note ~""monospaced"".
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest15.png](./rest/rest15.png)
+
+### Horizontal lines ###
+
+将以下内容保存为[rest16](./rest/rest16.pum):
+
+```
+@startuml
+
+database DB1 as "
+You can have horizontal lines
+----
+Or double lines
+====
+Or strong lines
+____
+Or dotted lines
+..My title..
+Enjoy!
+"
+
+note right
+This is working also in notes
+You can also add title in all these lines
+==Title==
+--Another title--
+end note
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest16.png](./rest/rest16.png)
