@@ -1,0 +1,14 @@
+@startsalt
+{+
+{* File | Edit | Source | Refactor
+Refactor | New | Open File | - | Close | Close All }
+{/ General | Fullscreen | Behavior | Saving }
+{
+{ Open image in: | ^Smart Mode^ }
+[x] Smooth images when zoomed
+[x] confirm image deletion
+[ ] show hidden images
+}
+[Close]
+}
+@endsalt

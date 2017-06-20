@@ -256,8 +256,50 @@ Superclass: | { "java.lang.Object" | [Browse...] }
 [Close]
 }
 @endsalt
+
+# 或使用以下方式定义竖直的tabs
+@startsalt
+{+
+{/ <b>General
+Fullscreen
+Behavior
+Saving } |
+{
+{ Open image in: | ^Smart Mode^ }
+[x] Smooth images when zoomed
+[x] confirm image deletion
+[ ] show hidden images
+[Close]
+}
+}
+@endsalt
 ```
 
 生成的效果图如下:
 
 ![rest10.png](./rest/rest10.png)
+
+### menu ###
+
+将以下内容保存为[rest11](./rest/rest11.pum):
+
+```
+@startsalt
+{+
+{* File | Edit | Source | Refactor
+Refactor | New | Open File | - | Close | Close All }
+{/ General | Fullscreen | Behavior | Saving }
+{
+{ Open image in: | ^Smart Mode^ }
+[x] Smooth images when zoomed
+[x] confirm image deletion
+[ ] show hidden images
+}
+[Close]
+}
+@endsalt
+```
+
+生成的效果图如下:
+
+![rest11.png](./rest/rest11.png)
