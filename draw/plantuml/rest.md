@@ -433,3 +433,51 @@ end note
 生成的效果图如下:
 
 ![rest16.png](./rest/rest16.png)
+
+### Headings ###
+
+将以下内容保存为[rest17](./rest/rest17.pum):
+
+```
+@startuml
+
+usecase UC1 as "
+= Extra-large heading
+Some text
+== Large heading
+Other text
+=== Medium heading
+Information
+....
+==== Small heading
+"
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest17.png](./rest/rest17.png)
+
+### Legacy HTML ###
+
+将以下内容保存为[rest18](./rest/rest18.pum):
+
+```
+@startuml
+
+:* You can change <color:red>text color</color>
+* You can change <back:cadetblue>background color</back>
+* You can change <size:18>size</size>
+* You use <u>legacy</u> <b>HTML <i>rag</i></b>
+* You use <u:red>color</u> <s:green>in HTML</s> <w:#0000FF>tag</w>
+----
+* Use image : <img:../../img/chrome.png>
+;
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest18.png](./rest/rest18.png)
