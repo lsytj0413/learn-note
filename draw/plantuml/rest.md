@@ -327,3 +327,27 @@ Row header 2 | A long cell | *
 可以使用 Creole 引擎来定义文本的风格.
 
 ### Emphasized text ###
+
+将以下内容保存为[rest13](./rest/rest13.pum):
+
+```
+@startuml
+
+Alice -> Bob : hello --there--
+... Some --long delay-- ...
+Bob -> Alice : ok
+note left
+This is **bold**
+This is //italics//
+This is ""monospaced""
+This is --stroked--
+This is __underlined__
+This is ~~waved~~
+end note
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest13.png](./rest/rest13.png)
