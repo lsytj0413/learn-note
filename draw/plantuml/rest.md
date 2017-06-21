@@ -672,3 +672,38 @@ note left : The printer <$printer> is available
 生成的效果图如下:
 
 ![rest24.png](./rest/rest24.png)
+
+## 修改字体和颜色 ##
+
+### 用法 ###
+
+可以使用 skinparam 命令来修改字体和颜色, 例如以下命令:
+
+```
+skinparam backgroundColor yellow
+```
+
+可以在以下地方使用该命令:
+
+- 在图形的定义中
+- 在一个包含文件中
+- 在一个配置文件中
+
+### 嵌套 ###
+
+对于多个 skinparam 命令, 可以使用如下方式嵌套定义:
+
+```
+skinparam xxxx {
+Param1 value1
+Param2 value2
+Param3 value3
+Param4 value4
+}
+
+相当于:
+skinparam xxxxParam1 value1
+skinparam xxxxParam2 value2
+skinparam xxxxParam3 value3
+skinparam xxxxParam4 value4
+```
