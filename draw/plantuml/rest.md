@@ -620,3 +620,55 @@ Alice -> Bob : Testing <$foo1{scale=3}>
 生成的效果图如下:
 
 ![rest23.png](./rest/rest23.png)
+
+### Encoding Sprite ###
+
+可以使用以下命令来生成 sprite 图形:
+
+```
+java -jar plantuml.jar -encodesprite 16z foo.png
+```
+
+其中 encodesprite 的值可以是 4, 8, 16, 4z, 8z 及 16z 之一, 其中的 z 代表可以压缩.
+
+### 实例 ###
+
+将以下内容保存为[rest24](./rest/rest24.pum):
+
+```
+@startuml
+
+sprite $bug [15x15/16z] PKzR2i0m2BFMi15p__FEjQEqB1z27aeqCqixa8S4OT7C53cKpsHpaYPDJY_12MHM-BLRyywPhrrlw3qumqNThmXgd1TOterAZmOW8sgiJafogofWRwtV3nCF
+sprite $printer [15x15/8z] NOtH3W0W208HxFz_kMAhj7lHWpa1XC716sz0Pq4MVPEWfBHIuxP3L6kbTcizR8tAhzaqFvXwvFfPEqm0
+
+sprite $disk {
+444445566677881
+436000000009991
+43600000000ACA1
+53700000001A7A1
+53700000012B8A1
+53800000123B8A1
+63800001233C9A1
+634999AABBC99B1
+744566778899AB1
+7456AAAAA99AAB1
+8566AFC228AABB1
+8567AC8118BBBB1
+867BD4433BBBBB1
+39AAAAABBBBBBC1
+}
+
+title Use of sprites (<$printer>, <$bug>...)
+class Example {
+Can have some bug : <$bug>
+Click on <$disk> to save
+}
+
+note left : The printer <$printer> is available
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest24.png](./rest/rest24.png)
