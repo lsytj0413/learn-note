@@ -589,3 +589,34 @@ listopeniconic
 所有的图标列表如下:
 
 ![rest22-openiconic.png](./rest/rest22-openiconic.png)
+
+### 定义和使用 sprite ###
+
+一个 sprite 是指一个小的图像元素, 可以有 4, 8, 或者 16 三个灰度等级. 使用 sprite 关键字来定义 sprite.
+
+将以下内容保存为[rest23](./rest/rest23.pum):
+
+```
+@startuml
+
+sprite $foo1 {
+FFFFFFFFFFFFFFF
+F0123456789ABCF
+F0123456789ABCF
+F0123456789ABCF
+F0123456789ABCF
+F0123456789ABCF
+F0123456789ABCF
+F0123456789ABCF
+F0123456789ABCF
+FFFFFFFFFFFFFFF
+}
+
+Alice -> Bob : Testing <$foo1{scale=3}>
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest23.png](./rest/rest23.png)
