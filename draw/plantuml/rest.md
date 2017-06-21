@@ -508,3 +508,33 @@ end title
 生成的效果图如下:
 
 ![rest19.png](./rest/rest19.png)
+
+### Tree ###
+
+将以下内容保存为[rest20](./rest/rest20.pum):
+
+```
+@startuml
+
+skinparam titleFontSize 14
+
+title
+Example of tree
+
+|_ First line
+|_ **Bom(Model)**
+|_ prop1
+|_ prop2
+|_ prop3
+|_ Last line
+
+end title
+
+[*] --> State1
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest20.png](./rest/rest20.png)
