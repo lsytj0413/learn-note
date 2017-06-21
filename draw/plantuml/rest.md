@@ -538,3 +538,54 @@ end title
 生成的效果图如下:
 
 ![rest20.png](./rest/rest20.png)
+
+### Special characters ###
+
+可以使用 &# 或者 <U+XXXX> 符号来定义 unicode 字符.
+
+将以下内容保存为[rest21](./rest/rest21.pum):
+
+```
+@startuml
+
+usecase foo as "this is &#8734; long"
+usecase bar as "this is also <U+221E> long"
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest21.png](./rest/rest21.png)
+
+### OpenIconic ###
+
+将以下内容保存为[rest22](./rest/rest22.pum):
+
+```
+@startuml
+
+title: <size:20><&heart>Use of OpenIconic<&heart></size>
+class Wifi
+note left
+Click on <&wifi>
+end note
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest22.png](./rest/rest22.png)
+
+可以通过以下内容来显示 OpenIconic 支持的所有图标:
+
+```
+@startuml
+listopeniconic
+@enduml
+```
+
+所有的图标列表如下:
+
+![rest22-openiconic.png](./rest/rest22-openiconic.png)
