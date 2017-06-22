@@ -707,3 +707,9 @@ skinparam xxxxParam2 value2
 skinparam xxxxParam3 value3
 skinparam xxxxParam4 value4
 ```
+
+### 颜色 ###
+
+可以使用如下图的颜色值:
+
+![rest-color](./rest/rest-color.png)
