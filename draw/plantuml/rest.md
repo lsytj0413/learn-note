@@ -713,3 +713,20 @@ skinparam xxxxParam4 value4
 可以使用如下图的颜色值:
 
 ![rest-color](./rest/rest-color.png)
+
+### 字体颜色, 名称和字号 ###
+
+可以使用如下的方式来修改字体:
+
+```
+skinparam classFontColor red
+skinparam classFontSize 10
+skinparam classFontName Aapex
+skinparam defaultFontName Aapex
+```
+
+常用的设置如下表:
+
+![rest-font-01](./rest/rest-font-01.png)
+![rest-font-02](./rest/rest-font-02.png)
+![rest-font-03](./rest/rest-font-03.png)
