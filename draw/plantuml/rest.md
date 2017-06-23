@@ -827,3 +827,46 @@ USER -> UID
 生成的效果图如下:
 
 ![rest27.png](./rest/rest27.png)
+
+### 宏 ###
+
+将以下内容保存为[rest28](./rest/rest28.pum):
+
+```
+@startuml
+
+!define send(a,b,c) a->b : c
+send(Alice, Bob, Hello)
+send(Bob, Alice, ok)
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest28.png](./rest/rest28.png)
+
+### 日期时间 ###
+
+将以下内容保存为[rest29](./rest/rest29.pum):
+
+```
+@startuml
+
+!define ANOTHER_DATE %date[yyyy.MM.dd 'at' HH:mm]%
+Title Generated %date% or ANOTHER_DATE
+alice -> bob
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest29.png](./rest/rest29.png)
+
+### 特殊变量 ###
+
+有以下的特殊变量:
+
+- %dirpath%: 当前文件路径
+- %filename%: 当前文件名
