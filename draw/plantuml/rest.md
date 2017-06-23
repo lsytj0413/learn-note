@@ -730,3 +730,41 @@ skinparam defaultFontName Aapex
 ![rest-font-01](./rest/rest-font-01.png)
 ![rest-font-02](./rest/rest-font-02.png)
 ![rest-font-03](./rest/rest-font-03.png)
+
+### 黑白色 ###
+
+将以下内容保存为[rest25](./rest/rest25.pum):
+
+```
+@startuml
+
+skinparam monochrome true
+
+actor User
+participant "First Class" as A
+participant "Second Class" as B
+participant "Last Class" as C
+
+User -> A : DoWork
+activate A
+
+A -> B : Create Request
+activate B
+
+B -> C : DoWork
+activate C
+C --> B : WorkDown
+destroy C
+
+B --> A : Request Created
+deactivate B
+
+A --> User : Done
+deactivate A
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest25.png](./rest/rest25.png)
