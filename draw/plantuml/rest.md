@@ -768,3 +768,35 @@ deactivate A
 生成的效果图如下:
 
 ![rest25.png](./rest/rest25.png)
+
+## Preprocessing ##
+
+### Including files ###
+
+可以使用 !include 来包含其他文件.
+
+假设有一个rest-list.iuml 文件, 内容如下[rest-list.iuml](./rest/rest-list.pum):
+
+```
+interface List
+List : int size()
+List : void clear()
+```
+
+将以下内容保存为[rest26](./rest/rest26.pum):
+
+```
+@startuml
+
+!include rest-list.iuml
+List <|.. ArrayList
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest26.png](./rest/rest26.png)
+
+一个文件在只能包含不同的其他文件, 每个文件可以包含一次. 如果需要多次包含, 可以使用 !include\_many .
+也可以在被包含文件中定义多个 @startuml/@enduml 段, 然后在包含文件中使用 !number 的方式来引入段, 例如 !include foo.txt!1. 同样的, 可以对每个段指定ID, 形式如 @startuml(id=MY\_OWN\_ID), 然后使用 !include foo.txt!MY\_OWN\_ID 的方式引用.

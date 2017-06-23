@@ -1,0 +1,6 @@
+@startuml
+
+!include rest-list.iuml
+List <|.. ArrayList
+
+@enduml
