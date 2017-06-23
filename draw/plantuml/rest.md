@@ -839,6 +839,21 @@ USER -> UID
 send(Alice, Bob, Hello)
 send(Bob, Alice, ok)
 
+!define DOUBLE(x) x x
+!definelong AUTHEN(x, y)
+x -> y : DOUBLE(hello)
+y -> x : ok
+!enddefinelong
+
+AUTHEN(Bob, Alice)
+
+!define some_macro(x, y="some default", z="another defualt") x and y and z
+class foo {
+some_macro(Z1, Z2, Z3)
+some_macro(Z1, Z2)
+some_macro(A)
+}
+
 @enduml
 ```
 
