@@ -800,3 +800,30 @@ List <|.. ArrayList
 
 一个文件在只能包含不同的其他文件, 每个文件可以包含一次. 如果需要多次包含, 可以使用 !include\_many .
 也可以在被包含文件中定义多个 @startuml/@enduml 段, 然后在包含文件中使用 !number 的方式来引入段, 例如 !include foo.txt!1. 同样的, 可以对每个段指定ID, 形式如 @startuml(id=MY\_OWN\_ID), 然后使用 !include foo.txt!MY\_OWN\_ID 的方式引用.
+
+### Including url ###
+
+可以使用 !includeurl 的方式引入url的内容.
+
+### 常量 ###
+
+将以下内容保存为[rest27](./rest/rest27.pum):
+
+```
+@startuml
+
+!define SEQUENCE (S,#AAAAAA) Database Sequence
+!define TABLE (T,#FFAAAA) Database Table
+
+class USER << TABLE >>
+class ACCOUNT << TABLE >>
+class UID << SEQUENCE >>
+USER "1" -- "*" ACCOUNT
+USER -> UID
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest27.png](./rest/rest27.png)
