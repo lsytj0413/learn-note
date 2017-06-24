@@ -978,3 +978,9 @@ deactivate A
 生成的效果图如下:
 
 ![rest32.png](./rest/rest32.png)
+
+## 颜色表 ##
+
+常用的颜色名称如下表:
+
+![rest-color-name.png](./rest/rest-color-name.png)
