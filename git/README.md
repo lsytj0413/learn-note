@@ -9,3 +9,4 @@
 - [第三章: 起步](./chapter03.md)
 - [第四章: 基本的 Git 概念](./chapter04.md)
 - [第五章: 文件管理和索引](./chapter05.md)
+- [第六章: 提交](./chapter06.md)
