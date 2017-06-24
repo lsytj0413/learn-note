@@ -91,3 +91,93 @@ git commit -all -m "commit"
 ### 编辑提交日志 ###
 
 如果你是在编辑器中编写提交日志, 并决定中止操作, 只需要不保存退出即可; 也可以删除已经编辑的日志消息, 重新保存即可. Git 不会处理空提交.
+
+## 使用 git rm ##
+
+git rm 命令用于从版本库和工作目录中同时删除文件, 它可以从索引或者同时从索引和工作目录中删除.
+
+```
+echo "Random stuff" > oops
+git rm oops   # didn't match files
+git add oops
+git status
+# 将文件修改为未暂存的
+git ls-files --stage
+git rm --cached oops
+
+# 从版本库中删除文件
+git commit -m "Add some files"
+git rm data
+git status
+
+# 误删除恢复
+git add data # didn't match files
+# 从版本库中恢复文件
+git checkout HEAD -- data
+git status
+```
+
+## 使用 git mv ##
+
+如果需要移动或重命名文件, 可以使用 git mv 命令完成. Git 会在索引中删除旧文件的路径名, 然后添加新文件的路径名, 而文件的原始内容仍然保存在对象库中, 只需要和新文件名重新关联即可.
+
+```
+git mv data mydata
+git commit -m "Moved data to mydata"
+# 查看文件的历史记录
+git log mydata # 此处Git丢失了原文件的历史记录
+# 查找到文件内容的关联历史记录
+git log --follow mydata
+```
+
+## 追踪重命名注解 ##
+
+Git不追踪重命名, 重命名只会影响对象树, 通过查看对象树的差异可以发现文件的移动.
+
+## .gitignore文件 ##
+
+.gitignore 文件的格式如下:
+
+- 空行被忽略, 以 #符号开始的行被视作注释, 但是如果该符号在其他文本后面则不视为注释
+- 简单的字面值文件名匹配任何目录中的同名文件
+- 目录名由末尾的反斜线标记, 匹配同名的目录和子目录, 不匹配文件或符号链接
+- 包含shell通配符, 一个通配符只能匹配一个文件或目录名, 不能跨目录匹配
+- 起始的感叹号会对该行其余部分的模式进行取反, 被之前模式排除但被取反规则匹配的文件是要包含的, 取反模式会覆盖低优先级的规则
+
+Git 允许版本库的任何目录下有 .gitignore 文件, 每个文件都只影响该目录及其所有子目录. 可以覆盖高层目录中的规则, 只需要在其子目录中包含一个取反模式即可.
+
+Git 使用如下的优先级顺序:
+
+- 命令行指定的模式
+- 从相同目录的 .gitignore 中读取的模式
+- 上层目录的模式
+- 来自 .git/info/exclude 文件的模式
+- 来自配置变量 core.excludedfile 指定的文件中的模式
+
+## Git中对象模型和文件的详细视图 ##
+
+下面以一个叫 file1 的文件从编辑到在索引中暂存, 再到最终提交的整个过程为例, 解释文件管理的变化与细节.
+
+初始状态如下图所示, 工作目录中包含 file1 和 file2 两个文件, master 分支包含一个提交:
+
+![./images/image03.png](图5-1 初始文件和对象)
+
+然后编辑 file1, 此时索引和对象库都没有发生变化:
+
+![./images/image04.png](图5-2 编辑file1之后)
+
+使用 git add file1 暂存变化, 此时对象库中生成了新的 blob 对象, 而且索引中的路径名发生更新, 此时工作目录和索引一致, 但索引中的对象树和master分支中 HEAD 提交的对象树不同:
+
+![./images/image05.png](图5-3 在 git add 之后)
+
+最后使用 git commit 提交内容:
+
+![./images/image06.png](图5-4 在 git commit 之后)
+
+对于 git commit 来说, 提交会启动三个步骤:
+
+1. 将索引转换成一个真实的树对象, 以SHA1命名, 然后放到对象库中
+2. 用日志消息创建一个新的提交对象, 新的提交对象会指向新创建的树对象以及前一个提交或父提交
+3. master 分支的引用从最近一次提交移动到新创建的提交对象, 成为新的 master HEAD
+
+在完成这些步骤之后, 工作目录, 索引和对象库再次一致.
