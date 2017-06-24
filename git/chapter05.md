@@ -160,19 +160,19 @@ Git 使用如下的优先级顺序:
 
 初始状态如下图所示, 工作目录中包含 file1 和 file2 两个文件, master 分支包含一个提交:
 
-![./images/image03.png](图5-1 初始文件和对象)
+![图5-1 初始文件和对象](./images/image03.png)
 
 然后编辑 file1, 此时索引和对象库都没有发生变化:
 
-![./images/image04.png](图5-2 编辑file1之后)
+![图5-2 编辑file1之后](./images/image04.png)
 
 使用 git add file1 暂存变化, 此时对象库中生成了新的 blob 对象, 而且索引中的路径名发生更新, 此时工作目录和索引一致, 但索引中的对象树和master分支中 HEAD 提交的对象树不同:
 
-![./images/image05.png](图5-3 在 git add 之后)
+![图5-3 在 git add 之后](./images/image05.png)
 
 最后使用 git commit 提交内容:
 
-![./images/image06.png](图5-4 在 git commit 之后)
+![图5-4 在 git commit 之后](./images/image06.png)
 
 对于 git commit 来说, 提交会启动三个步骤:
 
