@@ -918,3 +918,31 @@ This is NOT shown
 生成的效果图如下:
 
 ![rest30.png](./rest/rest30.png)
+
+### Advanced features ###
+
+将以下内容保存为[rest31](./rest/rest31.pum):
+
+```
+@startuml
+
+!definelong COMP_TEXTGENCOMP(name)
+[name] << Comp >>
+interface Ifc << IfcType >> AS name##Ifc
+name##Ifc - [name]
+!enddefinelong
+
+COMP_TEXTGENCOMP(dummy)
+
+!define module(x) component x <<module>>
+!define module(x,y) component x as y <<module>>
+
+module(foo)
+module(bar, barcode)
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest31.png](./rest/rest31.png)
