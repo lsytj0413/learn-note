@@ -1,0 +1,22 @@
+@startuml
+
+!define SHOW_METHODS
+
+class ArrayList
+!ifdef SHOW_METHODS
+ArrayList : int size()
+ArrayList : void clear()
+!endif
+
+!define SHOW_FIELDS
+!undef SHOW_METHODS
+class foo {
+!ifdef SHOW_FIELDS || SHOW_METHODS
+This is shown
+!endif
+!ifdef SHOW_METHODS && SHOW_FIELDS
+This is NOT shown
+!endif
+}
+
+@enduml

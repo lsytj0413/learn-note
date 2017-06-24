@@ -885,3 +885,36 @@ alice -> bob
 
 - %dirpath%: 当前文件路径
 - %filename%: 当前文件名
+
+### Conditions ###
+
+将以下内容保存为[rest30](./rest/rest30.pum):
+
+```
+@startuml
+
+!define SHOW_METHODS
+
+class ArrayList
+!ifdef SHOW_METHODS
+ArrayList : int size()
+ArrayList : void clear()
+!endif
+
+!define SHOW_FIELDS
+!undef SHOW_METHODS
+class foo {
+!ifdef SHOW_FIELDS || SHOW_METHODS
+This is shown
+!endif
+!ifdef SHOW_METHODS && SHOW_FIELDS
+This is NOT shown
+!endif
+}
+
+@enduml
+```
+
+生成的效果图如下:
+
+![rest30.png](./rest/rest30.png)
