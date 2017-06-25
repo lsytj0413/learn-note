@@ -4,4 +4,5 @@
 
 # 内容 #
 
-- [<The Linux Command Line读书笔记>](https://github.com/lsytj0413/practice/tree/master/linux/TheLinuxCommandLine)
+- [<The Linux Command Line读书笔记>](./TheLinuxCommandLine)
+- [<LinuxShell脚本攻略 读书笔记>](./LinuxShellScriptingCookbook)
