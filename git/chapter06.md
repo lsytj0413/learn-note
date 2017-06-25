@@ -66,6 +66,8 @@ git rev-parse 命令用于把任何形式的提交名(标签, 相对名, 简写�
 
 ## 提交历史记录 ##
 
+### 查看旧提交 ###
+
 显示提交历史记录的主要命令是 git log. 在参数形式上, git log 等价于 git log HEAD, 输出每一个从HEAD找到的历史记录的提交日志消息.
 
 可以在命令中显示历史记录的范围, 例如使用 since..until 这样的形式来指定提交范围.
@@ -90,17 +92,110 @@ git show HEAD~2
 git show origin/master:Makefile
 ```
 
-### 查看旧提交 ###
-
 ### 提交图 ###
 
+Git 使用有向无环图(DAG) 来实现版本库的提交历史记录. 通常约定, 在提交图中每个提交都引入一个树对象来表示整个版本库, 因此一个提交可以只画作一个名字.
+
+![图6-5 标记的提交图](./images/image06-07.png)
+
+#### 使用 gitk 来查看提交图 ####
+
+使用如下命令画出 DAG:
+
+```
+gitk
+```
+
+![图6-7 gitk的合并视图](./images/image06-08.png)
+
 ### 提交范围 ###
+
+双句点形式用来表示一个范围, 形式为 start..end , 通常提交范围用来检查某个分支或分支的一部分. 范围的定义是从 start开始可达的和从 end开始不可达的一组提交, 即end包含在范围内, start被排除在外.
+
+提交范围也可以使用分支名称, 例如下图中的master分支提交V 合并到 topic分支上的提交B:
+
+![图6-7 master合并到 topic](./images/image06-09.png)
+
+范围 topic..master 表示在 master分支而不在 topic 分支的提交, 在上图中表示 W, X ,Y 和 Z.
+
+如果在范围中省略 start 或 end, 那么默认使用 HEAD替代.
+
+三个句点形式表示 A 和 B 之间的对称差, 即 A 或 B 可达但又不是 A 和 B 同时可达的提交集合, A...B 等价于 B...A. 要得到 A...B, 可以执行以下命令:
+
+```
+git rev-list A B --not $(git merge-base --all A B)
+```
+
+下图为一个对称差示例:
+
+![图6-14 对称差](./images/image06-10.png)
+
+对称差的结果为 (I, H, Z, Y, X, G, F, E, D).
+
+也可以使用以下命令, 选择在 master分支但不再 dev, topic 或 bugfix 分支上的提交:
+
+```
+git log ^dev ^topic ^bugfix master
+```
 
 ## 查找提交 ##
 
 ### 使用 git bisect ###
 
+git bisect 一般基于任意搜索条件查找特定的错误提交, 例如某个时刻版本库不能正常工作, 而在之前的某个时间点是可以正常工作的, 这之间包含有多个提交, 此时可以用 git bisect 快速查找具体是哪个提交导致的错误.
+
+git bisect 在好提交和坏提交之间选择一个新提交, 并确定它是好是坏, 并据此缩小范围. 只需在初始时提供一个好提交和一个坏提交, 然后重复回答当前提交是否可以正常工作. 整个查找会在一个分离的HEAD上工作, 即一个匿名分支上.
+
+以下以 Linux 内核为例, 介绍 git bisect 命令的使用:
+
+```
+cd linux-2.6
+# 启动二分搜索
+git bisect start
+# 将 HEAD 作为坏提交
+git bisect bad
+# 将 v2.6.27 作为好提交
+git bisect good v2.6.27
+
+# 之后 Git 会检出中间版本, 并由你决定该版本的好坏
+# 假设为好
+git bisect good
+git bisect good
+
+# 假设接下来为坏
+git bisect bad
+
+# 重复
+git bisect good
+git bisect bad
+
+# 查看回答及提交ID
+git bisect log
+# 可以使用 git bisect replay 命令使用日志文件为输入, 以便重新开始
+
+# 可视化检查提交范围的内容
+git bisect visualize --pretty=oneline
+
+# 当完成查找时
+git branch
+# 回到原来的分支
+git bisect reset
+```
+
 ### 使用 git blame ###
+
+可以使用 git blame 命令来识别一个文件中的每一行最后是谁修改以及哪次提交做出了变更.
+
+```
+git blame -L 35, init/version.c
+```
 
 ### 使用 Pickaxe ###
 
+带有-S 选项的 git log 命令称为 Pickaxe, git log -Sstring 根据给定的 string 沿着文件的差异历史搜索, 找到执行变更的提交:
+
+```
+git log -Sinclude --pretty=oneline --abbrev-commit init/version.c
+```
+
+显示对文件添加或删除了 include 的行, 但是该提交必须有添加和删除的数量上的变化才能计数.
