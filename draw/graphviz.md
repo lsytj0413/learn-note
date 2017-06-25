@@ -2,7 +2,7 @@
 
 [官网](http://www.graphviz.org/)
 
-[User Guide](https://github.com/lsytj0413/learn-note/blob/master/draw/dotguide.pdf)
+[User Guide](./dotguide.pdf)
 
 ## 简介 ##
 
@@ -94,7 +94,7 @@ graphviz包含3种元素, 即图, 顶点和边. 每个元素都可以具有各�
 ### 第一个graphviz图 ###
 
 绘制一个简单的有向图, 包含a, b, c, d四个节点. 其中a指向b, b和c指向d.
-将以下内容保存为 [graph01.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph01.dot):
+将以下内容保存为 [graph01.dot](./graphviz/graph01.dot):
 
 ```
 digraph graph01 {
@@ -111,13 +111,13 @@ digraph graph01 {
 
 使用dot布局方式, 绘制出来的效果如下图:
 
-![graph01](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph01.png)
+![graph01](./graphviz/graph01.png)
 
 默认的顶点中的文字为定义顶点变量的名称, 形状为椭圆. 边的默认样式为黑色实线箭头.
 
 ### 定义顶点和边的样式 ###
 
-在digraph的花括号内, 添加顶点和边的新定义, 保存为 [graph02.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph02.dot):
+在digraph的花括号内, 添加顶点和边的新定义, 保存为 [graph02.dot](./graphviz/graph02.dot):
 
 ```
   node [shape="record"];
@@ -126,11 +126,11 @@ digraph graph01 {
 
 绘制的效果如下图:
 
-![graph02](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph02.png)
+![graph02](./graphviz/graph02.png)
 
 ### 修改顶点和边样式 ###
 
-进一步, 我们将顶点a的颜色修改为淡绿色, 并将c到d的边修改为红色, 将以下内容保存为 [graph03](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph03.dot):
+进一步, 我们将顶点a的颜色修改为淡绿色, 并将c到d的边修改为红色, 将以下内容保存为 [graph03](./graphviz/graph03.dot):
 
 ```
 digraph graph03{
@@ -150,13 +150,13 @@ digraph graph03{
 
 绘制的效果如下图:
 
-![graph03](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph03.png)
+![graph03](./graphviz/graph03.png)
 
 ### 以图片为节点 ###
 
 节点也可以使用图片, 不过需要注意的是, 在使用图片作为节点的时候需要将本来的形状设置为none, 并且将label置为空字符串, 以避免文字对图片的干扰.
 
-将以下内容保存为 [graph04.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph04.dot):
+将以下内容保存为 [graph04.dot](./graphviz/graph04.dot):
 
 ```
 digraph graph04{
@@ -177,11 +177,11 @@ digraph graph04{
 
 效果图如下:
 
-![graph04](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph04.png)
+![graph04](./graphviz/graph04.png)
 
 ### 子图的绘制 ###
 
-graphviz支持子图, 即图中的部分节点和边相对对立. 将以下内容保存为 [graph05.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph05.dot):
+graphviz支持子图, 即图中的部分节点和边相对对立. 将以下内容保存为 [graph05.dot](./graphviz/graph05.dot):
 
 ```
 digraph graph05{
@@ -206,7 +206,7 @@ digraph graph05{
 
 效果图如下:
 
-![graph05](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph05.png)
+![graph05](./graphviz/graph05.png)
 
 需要注意的是, 子图的名称必须以 cluster开头, 否则graphviz无法识别.
 
@@ -239,7 +239,7 @@ struct st_table {
 };
 ```
 
-可以通过graphviz绘制结构之间的引用关系, 将以下内容保存为 [graph06.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph06.dot):
+可以通过graphviz绘制结构之间的引用关系, 将以下内容保存为 [graph06.dot](./graphviz/graph06.dot):
 
 ```
 digraph graph06 {
@@ -262,12 +262,12 @@ digraph graph06 {
 
 效果图如下:
 
-![graph06](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph06.png)
+![graph06](./graphviz/graph06.png)
 
 在顶点的形状为record的时候, lable属性的语法比较奇怪, 但是使用起来非常灵活. 比如用竖线隔开的串会在绘制出来的节点中展现为一条分隔符, 用尖括号括起来的串称为锚点, 当一个节点具有多个锚点的时候这个特性会非常有用.
 例如节点 st\_table 的type属性指向 st\_hash\_type, 第4个属性指向 st\_table\_entry等, 都是通过锚点来实现的.
 
-也可以使用 circo算法来重新布局, 在 [graph07.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph07.dot) 中添加以下内容:
+也可以使用 circo算法来重新布局, 在 [graph07.dot](./graphviz/graph07.dot) 中添加以下内容:
 
 ```
   layout = "circo";
@@ -275,11 +275,11 @@ digraph graph06 {
 
 效果图如下:
 
-![graph07](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph07.png)
+![graph07](./graphviz/graph07.png)
 
 ### 另一个hash表 ###
 
-将以下内容保存为 [graph08.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph08.dot):
+将以下内容保存为 [graph08.dot](./graphviz/graph08.dot):
 
 ```
 digraph graph08 {
@@ -328,14 +328,14 @@ digraph graph08 {
 
 效果图如下:
 
-![graph08](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph08.png)
+![graph08](./graphviz/graph08.png)
 
 从上例中可以看到, 节点的label属性支持类似于HTML语言中的TABLE形式的定义, 通过行列的数目来定义节点的形状, 从而使节点的组成更加灵活.
 
 ### 软件模块组成图 ###
 
 可以使用graphviz绘制软件的模块图, 这些模块之间可以有复杂的关系, 并且部分关系密切的模块应归为一个子系统中.
-将以下内容保存为 [graph09.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph09.dot):
+将以下内容保存为 [graph09.dot](./graphviz/graph09.dot):
 
 ```
 digraph graph09{
@@ -378,14 +378,14 @@ digraph graph09{
 
 效果图如下:
 
-![graph09](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph09.png)
+![graph09](./graphviz/graph09.png)
 
 在上例中我们在有些地方使用HTML形式的label语法, 因为使用字符串形式的语法不能正确显示中文, 具体原因待查.
 
 ### 状态机 ###
 
 作一个简易有限自动机图, 接受a以及以a结尾的任意长度的字符串.
-将以下内容保存为 [graph10.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph10.dot):
+将以下内容保存为 [graph10.dot](./graphviz/graph10.dot):
 
 ```
 digraph graph10{
@@ -412,14 +412,14 @@ digraph graph10{
 
 效果图如下:
 
-![graph10](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph10.png)
+![graph10](./graphviz/graph10.png)
 
 形状值为plaintext的表示不绘制边框, 用于展示纯文本内容, 在绘制指示性的文本时很有用.
 
 ### 模块生命周期图 ###
 
 作一个简易生命周期图, 包括安装, 卸载, 正在启动等状态.
-将以下内容保存为 [graph11.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph11.dot):
+将以下内容保存为 [graph11.dot](./graphviz/graph11.dot):
 
 ```
 digraph graph11{
@@ -453,13 +453,13 @@ digraph graph11{
 
 效果图如下:
 
-![graph11](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph11.png)
+![graph11](./graphviz/graph11.png)
 
 ## 其他实例 ##
 
 ### 抽象语法树 ###
 
-使用graphviz绘图的表达式 (3+4)*5 的抽象语法树, 将以下内容保存为 [graph12.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph12.dot):
+使用graphviz绘图的表达式 (3+4)*5 的抽象语法树, 将以下内容保存为 [graph12.dot](./graphviz/graph12.dot):
 
 ```
 digraph graph12{
@@ -482,11 +482,11 @@ digraph graph12{
 
 效果图如下:
 
-![graph12](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph12.png)
+![graph12](./graphviz/graph12.png)
 
 ### UML类图 ###
 
-使用graphviz绘图的简单的UML类图, 将以下内容保存为 [graph13.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph13.dot):
+使用graphviz绘图的简单的UML类图, 将以下内容保存为 [graph13.dot](./graphviz/graph13.dot):
 
 ```
 digraph graph13{
@@ -513,12 +513,12 @@ digraph graph13{
 
 效果图如下:
 
-![graph13](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph13.png)
+![graph13](./graphviz/graph13.png)
 
 ### 状态图 ###
 
 
-将以下内容保存为 [graph14.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph14.dot):
+将以下内容保存为 [graph14.dot](./graphviz/graph14.dot):
 
 ```
 digraph graph14 {
@@ -550,11 +550,11 @@ digraph graph14 {
 
 效果图如下:
 
-![graph14](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph14.png)
+![graph14](./graphviz/graph14.png)
 
 ### 时序图 ###
 
-使用graphviz绘图的简单的时序图, 将以下内容保存为 [graph15.dot](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph15.dot):
+使用graphviz绘图的简单的时序图, 将以下内容保存为 [graph15.dot](./graphviz/graph15.dot):
 
 ```
 digraph graph15 {
@@ -594,7 +594,7 @@ digraph graph15 {
 
 效果图如下:
 
-![graph15](https://github.com/lsytj0413/learn-note/blob/master/draw/graphviz/graph15.png)
+![graph15](./graphviz/graph15.png)
 
 可以看到, 在代码中有用 {} 括起来的部分, 每一个 rank=same 的block中的所有节点都会在同一条线上.
 

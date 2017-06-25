@@ -6,7 +6,7 @@
 
 使用 * 符号来表示活动图的起始点和结束点, 可以使用 (*top) 符号来让起始点出现在图的顶点. 使用 --> 符号来表示箭头.
 
-将以下内容保存为 [activity01](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity01.pum):
+将以下内容保存为 [activity01](./activity/activity01.pum):
 
 ```
 @startuml
@@ -19,13 +19,13 @@
 
 生成的效果图如下:
 
-![activity01.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity01.png)
+![activity01.png](./activity/activity01.png)
 
 ### 文本标签 ###
 
 默认的, 一个箭头是从最后一个使用的 activity 开始的, 而且可以在箭头上使用文本标签.
 
-将以下内容保存为 [activity02](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity02.pum):
+将以下内容保存为 [activity02](./activity/activity02.pum):
 
 ```
 @startuml
@@ -39,13 +39,13 @@
 
 生成的效果图如下:
 
-![activity02.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity02.png)
+![activity02.png](./activity/activity02.png)
 
 ### 改变箭头方向 ###
 
 可以使用 -> 来表示竖向箭头, 也可以使用以下示例中的方法修改箭头的方向.
 
-将以下内容保存为 [activity03](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity03.pum):
+将以下内容保存为 [activity03](./activity/activity03.pum):
 
 ```
 @startuml
@@ -60,13 +60,13 @@
 
 生成的效果图如下:
 
-![activity03.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity03.png)
+![activity03.png](./activity/activity03.png)
 
 ### 分支 ###
 
 可以使用 if, then, else 等关键字来定义分支.
 
-将以下内容保存为[activity04](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity04.pum):
+将以下内容保存为[activity04](./activity/activity04.pum):
 
 ```
 @startuml
@@ -87,11 +87,11 @@ endif
 
 生成的效果图如下:
 
-![activity04.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity04.png)
+![activity04.png](./activity/activity04.png)
 
 默认的, 一个分支的开始是从最后一个活动的 activity 开始的, 但是也可以使它从一个另外的 activity 开始. 而且分支也可以嵌套.
 
-将以下内容保存为[activity05](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity05.pum):
+将以下内容保存为[activity05](./activity/activity05.pum):
 
 ```
 @startuml
@@ -128,13 +128,13 @@ endif
 
 生成的效果图如下:
 
-![activity05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity05.png)
+![activity05.png](./activity/activity05.png)
 
 ### 同步 ###
 
 可以使用 === 字符来定义同步方法.
 
-将以下内容保存为[activity06](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity06.pum):
+将以下内容保存为[activity06](./activity/activity06.pum):
 
 ```
 @startuml
@@ -153,13 +153,13 @@ endif
 
 生成的效果图如下:
 
-![activity06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity06.png)
+![activity06.png](./activity/activity06.png)
 
 ### 长描述 ###
 
 在定义一个 activity 节点的时候可以添加多行的描述, 也可以通过 as 关键字给节点一个短的名称, 以便之后引用.
 
-将以下内容保存为[activity07](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity07.pum):
+将以下内容保存为[activity07](./activity/activity07.pum):
 
 ```
 @startuml
@@ -178,13 +178,13 @@ A1 --> "Short activity <img:../../img/chrome.png>"
 
 生成的效果图如下:
 
-![activity07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity07.png)
+![activity07.png](./activity/activity07.png)
 
 ### 注解 ###
 
 可以使用 note left, note right, note top 或者 note bottom 等关键字来定义 activity 节点的注解, 如果需要对开始节点定义注解, 可以在图形定义的开头使用注解. 也可以使用 endnote 关键字来定义多行注解.
 
-将以下内容保存为[activity08](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity08.pum):
+将以下内容保存为[activity08](./activity/activity08.pum):
 
 ```
 @startuml
@@ -203,13 +203,13 @@ end note
 
 生成的效果图如下:
 
-![activity08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity08.png)
+![activity08.png](./activity/activity08.png)
 
 ### 分区 ###
 
 可以使用 partition 关键字来定义不同的分区, 每个分区都可以定义使用 html 颜色值或名称来定义背景色. 默认的, 一个 activity 节点是被自动的放在最后一个使用的分区中.
 
-将以下内容保存为[activity09](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity09.pum):
+将以下内容保存为[activity09](./activity/activity09.pum):
 
 ```
 @startuml
@@ -240,7 +240,7 @@ WavesArmes --> Introduction
 
 生成的效果图如下:
 
-![activity09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity09.png)
+![activity09.png](./activity/activity09.png)
 
 ### Skinparam ###
 
@@ -250,7 +250,7 @@ WavesArmes --> Introduction
 - 在一个包含文件中
 - 在一个配置文件中
 
-将以下内容保存为[activity10](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity10.pum):
+将以下内容保存为[activity10](./activity/activity10.pum):
 
 ```
 @startuml
@@ -278,13 +278,13 @@ FontName Impact
 
 生成的效果图如下:
 
-![activity10.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity10.png)
+![activity10.png](./activity/activity10.png)
 
 ### 八边形 ###
 
 可以使用 skinparam activityShape octagon 命令来修改 activity 节点的形状.
 
-将以下内容保存为[activity11](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity11.pum):
+将以下内容保存为[activity11](./activity/activity11.pum):
 
 ```
 @startuml
@@ -300,11 +300,11 @@ skinparam activityShape octagon
 
 生成的效果图如下:
 
-![activity11.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity11.png)
+![activity11.png](./activity/activity11.png)
 
 ### 完整实例 ###
 
-将以下内容保存为[activity12](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity12.pum):
+将以下内容保存为[activity12](./activity/activity12.pum):
 
 ```
 @startuml
@@ -365,7 +365,7 @@ endif
 
 生成的效果图如下:
 
-![activity12.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity12.png)
+![activity12.png](./activity/activity12.png)
 
 ## Beta版 ##
 
@@ -375,7 +375,7 @@ endif
 
 在 beta语法中, activity 节点的文本是以 :符号开始, ;符号结束.
 
-将以下内容保存为[activity13](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity13.pum):
+将以下内容保存为[activity13](./activity/activity13.pum):
 
 ```
 @startuml
@@ -389,13 +389,13 @@ several **lines**;
 
 生成的效果图如下:
 
-![activity13.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity13.png)
+![activity13.png](./activity/activity13.png)
 
 ### 开始节点和结束节点 ###
 
 可以使用 start 关键字定义开始节点, 使用 stop 或 end 关键字来定义结束节点.
 
-将以下内容保存为[activity14](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity14.pum):
+将以下内容保存为[activity14](./activity/activity14.pum):
 
 ```
 @startuml
@@ -414,13 +414,13 @@ stop
 
 生成的效果图如下:
 
-![activity14.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity14.png)
+![activity14.png](./activity/activity14.png)
 
 ### 条件 ###
 
 可以使用 if, elseif, then, else, endif 等关键字来定义条件分支.
 
-将以下内容保存为[activity15](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity15.pum):
+将以下内容保存为[activity15](./activity/activity15.pum):
 
 ```
 @startuml
@@ -454,13 +454,13 @@ stop
 
 生成的效果图如下:
 
-![activity15.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity15.png)
+![activity15.png](./activity/activity15.png)
 
 ### Repeat ###
 
 使用 repeat 和 repeatwhile 关键字来定义 repeat 循环.
 
-将以下内容保存为[activity16](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity16.pum):
+将以下内容保存为[activity16](./activity/activity16.pum):
 
 ```
 @startuml
@@ -479,13 +479,13 @@ stop
 
 生成的效果图如下:
 
-![activity16.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity16.png)
+![activity16.png](./activity/activity16.png)
 
 ### while ###
 
 使用 while 和 end while 关键字定义 while 循环.
 
-将以下内容保存为[activity17](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity17.pum):
+将以下内容保存为[activity17](./activity/activity17.pum):
 
 ```
 @startuml
@@ -504,13 +504,13 @@ stop
 
 生成的效果图如下:
 
-![activity17.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity17.png)
+![activity17.png](./activity/activity17.png)
 
 ### parallel ###
 
 使用 fork, fork again 和 end fork 关键字来定义 parallel processing.
 
-将以下内容保存为[activity18](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity18.pum):
+将以下内容保存为[activity18](./activity/activity18.pum):
 
 ```
 @startuml
@@ -535,13 +535,13 @@ stop
 
 生成的效果图如下:
 
-![activity18.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity18.png)
+![activity18.png](./activity/activity18.png)
 
 ### 注解 ###
 
 可以使用 floating 关键字来定义浮动的注解.
 
-将以下内容保存为[activity19](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity19.pum):
+将以下内容保存为[activity19](./activity/activity19.pum):
 
 ```
 @startuml
@@ -567,11 +567,11 @@ stop
 
 生成的效果图如下:
 
-![activity19.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity19.png)
+![activity19.png](./activity/activity19.png)
 
 ### 颜色 ###
 
-将以下内容保存为[activity20](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity20.pum):
+将以下内容保存为[activity20](./activity/activity20.pum):
 
 ```
 @startuml
@@ -588,11 +588,11 @@ These files should edited at this point!;
 
 生成的效果图如下:
 
-![activity20.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity20.png)
+![activity20.png](./activity/activity20.png)
 
 ### 箭头 ###
 
-将以下内容保存为[activity21](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity21.pum):
+将以下内容保存为[activity21](./activity/activity21.pum):
 
 ```
 @startuml
@@ -618,11 +618,11 @@ endif
 
 生成的效果图如下:
 
-![activity21.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity21.png)
+![activity21.png](./activity/activity21.png)
 
 ### 分组 ###
 
-将以下内容保存为[activity22](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity22.pum):
+将以下内容保存为[activity22](./activity/activity22.pum):
 
 ```
 @startuml
@@ -646,11 +646,11 @@ stop
 
 生成的效果图如下:
 
-![activity22.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity22.png)
+![activity22.png](./activity/activity22.png)
 
 ### swimlanes ###
 
-将以下内容保存为[activity23](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity23.pum):
+将以下内容保存为[activity23](./activity/activity23.pum):
 
 ```
 @startuml
@@ -672,13 +672,13 @@ stop
 
 生成的效果图如下:
 
-![activity23.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity23.png)
+![activity23.png](./activity/activity23.png)
 
 ### Detach ###
 
 可以使用 detach 关键字来移除箭头.
 
-将以下内容保存为[activity24](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity24.pum):
+将以下内容保存为[activity24](./activity/activity24.pum):
 
 ```
 @startuml
@@ -708,13 +708,13 @@ stop
 
 生成的效果图如下:
 
-![activity24.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity24.png)
+![activity24.png](./activity/activity24.png)
 
 ### SDL ###
 
 可以使用以下字符来修改 activity 节点的形状: |, <, >, /, ], } .
 
-将以下内容保存为[activity25](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity25.pum):
+将以下内容保存为[activity25](./activity/activity25.pum):
 
 ```
 @startuml
@@ -749,11 +749,11 @@ end split
 
 生成的效果图如下:
 
-![activity25.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity25.png)
+![activity25.png](./activity/activity25.png)
 
 ### 完整实例 ###
 
-将以下内容保存为[activity26](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity26.pum):
+将以下内容保存为[activity26](./activity/activity26.pum):
 
 ```
 @startuml
@@ -796,4 +796,4 @@ stop
 
 生成的效果图如下:
 
-![activity26.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity/activity26.png)
+![activity26.png](./activity/activity26.png)

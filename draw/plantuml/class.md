@@ -4,7 +4,7 @@
 
 可以使用 <|--, *--, o-- 这三个符号来定义类之间的关系, 其中的 -- 可以替换为 .. 来实现虚线.
 
-将以下内容保存为 [usecase01](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class01.pum):
+将以下内容保存为 [usecase01](./class/class01.pum):
 
 ```
 @startuml
@@ -20,7 +20,7 @@ Class09 -- Class10
 
 生成的效果图如下:
 
-![class01.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class01.png)
+![class01.png](./class/class01.png)
 
 ```
 
@@ -28,7 +28,7 @@ newpage
 
 ```
 
-将以下内容保存为 [usecase02](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class02.pum):
+将以下内容保存为 [usecase02](./class/class02.pum):
 
 ```
 @startuml
@@ -46,13 +46,13 @@ Class29 ^-- Class30
 
 生成的效果图如下:
 
-![class02.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class02.png)
+![class02.png](./class/class02.png)
 
 ## 标签 ##
 
 可以在类关系的箭头上使用标签文本, 并且对箭头两方的类定义文本. 也可以在标签的文本中使用 < 或 > 符号定义一个箭头.
 
-将以下内容保存为 [usecase03](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class03.pum):
+将以下内容保存为 [usecase03](./class/class03.pum):
 
 ```
 @startuml
@@ -72,13 +72,13 @@ Car -- Person : < owns
 
 生成的效果图如下:
 
-![class03.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class03.png)
+![class03.png](./class/class03.png)
 
 ## 方法 ##
 
 可以在 : 符号之后定义方法, 如果有多个方法可以在类名称之后使用大括号包含的多行文本, 其中每一行文本包含一个方法.
 
-将以下内容保存为 [usecase04](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class04.pum):
+将以下内容保存为 [usecase04](./class/class04.pum):
 
 ```
 @startuml
@@ -104,13 +104,13 @@ departureTime : Date
 
 生成的效果图如下:
 
-![class04.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class04.png)
+![class04.png](./class/class04.png)
 
 ## 访问限定 ##
 
 可以使用 -(private), #(protected), ~(package private), +(public) 来定义类中属性的访问限定类型.
 
-将以下内容保存为 [usecase05](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class05.pum):
+将以下内容保存为 [usecase05](./class/class05.pum):
 
 ```
 @startuml
@@ -130,13 +130,13 @@ class Dummy {
 
 生成的效果图如下:
 
-![class05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class05.png)
+![class05.png](./class/class05.png)
 
 ## 抽象和静态 ##
 
 可以定义静态方法和抽象方法, 可以添加在行末和行尾.
 
-将以下内容保存为 [usecase06](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class06.pum):
+将以下内容保存为 [usecase06](./class/class06.pum):
 
 ```
 @startuml
@@ -152,13 +152,13 @@ class Dummy {
 
 生成的效果图如下:
 
-![class06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class06.png)
+![class06.png](./class/class06.png)
 
 ## 类体 ##
 
 默认的, 类的方法和属性是会被 plantuml 分组, 但是你也可以使用 --, .., ==, __ 等符号进行手动分组.
 
-将以下内容保存为 [usecase07](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class07.pum):
+将以下内容保存为 [usecase07](./class/class07.pum):
 
 ```
 @startuml
@@ -194,13 +194,13 @@ String password
 
 生成的效果图如下:
 
-![class07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class07.png)
+![class07.png](./class/class07.png)
 
 ## 模板信息 ##
 
 可以在 class 关键字中定义一些模板信息, 通过 << 和 >> 符号. 可以通过 note left of, note right of, note top of, note bottom of, note left, note right, note top, note bottom 以及单独的 note 关键字来定义一些注解文本, 并通过 .. 符号关联到元素.
 
-将以下内容保存为 [usecase08](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class08.pum):
+将以下内容保存为 [usecase08](./class/class08.pum):
 
 ```
 @startuml
@@ -223,7 +223,7 @@ note left: On last defined class
 
 生成的效果图如下:
 
-![class08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class08.png)
+![class08.png](./class/class08.png)
 
 ## 注解 ##
 
@@ -232,7 +232,7 @@ note left: On last defined class
 
 也可以在链接上使用注解, 使用 note left on link, note right on link, note top on link, note bottom on link 的关键字即可.
 
-将以下内容保存为 [usecase09](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class09.pum):
+将以下内容保存为 [usecase09](./class/class09.pum):
 
 ```
 @startuml
@@ -268,13 +268,13 @@ end note
 
 生成的效果图如下:
 
-![class09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class09.png)
+![class09.png](./class/class09.png)
 
 ## 抽象类和接口 ##
 
 可以使用 abstract, abstract class 等关键字来定义抽象类, 同样的也可以使用 interface, annotation 和 enum 等关键字来定义对应的类型.
 
-将以下内容保存为 [usecase10](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class10.pum):
+将以下内容保存为 [usecase10](./class/class10.pum):
 
 ```
 @startuml
@@ -309,7 +309,7 @@ annotation SuppressWarnings
 
 生成的效果图如下:
 
-![class10.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class10.png)
+![class10.png](./class/class10.png)
 
 
 ## non-letters ##
@@ -319,7 +319,7 @@ annotation SuppressWarnings
 - 使用关键字
 - 使用双引号包含文本
 
-将以下内容保存为 [usecase11](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class11.pum):
+将以下内容保存为 [usecase11](./class/class11.pum):
 
 ```
 @startuml
@@ -334,7 +334,7 @@ class2 *-- "foo/dummy" : use
 
 生成的效果图如下:
 
-![class11.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class11.png)
+![class11.png](./class/class11.png)
 
 ## 隐藏方法或属性 ##
 
@@ -358,7 +358,7 @@ class2 *-- "foo/dummy" : use
 
 可以使用多个 hide 或 show 命令.
 
-将以下内容保存为 [usecase12](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class12.pum):
+将以下内容保存为 [usecase12](./class/class12.pum):
 
 ```
 @startuml
@@ -385,13 +385,13 @@ show <<Serializable>> fields
 
 生成的效果图如下:
 
-![class12.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class12.png)
+![class12.png](./class/class12.png)
 
 ## 泛型和特殊符号 ##
 
 可以使用 < 和 > 字符来定义类中的泛型. 字符 C, I, E, A 是作为 class, interface, enum 和 abstract 等对象类型的标识, 用户也可以定义自己的标识字符, 通过在模板前增加一个小括号包含的字符和颜色.
 
-将以下内容保存为 [usecase13](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class13.pum):
+将以下内容保存为 [usecase13](./class/class13.pum):
 
 ```
 @startuml
@@ -410,13 +410,13 @@ class Date << (D,orchid) >>
 
 生成的效果图如下:
 
-![class13.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class13.png)
+![class13.png](./class/class13.png)
 
 ## 包 ##
 
 可以通过 package 关键字来定义一个包, 此时可以选择定义包的背景色(通过 HTML 颜色名称或颜色值). 包是可以嵌套的, 也可以定义包之间的联系.
 
-将以下内容保存为 [usecase14](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class14.pum):
+将以下内容保存为 [usecase14](./class/class14.pum):
 
 ```
 @startuml
@@ -445,13 +445,13 @@ foo1.foo2 +-- foo1.foo2.foo3
 
 生成的效果图如下:
 
-![class14.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class14.png)
+![class14.png](./class/class14.png)
 
 ## 包的风格 ##
 
 可以对不同的包定义不同的显示风格.
 
-将以下内容保存为 [usecase15](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class15.pum):
+将以下内容保存为 [usecase15](./class/class15.pum):
 
 ```
 @startuml
@@ -487,13 +487,13 @@ class Class6
 
 生成的效果图如下:
 
-![class15.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class15.png)
+![class15.png](./class/class15.png)
 
 ## 名字空间 ##
 
 可以使用 namespace 关键字来定义名字空间.
 
-将以下内容保存为 [usecase16](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class16.pum):
+将以下内容保存为 [usecase16](./class/class16.pum):
 
 ```
 @startuml
@@ -517,13 +517,13 @@ BaseClass <|-- net.unused.Person
 
 生成的效果图如下:
 
-![class16.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class16.png)
+![class16.png](./class/class16.png)
 
 ## 自动名字空间 ##
 
 可以使用 set namespaceSeparator 命令来定义自动名字空间的分隔符.
 
-将以下内容保存为 [usecase17](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class17.pum):
+将以下内容保存为 [usecase17](./class/class17.pum):
 
 ```
 @startuml
@@ -541,7 +541,7 @@ some info
 
 生成的效果图如下:
 
-![class17.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class17.png)
+![class17.png](./class/class17.png)
 
 ## lollipop interface ##
 
@@ -551,7 +551,7 @@ some info
 - bar ()-- foo
 - foo -() bar
 
-将以下内容保存为 [usecase18](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class18.pum):
+将以下内容保存为 [usecase18](./class/class18.pum):
 
 ```
 @startuml
@@ -564,13 +564,13 @@ bar ()- foo
 
 生成的效果图如下:
 
-![class18.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class18.png)
+![class18.png](./class/class18.png)
 
 ## 修改箭头方向 ##
 
 默认的, 使用 -- 的箭头方向是水平的, 可以使用单个 - 符号或者 . 符号来修改为垂直方向. 也可以使用 left, right, up 和 down 等关键字来定义方向, 可以只使用关键字的一个或二个字母.
 
-将以下内容保存为 [usecase19](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class19.pum):
+将以下内容保存为 [usecase19](./class/class19.pum):
 
 ```
 @startuml
@@ -591,11 +591,11 @@ foo -down-> dummyDown
 
 生成的效果图如下:
 
-![class19.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class19.png)
+![class19.png](./class/class19.png)
 
 ## 关联类 ##
 
-将以下内容保存为 [usecase20](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class20.pum):
+将以下内容保存为 [usecase20](./class/class20.pum):
 
 ```
 @startuml
@@ -631,7 +631,7 @@ cancel ()
 
 生成的效果图如下:
 
-![class20.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class20.png)
+![class20.png](./class/class20.png)
 
 ## Skinparam ##
 
@@ -641,7 +641,7 @@ cancel ()
 - 在一个包含文件中
 - 在一个配置文件中
 
-将以下内容保存为 [usecase21](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class21.pum):
+将以下内容保存为 [usecase21](./class/class21.pum):
 
 ```
 @startuml
@@ -668,13 +668,13 @@ Class03 o-- Class04 : aggregation
 
 生成的效果图如下:
 
-![class21.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class21.png)
+![class21.png](./class/class21.png)
 
 ## 渐变色 ##
 
 可以通过以下的符号分割的两个颜色来定义渐变的背景色: |, /, \, -.
 
-将以下内容保存为 [usecase22](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class22.pum):
+将以下内容保存为 [usecase22](./class/class22.pum):
 
 ```
 @startuml
@@ -698,13 +698,13 @@ class Dummy
 
 生成的效果图如下:
 
-![class22.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class22.png)
+![class22.png](./class/class22.png)
 
 ## 布局 ##
 
 可以通过 together 关键字来让对象分布在一起.
 
-将以下内容保存为 [usecase23](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class23.pum):
+将以下内容保存为 [usecase23](./class/class23.pum):
 
 ```
 @startuml
@@ -728,13 +728,13 @@ Bar1 -[hidden]> Bar2
 
 生成的效果图如下:
 
-![class23.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class23.png)
+![class23.png](./class/class23.png)
 
 ## 拆分文件 ##
 
 可以通过 page (hpages)x(vpages) 命令将生成的图形拆分为不同的文件, 其中 hpages 表示水平数量, vpages 表示垂直数量.
 
-将以下内容保存为[usecase24](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class/class24.pum):
+将以下内容保存为[usecase24](./class/class24.pum):
 
 ```
 @startuml

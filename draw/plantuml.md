@@ -16,11 +16,11 @@ plantuml 支持的图形有:
 - 对象图 (object diagram)
 - 线框图 (wireframe graphical interface)
 
-[User Guide](https://github.com/lsytj0413/learn-note/blob/master/draw/PlantUML_Guide.pdf)
+[User Guide](./PlantUML_Guide.pdf)
 
 ### 一个例子 ###
 
-将以下内容保存为 [plantuml01](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml01.pum):
+将以下内容保存为 [plantuml01](./plantuml/plantuml01.pum):
 
 ```
 @startuml
@@ -31,27 +31,27 @@ Alice ->> Bob: asynchronous call
 
 生成的效果图如下:
 
-![plantuml01.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/plantuml01.png)
+![plantuml01.png](./plantuml/plantuml01.png)
 
 ## 序列图 ##
 
-[教程](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence.md)
+[教程](./plantuml/sequence.md)
 
 ## 用例图 ##
 
-[教程](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/usecase.md)
+[教程](./plantuml/usecase.md)
 
 ## 类图 ##
 
-[教程](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/class.md)
+[教程](./plantuml/class.md)
 
 ## 活动图 ##
 
-[教程](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/activity.md)
+[教程](./plantuml/activity.md)
 
 ## 组件图 ##
 
-[教程](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/component.md)
+[教程](./plantuml/component.md)
 
 ## 状态图 ##
 

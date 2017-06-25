@@ -14,7 +14,7 @@ ditaa 是一个使用java语言编写的命令行工具, 可以将ascii字符组
 ditaa example.dit [example.png]
 ```
 
-例如使用以下内容, [ditaa01](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa01.dit):
+例如使用以下内容, [ditaa01](./ditaa/ditaa01.dit):
 
 ```
 +--------+   +-------+    +-------+
@@ -30,13 +30,13 @@ ditaa example.dit [example.png]
 
 生成的效果图如下:
 
-![ditaa01.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa01.png)
+![ditaa01.png](./ditaa/ditaa01.png)
 
 ## 语法 ##
 
 ### 矩形 ###
 
-可以使用 / 以及 \ 来连接转角, ditaa会将这两个字符绘制为圆角, 例如 [ditaa02](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa02.dit):
+可以使用 / 以及 \ 来连接转角, ditaa会将这两个字符绘制为圆角, 例如 [ditaa02](./ditaa/ditaa02.dit):
 
 ```
 /--+
@@ -46,7 +46,7 @@ ditaa example.dit [example.png]
 
 生成的效果图如下:
 
-![ditaa02.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa02.png)
+![ditaa02.png](./ditaa/ditaa02.png)
 
 ### 颜色 ###
 
@@ -56,7 +56,7 @@ ditaa example.dit [example.png]
 cXXX
 ```
 
-其中 XXX 是一个16进制的数字, 一个示例如下 [ditaa03](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa03.dit):
+其中 XXX 是一个16进制的数字, 一个示例如下 [ditaa03](./ditaa/ditaa03.dit):
 
 ```
 /----\  /----\
@@ -72,9 +72,9 @@ cXXX
 
 生成的效果图如下:
 
-![ditaa03.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa03.png)
+![ditaa03.png](./ditaa/ditaa03.png)
 
-也可以使用一些可读的字符串来定义颜色, 一个示例如下 [ditaa04](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa04.dit):
+也可以使用一些可读的字符串来定义颜色, 一个示例如下 [ditaa04](./ditaa/ditaa04.dit):
 
 ```
 Color codes
@@ -89,7 +89,7 @@ Color codes
 
 生成的效果图如下:
 
-![ditaa04.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa04.png)
+![ditaa04.png](./ditaa/ditaa04.png)
 
 如果定义了颜色的形状中包含文字, 文字的颜色会根据形状的颜色而自动变化. 颜色代码只在闭合的形状中生效, 在其他地方是不生效的.
 
@@ -99,13 +99,13 @@ ditaa 支持一些其他的形状, 形状的代码在 {} 中定义, 常见的形
 
 | 形状 | 代码 | 图形 |
 |:--|:--|:--|
-| Document | {d} | ![ditaa05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa05.png) |
-| Storage | {s} | ![ditaa06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa06.png) |
-| Input/Output | {io} | ![ditaa07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa07.png) |
+| Document | {d} | ![ditaa05.png](./ditaa/ditaa05.png) |
+| Storage | {s} | ![ditaa06.png](./ditaa/ditaa06.png) |
+| Input/Output | {io} | ![ditaa07.png](./ditaa/ditaa07.png) |
 
 #### Document ####
 
-定义内容如下 [ditaa05](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa05.dit):
+定义内容如下 [ditaa05](./ditaa/ditaa05.dit):
 
 ```
 +-----+
@@ -117,11 +117,11 @@ ditaa 支持一些其他的形状, 形状的代码在 {} 中定义, 常见的形
 
 生成的效果图如下:
 
-![ditaa05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa05.png)
+![ditaa05.png](./ditaa/ditaa05.png)
 
 #### Storage ####
 
-定义内容如下 [ditaa06](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa06.dit):
+定义内容如下 [ditaa06](./ditaa/ditaa06.dit):
 
 ```
 +-----+
@@ -133,11 +133,11 @@ ditaa 支持一些其他的形状, 形状的代码在 {} 中定义, 常见的形
 
 生成的效果图如下:
 
-![ditaa06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa06.png)
+![ditaa06.png](./ditaa/ditaa06.png)
 
 #### Input/Output ####
 
-定义内容如下 [ditaa07](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa07.dit):
+定义内容如下 [ditaa07](./ditaa/ditaa07.dit):
 
 ```
 +-----+
@@ -149,11 +149,11 @@ ditaa 支持一些其他的形状, 形状的代码在 {} 中定义, 常见的形
 
 生成的效果图如下:
 
-![ditaa07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa07.png)
+![ditaa07.png](./ditaa/ditaa07.png)
 
 ### 线条 ###
 
-所有的包含一个 =(横线) 或者 :(竖线) 的线条会被绘制为虚线, 一个示例如下 [ditaa08](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa08.dit):
+所有的包含一个 =(横线) 或者 :(竖线) 的线条会被绘制为虚线, 一个示例如下 [ditaa08](./ditaa/ditaa08.dit):
 
 ```
 ----+  /----\  +----+
@@ -164,11 +164,11 @@ ditaa 支持一些其他的形状, 形状的代码在 {} 中定义, 常见的形
 
 生成的效果图如下:
 
-![ditaa08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa08.png)
+![ditaa08.png](./ditaa/ditaa08.png)
 
 ### 线上的链接点 ###
 
-如果 * 字符在一条线上, 而且不是在线的结尾处, 那么它会被绘制为一个链接点, 一个示例如下 [ditaa09](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa09.dit):
+如果 * 字符在一条线上, 而且不是在线的结尾处, 那么它会被绘制为一个链接点, 一个示例如下 [ditaa09](./ditaa/ditaa09.dit):
 
 ```
 *----*
@@ -180,11 +180,11 @@ ditaa 支持一些其他的形状, 形状的代码在 {} 中定义, 常见的形
 
 生成的效果图如下:
 
-![ditaa09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa09.png)
+![ditaa09.png](./ditaa/ditaa09.png)
 
 ### 文本 ###
 
-如果文本中包含 *o XXXXX* 格式的内容, 其中 XXXXX 是需要显示的文字, 那么字符 o 会被绘制为一个句点, 一个示例如下 [ditaa10](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa10.dit):
+如果文本中包含 *o XXXXX* 格式的内容, 其中 XXXXX 是需要显示的文字, 那么字符 o 会被绘制为一个句点, 一个示例如下 [ditaa10](./ditaa/ditaa10.dit):
 
 ```
 /-----------------\
@@ -199,7 +199,7 @@ ditaa 支持一些其他的形状, 形状的代码在 {} 中定义, 常见的形
 
 生成的效果图如下:
 
-![ditaa10.png](https://github.com/lsytj0413/learn-note/blob/master/draw/ditaa/ditaa10.png)
+![ditaa10.png](./ditaa/ditaa10.png)
 
 ### HTML格式 ###
 

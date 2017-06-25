@@ -2,7 +2,7 @@
 
 ## 简单例子 ##
 
-将以下内容保存为 [plantuml02](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml02.pum):
+将以下内容保存为 [plantuml02](./sequence/plantuml02.pum):
 
 ```
 Alice -> Bob: Authentication Request
@@ -14,7 +14,7 @@ Alice <-- Bob: Another authentication Response
 
 生成的效果图如下:
 
-![plantuml02.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml02.png)
+![plantuml02.png](./sequence/plantuml02.png)
 
 ## 注释 ##
 
@@ -24,7 +24,7 @@ Alice <-- Bob: Another authentication Response
 
 可以使用 participant 关键字申明参与者, 也可以使用下列单词标明参与者的分类: actor, boundary, control, entity, database.
 
-不同的参与者的图标是不同的, 将以下内容保存为 [plantuml03](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml03.pum):
+不同的参与者的图标是不同的, 将以下内容保存为 [plantuml03](./sequence/plantuml03.pum):
 
 ```
 actor Foo1
@@ -41,11 +41,11 @@ Foo1 -> Foo5 : To database
 
 生成的效果图如下:
 
-![plantuml03.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml03.png)
+![plantuml03.png](./sequence/plantuml03.png)
 
 使用 as 关键字可以为参与者起一个别名, 这样在引用长名的参与者时会方便很多. 在参与者申明语句后行尾可以追加背景色的设置, 只要把标准的 HTML 颜色值写在后面就行.
 
-将以下内容保存为 [plantuml04](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml04.pum):
+将以下内容保存为 [plantuml04](./sequence/plantuml04.pum):
 
 ```
 actor Bob #red
@@ -64,13 +64,13 @@ Bob -> L : Log transaction
 
 生成的效果图如下:
 
-![plantuml04.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml04.png)
+![plantuml04.png](./sequence/plantuml04.png)
 
 针对非字母的参与者名, 可以使用双引号, 同样也可以为比较长的名字起个别名, 方法同使用 as 关键字.
 
 使用上面的关键字来申明参与者, 是一种显式申明; 而采用引号来申明参与者则是一种隐式申明方法, 它不需要专门的位置去定义.
 
-将以下内容保存为 [plantuml05](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml05.pum):
+将以下内容保存为 [plantuml05](./sequence/plantuml05.pum):
 
 ```
 Alice -> "Bob()" : Hello
@@ -82,13 +82,13 @@ Long --> "Bob()" : ok
 
 生成的效果图如下:
 
-![plantuml05.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml05.png)
+![plantuml05.png](./sequence/plantuml05.png)
 
 ## 发送消息给自己 ##
 
 一个参与者可以给自己发送消息, 消息名如果需要有多行文本, 可以使用 \n 来表示换行.
 
-将以下内容保存为 [plantuml06](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml06.pum):
+将以下内容保存为 [plantuml06](./sequence/plantuml06.pum):
 
 ```
 Alice -> Alice : This is a signal to self.\nIt also demonstrates\nmultiline \ntext
@@ -96,7 +96,7 @@ Alice -> Alice : This is a signal to self.\nIt also demonstrates\nmultiline \nte
 
 生成的效果图如下:
 
-![plantuml06.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml06.png)
+![plantuml06.png](./sequence/plantuml06.png)
 
 ## 改变箭头的样式 ##
 
@@ -108,7 +108,7 @@ Alice -> Alice : This is a signal to self.\nIt also demonstrates\nmultiline \nte
 - 在箭头后面加个 o 可以在箭头前绘制一个圆圈
 - 使用 \<-\> 可用来绘制双向箭头
 
-将以下内容保存为 [plantuml07](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml07.pum):
+将以下内容保存为 [plantuml07](./sequence/plantuml07.pum):
 
 ```
 Bob -> Alice
@@ -126,13 +126,13 @@ Bob <<-\\o Alice
 
 生成的效果图如下:
 
-![plantuml07.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml07.png)
+![plantuml07.png](./sequence/plantuml07.png)
 
 ## 改变箭头的颜色 ##
 
 要改变箭头的颜色, 可以使用 [HTML颜色符号](https://www.w3schools.com/HTML/html_colors.asp).
 
-将以下内容保存为 [plantuml08](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml08.pum):
+将以下内容保存为 [plantuml08](./sequence/plantuml08.pum):
 
 ```
 Bob -[#red]> Alice : hello
@@ -141,13 +141,13 @@ Alice -[#0000ff]-> Bob : ok
 
 生成的效果图如下:
 
-![plantuml08.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml08.png)
+![plantuml08.png](./sequence/plantuml08.png)
 
 ## 消息序号 ##
 
 关键词 autonumber 用来自动的给消息添加上序号.
 
-将以下内容保存为 [plantuml09](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml09.pum):
+将以下内容保存为 [plantuml09](./sequence/plantuml09.pum):
 
 ```
 autonumber
@@ -157,11 +157,11 @@ Bob -> Alice : Authentication Response
 
 生成的效果图如下:
 
-![plantuml09.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml09.png)
+![plantuml09.png](./sequence/plantuml09.png)
 
 如果需要指定一个起始号码, 可以直接在 autonumber 后面加一个数字即可, 如果需要设置自增量, 则再加一个数字.
 
-将以下内容保存为 [plantuml10](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml10.pum):
+将以下内容保存为 [plantuml10](./sequence/plantuml10.pum):
 
 ```
 autonumber
@@ -179,14 +179,14 @@ Bob <- Alice : Yet Another authentication Response
 
 生成的效果图如下:
 
-![plantuml10.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml10.png)
+![plantuml10.png](./sequence/plantuml10.png)
 
 也可以为序号指定数字格式, 这个格式化的过程实际上是Java类 DecimalFormat 来执行的, 0表示数字, # 缺省补零位数.
 同样的, 也可以使用一些 HTML 标签来控制数字的样式.
 
 使用 autonumber stop 关键字来停止序号, 使用 autonumber resume 'increment' 'format' 来重新启用序号.
 
-将以下内容保存为 [plantuml11](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml11.pum):
+将以下内容保存为 [plantuml11](./sequence/plantuml11.pum):
 
 ```
 autonumber "<b>[000]"
@@ -207,7 +207,7 @@ Bob <- Alice : Yet Another authentication Response
 
 生成的效果图如下:
 
-![plantuml11.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml11.png)
+![plantuml11.png](./sequence/plantuml11.png)
 
 ## 标题 ##
 
@@ -216,7 +216,7 @@ Bob <- Alice : Yet Another authentication Response
 也可以使用 title 和 end title 关键字来定义多行的标题.
 
 
-将以下内容保存为 [plantuml12](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml12.pum):
+将以下内容保存为 [plantuml12](./sequence/plantuml12.pum):
 
 ```
 /' title Simple Comunication example '/
@@ -234,13 +234,13 @@ Bob <- Alice : Authentication Response
 
 生成的效果图如下:
 
-![plantuml12.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml12.png)
+![plantuml12.png](./sequence/plantuml12.png)
 
 ## 图形图例 ##
 
 使用 legend 和 end legend 关键字可以设置图形的图例, 图例可以设置为左对齐, 右对齐和居中对齐.
 
-将以下内容保存为 [plantuml13](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml13.pum):
+将以下内容保存为 [plantuml13](./sequence/plantuml13.pum):
 
 ```
 Alice -> Bob : Hello
@@ -253,7 +253,7 @@ end legend
 
 生成的效果图如下:
 
-![plantuml13.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml13.png)
+![plantuml13.png](./sequence/plantuml13.png)
 
 ## 分割图形 ##
 
@@ -261,7 +261,7 @@ end legend
 
 使用这个方法可以方便的在Word里面把比较长的u图形分别打印到几个不同的页面上.
 
-将以下内容保存为 [plantuml14](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml14.pum):
+将以下内容保存为 [plantuml14](./sequence/plantuml14.pum):
 
 ```
 Bliss -> Tia : I love you
@@ -284,7 +284,7 @@ Tia -> Bliss : No money No love
 
 这些关键字后可以添加一些文本用来显示在头部(除了group), 在组嵌套组的结构里可以用关键字 end 来关闭组或者表示一个组符号的结束符.
 
-将以下内容保存为 [plantuml15](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml15.pum):
+将以下内容保存为 [plantuml15](./sequence/plantuml15.pum):
 
 ```
 Alice -> Bob : Authentication Request
@@ -307,13 +307,13 @@ end
 
 生成的效果图如下:
 
-![plantuml15.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml15.png)
+![plantuml15.png](./sequence/plantuml15.png)
 
 ## 消息注解 ##
 
 我们可能经常会在消息的左边或者右边使用注解. 要添加注解, 只要使用 note left 或 note right 关键词即可.
 
-将以下内容保存为 [plantuml16](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml16.pum):
+将以下内容保存为 [plantuml16](./sequence/plantuml16.pum):
 
 ```
 Alice -> Bob : hello
@@ -332,7 +332,7 @@ end note
 
 生成的效果图如下:
 
-![plantuml16.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml16.png)
+![plantuml16.png](./sequence/plantuml16.png)
 
 ## 其他注解方式 ##
 
@@ -344,7 +344,7 @@ end note
 
 也可以使用 hnote 和 rnote 关键字来改变注解的形状.
 
-将以下内容保存为 [plantuml17](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml17.pum):
+将以下内容保存为 [plantuml17](./sequence/plantuml17.pum):
 
 ```
 participant Alice
@@ -370,7 +370,7 @@ end note
 
 生成的效果图如下:
 
-![plantuml17.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml17.png)
+![plantuml17.png](./sequence/plantuml17.png)
 
 ## 使用 HTML 进行格式化 ##
 
@@ -387,7 +387,7 @@ end note
 - \<img src="file"\> 或 \<img:file\>: 添加图片文件
 - \<img src="http://url"> 或 \<img:http://url>: 添加互联网图片
 
-将以下内容保存为 [plantuml18](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml18.pum):
+将以下内容保存为 [plantuml18](./sequence/plantuml18.pum):
 
 ```
 participant Alice
@@ -411,13 +411,13 @@ end note
 
 生成的效果图如下:
 
-![plantuml18.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml18.png)
+![plantuml18.png](./sequence/plantuml18.png)
 
 ## 划分图形 ##
 
 可以使用 == 字符来将图形划分为不同的逻辑部分.
 
-将以下内容保存为 [plantuml19](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml19.pum):
+将以下内容保存为 [plantuml19](./sequence/plantuml19.pum):
 
 ```
 @startuml
@@ -437,13 +437,13 @@ Alice <-- Bob : another authentication Response
 
 生成的效果图如下:
 
-![plantuml19.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml19.png)
+![plantuml19.png](./sequence/plantuml19.png)
 
 ## 引用 ##
 
 使用 ref 关键字来引用一个图形.
 
-将以下内容保存为 [plantuml20](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml20.pum):
+将以下内容保存为 [plantuml20](./sequence/plantuml20.pum):
 
 ```
 @startuml
@@ -463,13 +463,13 @@ end ref
 
 生成的效果图如下:
 
-![plantuml20.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml20.png)
+![plantuml20.png](./sequence/plantuml20.png)
 
 ## 延迟 ##
 
 可以用 ... 字符来指定一个 Delay, 同时可以指定一个消息文本.
 
-将以下内容保存为 [plantuml21](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml21.pum):
+将以下内容保存为 [plantuml21](./sequence/plantuml21.pum):
 
 ```
 @startuml
@@ -485,13 +485,13 @@ Bob --> Alice : Bye !
 
 生成的效果图如下:
 
-![plantuml21.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml21.png)
+![plantuml21.png](./sequence/plantuml21.png)
 
 ## 空白 ##
 
 可以用 ||| 字符来指定一个 Space, 同时可以指定空白的像素数量.
 
-将以下内容保存为 [plantuml22](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml22.pum):
+将以下内容保存为 [plantuml22](./sequence/plantuml22.pum):
 
 ```
 @startuml
@@ -510,13 +510,13 @@ Bob --> Alice: ok
 
 生成的效果图如下:
 
-![plantuml22.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml22.png)
+![plantuml22.png](./sequence/plantuml22.png)
 
 ## 生命周期 ##
 
 使用 activate 和 deactivate 关键字来声明参与者的生命周期.
 
-将以下内容保存为 [plantuml23](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml23.pum):
+将以下内容保存为 [plantuml23](./sequence/plantuml23.pum):
 
 ```
 @startuml
@@ -544,11 +544,11 @@ deactivate A
 
 生成的效果图如下:
 
-![plantuml23.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml23.png)
+![plantuml23.png](./sequence/plantuml23.png)
 
 也可以设定嵌套的生命周期, 并且为它设置颜色.
 
-将以下内容保存为 [plantuml24](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml24.pum):
+将以下内容保存为 [plantuml24](./sequence/plantuml24.pum):
 
 ```
 @startuml
@@ -574,13 +574,13 @@ deactivate A
 
 生成的效果图如下:
 
-![plantuml24.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml24.png)
+![plantuml24.png](./sequence/plantuml24.png)
 
 ## 创建参与者 ##
 
 可以使用 create 关键字来临时创建一个参与者.
 
-将以下内容保存为 [plantuml25](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml25.pum):
+将以下内容保存为 [plantuml25](./sequence/plantuml25.pum):
 
 ```
 @startuml
@@ -600,13 +600,13 @@ Alice --> Bob : ok
 
 生成的效果图如下:
 
-![plantuml25.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml25.png)
+![plantuml25.png](./sequence/plantuml25.png)
 
 ## 输入及输出消息 ##
 
 可以将箭头的一部分放置在图形上, 使用 [ 以及 ] 符号即可.
 
-将以下内容保存为 [plantuml26](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml26.pum):
+将以下内容保存为 [plantuml26](./sequence/plantuml26.pum):
 
 ```
 @startuml
@@ -629,10 +629,10 @@ deactivate A
 
 生成的效果图如下:
 
-![plantuml26.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml26.png)
+![plantuml26.png](./sequence/plantuml26.png)
 
 也可以使用下面的语法.
-将以下内容保存为 [plantuml27](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml27.pum):
+将以下内容保存为 [plantuml27](./sequence/plantuml27.pum):
 
 ```
 @startuml
@@ -656,14 +656,14 @@ Bob x<-]
 
 生成的效果图如下:
 
-![plantuml27.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml27.png)
+![plantuml27.png](./sequence/plantuml27.png)
 
 ## 模板信息 ##
 
 可以使用 << 和 >> 字符来指定一些模板的信息, 并且可以使用 (X, color) 形式来指定颜色.
 可以通过 guillemet 字符来指定模板信息的包围符号.
 
-将以下内容保存为 [plantuml28](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml28.pum):
+将以下内容保存为 [plantuml28](./sequence/plantuml28.pum):
 
 ```
 @startuml
@@ -679,13 +679,13 @@ Bob -> Alice: First message
 
 生成的效果图如下:
 
-![plantuml28.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml28.png)
+![plantuml28.png](./sequence/plantuml28.png)
 
 ## 参与者组合 ##
 
 可以使用 box 和 end box 关键字将多个参与者绘制到一个矩形中.
 
-将以下内容保存为 [plantuml29](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml29.pum):
+将以下内容保存为 [plantuml29](./sequence/plantuml29.pum):
 
 ```
 @startuml
@@ -704,11 +704,11 @@ Alice -> Other: hello
 
 生成的效果图如下:
 
-![plantuml29.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml29.png)
+![plantuml29.png](./sequence/plantuml29.png)
 
 ## 删除页脚 ##
 
-将以下内容保存为 [plantuml30](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml30.pum):
+将以下内容保存为 [plantuml30](./sequence/plantuml30.pum):
 
 ```
 @startuml
@@ -724,7 +724,7 @@ Alice -> Bob: hello
 
 生成的效果图如下:
 
-![plantuml30.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml30.png)
+![plantuml30.png](./sequence/plantuml30.png)
 
 ## Skinparam ##
  
@@ -734,7 +734,7 @@ Alice -> Bob: hello
 - 在一个包含文件中
 - 在一个配置文件中
  
-将以下内容保存为 [plantuml31](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml31.pum):
+将以下内容保存为 [plantuml31](./sequence/plantuml31.pum):
 
 ```
 @startuml
@@ -795,11 +795,11 @@ deactivate A
 
 生成的效果图如下:
 
-![plantuml31.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml31.png)
+![plantuml31.png](./sequence/plantuml31.png)
 
 ## 修改间隔 ##
 
-将以下内容保存为 [plantuml32](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml32.pum):
+将以下内容保存为 [plantuml32](./sequence/plantuml32.pum):
 
 ```
 @startuml
@@ -825,4 +825,4 @@ Alice1 -> Out : out
 
 生成的效果图如下:
 
-![plantuml32.png](https://github.com/lsytj0413/learn-note/blob/master/draw/plantuml/sequence/plantuml32.png)
+![plantuml32.png](./sequence/plantuml32.png)
