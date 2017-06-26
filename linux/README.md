@@ -390,3 +390,296 @@ $ lspci | grep Ether
 ```
 
 ### 网络配置 ###
+
+#### 配置网卡 ####
+
+```
+# 检查网卡是否正常安装
+$ lspci | grep Ether
+$ dmesg | grep error
+
+# 编辑网卡文件
+$ vim /etc/network/interfaces
+```
+
+#### 修改 hostname ####
+
+```
+$ vim /etc/hostname
+```
+
+#### 修改 hosts ####
+
+```
+$ vim /etc/hosts
+```
+
+#### DNS ####
+
+```
+# 修改resolv
+$ vim /etc/resolvconf/resolv.conf.d/base
+nameserver 8.8.8.8
+
+# 使修改生效
+$ resolvconf -u
+```
+
+#### 查看网络配置 ####
+
+```
+$ ifconfig
+$ ifconfig eth0
+
+$ ifconfig eth0 | grep "inet addr" | awk -F[:" "]+ '{print $4}'
+```
+
+#### ping ####
+
+```
+$ ping -c 5 www.163.com
+```
+
+#### netstat ####
+
+该命令的功能是显示网络连接, 路由表和网络接口的信息. 常用的参数如下表:
+
+| 参数 | 描述 |
+|:--|:--|
+| -A | 显示任何关联的协议控制块的地址, 主要用于调试 |
+| -a | 显示所有套接字状态, 一般不显示与服务器进程相关联的套接字 |
+| -i | 显示自动配置接口的状态, 在系统引导后配置的接口状态不在输出 |
+| -m | 显示网络存储器的使用情况 |
+| -n | 打印实际地址, 而不是显示主机或网络名 |
+| -r | 打印路由选择表 |
+| -f address | 对给出名字的地址簇打印统计数字和控制块信息, 支持 inet |
+| -I interface | 只打印给出名字的接口状态 |
+| -p protocol-name | 只打印给出名字的统计数字和协议控制块信息 |
+| -s | 打印每个协议的统计数字 |
+| -t | 在输出显示中用时间信息代替队列长度信息 |
+
+```
+$ netstat -an | grep -v unix
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 0.0.0.0:902             0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:8307          0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.1.1:53            0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:1080          0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:1080          127.0.0.1:44480         ESTABLISHED
+tcp        1      0 192.168.0.106:35758     101.201.173.115:80      CLOSE_WAIT 
+tcp        0    378 192.168.0.106:40962     61.55.167.91:80         ESTABLISHED
+tcp        0      1 192.168.0.106:39982     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40010     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39960     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39962     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39996     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39958     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39990     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40026     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40040     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40038     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39928     93.46.8.89:443          SYN_SENT   
+tcp        1      0 192.168.0.106:35730     101.201.173.115:80      CLOSE_WAIT 
+tcp        0      1 192.168.0.106:39998     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39970     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39992     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40022     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39942     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39986     93.46.8.89:443          SYN_SENT   
+tcp        0      0 192.168.0.106:54180     115.159.241.221:443     ESTABLISHED
+tcp        0      1 192.168.0.106:40008     93.46.8.89:443          SYN_SENT   
+tcp        0      0 192.168.0.106:35334     192.30.253.124:443      ESTABLISHED
+tcp        0      1 192.168.0.106:39974     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40000     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39954     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40028     93.46.8.89:443          SYN_SENT   
+tcp        0      0 127.0.0.1:44480         127.0.0.1:1080          ESTABLISHED
+tcp        0      1 192.168.0.106:40024     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40002     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39932     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39972     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39978     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39980     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39936     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39944     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39966     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40034     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39934     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40020     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40030     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40006     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39988     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40014     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39964     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39946     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39984     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40036     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39948     93.46.8.89:443          SYN_SENT   
+tcp        0      0 192.168.0.143:55740     192.168.0.50:139        ESTABLISHED
+tcp        0      1 192.168.0.106:41610     61.135.186.152:80       FIN_WAIT1  
+tcp        0      1 192.168.0.106:40018     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39930     93.46.8.89:443          SYN_SENT   
+tcp        0      0 192.168.0.106:38802     45.76.103.176:1160      ESTABLISHED
+tcp        0      1 192.168.0.106:39938     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39940     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39976     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40032     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39994     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39950     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40012     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39952     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40016     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:40004     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39968     93.46.8.89:443          SYN_SENT   
+tcp        0      1 192.168.0.106:39956     93.46.8.89:443          SYN_SENT   
+tcp6       0      0 :::902                  :::*                    LISTEN     
+tcp6       0      0 :::443                  :::*                    LISTEN     
+udp        0      0 127.0.0.1:1080          0.0.0.0:*                          
+udp        0      0 0.0.0.0:5353            0.0.0.0:*                          
+udp        0      0 0.0.0.0:5353            0.0.0.0:*                          
+udp        0      0 0.0.0.0:5353            0.0.0.0:*                          
+udp        0      0 0.0.0.0:5353            0.0.0.0:*                          
+udp        0      0 0.0.0.0:39229           0.0.0.0:*                          
+udp        0      0 127.0.1.1:53            0.0.0.0:*                          
+udp        0      0 0.0.0.0:68              0.0.0.0:*                          
+udp        0      0 0.0.0.0:49708           0.0.0.0:*                          
+udp        0      0 0.0.0.0:631             0.0.0.0:*                          
+udp6       0      0 :::5353                 :::*                               
+udp6       0      0 :::5353                 :::*                               
+udp6       0      0 :::5353                 :::*                               
+udp6       0      0 :::5353                 :::*                               
+udp6       0      0 :::42656                :::*                               
+raw        0      0 0.0.0.0:1               0.0.0.0:*               7          
+raw6       0      0 :::58                   :::*                    7          
+活跃的UNIX域套接字 (服务器和已建立连接的)
+Proto RefCnt Flags       Type       State         I-Node   路径
+```
+
+state 字段的含义如下:
+
+- LISTEN: 侦听来自远方的TCP端口的连接请求
+- SYN_SENT: 在发送连接请求后等待匹配的连接请求
+- SYS_RECEIVED: 在收到和发送一个连接请求后等待对方对连接请求进行确认
+- ESTABLISHED: 代表一个打开的连接, 作为并发连接数
+- FIN\_WAIT\_1: 等待远程TCP连接中断请求, 或先前的连接中断请求的确认
+- FIN\_WAIT\_2: 从远程TCP等待连接中断请求
+- CLOSE\_WAIT: 等待从本地用户发来的连接中断请求
+- CLOSING: 等待远程TCP对连接中断请求的确认
+- LAST\_ACK: 等待原来发向远程TCP的连接中断请求的确认
+- TIME\_WAIT: 等待足够的时间以确保远程TCP接收到连接中断请求的确认
+- CLOSED: 没有任何连接状态
+
+```
+# 统计网络连接状态
+$ netstat -an | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+
+# 查看路由表
+$ route -n
+# 等价于
+$ netstat -r
+
+# 跟踪网络包路径
+$ traceroute www.163.com
+```
+
+#### nslookup ####
+
+```
+# 查询域名对应的IP
+$ nslookup www.baidu.com
+Server:		127.0.1.1
+Address:	127.0.1.1#53
+
+Non-authoritative answer:
+www.baidu.com	canonical name = www.a.shifen.com.
+Name:	www.a.shifen.com
+Address: 180.97.33.107
+Name:	www.a.shifen.com
+Address: 180.97.33.108
+
+# 等价于
+$ dig www.baidu.com
+
+; <<>> DiG 9.10.3-P4-Ubuntu <<>> www.baidu.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 39120
+;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 5, ADDITIONAL: 6
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;www.baidu.com.			IN	A
+
+;; ANSWER SECTION:
+www.baidu.com.		134	IN	CNAME	www.a.shifen.com.
+www.a.shifen.com.	71	IN	A	180.97.33.107
+www.a.shifen.com.	71	IN	A	180.97.33.108
+
+;; AUTHORITY SECTION:
+a.shifen.com.		110	IN	NS	ns3.a.shifen.com.
+a.shifen.com.		110	IN	NS	ns2.a.shifen.com.
+a.shifen.com.		110	IN	NS	ns4.a.shifen.com.
+a.shifen.com.		110	IN	NS	ns5.a.shifen.com.
+a.shifen.com.		110	IN	NS	ns1.a.shifen.com.
+
+;; ADDITIONAL SECTION:
+ns1.a.shifen.com.	110	IN	A	61.135.165.224
+ns2.a.shifen.com.	110	IN	A	180.149.133.241
+ns3.a.shifen.com.	110	IN	A	61.135.162.215
+ns4.a.shifen.com.	110	IN	A	115.239.210.176
+ns5.a.shifen.com.	110	IN	A	119.75.222.17
+
+;; Query time: 3 msec
+;; SERVER: 127.0.1.1#53(127.0.1.1)
+;; WHEN: Mon Jun 26 21:44:06 CST 2017
+;; MSG SIZE  rcvd: 271
+```
+
+#### finger ####
+
+```
+# 查询用户信息
+$ finger
+```
+
+#### lsof ####
+
+lsof 是一个列出当前系统打开文件的工具.
+
+```
+# 查看22端口的占用
+$ lsof -i:22
+```
+
+### 服务器优化 ###
+
+#### 调整 TCP/IP 参数 ####
+
+```
+$ vim /etc/sysctl.conf
+net.ipv4.tcp_syncookies=1
+# 减少 TIME_WAIT
+net.ipv4.tcp_fin_timeout=30
+net.ipv4.tcp_keepalive_time=1200
+net.ipv4.tcp_syncookies=1
+net.ipv4.tcp_tw_reuse=1
+net.ipv4.tcp_tw_recycle=1
+net.ipv4.ip_local_port_range=1024 65000
+net.ipv4.tcp_max_syn_backlog=8192
+net.ipv4.tcp_max_tw_byckets=5000
+
+$ sysctl -p
+```
+
+#### 调整最大文件打开数 ####
+
+```
+$ vim /etc/security/limits.conf
+* soft nofile 60000
+* hard nofile 65535
+
+$ vim /etc/rc.local
+ulimit -SHn 65535
+```
