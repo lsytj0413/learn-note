@@ -200,7 +200,7 @@ nvme0n1           0.00     0.00    0.00    0.00     0.00     0.00     0.00     0
 - svctm 应该小于 await, 请求过多会导致 svctm 增加
 - await 大小取决于服务时间(svctm)以及 I/O 队列的长度和 I/O 请求的发出模式, 如果 svctm 接近于 await, 说明 I/O 几乎没有等待时间; 如果 await 远大于 svctm, 说明 I/O 队列太长
 
-### 查看目录大小 ###
+#### 查看目录大小 ####
 
 ```
 $ du -sh /root
@@ -208,7 +208,7 @@ $ du -sh /root
 $ du -d0 -cks * | sort -rn | head -n 10
 ```
 
-### dd ###
+#### dd ####
 
 dd 命令可以把指定的输入文件拷贝到指定的输出文件中, 并且在拷贝过程中可以进行格式转换:
 
@@ -238,3 +238,120 @@ dd 命令常用参数如下表:
 | skip=blocks | 从输入文件开头跳过 blocks 个块之后开始复制 | |
 | seek=blocks | 从输出文件开头跳过 blocks 个块之后开始复制 | |
 | count=blocks | 仅拷贝 blocks 个块 | |
+
+### 系统平均负载 ###
+
+```
+# 使用uptime
+$ uptime
+ 20:33:52 up 11:44,  1 user,  load average: 0.25, 0.21, 0.18
+
+# 使用 w 命令
+$ w
+ 20:34:34 up 11:44,  1 user,  load average: 0.33, 0.24, 0.20
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+soren    tty7     :0               日08   35:44m 35:53   0.46s /sbin/upstart --user
+
+# 使用 top 命令
+$ top
+top - 20:35:16 up 11:45,  1 user,  load average: 0.43, 0.28, 0.21
+Tasks: 229 total,   2 running, 227 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 14.4 us,  3.0 sy,  0.1 ni, 81.6 id,  0.9 wa,  0.0 hi,  0.1 si,  0.0 st
+KiB Mem :  8068220 total,   273228 free,  2466728 used,  5328264 buff/cache
+KiB Swap:  3906556 total,  3906556 free,        0 used.  3802932 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                                            
+ 2419 soren     20   0 1448112 130808  76240 S  18.8  1.6  37:09.91 compiz                                                                                                             
+ 1078 root      20   0 1411612 900224 878700 S  12.5 11.2  35:57.36 Xorg                                                                                                               
+25357 root      20   0   45612   3764   3092 R  12.5  0.0   0:00.03 top                                                                                                                
+ 3004 soren     20   0 2693960 556480 245960 S   6.2  6.9  32:59.75 chromium-browse                                                                                                    
+31646 soren     20   0 1251204 174180  53344 R   6.2  2.2   1:04.57 evince                                                                                                             
+    1 root      20   0  187488   8184   4048 S   0.0  0.1   0:02.65 systemd                                                                                                            
+    2 root      20   0       0      0      0 S   0.0  0.0   0:00.03 kthreadd                                                                                                           
+    3 root      20   0       0      0      0 S   0.0  0.0   0:00.38 ksoftirqd/0                                                                                                        
+    5 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H                                                                                                       
+    7 root      20   0       0      0      0 S   0.0  0.0   1:02.16 rcu_sched                                                                                                          
+    8 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcu_bh                                                                                                             
+    9 root      rt   0       0      0      0 S   0.0  0.0   0:00.08 migration/0                                                                                                        
+   10 root      rt   0       0      0      0 S   0.0  0.0   0:00.26 watchdog/0                                                                                                         
+   11 root      rt   0       0      0      0 S   0.0  0.0   0:00.25 watchdog/1                                                                                                         
+   12 root      rt   0       0      0      0 S   0.0  0.0   0:00.07 migration/1                                                                                                        
+   13 root      20   0       0      0      0 S   0.0  0.0   0:00.85 ksoftirqd/1                                                                                                        
+   15 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/1:0H                                                                                                       
+   16 root      rt   0       0      0      0 S   0.0  0.0   0:00.24 watchdog/2                                                                                                         
+   17 root      rt   0       0      0      0 S   0.0  0.0   0:00.08 migration/2                                                                                                        
+   18 root      20   0       0      0      0 S   0.0  0.0   0:00.42 ksoftirqd/2                                                                                                        
+   20 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/2:0H                                                                                                       
+   21 root      rt   0       0      0      0 S   0.0  0.0   0:00.24 watchdog/3                                                                                                         
+   22 root      rt   0       0      0      0 S   0.0  0.0   0:00.18 migration/3                                                                                                        
+   23 root      20   0       0      0      0 S   0.0  0.0   0:00.24 ksoftirqd/3                                                                                                        
+   25 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/3:0H                                                                                                       
+   26 root      20   0       0      0      0 S   0.0  0.0   0:00.00 kdevtmpfs                                                                                                          
+   27 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 netns                                                                                                              
+   28 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 perf                                                                                                               
+   29 root      20   0       0      0      0 S   0.0  0.0   0:00.05 khungtaskd                                                                                                         
+   30 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 writeback                                                                                                          
+   31 root      25   5       0      0      0 S   0.0  0.0   0:00.00 ksmd                                                                                                               
+   32 root      39  19       0      0      0 S   0.0  0.0   0:01.70 khugepaged                                                                                                         
+   33 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 crypto                                                                                                             
+   34 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kintegrityd                                                                                                        
+   35 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 bioset                                                                                                             
+   36 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kblockd                                                                                                            
+   37 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 ata_sff                                                                                                            
+   38 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 md                                                                                                                 
+   39 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 devfreq_wq                                                                                                         
+   43 root      20   0       0      0      0 S   0.0  0.0   0:00.00 kswapd0                                                                                                            
+   44 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 vmstat                                                                                                             
+   45 root      20   0       0      0      0 S   0.0  0.0   0:00.04 fsnotify_mark                                                                                                      
+   46 root      20   0       0      0      0 S   0.0  0.0   0:00.00 ecryptfs-kthrea                                                                                                    
+   62 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kthrotld                                                                                                           
+   63 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 acpi_thermal_pm      
+```
+
+其中 load average 字段表示的是过去的 1分钟, 5分钟和 15分钟进程队列中的平均进程数量.
+
+### 系统其他参数 ###
+
+#### wmstat ####
+
+vmstat 可以用来观察系统的进程状态, 内存使用情况, 虚拟内存的使用情况, 磁盘I/O, 中断, 上下文切换, CPU的使用情况等性能信息.
+
+```
+$ vmstat 1 4
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 0  0      0 272988 386556 4936696    0    0    24   116  281  130 14  3 82  1  0
+ 0  0      0 273468 386556 4936804    0    0     0     0  262  564  2  0 98  0  0
+ 0  0      0 273468 386556 4936804    0    0     0     0  297  932  2  0 98  0  0
+ 1  0      0 273344 386556 4936804    0    0     0     0  402 1440  1  0 99  0  0
+```
+
+显示的信息描述如下:
+
+- procs
+    - r: 等待运行的进程数
+    - b: 处在非中断睡眠状态的进程数
+    - w: 被交换出去的可运行的进程数
+- memory
+    - swap: 虚拟内存的使用情况, 单位为 KB
+    - free: 空闲的内存, 单位为 KB
+    - buff: 被用作缓存的内存, 单位为 KB
+- swap
+    - si: 从磁盘交换到内存的交换页数量, 单位为 KB
+    - so: 从内存交换到磁盘的交换页数量, 单位为 KB
+- io
+    - bi: 发送到块设备的块数, 单位为块
+    - bo: 从块设备接收的块数, 单位为块
+- system
+    - in: 每秒的中断数, 包括时钟终端
+    - cs: 每秒的环境(上下文)切换次数
+- cpu
+    - us: CPU使用时间, 百分比
+    - sy: CPU系统使用时间, 百分比
+    - id: 闲置时间, 百分比
+
+默认情况下, r应该小于5, b应该约等于0. 假设出现如下情况:
+
+- r 经常大于3或4, 且 id 经常小于50, 表示CPU负载大
+- bi, bo 长期不等于0, 表示内存不足
+- disk 经常不等于0, 且在 b 列中的队列大于2或3, 表示I/O性能不好
