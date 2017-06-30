@@ -148,10 +148,79 @@ $ git checkout bug/pr-1
 
 ### 有未提交的更改时进行检出 ###
 
+如果一个文件的本地修改不同于新分支上的变更, 那么 Git 会拒绝检出目标分支. 例如以下情况:
+
+```
+# 本地工作目录下的 NewStuff 文件内容如下
+$ cat NewStuff
+Something
+Something else
+
+# 本地分支 HEAD 上的文件内容
+$ git show master:NewStuff
+Something
+
+# dev 分支的内容
+$ git show dev:NewStuff
+Something
+A Change
+
+# 尝试检出 dev 分支, 会报错
+$ git checkout dev
+# 可以使用 -f 命令强制检出
+```
+
+错误信息会提示将修改提交到任意分支, 然后才能继续检出操作. 此时你可以将变更提交到 master 分支, 但是如果你想要提交到 dev 分支, 那么此时是一个困难的情况: 你不能把变更提交到 dev 分支, 因为你不能检出该分支.
+
 ### 合并变更到不同分支 ###
+
+在上一节中, 当前工作目录的状态与你想切换到的分支相冲突, 而我们需要把工作目录中的修改和被检出的文件合并. 可以使用 -m 参数来要求 Git 通过在本地的修改和对目标分支之间进行一次合并操作, 尝试将本地的修改加入到新工作目录中:
+
+```
+git checkout -m dev
+```
+
+成功的检出了 dev 分支, 但是此时可能还需要解决合并文件导致的合并冲突.
 
 ### 创建并检出新分支 ###
 
+Git 提供了 -b 选项来实现创建一个新的分支并同时切换到该分支.
+
+```
+$ git checkout -b new-branch [start-point]
+# 等价于
+$ git branch new-branch [start-point]
+$ git checkout new-branch
+```
+
 ### 分离 HEAD 分支 ###
 
+通常情况下, git checkout 会改变期望分支的头部; 然后可以检出任何提交, 在这时 Git 会创建一种匿名分支, 称为一个分离的 HEAD. 在以下情况下 Git 会创建一个分离的 HEAD:
+
+1. 检出的提交不是分支的 HEAD
+2. 检出一个追踪分支
+3. 检出标签引用的提交
+4. 启动一个 bisect 操作
+5. 使用 git submodule update 命令
+
+如果你在一个分离的 HEAD 上, 并决定用新的提交留住它们, 那么使用以下命令创建一个新分支即可:
+
+```
+# 基于分离的 HEAD 创建一个新分支
+$ git checkout -b new-branch
+```
+
+或者你只需放弃这种状态, 那么使用以下命令检出到一个存在的分支即可:
+
+```
+$ git checkout branch
+```
+
 ## 删除分支 ##
+
+可以使用 git branch -d branch 从版本库中删除分支, Git 会阻止你删除当前分支, 而且 Git 也会阻止你删除一个包含不存在与当前分支中的提交的分支, 在这种情况下可以使用 -D 选项来实现删除.
+
+Git 会删除那些不再被引用的提交和不能从某些命名的引用(如分支或标签名)可达的提交. 如果想保留在分支中被删除的提交, 可以将它们合并到另一个分支, 或是为它们创建一个分支, 也可以用标签指向它们.
+否则如果没有对它们的引用和提交, blob 是不可达的, 它们最终会被 Git gc 工具回收.
+
+在意外删除分支或其他引用后, 可以使用 git reflog 命令恢复; 其他命令如 git fsck 或配置选项 gc.reflogExpire 和 gc.pruneExpire 同样可以帮助恢复丢失的提交, 文件和分支的头部.
