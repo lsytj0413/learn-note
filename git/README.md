@@ -24,4 +24,4 @@
 - [第十八章: 结合 SVN 版本库使用 Git](./chapter18.md)
 - [第十九章: 高级操作](./chapter19.md)
 - [第二十章: 提示, 技巧和技术](./chapter20.md)
-- [第二十一章: Git 和 Github](./chapter21.md)
+- [第二十一章: Git 和 GitHub](./chapter21.md)
