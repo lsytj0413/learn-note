@@ -11,3 +11,4 @@
 - [第五章: 文件管理和索引](./chapter05.md)
 - [第六章: 提交](./chapter06.md)
 - [第七章: 分支](./chapter07.md)
+- [第八章: diff](./chapter08.md)
