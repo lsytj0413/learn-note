@@ -195,8 +195,54 @@ index d90bda0..7601807 100644
 
 ## git diff 和提交范围 ##
 
+git diff 命令支持两点语法来显示两个提交之间的不同, 例如下面两条命令是等价的:
 
+```
+$ git diff master bug/pr-1
+$ git diff master..bug/pr-1
+```
+
+但是它的两点语法和 git log 中的用法不同:
+
+- git diff 不关心它比较的文件的历史, 也不关心分支
+- git log 特别关注一个文件是如何变成另一个的, 例如当产生分支时在每一个分支上发生了什么
+
+例如, 从 master 分支中创建了一个新分支 bug/pr-1, 并在 bug/pr-1 分支中对某个文件添加了一行 "Fix Problem report 1", 然后在 master 分支中对同样的文件添加一行 "Fix Problem report 3", 然后使用如下命令查看输出:
+
+git show-branch 命令:
+
+![图 git show-branch](./images/image08-03.png)
+
+git log 命令, 回溯 bug/pr-1 到 master 分支的历史:
+
+![图 git log](./images/image08-04.png)
+
+git diff 命令, 查看两个分支文件现在状态的差异:
+
+![图 git diff](./images/image08-05.png)
+
+考虑如下更大的 git diff 历史:
+
+![图8-2 更大的 git diff 历史](./images/image08-06.png)
+
+在上图中, git log master..maint 会显示5个单独的提交, 即 V,W...Z; 而 git diff master..maint 会显示 H 和 Z 处树之间的差异, 累计 11 个提交, 即 C,D...H 和 V...Z.
+
+同样的, 两条命令都接受 commit1...commit2 这样的参数来产生一个对称差. git log commit1...commit2 显示的是各自可达又不同时可达的提交, 因此 git log master...maint 会输出 C,D...H 和 V...Z; 对称差在 git diff 中会显示 commit2 和 commit1 的共同祖先(或合并基础)之间的差异, 因此 git diff master...maint 会组合 V,W...Z 中的变更.
 
 ## 路径限制的 git diff ##
 
+在默认情况下, git diff 会显示从根开始的整个目录结构的差异, 可以使用路径限制来指定输出一个子集:
+
+![图 指定目录](./images/image08-07.png)
+
+也可以使用 -S"string" 选项来搜索包含 string 的变更:
+
+```
+$ git diff -S"octopus" master~50
+```
+
 ## 比较 SVN 和 Git 如何产生 diff ##
+
+SVN 只存储文件间的差异, 例如本地版本是 r1095, 服务器版本是 r1123, 当你更新是服务器会把两个版本之间的 diff 发送给你, 并且它会把多个版本的 diff 文件合并为一个更大的 diff 文件.
+
+而在 Git 中, 每个提交都包含一个树, 包含该提交的所有文件列表. Git 的 diff 和 patch 是导出的数据, 因为 Git 存储的是每一个提交的完整内容.
