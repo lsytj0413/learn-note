@@ -122,9 +122,92 @@ $ git commit
 
 ## 处理合并冲突 ##
 
+创建另一个合并冲突的场景. 对一个仓库新建两个不同的分支, 各自有不同的文件变体:
+
+```
+$ git init
+$ echo hello > hello
+$ git add hello
+$ git commit -m "Initial hello file"
+ 
+$ git checkout -b alt
+$ echo world >> hello
+$ echo 'Yay!' >> hello
+$ git commit -a -m "One world"
+ 
+$ git checkout master
+$ echo worlds >> hello
+$ echo 'Yay!' >> hello
+$ git commit -a -m "All worlds"
+```
+
+现在在 master 分支中尝试合并 alt 分支, Git 会提示发生了冲突:
+
+```
+$ git merge alt
+```
+
 ### 定位冲突的文件 ###
 
+Git 会对有问题的文件进行跟踪, 并在索引中把它们标记为冲突的(conflicted) 或者未合并的(unmerged). 可以使用 git status 命令或 git ls-files -u 命令来显示工作树中仍然未合并的一组文件:
+
+![图 git log/ git ls-files -u](./images/image09-03.png)
+
+也可以使用 git diff 来显示没有合并的内容, 但是该命令也会显示更多的细节.
+
 ### 检查冲突 ###
+
+当冲突出现时, 通过三方比较或者合并标记强调工作目录中的每个冲突文件的副本. 例如前例中的冲突文件内容如下:
+
+![图 cat hello](./images/image09-04.png)
+
+合并标记划定文件冲突部分的两个副本, 可以简单的选择其中一个, 移除冲突标记然后提交即可. 也可以使用如下的其他方式:
+
+#### 对冲突使用 git diff 命令 ####
+
+Git 有一个特殊的 git diff 变体来同时显示针对两个父版本做的修改:
+
+![图 git diff](./images/image09-05.png)
+
+这只是两个 diff 文件的组合, 一个是称为 HEAD 的父版本, 一个是称为 alt 的父版本, 第二个父版本也有一个特殊的名字: MERGE_HEAD.
+git diff 的输出中有两列信息, 第一列显示相对你的版本的更改, 第二列显示相对另一个版本的更改.
+
+也可以拿 HEAD 和 MERGE_HEAD 版本和工作目录(合并的)版本进行比较:
+
+```
+$ git diff HEAD                 # 等价于 git diff --ours
+$ git diff MERGE_HEAD           # 等价于 git diff --theirs
+# 查看自合并基础之后的变更组合
+$ git diff --base               # 等价于 git diff $(git merge-base HEAD MERGE_HEAD)
+```
+
+可以将文件编辑为如下内容, 使用一个第三版本来解决冲突:
+
+```
+hello
+worldly ones
+Yay!
+```
+
+然后使用 git diff 会看到如下输出:
+
+![图 git diff](./images/image09-06.png)
+
+或者选择其中一个版本来解决冲突, 这时 git diff 将不再输出冲突内容, 这是因为当你解决 MERGE_HEAD 版本中的冲突后, Git 会忽略这些差异.
+
+#### 对冲突使用 git log 命令 ####
+
+在解决冲突时, 也可以使用 git log 命令来显示冲突的来源和变更:
+
+![图 git log --merge --left-right -p](./images/image09-07.png)
+
+此命令将显示这两个部分的历史中的所有提交, 并显示每次提交引入的变更. 选项如下:
+
+- --merge: 只显示和产生冲突的文件相关的提交
+- --left-right: 如果提交来自合并的左则显示<(我们的版本), 来自合并的右则显示>(他们的版本)
+- -p: 显示提交消息和每个提交相关联的补丁
+
+如果版本库中的冲突太多, 也可以在命令后面指定文件名.
 
 ### Git 是如何追踪冲突的 ###
 
