@@ -124,6 +124,41 @@ $ git show-branch
 
 ## 使用 git cherry-pick ##
 
+git cherry-pick 命令会在当前分支上应用给定提交引入的变更, 即引入一个新的独特提交, 并添加历史记录. 通常用于把版本库中一个分支的特定提交引入一个不同的分支, 常见用法是把维护分支的提交移植到开发分支.
+
+假设如下图, 在 dev 分支上进行正常开发, 而 rel\_2.3 包含2.3版本维护的提交. 现在在 dev 分支上的提交 F 修复了一个BUG, 并且需要应用到 rel\_2.3 分支:
+
+![图 执行 cherry-pick 后](./images/image10-05.png)
+
+使用命令如下:
+
+```
+$ git checkout rel_2.3
+$ git cherry-pick dev~2
+```
+
+从图中可以看到, rel_2.3 分支添加了一个提交 F'.
+
+git cherry-pick 的另一个常见用途是重建一系列提交, 通过从一个分支选择一批提交, 然后把它引入另一个分支. 假设如下图, 需要将 my_dev 分支上的提交引入 master 分支, 但是打乱顺序:
+
+![图 执行 cherry-pick 乱序后](./images/image10-06.png)
+
+使用的命令如下:
+
+```
+$ git checkout master
+$ git cherry-pick my_dev^
+$ git cherry-pick my_dev~3
+$ git cherry-pick my_dev~2
+$ git cherry-pick my_dev
+```
+
+在 git cherry-pick 命令中, 也可以应用一个范围的提交:
+
+```
+$ git cherry-pick X..Z
+```
+
 ## 使用 git revert ##
 
 ## reset, revert 和 checkout ##
