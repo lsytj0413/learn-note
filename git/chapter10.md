@@ -200,8 +200,83 @@ $ git commit --amend --author "xxx"
 
 ## 变基提交 ##
 
+git rebase 命令是用来改变一串提交以什么为基础的, 不在目标分支中的当前分支提交会变基. 常见用途是保持你正在开发的一系列提交相对于另一个分支是最新的.
+例如在下图中, 有两个分支: master 和 topic. topic 分支是以 master 分支的提交 B 为基础的:
 
+![图 执行 git rebase 之前](./images/image10-09.png)
+
+可以使用如下命令让 topic 的提交基于提交 E :
+
+```
+$ git checkout topic
+$ git rabase master
+# 或者
+$ git rebase master topic
+```
+
+执行命令之后如图:
+
+![图 执行 git rebase 之后](./images/image10-10.png)
+
+在这种情况下, 使用 git rebase 命令称为向前移植(forward porting), 在本例中分支 topic 已经向前移植到了 master 分支.
+
+git rebase 命令也可以用 --onto 选项把一条分支上的开发线整个移植到完全不同的分支上. 例如假设在 feature 分支上开发了一个新功能, 需要将提交迁移到 master 分支, 迁移之前如下图:
+
+![图 执行 git rebase 迁移之前](./images/image10-11.png)
+
+使用如下命令进行迁移:
+
+```
+$ git rebase --onto master maint^ feature
+```
+
+执行迁移之后如下图:
+
+![图 执行 git rebase 迁移之后](./images/image10-12.png)
+
+变基操作一次只迁移一个提交, 从各自原始提交位置迁移到新的提交基础, 每个提交都可能有冲突需要解决. 如果发现冲突, rebase 操作会挂起以便你解决冲突. 这时你可以采用以下操作:
+
+- git rebase --continue: 在解决冲突并更新索引之后恢复变基操作, 处理下一个提交
+- git rebase --skip: 跳过这个提交并移动到下一个提交
+- git rebase --abort: 中止操作, 并把版本库恢复到发出 git rebase 命令之前的状态
 
 ### 使用 git rebase -i ###
+
+git rebase 命令的 -i 或者 --interactive 选项可以重新排序, 编辑, 删除, 把多个提交合并为一个, 把多个提交分离成多个. 这个命令允许你修改一个分支的大小, 然后把它们放回原来的分支或不同的分支.
+
+假设你有如下图的提交历史:
+
+![图 执行 git rebase -i 之前](./images/image10-13.png)
+
+首先你想把它修改为如下图的历史:
+
+![图 执行 git rebase -i 重新排序](./images/image10-14.png)
+
+可以执行如下命令:
+
+```
+$ git rebase -i master~3
+```
+
+然后编辑一个如下图的文件:
+
+![图 执行 git rebase -i 编辑文件](./images/image10-15.png)
+
+前三行列出在命令行里指定的可编辑提交范围内的提交, 并按照从最老到最新排序. 现在交换第1行和第2行的顺序, 然后退出编辑器. 这时每个提交都会按照顺序应用到目标分支. 得到的提交历史如下图:
+
+![图 执行 git rebase -i 重新排序之后](./images/image10-16.png)
+
+下一步是把两个拼写提交合并为一个. 再一次使用 git rebase -i master~3 命令, 将提交内容编辑为如下图:
+
+![图 执行 git rebase -i 编辑提交](./images/image10-17.png)
+
+第三次提交会合并到前一个提交中, 新的提交信息模板会把两个提交组合起来. 如下图:
+
+![图 执行 git rebase -i 编辑提交信息](./images/image10-18.png)
+
+可以编辑这些内容作为新的提交信息, 得到如下图的历史:
+
+![图 执行 git rebase -i 合并提交之后](./images/image10-19.png)
+
 
 ### 变基和合并 ###
