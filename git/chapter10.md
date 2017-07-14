@@ -161,11 +161,46 @@ $ git cherry-pick X..Z
 
 ## 使用 git revert ##
 
+git revert 应用给定提交的逆过程, 用于引入一个新提交来抵消给定提交的影响.
+
+例如执行以下命令, 撤销提交 D 得到的结果如图:
+
+```
+$ git revert master~3
+```
+
+![图 执行 git revert 之后](./images/image10-07.png)
+
 ## reset, revert 和 checkout ##
+
+有一些规则和指引, 指明 reset, revert, checkout 命令应在何时使用:
+
+- 如果想切换到不同的分支, 使用 checkout, checkout 命令也可以检出文件然后放到工作目录中
+- reset 命令会重置当前分支的 HEAD 引用
+- revert 命令作用于全部提交, 而不是文件
 
 ## 修改最新提交 ##
 
+使用 git commit --amend 来修改当前分支最近一次提交, 常用用途shi在刚做出一个提交之后修改录入错误. 假设提交了一个内容如下图:
+
+![图 初始提交](./images/image10-08.png)
+
+如果此时发现一个错误, 你可以简单的修改文件然后做出一个提交, 这样将留下两个提交记录. 如果你不想引入新的提交, 可以执行如下命令:
+
+```
+$ git add speech.txt
+$ git commit --amend
+```
+
+然后新的修改将修改原始提交. 也可以使用如下命令来修改提交作者:
+
+```
+$ git commit --amend --author "xxx"
+```
+
 ## 变基提交 ##
+
+
 
 ### 使用 git rebase -i ###
 
