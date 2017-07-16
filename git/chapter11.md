@@ -63,3 +63,31 @@ git stash show 命令可以显示给定储藏条目相对于它的父提交的�
 创建储藏的能力可能很有吸引力, 但是要注意, 不能滥用而创建太多的储藏, 也不要将它们转化成命令的分支来使它们留在版本库中.
 
 ## 引用日志 ##
+
+引用日志记录非裸版本库中分支头的改变, 每次对引用的更新, 包括对 HEAD 的引用, 引用日志都会更新以记录这些引用发生了哪些变化. 会更新引用日志的基本操作包括:
+
+- 复制
+- 推送
+- 执行新提交
+- 修改或创建分支
+- 变基操作
+- 重置操作
+
+从根本上说, 任何修改引用或更改分支头的 Git 操作都会记录. 默认情况下, 引用日志在非裸版本库中是启用的, 在裸版本库中是禁用的. 引用日志是由配置选项 core.logAllRefUpdates 控制的, 可以通过 git config 命令来修改该配置.
+
+可以通过 git reflog show 命令来显示引用日志:
+
+![图 git reflog show](./images/image11-03.png)
+
+引用日志记录所有引用的事物处理, 但是 git reflog show 命令一次只显示一个引用的事务, 默认显示的是 HEAD. 可以通过如下命令显示 fred 分支的变化:
+
+![图 git reflog fred](./images/image11-04.png)
+
+Git 还支持更多类英语的限定符在花括号中作为引用的一部分:
+
+![图 git log "last saturday"](./images/image11-05.png)
+
+Git 针对引用支持大量基于日期的限定符, 包括 yesterday, noon, midnight, tea, 星期, 月份等. Git 会时不时的自动执行垃圾回收进程, 在这个过程中, 一些老旧的引用日志条目会过期并被丢弃. 通常情况下, 一个提交如果不能从某个分支或引用指向, 也不可达, 将会默认在 30 天后过期; 可达的提交将默认在 90 天后过期.
+可以通过设置配置变量 gc.reflogExpireUnreachable 和 gc.reflogExpire 的值来满足要求. 可以使用 git reflog delete 命令来删除单个条目, 或使用 git reflog expire 命令直接让条目过期并被立即删除.
+
+事实上, 储藏正是通过使用 stash 引用的引用日志来实现的. 引用日志都存储在 .git/logs 目录下, .git/logs/refs 目录包含所有引用的历史记录, .git/logs/refs/heads 包含分支头的历史记录.
