@@ -56,13 +56,150 @@ $ git ls-remote
 
 ## 引用其他版本库 ##
 
+一个远程版本库是指存在版本库配置文件中的一个实体名, 由两个不同的部分组成: 第一部分以 URL 的形式指出其他版本库的名称; 第二部分称为 refspec, 指定一个引用(通常表示一个分支)是如何从一个版本库的命名空间映射到其他版本库的命令空间.
+
 ### 引用远程版本库 ###
+
+Git 支持多种的 URL, 来指定访问协议和数据的位置或地址. Git 的 URL 形式不完全符合 RFC1738 和 RFC2396 的定义, 通常称为 Git URL, 而且在 .git/config 文件中也使用 Git URL.
+
+Git URL 可以是如下的几种形式:
+
+1. 指代本地文件系统上的版本库
+
+可以是本地的物理文件系统, 或是通过 NFS 挂载到本地的虚拟文件系统, 形式如下:
+
+```
+/path/to/repo.git
+file://path/to/repo.git
+```
+
+两者的形式相似, 但是第一种使用文件系统中的硬链接来共享对象, 后者直接复制对象. 通常建议使用第二种形式.
+
+2. Git 原生协议
+
+Git 原生协议是指 Git 内部用来传输数据的自定义协议, 形式如下:
+
+```
+git://example.com/path/to/repo.git
+git://example.com/~user/path/to/repo.git
+```
+
+使用这些格式的客户端不用经过身份验证, 不要求输入密码. ~user 格式可以用来指代用户的主目录, 并且只有当服务器端使用 --user-path 选项允许时 ~user 格式才有效.
+
+3. ssh 协议
+
+对经过身份验证的安全链接, 可以使用如下形式:
+
+```
+ssh://[user@]example.com[:port]/path/to/repo.git
+ssh://[user@]example.com/path/to/repo.git
+ssh://[user@]example.com/~user2/path/to/repo.git
+ssh://[user@]example.com/~/path/to/repo.git
+```
+
+第三种形式允许存在两个不同的用户名, 第一个是验证会话的用户, 第二个是访问目录的用户.
+
+4. scp URL
+
+形式类似于 SSH 形式, 但无法指定端口参数:
+
+```
+[user@]example.com/path/to/repo.git
+[user@]example.com:~user/path/to/repo.git
+[user@]example.com:path/to/repo.git
+```
+
+5. HTTP/HTTPS 协议
+
+```
+http://example.com/path/to/repo.git
+https://example.com/path/to/repo.git
+```
+
+需要注意的是, 大多数企业的防火墙允许 HTTP 的 80 端口和 HTTPS 的 443 端口, 而 Git 默认的 9418 端口通常是关闭的.
+
+6. Rsync 协议
+
+```
+rsync://example.com/path/to/repo.git
+```
+
+不鼓励使用.
 
 ### refspec ###
 
+refspec 把远程版本库中的分支名映射到本地版本库的分支名. 因为 refspec 必须同时从本地版本库和远程版本库指定分支, 所以完整的分支名在 refspec 中是很常见且必须的. 通常开发分支名有 refs/heads/ 前缀, 远程追踪分支名有 refs/remotes/ 前缀.
+
+refspec 的语法如下:
+
+```
+[+]source:destination
+```
+
+主要由源引用, 冒号和目标引用组成, 完整的格式还有一个可选的加号, 有加号表示不会在传输过程中进行正常的快进安全检查, 星号运行用有限形式的通配符匹配分支名.
+
+在某些应用中, 源引用是可选的; 在另一些应用中, 冒号和目标引用是可选的.
+
+源和目标依赖于正在执行的 Git 操作, 关系总结于下表:
+
+| 操作 | 源 | 目标 |
+|:--|:--|:--|
+| push | 推送的本地引用 | 更新的远程引用 |
+| fetch | 抓取的远程引用 | 更新的本地引用 |
+
+典型的 git fetch 命令会如下使用 refspec:
+
+```
++refs/heads/*:refs/remotes/remote/*
+```
+
+此处的 refspec 解释如下:
+
+> 在命名空间的 refs/heads/ 中来自远程版本库的所有源分支(i)映射到本地版本库, 使用远程版本库名来构造名字(ii), 并放在 refs/remotes/remote/ 命名空间中.
+
+惯例是将给定的远程版本库分支放在 refs/remotes/remote/* 下. 可以使用 git show-ref 列出当前版本库中的引用, 使用 git ls-remote 列出远程版本库的引用.
+
+在典型的 git push 命令中, 会把你的版本库中的源分支发送到远程版本库, 使用的 refspec 如下:
+
+```
++refs/heads/*:refs/heads/*
+```
+
+如果命令中没有指定远程版本库, 则默认使用 origin; 如果没有 refspec, 则将提交发送到远程版本库中你与上游版本库共有的所有分支.
+
+默认的 refspec 使用以下两条等价的命令:
+
+```
+git push origin branch
+git push origin branch:refs/heads/branch
+```
+
 ## 使用远程版本库的示例 ##
 
+一般会建立一个所有的开发人员都认为是权威的一个版本库, 所有人都一致对待该版本库, 这个版本库会存放在一个特殊的目录中, 该目录称为仓库(depot). 仓库会使所有开发人员的 remote origin.
+
 ### 创建权威版本库 ###
+
+第一步是用一个初始版本库填充 /tmp/Depot, 假设在 ~/public_html 下已经是 Git 版本库的网站内容, 那么使用以下命令复制内容:
+
+```
+$ cd /tmp/Depot
+$ git clone --bare ~/public_html public_html.git
+```
+
+clone 命令把 ~/public_html 中的 Git 远程版本库复制到当前工作目录 /tmp/Depot 下. 最后一个参数给版本库赋予了一个新的名字. 按照惯例, 裸版本库名有个 .git 后缀.
+
+原始的开发版本库的内容如下:
+
+![图 原始版本库内容](./images/image12-01.png)
+
+裸版本库中没有工作目录, 内容如下:
+
+![图 裸版本库内容](./images/image12-02.png)
+
+因为在克隆操作过程中使用了 --bare 选项, 所以 Git 没有引入一般默认的 origin 远程版本库. 裸版本库的配置如下:
+
+![图 裸版本库配置](./images/image12-03.png)
 
 ### 制作你自己的 origin 远程版本库 ###
 
