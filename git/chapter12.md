@@ -203,6 +203,37 @@ clone 命令把 ~/public_html 中的 Git 远程版本库复制到当前工作目
 
 ### 制作你自己的 origin 远程版本库 ###
 
+版本库 ~/public_html 是通过 git init 创建的, 所以它没有 origin, 需要我们手动添加. 操作远程版本库的命令是 git remote, 这个操作会在 .git/config 文件中引入一些新设置. 执行的命令如下:
+
+```
+$ git remote add origin /tmp/Depot/public_html
+$ cat .git/config
+```
+
+![图 cat .git/config](./images/image12-04.png)
+
+git remote 命令在配置中增加了一个名为 origin 的 remote 区段, 其中包含远程版本库的 url 和 refspec.
+
+现在可以在原始版本库中创建新的远程追踪分支, 代表来自远程版本库的分支, 已完成建立 origin 远程版本库的进程.
+
+```
+# 列出所有分支, 此时只有 master 分支
+$ git branch -a
+* master
+
+# 更新远程版本库信息
+$ git remote update
+$ git branch -a
+* master
+remotes/origin/master
+```
+
+Git 在版本库中引入了一个新的分支 origin/master, 这是一个 origin 远程版本库的远程追踪分支. 它的目的是掌握和追踪 origin 远程版本库的 master 分支的提交.
+
+由 git remote update 命令产生的 Updating origin 不代表远程版本库更新了, 只是意味着本地版本库中的 origin 已被基于远程版本库的信息更新了.
+
+普通的 git remote update 命令会导致每个 remote 都被更新, 可以通过在命令后指定 remote 的名称来限制只从一个 remote 获取更新. 也可以在添加远程版本库是使用 -f 选项来立即对远程版本库执行 fetch.
+
 ### 在版本库中进行开发 ###
 
 ### 推送变更 ###
