@@ -423,11 +423,34 @@ git clone 命令会产生两个单独的版本库:
 
 ## 远程版本库配置 ##
 
+Git 为建立和维护远程版本库信息提供三种机制: git remote 命令, git config 命令和直接编辑 .git/config 文件; 这三种机制的最终结果都体现在 .git/config 文件记录的配置信息上.
+
 ### 使用 git remote ###
+
+- 可以使用 git remote add 命令添加远程版本库
+- 使用 git remote show 命令显示远程版本库信息
+- 使用 git remote update 命令抓取远程版本库的所有可用更新到本地版本库
+- 使用 git remote rm 删除远程版本库以及关联的远程追踪分支
+- 使用 git branch -r -d 删除远程追踪分支, 谨慎使用
+- 使用 git remote prune 删除本地版本库中陈旧的远程追踪分支
+- 使用 git remote update --prune remote 命令首先从远程版本库获得更新, 然后删除陈旧的远程追踪分支
+- 使用 git remote rename 重命名远程版本库
+- 使用 git remote set-url 更新远程版本库的URL
 
 ### 使用 git config ###
 
+git config 命令可以用来直接操纵配置文件中的条目, 其中就包括远程版本库的一些配置变量. 例如添加一个名为 publish 的远程版本库并带有 refspec:
+
+```
+$ git config remote.publish.url 'ssh://git.example.org/pub/repo.git'
+$ git config remote.publis.push '+refs/heads/*:refs/heads/*'
+```
+
+可以使用 git config -l 命令列出有完整变量名的配置文件内容.
+
 ### 使用手动编辑 ###
+
+有些情况下, 直接编辑配置文件可能更简单快捷, 这是这样很容易出错.
 
 ## 使用追踪分支 ##
 
