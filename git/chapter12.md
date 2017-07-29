@@ -236,11 +236,128 @@ Git 在版本库中引入了一个新的分支 origin/master, 这是一个 origi
 
 ### 在版本库中进行开发 ###
 
+现在在版本库中进行开发:
+
+```
+$ cd ~/public_html
+$ git show-branch -a
+
+# 添加fuzzy.txt, 内容如下
+$ cat fuzzy.txt
+Fuzzy Wuzzy was a bear
+Fuzzy Wuzzy had no hair
+Fuzzy Wuzzy wasn't very fuzzy,
+Was he?
+
+$ git add fuzzy.txt
+$ git commit
+```
+
 ### 推送变更 ###
+
+提交的任何变更都在本地版本库中, 可以使用 git push 命令把变更推送到 origin 远程版本库.
+
+```
+$ git push origin master
+```
+
+执行这条命令, Git 使原本在你本地 master 分支的变更发送到远程版本库, 然后再请求把它们放回到 origin/master 的远程追踪分支.
+
+可以使用如下命令来查看远程版本库的分支信息, 来检测远程版本库是否也已更新:
+
+```
+$ git ls-remote origin
+# 然后使用 git rev-parse HEAD 或 git show 来展示与当前的本地分支匹配的提交ID
+```
 
 ### 添加新开发人员 ###
 
+假设将 Bob 引入这个项目:
+
+```
+$ cd /tmp/Bob
+$ git clone /tmp/Depot/public_html.git
+
+# 查看 origin 的信息
+$ git remote show origin
+
+# 查看所有分支
+$ git branch -a
+* master
+  origin/HEAD
+  origin/master
+```
+
+origin/HEAD 通过符号名指出哪个分支是远程版本库认为的活动分支.
+
+Bob 可以修改版本库的内容, 然后推送到仓库中的主版本库:
+
+```
+$ cat fuzzy.txt
+Fuzzy Wuzzy was a bear
+Fuzzy Wuzzy had no hair
+Fuzzy Wuzzy wasn't very fuzzy,
+Wuzzy?
+
+$ git commit fuzzy.txt
+$ git push
+```
+
 ### 获取版本库更新 ###
+
+假设你在获取了 Bob 的最新修改后, 提交了如下的内容:
+
+```
+$ cat index.html
+<html>
+<body>
+My web site is alive!
+<br/>
+Read a <a href="fuzzy.txt">hairy</a> poem!
+</body>
+</html>
+
+$ git commit -m "Add a hairy poem link." index.html
+$ git push
+```
+
+然后 Bob 可以使用 git pull 命令获取该提交:
+
+```
+$ git pull
+```
+
+git pull 命令可以指定版本库和多个 refspec. 如果不指定版本库, 则默认使用 origin 远程版本库; 如果没有指定 refspec, 则默认使用 fetch refspec; 如果指定了版本库而没有指定 refspec, 那么默认抓取远程版本库的 HEAD 引用.
+
+git pull 命令包含两个子步骤: 先执行 git fetch, 然后执行 git merge 或 git rebase, 默认情况下第二个步骤是 merge. 接下来描述一下每一步的细节.
+
+**抓取步骤**
+
+在抓取步骤中, Git 先定位远程版本库, 比如对于如下的远程版本库配置信息:
+
+![图 远程版本库配置](./images/image12-05.png)
+
+假定使用默认远程版本库名 origin, Git 通过配置知道使用 /tmp/Depot/public_html 作为源版本库, 由于没有在命令行中指定 refspec, Git 会使用 remote 条目中所有 "fetch=" 的行, 因此将抓取远程版本库中的每个 refs/heads/* 分支.
+
+接下来 Git 对源版本库进行协商, 以确定哪些提交是在远程版本库中而不是在本地版本库. Git 会把新提交放在你本地版本库上一个合适的远程追踪分支中.
+
+**合并或变基步骤**
+
+在 git pull 的第二个步骤, Git 默认会执行 merge 操作. Git 通过如下的配置知道合并哪些特定的分支:
+
+![图 合并配置](./images/image12-06.png)
+
+以上配置说明, 当 master 分支是当前检出的分支时, 使用 origin 作为 fetch 的默认远程版本库, 在 merge 步骤中将 regs/heads/master 作为默认分支合并到 master 分支.
+
+因为 merge 配置只在执行 git pull 命令时适用, 所以在手动执行 git merge 时必须在命令行中指定合并的源分支.
+
+可以使用 --rebase 选项来指定 pull 过程的第二个步骤中使用变基操作, 这时需要将合并配置中的 rebase 变量配置为 true.
+
+**应该变基还是合并**
+
+通过合并, 每次拉取将有可能产生额外的合并提交来记录更新同时存在于每一个分支的变更; 变基从根本上改变了一系列提交是在何时何地开发的概念, 开发历史记录的某些方面会丢失.
+
+如果需要建立一个始终如一的方法, 可以设置选项 branch.autosetupmerge 或 branch.autosetuprebase 为 true, false 或者 always.
 
 ## 图解远程版本库开发周期 ##
 
