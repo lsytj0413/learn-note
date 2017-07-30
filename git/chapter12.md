@@ -516,4 +516,41 @@ $ git log origin/master..master
 
 ## 添加和删除远程分支 ##
 
+在本地克隆分支上创建的任何提交在远程版本库都不可见, 除非你显示的将提交传递给远程版本库; 对分支的创建和删除也是一样.
+
+要在远程版本库中执行类似本地的分支添加和删除操作, 需要在一条 git push 命令中指定不同形式的 refspec, refspec 语法如下:
+
+```
+[+]源:目标
+```
+
+可以推送只有源引用的 refspec 在远程版本库中创建新分支:
+
+```
+$ cd ~/public_html
+$ git checkout -b foo
+$ git push origin foo
+
+# 下面的命令有相同的效果
+$ git push upstream new_dev
+$ git push upstream new_dev:new_dev
+$ git push upstream new_dev:refs/heads/new_dev
+```
+
+推送只有目标引用的 refspec 导致目标引用从远程版本库中删除:
+
+```
+# 删除远程分支
+$ git push origin :foo
+# 等价于
+$ git push origin --delete foo
+```
+
+对于重命名远程分支, 并没有简单的解决方案; 一般是用新名称创建分支, 然后删除旧分支.
+
 ## 裸版本库和 git 推送 ##
+
+应该只推送到裸版本库. 如果你想要推送到开发版本库, 那么采用下面两种基本方法的一种:
+
+- 在接收版本库中启用一个钩子, 检出某个分支到工作目录
+- 每个开发人员都将修改推送到一个非检出的分支(接收分支)
