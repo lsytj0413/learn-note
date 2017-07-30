@@ -456,7 +456,63 @@ $ git config remote.publis.push '+refs/heads/*:refs/heads/*'
 
 ### 创建追踪分支 ###
 
+master 分支可以认为是 origin/master 分支的开发扩展, 可以在任何的远程追踪分支上创建新的开发扩展分支. 使用远程追踪分支名来的检出请求会导致创建一个新的本地追踪分支, 并与该远程追踪分支关联(仅当分支名与所有远程版本库的一个远程追踪分支匹配).
+
+假设创建一个版本库, 包含两个远程版本库:
+
+```
+$ git clone git://github.com/gitster/git.git
+$ cd git
+$ git remote add korg git://git.kernel.org/pub/scm/git/git.git
+$ git remote update
+```
+
+然后找到一个独特的分支名并检出(使用完整的分支名):
+
+![图 独特分支名的检出](./images/image12-14.png)
+
+如果分支名存在二义性, 也可以直接创建分支:
+
+![图 二义性分支名的检出](./images/image12-15.png)
+
+如果你需要给本地追踪分支一个不同的名字, 可以使用 -b 选项:
+
+```
+$ git checkout -b mypu --track korg/pu
+```
+
+之前的操作会产生如下的配置文件:
+
+![图 配置文件内容](./images/image12-16.png)
+
+早期的 Git 会在检出的远程追踪分支上产生一个分离的 HEAD, 如果你需要在一个分离的 HEAD 上进行提交, 那么可以使用 *git checkout -b* 来创建新的本地分支, 然后在该分支上提交.
+
+在创建本地追踪分支时, 如果你不想检出它, 可以使用如下的命令:
+
+```
+$ git branch --track dev origin/dev
+```
+
+而如果你已经有一个本地特性分支, 想要和远程版本库的远程追踪分支相关联, 那么可以使用如下方式:
+
+```
+$ git remote add upstreamrepo git://git.example.org/upstreamrepo.git
+
+# 将 mydev 分支与 upstreamrepo/dev 关联
+$ git branch --set-upstram mydev upstreamrepo/dev
+```
+
 ### 领先和落后 ###
+
+Git 提供了每个分支提交数目的快速摘要和判断一个分支比另一个分支领先还是落后的方法.
+
+```
+# 使用 git status 查看此状态
+$ git status
+
+# 查看在 master 而不在 origin/master 的提交
+$ git log origin/master..master
+```
 
 ## 添加和删除远程分支 ##
 
