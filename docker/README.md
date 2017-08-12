@@ -29,3 +29,14 @@ sudo apt-cache madison docker-ce
 # 安装特定版本的 docker-ce
 apt install docker-ce=<version>
 ```
+
+## 代理 ##
+
+举个例子, 假如需要通过 docker pull 获取一个 image, 但是此时需要使用代理, 那么需要进行如下操作:
+
+```
+sudo service docker stop
+sudo HTTP_PROXY="127.0.0.1:8118" HTTPS_PROXY="127.0.0.1:8118" dockerd
+```
+
+即首先需要停止 docker deamon, 然后使用代理配置重新启动它.
