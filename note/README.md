@@ -4,6 +4,6 @@
 
 [单词](./word.md) 记录了一些比较有趣与常用的单词.
 
-## shell ##
+## script ##
 
-[shell](./shell.md) 记录了一些 shell 使用过程中的笔记.
+[script](./script.md) 记录了一些 shell 使用过程中的笔记.
