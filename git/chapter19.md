@@ -21,7 +21,73 @@ git filter-branch 完成后, 原先包含整个旧的提交历史记录的引用
 
 ### 使用 git filter-branch 的例子 ###
 
+一个比较常见的使用场景是: 你创建了一个充满了提交历史记录的版本库, 想清理它或做大规模的修改, 从而使得别人能够克隆和使用它.
+
+**使用 git filter-branch 删除文件**
+
+Git 维护版本库中每个文件的完整历史记录, 因此简单的使用 git rm 删除文件是达不到彻底删除文件的效果的. 使用 git filter-branch 就可以从版本库的任何或者每个提交中删除文件, 使得这个文件看起来就是从来没有在版本库中出现过一样.
+
+首先创建一个版本库, 其中包含一些读书笔记, 这时我们要删除 1984 文件的一切记录. 我们可以使用 tree-filter 和 index-filter 来达到效果, 使用 tree-filter 的命令如下:
+
+```
+$ git filter-branch --tree-filter 'rm 1984' master
+```
+
+使用上述命令之后, 我们发现命令执行的过程失败了. 这是因为 Git 会对 master 分支的每个提交建立该提交的上下文, 并且执行 rm 命令, 但是文件 1984 是在第三个提交引入的, 所以对第一个提交执行 rm 命令会失败. 修改之后的命令如下:
+
+```
+# 使用 -f 选项来强制删除并且忽略不存在的文件
+$ git filter-branch --tree-filter 'rm -f 1984' master
+```
+
+Git 会输出当前重写的所有提交, 但是只有最后一个显示在屏幕上. 可以通过管道命令将 Git 的输出重定向到 less, 即可以看到所有重写的提交.
+
+使用 index-filter 的命令如下:
+
+```
+$ git filter-branch --index-filter 'git rm --cached --ignore-unmatch 1984' master
+```
+
+因为 1984 这个文件是从第三个提交引入的, 所有 Git 会给从第三个提交开始的所有提交生成新的 SHA1 值, 在重写和过滤的过程中, Git 创建并维护新老提交的对应关系表, 并提供 map 函数来获取它.
+
+**使用 git filter-branch 编辑提交信息**
+
+在之前的示例中, 我们删除了 1984 文件, 但是一些提交信息中仍然提到了 1984. 例如:
+
+![图 包含1984的提交信息](./images/image19-01.png)
+
+我们可以使用 --msg-filter 过滤器来重写提交信息, 该过滤器命令从 stdin 接受老的提交信息并将修改后的文本你写入 stdout. 使用的命令如下:
+
+```
+$ git filter-branch --msg-filter '
+sed -e "/1984/d" -e "s/few classics/classic/"' master
+```
+
 ### filter-branch 的诱惑 ###
+
+git filter-branch 也可以作用于多个分支和引用, 假设需要将操作作用于所有分支:
+
+```
+# 使用 --all 作用于所有分支
+$ git filter-branch --index-filter \
+"git rm --cached -f --ignore-unmatch '*.jpeg'" \
+-- --all
+```
+
+如果你需要同时将所有标签从过滤前的旧提交指向新提交:
+
+```
+$ git filter-branch --index-filter \
+"git rm --cached -f --ignore-unmatch '*.jpeg'" \
+--tag-name-filter cat \
+-- --all
+```
+
+可以使用如下的命令找到修改过名字的文件:
+
+```
+$ git log --name-only --follow --all - file
+```
 
 ## 我如何学会喜欢上 git rev-list ##
 
