@@ -250,6 +250,46 @@
 
 ![图 采用不同模型的聚类结果](./images/recommend-15.png)
 
-## 参考资料 ##
+# 推荐系统 #
 
-[推荐引擎初](https://www.ibm.com/developerworks/cn/web/1103_zhaoct_recommstudy1/index.html?ca=drs-)
+## 概述 ##
+
+推荐系统是通过挖掘用户与项目之间的二元关系, 帮助用户从大量数据中发现其可能感兴趣的项目如网页, 服务, 商品, 人等, 并生成个性化推荐以满足个性化需求.
+
+一般的推荐系统基本框架如下:
+
+![图 推荐系统基本框架](./images/recommend-16.png)
+
+数据的生命周期如下:
+
+![图 数据生命周期](./images/recommend-17.png)
+
+一般的思路流程如下:
+
+![图 推荐系统的思路流程](./images/recommend-18.jpg)
+
+## 标签体系 ##
+
+![图 标签体系的搭建流程](./images/recommend-19.jpg)
+
+## 用户体系 ##
+
+![图 用户体系的搭建流程](./images/recommend-20.jpg)
+
+# 参考资料 #
+
+[推荐引擎初探](https://www.ibm.com/developerworks/cn/web/1103_zhaoct_recommstudy1/index.html?ca=drs-)
+
+[携程实时用户行为系统实践](http://www.dataguru.cn/article-11059-1.html)
+
+[深度丨从零搭建推荐体系](http://www.jianshu.com/p/d585b3938dea)
+
+[百分点亿级个性化推荐系统的发展历程和实践架构](http://www.open-open.com/lib/view/open1473732760777.html)
+
+[Netflix公布个性化和推荐系统架构](http://www.infoq.com/cn/news/2013/04/netflix-ml-architecture/)
+
+[达观数据是如何基于用户历史行为进行精准个性化推荐的?](http://www.chinaz.com/news/2017/0620/744324.shtml?qq-pf-to=pcqq.c2c)
+
+[推荐系统不相信眼泪，但此算法会给你些安慰](http://iyao.ren/2017/02/28/itemcf/)
+
+[实时推荐系统的3种方式](http://www.jianshu.com/p/356656ce2901)

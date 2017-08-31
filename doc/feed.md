@@ -106,7 +106,7 @@ Facebook 的排序(Edge Rank, 现在是机器学习): 亲密度(交互频率以�
 - 亲密度高: 优先推送
 - 亲密度低: 不推送或延迟推送
 
-## 参考资料 ##
+# 参考资料 #
 
 1. [feed流简介及系统架构](http://www.lmyw.net.cn/?p=619)
 2. [Design News Feed System](http://blog.gainlo.co/index.php/2016/03/29/design-news-feed-system-part-1-system-design-interview-questions/)
