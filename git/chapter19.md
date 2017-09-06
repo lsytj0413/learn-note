@@ -93,7 +93,69 @@ $ git log --name-only --follow --all - file
 
 ### 基于日期的检出 ###
 
+可以利用类似 git checkout master@{Jan 1, 2011} 的命令可以实现基于日期的检出, 该命令使用 reflog 来找到 master 分支上基于日期的引用. 但是这种方式有几个问题可能导致这种方式失效:
+
+1. 版本库没有启用 reflog, 或者 reflog 过期
+2. 它要求依据 reflog 依据你对 master 分支的操作记录来查找在给定时刻分支指向哪个提交, 而不是根据该分支上的提交时间线来查找. 这两者可能是没有关系的.
+3. 可能造成死锁
+
+所以应该使用 git rev-list 命令, 它提供了丰富的选项组合, 帮助用户对有很多分支的复杂历史记录排序, 挖掘潜在模糊的用户特征, 限制搜索空间, 最后在提交历史记录中定位特定的提交.
+
+例如找出 master 分支上 2011 年的最后一个提交:
+
+```
+$ git clone git://github.com/gitster/git.git
+$ cd git
+$ git rev-list -n 1 --before="Jan 1, 2012 00:00:00" master
+```
+
+git rev-list 命令参考的是 CommitDate(提交日期) 字段, 而不是 AuthorDate(创作日期) 字段.
+
+**基于日期的检出的注意事项**
+
+Git 处理日期的部分是通过一个叫 approxidate() 函数实现的, Git 在解析你作为参数传入的日期时是近似的.
+
+```
+# 精确的时间
+$ git rev-list -n 1 --before="Jan 1, 2012 00:00:00" master
+
+# 假定为当前时间
+$ git rev-list -n 1 --before="Jan 1, 2012" master
+```
+
+尽管你在按特定时间查询提交时, 可以得到一个有效的结果, 但是可能过几天再以同样的查询条件查询时会得到不同的结果(可能从其他分支合并了更符合条件的提交).
+
 ### 获取文件的旧版本 ###
+
+可以保持当前工作目录的状态, 而只是将其中某个文件恢复到某个历史版本. 可以借助 rev-list 技术来找出包含所要文件的提交, 在查找时 Git 允许将搜索限定到特定的文件或一系列文件(称为路径限制 path limiting). 
+
+```
+$ git rev-list master --date.c
+```
+
+在找到提交之后有三种方法可以用来得到文件的那个版本:
+
+1. 直接检出那个提交的文件并覆盖工作目录中的当前文件
+
+```
+$ git checkout ecee9d9 date.c
+# 如果不知道提交ID但是知道提交日志包含的一些内容
+$ git checkout :/"FIx PR-1705" main.c
+```
+
+2. 通过 show 命令写入文件
+
+```
+$ git show ecee9d9:date.c > date.c-oldest
+```
+
+3. 通过 cat-file 命令写入文件
+
+```
+$ git cat-file -p 89967:date.c > date.c-first-change
+```
+
+第二种和第三种方式有细微的差别, 第二种方式会利用任何可用的文本转换方法对输出内容进行过滤, 第三种不会进行过滤.
 
 ## 数据块的交互式暂存 ##
 
