@@ -216,4 +216,59 @@ git add -p
 
 ### git fsck 命令 ###
 
+Git 提供了 git fsck 命令来帮助找回丢失的数据. Git 版本库中的每个对象都会和另一个对象连接起来, 并和分支名, 标签名或其他符号引用挂上勾. 一些命令或操作会使一些对象失去和其他对象的连接, 从而脱离版本库完整的数据结构, 这些对象叫做不可及的或者悬挂的, 即从任何命名的引用开始, 沿着每个标签, 提交, 父提交和数对象引用, 遍历整个版本库的数据结构, 都无法达到这些丢失的对象. 可以使用以下命令列出版本库中的所有对象:
+
+```
+$ cd path/to/some/repo
+$ ls -R .git/objects/
+```
+
+可以使用以下命令列出未引用对象:
+
+```
+$ git fsck
+```
+
+首先产生一个遗失的提交:
+
+```
+# 创建版本库
+$ mkdir /tmp/lost
+$ cd /tmp/lost
+$ git init
+
+# 产生第一个提交
+$ echo "foo" >> file
+$ git add file
+$ git commit -m "Add some foo"
+
+# 产生第二个提交
+$ echo bar >> file
+$ git commit -m "Add some bar" file
+
+# 强制重置到第一个提交, 这会导致丢失一个提交
+$ git reset --hard HEAD^
+
+# 暴力的去除 reflog, 否则第二个提交会被 reflog 引用, git fsck 不能列出它
+# 也可以不删除 reflog, 使用 git fsck --no-reflog 找到在没有 reflog 时悬挂的对象
+$ rm -rf .git/logs
+
+# 列出不可达的对象
+$ git fsck
+
+# 查看提交内容
+$ git show 11e0dc9c
+# 查看文件内容
+$ git show 3bd1f0e
+```
+
+每次使用 git add 向索引中添加文件时都会向版本库添加一个 blob, 如果随后修改了该文件并重新添加到索引, 那么之前生成的 blob 对象就会变成悬挂的.
+
 ### 重新连接遗失的提交 ###
+
+对于丢失的 blob 对象, 可以通过 git show 命令来获取它的完整内容并重新添加到版本库即可. 对于提交对象, 通常做法是引入一个新分支来找回提交, 因为它很可能是丢失的一系列提交的一部分或是整个分支都丢失了.
+
+```
+$ git branch recovered 11e0dc9c
+$ git show-branch
+```
