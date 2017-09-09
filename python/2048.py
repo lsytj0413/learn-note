@@ -1,9 +1,8 @@
 # coding=utf-8
 
 import curses
-from random import randrange, choice
 from collections import defaultdict
-
+from random import choice, randrange
 
 actions = [
     'Up',
@@ -205,7 +204,7 @@ def main(stdscr):
 
     state_actions = {
         'Init': init,
-        'Win': lambda : not_game('Win'),
+        'Win': lambda: not_game('Win'),
         'Gameover': lambda: not_game('Gameover'),
         'Game': game
     }
