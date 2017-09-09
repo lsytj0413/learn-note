@@ -251,3 +251,12 @@ decltype多用于泛型编程中.
     auto add(T t, U u) -> decltype(t + u){
         return t+u;
     }
+
+在 C++14 之后, 拥有一个更为简洁的语法:
+
+```
+template <typename T, typename U>
+auto add(T t, U u) {
+    return t + u;
+}
+```
