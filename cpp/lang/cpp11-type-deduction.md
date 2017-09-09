@@ -19,10 +19,12 @@ permalink:
     C++11学习笔记之类型推导部分, 包括auto, decltype等. ---《深入应用C++11》
 + <!-- more -->
 
-# 类型推导
+# 类型推导 #
+
 C++11引入了auto和decltype关键字实现类型推导，以获取复杂的类型，简化书写，提高编码效率。
 
-# auto类型推导
+# auto类型推导 #
+
 auto是一个隐式的类型推导，发生在编译器。作用是让编译器自动推导出这个变量的类型，而不需要显示指定。以下是一些基本用法:
 
     auto x = 5;                      // OK, x=int
@@ -37,7 +39,8 @@ auto是一个隐式的类型推导，发生在编译器。作用是让编译器�
 1. 第３行中，虽然经过ｖ的推导之后已经可以确定ｕ的类型，但是u仍然必须进行赋值;
 2. 第３行中，ｕ的初始化不能使编译器推导产生二义性.
 
-## auto推导规则
+## auto推导规则 ##
+
 先看例子:
 
     int x = 0;                     
@@ -65,13 +68,15 @@ auto是一个隐式的类型推导，发生在编译器。作用是让编译器�
 
 在C++11中, auto不能用于函数参数，在C++14中则可用于lambda表达式的参数声明.
 
-## auto的限制
+## auto的限制 ##
+
 1. 不能用于函数参数;
 2. 不能用于非静态成员变量, 仅能用于static const的整形或枚举成员，因为其他类型在C++中无法就地初始化;
 3. 无法定义数组;
 4. 无法推导出模板参数, 例如 **Bar<auto> bb = bar; **.
 
-## 什么时候使用auto
+## 什么时候使用auto ##
+
 1. 已知类型时使用auto简化书写, 如:
 
         vector<int>::iterator itor = v.begin();
@@ -95,8 +100,10 @@ auto是一个隐式的类型推导，发生在编译器。作用是让编译器�
 
 3. auto会造成代码可读性和可维护性下降,需衡量使用.
 
-# decltype 
-## 获取表达式类型
+# decltype #
+
+## 获取表达式类型 ##
+
 C++11新增了decltype关键字, 用于在编译期获取表达式的类型.语法格式如下:
 
     decltype(exp)
@@ -118,13 +125,13 @@ decltype类似于sizeof, 推导过程是在编译期完成，且不会计算表�
 2. decltype可以像auto一样加上引用和指针, 以及cv限定符;
 3. decltype和引用结合的推导结果, 与C++11新增的引用折叠规则有关;
 
-## decltype的推导规则
+## decltype的推导规则 ##
 
 1. exp是标识符/类访问表达式, decltype(exp)和exp的类型一致：
 2. exp是函数调用, decltype(exp)和返回值类型一致;
 3. 其他情况下, 若exp是左值, 则decltype(exp)是exp类型的左值引用, 否则和exp类型一致;
 
-### 标识符和类访问表达式
+### 标识符和类访问表达式 ###
 
     struct Foo{
         static const int Number = 0;
@@ -141,7 +148,7 @@ decltype类似于sizeof, 推导过程是在编译期完成，且不会计算表�
     Foo foo;
     decltyep(foo.x) d = 0;           // d=int
 
-### 函数调用
+### 函数调用 ###
 
     int& func_int_r(void);                    // lvalue
     int&& func_int_rr(void);                  // xvalue, 右值引用本身是一个xvalue
@@ -167,7 +174,7 @@ decltype类似于sizeof, 推导过程是在编译期完成，且不会计算表�
 
 注意c2的类型是int而不是const int，对于rvalue而言, 只有类类型可以携带cv限定符.
 
-### 带括号表达式和加法表达式
+### 带括号表达式和加法表达式 ###
 
     struct Foo { int x;};
     const Foo foo = Foo();
@@ -183,7 +190,8 @@ decltype类似于sizeof, 推导过程是在编译期完成，且不会计算表�
 2. m+n返回一个右值
 3. n+=m返回一个左值
 
-## 实际使用
+## 实际使用 ##
+
 decltype多用于泛型编程中.
 
     template <typename ContainerT>
@@ -214,7 +222,8 @@ decltype多用于泛型编程中.
         decltype(ContainerT().begin()) it_;
     }
 
-# 结合使用auto/decltype--返回类型后置语法
+# 结合使用auto/decltype--返回类型后置语法 #
+
 考虑以下场景:
 
     template <typename R, typename T, typename U>

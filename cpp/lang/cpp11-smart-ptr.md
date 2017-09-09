@@ -18,18 +18,22 @@ permalink:
     C++11学习笔记之智能指针, shared_ptr, unique_ptr和weak_ptr. ---《深入应用C++11》
 + <!-- more -->
 
-# 什么是智能指针
+# 什么是智能指针 #
+
 在C#和java语言中有垃圾回收机制, .NET运行时和Java虚拟机可以管理分配的堆内存, 在对象失去引用的时候自动回收, 一般不用关心内存管理.
 但在C++中,必须自己去释放分配的内存,否则会内存泄漏.解决这个问题最有效的办法是使用智能指针管理分配的内存.
 
 智能指针是存储指向动态分配对象的指针的类, 用于生存期控制, 确保在离开指针所在作用域时, 自动正确的销毁动态分配的对象, 防止内存泄漏.
 一种通用的实现技术是使用引用计数, 每引用一次计数+1, 析构一次-1, 当计数减为0时, 释放内存.
 
-# shared_ptr: 共享的智能指针
+# shared_ptr: 共享的智能指针 #
+
 shared\_ptr使用引用计数, 每一个shared\_ptr的拷贝都指向相同的内存, 在最后一个shared\_ptr析构时释放内存.
 
-## 基本用法
-### 初始化
+## 基本用法 ##
+
+### 初始化 ###
+
 可以通过构造函数, std::make\_shared<T>辅助函数和reset方法初始化shared\_ptr:
 
     std::shared_ptr<int> p(new int(10));
@@ -49,13 +53,15 @@ shared\_ptr使用引用计数, 每一个shared\_ptr的拷贝都指向相同的�
 
     std::shared_ptr<int> p = new int(1);         // error
 
-### 获取原始指针
+### 获取原始指针 ###
+
 可以通过get函数返回原始指针:
 
     std::shared_ptr<int> p(new int{1});
     int* p1 = p.get();
 
-### 指定删除器
+### 指定删除器 ###
+
 智能指针初始化时可以指定删除器:
 
     void delete_p(int* p){
@@ -81,16 +87,18 @@ shared\_ptr使用引用计数, 每一个shared\_ptr的拷贝都指向相同的�
 
 其中default\_delete内部是通过调用delete实现功能的.
 
-## 注意点
+## 注意点 ##
 
-### 不要用一个原始指针初始化多个shared_ptr
+### 不要用一个原始指针初始化多个shared_ptr ###
+
 这种情况会造成重复delete:
 
     int* ptr = new int{1};
     shared_ptr<int> p1(ptr);
     shared_ptr<int> p2(ptr);         // double delete 
 
-### 不要在实参中创建shared_ptr
+### 不要在实参中创建shared_ptr ###
+
 例如下面的写法:
 
     function (shared_ptr<int>(new int{1}), g());          // 可能造成内存泄漏
@@ -100,9 +108,10 @@ shared\_ptr使用引用计数, 每一个shared\_ptr的拷贝都指向相同的�
 正确的写法如下:
 
     shared_ptr<int> p(new int{1});
-    function (p, g());         
+    function (p, g());
 
-### 要通过shared_from_this返回this指针
+### 要通过shared_from_this返回this指针 ###
+
 不要直接将this指针作为shared\_ptr返回, 这样可能导致重复析构.
 正确的做法是让目标类从enable\_shared\_from\_this派生, 使用基类的成员函数shared\_from\_this返回this的智能指针:
 
@@ -116,7 +125,8 @@ shared\_ptr使用引用计数, 每一个shared\_ptr的拷贝都指向相同的�
     shared_ptr<A> spy(new A());
     shared_ptr<A> p = spy->self();
     
-### 避免循环引用
+### 避免循环引用 ###
+
 循环引用会导致内存泄漏:
 
     struct A;
@@ -138,10 +148,12 @@ shared\_ptr使用引用计数, 每一个shared\_ptr的拷贝都指向相同的�
 上例中存在内存泄漏,循环引用导致pa和pb的引用计数为2, 当离开作用域之后也只会变为1.
 解决办法是将shared\_ptr使用weak\_ptr替换.
 
-### 侵入性
+### 侵入性 ###
+
 shared\_ptr具有侵入性, 即一个指针一旦交由shared\_ptr控制, 则再不能取出.
 
-# unique_ptr: 独占的智能指针
+# unique_ptr: 独占的智能指针 #
+
 unique\_ptr是独占型的智能指针, 不允许其他的智能指针共享内部的指针, 不允许通过赋值给另一个unique\_ptr.
 
     unique_ptr<A> p(new A);
@@ -183,12 +195,14 @@ unique\_ptr指定删除器时需要取定删除器的类型:
         delete p;
     });    
 
-# weak_ptr: 弱引用的智能指针
+# weak_ptr: 弱引用的智能指针 #
+
 弱引用的智能指针weak\_ptr是用来监视shared\_ptr的,不会增加引用计数.
 它不管理shared\_ptr内部的指针, 主要是为了监视shared\_ptr的生命周期, 是shared\_ptr的一个助手.
 weak\_ptr没有重载操作符*和->, 不能操作资源.
 
-## 基本用法
+### 基本用法 ###
+
 1. 通过use\_count()获取引用计数值 
 2. 通过expire()判断资源是否已经释放
 3. 通过lock方法获取所监视的shared\_ptr 
@@ -204,11 +218,13 @@ weak\_ptr没有重载操作符*和->, 不能操作资源.
     shared_ptr<int> sp1 = wp.lock();
     cout << *sp1 << endl;
 
-## 返回this指针
+## 返回this指针 ##
+
 之前提到需要通过派生enable\_shared\_from\_this, 然后用shared\_from\_this返回智能指针.
 因为enable\_shared\_from\_this中有一个weak\_ptr, 调用shared\_from\_this时正是由weak\_ptr的lock方法返回指针.
 
-## 解决循环引用
+## 解决循环引用 ##
+
 示例如下:
 
     struct A;
@@ -229,7 +245,7 @@ weak\_ptr没有重载操作符*和->, 不能操作资源.
 
 将其中一个成员修改为weak\_ptr之后, 不会造成循环引用.
 
-# 使用智能指针管理第三方库分配的内存
+# 使用智能指针管理第三方库分配的内存 #
 
 一般第三方库分配的内存都需要调用相应的第三方库接口释放, 容易造成内存泄漏, 使用智能指针加上删除器管理第三方库分配的内存,
 即可避免内存泄漏.

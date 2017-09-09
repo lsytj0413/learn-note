@@ -18,16 +18,17 @@ permalink:
     C++11学习笔记之type_traits. ---《深入应用C++11》
 + <!-- more -->
 
-# 什么是类型萃取
+# 什么是类型萃取 #
 
 type\_traits提供了丰富的编译期计算,查询,判断,选择和转换的帮助类.
 
 type\_traits的类型选择功能,在一定程度上可以消除冗长的switch-case或者if-else语句,降低程序的圈复杂度, 提高代码的可维护性.
 type\_traits的类型判断功能,在编译期可以检查出是否是正确的类型, 以便能编写更安全的代码.
 
-# 基本的type_traits 
+# 基本的type_traits #
 
-## 简单的type_traits 
+## 简单的type_traits ##
+
 先看一个在C++11之前,在一个类中定义编译期常量的方法非:
 
     template <typename T>
@@ -73,7 +74,8 @@ intergral\_constant类有一个value成员, 可以通过它获取值. 常见的�
 2. true\_type和false\_type是不同的类型, 可以用作函数重载等, 而true和false是相同的类型(bool);
 3. true\_type和false\_type更符合元编程的要求.
 
-## 类型判断的type_traits
+## 类型判断的type_traits ##
+
 类型判断的type\_traits从std::intergral\_constant派生,用来检查模板类型是否符合为某种类型.
 
 一些常用的类型判断模板如下表:
@@ -103,7 +105,7 @@ intergral\_constant类有一个value成员, 可以通过它获取值. 常见的�
 
 判断类型的traits一般和enable\_if结合使用,通过SFINAE特性来实现功能更强大的重载.
 
-## 判断两个类型之间关系的traits
+## 判断两个类型之间关系的traits ##
 
 在需要检查两个类型之间的关系时,可以使用以下traits:
 
@@ -113,7 +115,8 @@ intergral\_constant类有一个value成员, 可以通过它获取值. 常见的�
 | is\_base\_of | 是否是继承关系 |
 | is\_convertible | 第一个类型是否能转换为第二个类型 |
 
-## 类型转换的traits
+## 类型转换的traits ##
+
 常用的类型转换的traits包括对const的修改和添加,引用的移除和添加, 数组的修改和指针的修改等, 如下表:
 
 | traits类型 | 说明 |
@@ -131,12 +134,14 @@ intergral\_constant类有一个value成员, 可以通过它获取值. 常见的�
 | common\_types | 获取公共类型 |
 
 对于普通类型来说,decay是移除引用和cv限定符.decay还可以作用于数组和函数, 具体的规则如下:
+
 1. 先移除T的引用,得到类型U, U = remove\_reference<T>::type;
 2. 如果is\_array<T>::value为true,修改类型type为remove\_extent<U>::type*;
 3. 否则, 如果是is\_function<U>::value为true, 修改类型type为add\_pointer<U>::type;
 4. 否则, 修改类型type为remove\_cv<U>::type;
 
-# 根据条件选择的traits
+# 根据条件选择的traits #
+
 std::conditional在编译期根据一个判断式选择两个类型中的一个, 类似于一个三元表达式:
 
     template <bool B, typename T, class F>
@@ -144,7 +149,8 @@ std::conditional在编译期根据一个判断式选择两个类型中的一个,
     
 如果B为true, 则conditional::type为T,否则为F.
 
-# 获取可调用对象返回类型的traits
+# 获取可调用对象返回类型的traits #
+
 当某个类型没有模板参数时,要获取函数的返回类型会比较困难:
 
     struct A{
@@ -178,7 +184,8 @@ std::declval可以获取任何类型的临时值,不论该类型是否有默认�
 在上例中, 因为fn是一个函数类型而不是一个可调用对象, 所以不能直接适用于std::result\_of.
 需要先转换为一个可调用对象.
 
-# 根据条件禁用或启用某种或某些类型的traits
+# 根据条件禁用或启用某种或某些类型的traits #
+
 编译器在匹配重载函数时会匹配所有的重载函数,找到一个最精确匹配的函数,在匹配过程中可能会有一些失败的尝试,当匹配失败时会再次尝试匹配其他的重载函数.
 
     template <typename T>

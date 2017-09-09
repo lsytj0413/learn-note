@@ -18,18 +18,22 @@ permalink:
     C++11学习笔记之使用chrono库处理日期和时间. ---《深入应用C++11》
 + <!-- more -->
 
-# 简介
+# 简介 #
+
 chrono是C++11中方便的处理日期和时间的库, 主要包含三种类型: 
 
 1. duration: 时间间隔
 2. clocks: 时钟
 3. time\_point: 时间点
 
-# duration
+# duration #
+
 duration表示一段时间间隔, 用来记录时间长度, 可以表示几秒, 几分钟或者几小时的时间间隔.原型如下:
 
-    template <class Rap, class Period=std::ratio<1,1>>
-    class duration;
+```
+template <class Rap, class Period=std::ratio<1,1>>
+class duration;
+```
     
 第一个参数Rep是一个数值类型, 表示时钟数;
 
@@ -83,7 +87,7 @@ duration的加减运算有一定的规则, 当两个duration时钟周期不相�
     cout << chrono::duration_cast<chrono::minutes>(t3).count() << endl;
     // output: 9
 
-# time_point
+# time_point #
 
 time\_point表示一个时间点, 用来获取从它的clock的纪元开始所经过的duration和当前的时间, 
 可以做一些时间的比较和算数运算, 可以和ctime库结合起来显示时间. time\_clock必须用clock来计时.
@@ -106,14 +110,16 @@ time\_point还支持一些算术运算, 比如两个time\_point的差值时钟�
     cout << std::put_time(std::localtime(&last), "%F %T") << endl;
     cout << std::put_time(std::localtime(&next), "%F %T") << endl;
 
-# clocks
+# clocks #
+
 clocks代表当前的系统时钟, 内部有time\_point, duration, Rep和Period等信息.包含以下3种信息:
 
 1. system_clock: 代表真实世界的挂钟时间, 具体时间依赖于系统. system_clock保证提供一个可读时间
 2. steady_clock: 不能被调整的时钟, 并不一定代表真实时间. 保证先后调用now获得的时间值是递增的
 3. high_resolution_clock: 高精度时钟, 实际上是上两者之一的别名. 可以通过now获取当前时间点
 
-# 计时器Timer
+# 计时器Timer #
+
 可以利用high\_resolution\_clock来实现一个类似于boost.timer的计时器.
 
     class Timer

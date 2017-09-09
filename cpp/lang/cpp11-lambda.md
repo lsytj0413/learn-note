@@ -18,7 +18,8 @@ permalink:
     C++11学习笔记之std::function, std::bind与lambda表达式. ---《深入应用C++11》
 + <!-- more -->
 
-# 可调用对象
+# 可调用对象 #
+
 在C++中,存在可调用对象这个概念, 有如下几种定义:
 1. 函数指针
 2. 具有operator()成员函数的对象, 即仿函数
@@ -26,7 +27,8 @@ permalink:
 4. 是一个类成员函数指针
    > 函数类型不能直接用来定义对象,而函数引用可看作一个const的函数指针
    
-# std::function
+# std::function #
+
 std::function是一个可调用对象的包装器.它是一个类模板,可以容纳除了类成员函数指针之外的所有可调用对象.
 
 通过指定它的模板参数,可以用统一的方式处理函数,函数对象,函数指针, 并允许保存和延迟调用.
@@ -70,7 +72,8 @@ std::function是一个可调用对象的包装器.它是一个类模板,可以�
     }
 std::function可以取代函数指针的作用,比函数指针更灵活,便利,适合作为回调函数, 类似于C#中的委托.   
 
-# std::bind
+# std::bind #
+
 std::function并不能绑定成员函数,这是它的缺陷.利用std::bind可以弥补这个缺点.
 
 std::bind的作用是将一个可调用对象与其参数一起绑定,绑定后的结果可以通过std::function进行保存.主要包括以下两个作用:
@@ -144,7 +147,9 @@ std::bind的作用是将一个可调用对象与其参数一起绑定,绑定后�
     }
 
 bind具有非常强大的功能,使用bind与function配合,所有的可调用对象都有了统一的操作方法.
-## 使用bind简化bind1st和bind2nd
+
+## 使用bind简化bind1st和bind2nd ##
+
 假设我们需要查找大于10和小于10的元素个数, 使用bind1st和bind2nd 实现如下:
 
     // > 10
@@ -175,7 +180,8 @@ bind具有非常强大的功能,使用bind与function配合,所有的可调用�
         std::bind(less<int>(), placeholder::_1, 10)
     );
 
-## 组合bind
+## 组合bind ##
+
 bind可以组合多个函数,形成一个功能更强大的函数.
 
     // 找出>5 and <=10的元素个数
@@ -185,14 +191,16 @@ bind可以组合多个函数,形成一个功能更强大的函数.
     );
     int count = count_if(coll.begin(), coll.end(), f);
 
-# lambda表达式
+# lambda表达式 #
+
 lambda来源于函数式编程的概念,也是现代编程语言的一个特点.lambda表达式有以下优点:
 
 1. 声明式编程风格: 就地匿名定义目标函数或函数对象, 具有更好的可读性和可维护性
 2. 简洁: 避免定义只使用一次的函数或函数对象, 避免代码膨胀和功能分散
 3. 实现闭包
 
-## 概念和基本用法
+## 概念和基本用法 ##
+
 lambda表达式定义了一个匿名函数,并且可以捕获一定范围内的变量.语法如下:
 
     [ capture ] (params) opt -> ret { body; };
@@ -212,6 +220,7 @@ lambda表达式定义了一个匿名函数,并且可以捕获一定范围内的�
     auto x2 = []{ return {1, 2}; };    // error
 
 lambda表达式可以通过捕获列表捕获一定范围内的变量:
+
 1. []: 不捕获任何变量
 2. \[&\]: 按引用捕获外部作用域的所有变量
 3. \[=\]: 按值捕获外部作用域的所有变量
@@ -236,7 +245,8 @@ lambda表达式可以通过捕获列表捕获一定范围内的变量:
 
 lambda表达式是就地定义仿函数的语法糖, 被捕获的变量会成为闭包类型的成员变量.
 
-## 声明式编程风格
+## 声明式编程风格 ##
+
 先看一个例子:
 
     std::vector<int> v{1, 2, 3, 4, 5};
@@ -251,7 +261,8 @@ lambda表达式是就地定义仿函数的语法糖, 被捕获的变量会成为
 
 lambda表达式可以就地封装短小的闭包功能,让上下文紧密结合.
 
-## 实现闭包
+## 实现闭包 ##
+
 计算集合中大于5小于10的元素个数:
 
     int count = count_if(coll.begin(), coll.end(), [](int x){
@@ -260,8 +271,9 @@ lambda表达式可以就地封装短小的闭包功能,让上下文紧密结合.
 
 可以看到,lambda表达式比bind灵活性更好,也更为简洁.
 
-# 其他细节
-## bind的参数个数
+# 其他细节 #
+
+## bind的参数个数 ##
 
     void func(int i, int j)
     {
@@ -286,7 +298,7 @@ lambda表达式可以就地封装短小的闭包功能,让上下文紧密结合.
     }
 从上可以看出,bind可以传递多的参数,只不过参数会被忽略;
 
-## lamdba表达式的类型
+## lamdba表达式的类型 ##
 
     auto f1 = [](int i){return i;};
     auto f2 = [](int i){return i;};
@@ -294,9 +306,11 @@ lambda表达式可以就地封装短小的闭包功能,让上下文紧密结合.
     cout << is_same<decltype(f1), decltype(f2)>::value << endl;
     // output: 
     // 0
+    
 从上可以看出, 就算是完全相同的两个lambda表达式,也是不同的类型.
 
-## bind与lambda对比
+## bind与lambda对比 ##
+
 lambda相对与bind来说更简洁,而且可以实现bind的所有功能. 所以在C++中, 应该尽可能使用lambda来替代bind.
 
 在[stack overflow](http://stackoverflow.com/)上有个提问,对比了bind和lamdba.
@@ -304,7 +318,9 @@ lambda相对与bind来说更简洁,而且可以实现bind的所有功能. 所以
 [Why use `std::bind` over lambdas in C++14?](http://stackoverflow.com/questions/17363003/why-use-stdbind-over-lambdas-in-c14/17545183)
 
 简要介绍如下:
-### 实现template
+
+### 实现template ###
+
 使用bind可以实现绑定模板函数:
 
     struct Foo{
@@ -327,7 +343,7 @@ lambda相对与bind来说更简洁,而且可以实现bind的所有功能. 所以
     };
     f("test", 1.2f);
 
-### 调用重载函数
+### 调用重载函数 ###
     
     struct F {
         bool operator()(char, int);
@@ -339,7 +355,7 @@ lambda相对与bind来说更简洁,而且可以实现bind的所有功能. 所以
     std::string s = f('b');
 lambda暂时不能实现此功能.
 
-### Scott Meyers的观点
+### Scott Meyers的观点 ###
 
 Scott.Meyers[^Scott.Meyers]探讨过[这个问题](http://www.meetup.com/ocppug/events/122753582/), 他的观点如下:
 

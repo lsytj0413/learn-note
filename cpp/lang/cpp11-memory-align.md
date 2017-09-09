@@ -18,7 +18,8 @@ permalink:
     C++11学习笔记之内存对齐. ---《深入应用C++11》
 + <!-- more -->
 
-# 什么是内存对齐
+# 什么是内存对齐 #
+
 内存对齐,或者说字节对齐,是指一个数据类型所能存放的内存地址的属性.这个属性是一个无符号整数,并且这个整数必须是2的N次方.
 当我们说一个数据类型的内存对齐为8时,是指这个数据类型所定义出的所有变量的内存地址都是8的倍数.
 
@@ -89,7 +90,7 @@ permalink:
 
 例如: 假设MyStruct的起始地址为0x01,那么a和b之间会有2个字节的padding;而如果MyStruct的起始地址为0x03,那么a和b之间就不会有padding.
 
-# 堆内存的内存对齐
+# 堆内存的内存对齐 #
 
 在讨论内存对齐的时候一般忽略堆内存.实际上,malloc一般使用当前平台默认的最大内存对齐数对齐内存,所以当我们自定义的内存对齐超出了这个范围,则不能直接使用malloc获取内存.
 
@@ -119,7 +120,7 @@ permalink:
         free(static_cast<void**>(p)[-1]);
     }
 
-# 利用alignas指定内存对齐大小
+# 利用alignas指定内存对齐大小 #
 
 有时我们不希望按照默认的方式来对齐,这时可以使用alignas来指定内存对齐的大小:
 
@@ -138,6 +139,7 @@ permalink:
     alignas(int) char c;
     
 注意:
+
 1. 在C++11中,只要是一个编译期常数都支持alignas;
 2. alignas只能改大不能改小;
 3. 如需要改小可使用#pragma pack,或使用C++11中的等价物 _Pragma
@@ -148,7 +150,7 @@ permalink:
     struct MyStruct{};
     _Pragma("pack()")
 
-# 利用alignof 和std::alignment_of获取内存对齐大小
+# 利用alignof 和std::alignment_of获取内存对齐大小 #
 
 alignof可以获取内存对齐大小(也可作用与变长参数类型,同sizeof), 使用方式如下:
 
@@ -168,7 +170,7 @@ std::alignment\_of的简单实现方式如下:
     struct alignment_of : std::intergral_constant< std::size_t, alignof(T)>
     {};
 
-# 内存对齐的类型std::aligned_storage
+# 内存对齐的类型std::aligned_storage #
 
 std::aligned\_storage可以看作一个内存对齐的缓冲区, 原型如下:
 
@@ -209,7 +211,7 @@ std::aligned\_storage一般和placement new结合使用, 用法如下:
     
 注意: 当使用堆内存时可能还需要aligned_malloc.
 
-# std::max_align_t和std::align操作符
+# std::max_align_t和std::align操作符 #
 
 std::max\_align\_t返回当前平台的最大默认对齐值, 对于malloc返回的内存, 其对齐和std::max\_align\_t的对齐大小应当是一致的.
 
