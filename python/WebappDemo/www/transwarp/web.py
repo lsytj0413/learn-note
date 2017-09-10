@@ -5,15 +5,25 @@ WEB framework
 """
 
 
-import types, os, re, cgi, sys, time, datetime, functools, mimetypes, threading, urllib
-import logging, traceback
+import cgi
+import datetime
+import functools
+import logging
+import mimetypes
+import os
+import re
+import sys
+import threading
+import traceback
+import types
+import urllib
+
+from common import Dict, to_str, to_unicode
 
 try:
     from cStringIO import StringIO
 except ImportError:
     from StringIO import StringIO
-
-from common import Dict, to_str, to_unicode
 
 
 ctx = threading.local()
@@ -32,7 +42,7 @@ class UTC(datetime.tzinfo):
         utc = str(utc.strip().upper())
         mt = _RE_TZ.match(utc)
         if mt:
-            minus = mt.group(1)=='-'
+            minus = mt.group(1) == '-'
             h = int(mt.group(2))
             m = int(mt.group(3))
             if minus:
@@ -162,8 +172,7 @@ _RESPONSE_HEADERS = (
 
 
 _RESPONSE_HEADER_DICT = dict(zip(map(lambda x: x.upper(), _RESPONSE_HEADERS),
-                                 _RESPONSE_HEADERS
-))
+                                 _RESPONSE_HEADERS))
 
 
 _HEADER_X_POWERED_BY = ('X-Powered-By', 'transwarp/1.0')
@@ -331,9 +340,9 @@ def _build_regex(path):
             for ch in v:
                 if ch >= '0' and ch <= '9':
                     s = s + ch
-                elif ch  >= 'A' and ch <= 'Z':
+                elif ch >= 'A' and ch <= 'Z':
                     s = s + ch
-                elif ch  >= 'a' and ch <= 'z':
+                elif ch >= 'a' and ch <= 'z':
                     s = s + ch
                 else:
                     s = s + '\\' + ch
@@ -402,12 +411,14 @@ class StaticFileRoute(object):
         if not os.path.isfile(fpath):
             raise notfound()
         fext = os.path.splitext(fpath)[1]
-        ctx.response.content_type = mimetypes.types_map.get(fext.lower(), 'application/octet-stream')
+        ctx.response.content_type = mimetypes.types_map.get(
+            fext.lower(),
+            'application/octet-stream')
         return _static_file_generator(fpath)
 
 
 def favicon_handler():
-    return static_file_handler('/favicon.ico')
+    return _static_file_generator('/favicon.ico')
 
 
 class MultipartFile(object):
@@ -437,8 +448,7 @@ class Request(object):
             return to_unicode(item.value)
         fs = cgi.FieldStorage(fp=self._environ['wsgi.input'],
                               environ=self._environ,
-                              keep_blank_values = True
-        )
+                              keep_blank_values=True)
         inputs = dict()
         for key in fs:
             inputs[key] = _convert(fs[key])
@@ -555,7 +565,8 @@ class Response(object):
 
     @property
     def headers(self):
-        L = [(_RESPONSE_HEADER_DICT.get(k, k), v) for k, v in self._headers.iteritems()]
+        L = [(_RESPONSE_HEADER_DICT.get(k, k), v) for
+             k, v in self._headers.iteritems()]
         if hasattr(self, '_cookies'):
             for v in self._cookies.itervalues():
                 L.append(('Set-Cookie', v))
@@ -564,20 +575,20 @@ class Response(object):
 
     def header(self, name):
         key = name.upper()
-        if not key in _RESPONSE_HEADER_DICT:
+        if key not in _RESPONSE_HEADER_DICT:
             key = name
         return self._headers.get(key)
 
     def unset_header(self, name):
         key = name.upper()
-        if not key in _RESPONSE_HEADER_DICT:
+        if key not in _RESPONSE_HEADER_DICT:
             key = name
         if key in self._headers:
             del self._headers[key]
 
     def set_header(self, name, value):
         key = name.upper()
-        if not key in _RESPONSE_HEADER_DICT:
+        if key not in _RESPONSE_HEADER_DICT:
             key = name
         self._headers[key] = to_str(value)
 
@@ -615,9 +626,13 @@ class Response(object):
         L = ['%s=%s' % (_quote(name), _quote(value))]
         if expires is not None:
             if isinstance(expires, (float, int, long)):
-                L.append('Expires=%s' % (datetime.datetime.fromtimestamp(expires, UTC_0).strftime('%a, %d-%b-%Y %H:%M:%S GMT')))
+                L.append('Expires=%s' % (
+                    datetime.datetime.fromtimestamp(expires, UTC_0).
+                    strftime('%a, %d-%b-%Y %H:%M:%S GMT')))
             if isinstance(expires, (datetime.date, datetime.datetime)):
-                L.append('Expires=%s' % (expires.astimezone(UTC_0).strftime('%a, %d-%b-%Y %H:%M:%S GMT')))
+                L.append('Expires=%s' % (
+                    expires.astimezone(UTC_0).
+                    strftime('%a, %d-%b-%Y %H:%M:%S GMT')))
         elif isinstance(max_age, (int, long)):
             L.append('Max-Age=%d' % (max_age))
         L.append('Path=%s' % (max_age))
@@ -709,10 +724,12 @@ def __default_error_handler(e, start_response, is_debug):
         start_response(e.status, headers)
         return '<html><body><h1>%s</h1></body></html>' % (e.status)
     logging.exception('Exception:')
-    start_response('500 Internal Server Error', [('Content-Type', 'text/html'), _HEADER_X_POWERED_BY])
-    if is_debug:
-        return _debug()
-    return '<html><body><h1>500 Internal Server Error</h1><h3>%s</h3></body></html>' % (str(e))
+    start_response('500 Internal Server Error', [('Content-Type', 'text/html'),
+                                                 _HEADER_X_POWERED_BY])
+    # if is_debug:
+    #     return _debug()
+    return '<html><body><h1>500 Internal Server Error\
+    </h1><h3>%s</h3></body></html>' % (str(e))
 
 
 def view(path):
@@ -726,7 +743,8 @@ def view(path):
             if isinstance(r, dict):
                 logging.info('return Template')
                 return Template(path, **r)
-            raise ValueError('Expect return a dict when using @view() decorator.')
+            raise ValueError(
+                'Expect return a dict when using @view() decorator.')
         return _wrapper
     return _decorator
 
@@ -736,7 +754,7 @@ _RE_INTERCEPTROR_ENDS_WITH = re.compile(r'^\*([^\*\?]+)$')
 
 
 def _build_pattern_fn(pattern):
-    m  =_RE_INTERCEPTROR_STARTS_WITH.match(pattern)
+    m = _RE_INTERCEPTROR_STARTS_WITH.match(pattern)
     if m:
         return lambda p: p.startswith(m.group(1))
     m = _RE_INTERCEPTROR_ENDS_WITH.match(pattern)
@@ -820,7 +838,8 @@ class WSGIApplication(object):
         logging.info('Add moduel: %s' % (m.__name__))
         for name in dir(m):
             fn = getattr(m, name)
-            if callable(fn) and hasattr(fn, '__web_route__') and hasattr(fn, '__web_method__'):
+            if callable(fn) and hasattr(fn, '__web_route__') and \
+               hasattr(fn, '__web_method__'):
                 self.add_url(fn)
 
     def add_url(self, func):
@@ -845,7 +864,8 @@ class WSGIApplication(object):
 
     def run(self, port=9000, host='127.0.0.1'):
         from wsgiref.simple_server import make_server
-        logging.info('application (%s) will start at %s:%s...' % (self._document_root, host, port))
+        logging.info('application (%s) will start at %s:%s...' % (
+            self._document_root, host, port))
         server = make_server(host, port, self.get_wsgi_application(debug=True))
         server.serve_forever()
 
@@ -907,15 +927,19 @@ class WSGIApplication(object):
                 logging.exception(e)
                 if not debug:
                     start_response('500 Internal Server Error', [])
-                    return ['<html><body><h1>500 Internal Server Error</h1></body></html>']
+                    return ['<html><body><h1>500 Internal Server Error\
+                    </h1></body></html>']
                 exc_type, exc_value, exc_traceback = sys.exc_info()
                 fp = StringIO()
-                traceback.print_exception(exc_type, exc_value, exc_traceback, file=fp)
+                traceback.print_exception(exc_type, exc_value, exc_traceback,
+                                          file=fp)
                 stacks = fp.getvalue()
                 fp.close()
                 start_response('500 Internal Server Error', [])
                 return [
-                    r'''<html><body><h1>500 Internal Server Error</h1><div style="font-family:Monaco, Consolas, 'Courier New', mobospace;"><pre>''',
+                    r'''<html><body><h1>500 Internal Server Error\
+                    </h1><div style="font-family:Monaco, Consolas,\
+                    'Courier New', mobospace;"><pre>''',
                     stacks.replace('<', '&lt;').replace('>', '&gt;'),
                     '</pre></div></body></html>'
                 ]

@@ -4,7 +4,8 @@
 数据库ORM模块
 """
 
-import logging, time
+import logging
+
 import db
 
 
@@ -32,7 +33,10 @@ class Field(object):
         return d() if callable(d) else d
 
     def __str__(self):
-        s = ['<%s:%s, %s, default(%s),' % (self.__class__.__name__, self.name, self.ddl, self._default)]
+        s = ['<%s:%s, %s, default(%s),' % (self.__class__.__name__,
+                                           self.name,
+                                           self.ddl,
+                                           self._default)]
         self.nullable and s.append('N')
         self.updatable and s.append('U')
         self.insertable and s.append('I')
@@ -46,9 +50,9 @@ class StringField(Field):
     """
 
     def __init__(self, **kw):
-        if not 'default' in kw:
+        if 'default' not in kw:
             kw['default'] = ''
-        if not 'ddl' in kw:
+        if 'ddl' not in kw:
             kw['ddl'] = 'varchar(255)'
         super(StringField, self).__init__(**kw)
 
@@ -59,9 +63,9 @@ class IntegerField(Field):
     """
 
     def __init__(self, **kw):
-        if not 'default' in kw:
+        if 'default' not in kw:
             kw['default'] = 0
-        if not 'ddl' in kw:
+        if 'ddl' not in kw:
             kw['ddl'] = 'bigint'
         super(IntegerField, self).__init__(**kw)
 
@@ -72,9 +76,9 @@ class FloatField(Field):
     """
 
     def __init__(self, **kw):
-        if not 'default' in kw:
+        if 'default' not in kw:
             kw['default'] = 0.0
-        if not 'ddl' in kw:
+        if 'ddl' not in kw:
             kw['ddl'] = 'real'
         super(FloatField, self).__init__(**kw)
 
@@ -85,9 +89,9 @@ class BooleanField(Field):
     """
 
     def __init__(self, **kw):
-        if not 'default' in kw:
+        if 'default' not in kw:
             kw['default'] = False
-        if not 'ddl' in kw:
+        if 'ddl' not in kw:
             kw['ddl'] = 'bool'
         super(BooleanField, self).__init__(**kw)
 
@@ -98,9 +102,9 @@ class TextField(Field):
     """
 
     def __init__(self, **kw):
-        if not 'default' in kw:
+        if 'default' not in kw:
             kw['default'] = ''
-        if not 'ddl' in kw:
+        if 'ddl' not in kw:
             kw['ddl'] = 'text'
         super(TextField, self).__init__(**kw)
 
@@ -111,9 +115,9 @@ class BlobField(Field):
     """
 
     def __init__(self, **kw):
-        if not 'default' in kw:
+        if 'default' not in kw:
             kw['default'] = ''
-        if not 'ddl' in kw:
+        if 'ddl' not in kw:
             kw['ddl'] = 'blob'
         super(BlobField, self).__init__(**kw)
 
@@ -135,7 +139,8 @@ def _gen_sql(table_name, mappings):
     构造建表sql语句
     """
     pk = None
-    sql = ['-- generating SQL for {}:'.format(table_name), 'create table `%s`('%(table_name)]
+    sql = ['-- generating SQL for {}:'.format(table_name),
+           'create table `%s`(' % (table_name)]
     for f in sorted(mappings.values(), lambda x, y: cmp(x._order, y._order)):
         if not hasattr(f, 'ddl'):
             raise StandardError('no ddl in field "{}"'.format(f))
@@ -143,7 +148,10 @@ def _gen_sql(table_name, mappings):
         nullable = f.nullable
         if f.primary_key:
             pk = f.name
-        sql.append(nullable and '  `%s` %s,' % (f.name, ddl) or '  `%s` %s not null,' % (f.name, ddl))
+        sql.append(
+            nullable and
+            '  `%s` %s,' % (f.name, ddl) or
+            '  `%s` %s not null,' % (f.name, ddl))
     sql.append('  primary key(`{}`)'.format(pk))
     sql.append(');')
     return '\n'.join(sql)
@@ -159,7 +167,7 @@ class ModelMetaclass(type):
             return type.__new__(cls, name, bases, attrs)
         if not hasattr(cls, 'subclasses'):
             cls.subclasses = {}
-        if not name in cls.subclasses:
+        if name not in cls.subclasses:
             cls.subclasses[name] = name
         else:
             logging.warning('Redefine class: {}'.format(name))
@@ -172,7 +180,9 @@ class ModelMetaclass(type):
                     v.name = k
                 if v.primary_key:
                     if primary_key:
-                        raise TypeError('Cannot define more than 1 primary key in class: {}'.format(name))
+                        raise TypeError(
+                            'Cannot define more than \
+                            1 primary key in class: {}'.format(name))
                     if v.updatable:
                         v.updatable = False
                     if v.nullable:
@@ -181,16 +191,17 @@ class ModelMetaclass(type):
                 mappings[k] = v
 
         if not primary_key:
-            raise TypeError('Primary key not defined in class: {}'.format(name))
+            raise TypeError('Primary key not defined in class: {}'.format(
+                name))
         for k in mappings.iterkeys():
             attrs.pop(k)
-        if not '__table__' in attrs:
+        if '__table__' not in attrs:
             attrs['__table__'] = name.lower()
         attrs['__mappings__'] = mappings
         attrs['__primary_key__'] = primary_key
-        attrs['__sql__'] = lambda self: __gen_sql(attrs['__table__'], mappings)
+        attrs['__sql__'] = lambda self: _gen_sql(attrs['__table__'], mappings)
         for trigger in _triggers:
-            if not trigger in attrs:
+            if trigger not in attrs:
                 attrs[trigger] = None
         return type.__new__(cls, name, bases, attrs)
 
@@ -209,7 +220,8 @@ class Model(dict):
         try:
             return self[key]
         except KeyError:
-            raise AttributeError(r"'dict' object has no attribute '{}'".format(key))
+            raise AttributeError(r"'dict' object has no attribute '{}'".format(
+                key))
 
     def __setattr__(self, key, value):
         self[key] = value
@@ -219,8 +231,9 @@ class Model(dict):
         """
         通过primary_key 获取记录
         """
-        d = db.select_one('select * from %s where %s=?' % (cls.__table__,
-                                                           cls.__primary_key__.name),
+        d = db.select_one('select * from %s where %s=?' % (
+            cls.__table__,
+            cls.__primary_key__.name),
                           pk)
         return cls(**d) if d else None
 
@@ -230,8 +243,7 @@ class Model(dict):
         查找一条记录
         """
         d = db.select_one('select * from %s %s' % (cls.__table__, where),
-                          *args
-        )
+                          *args)
         return cls(**d) if d else None
 
     @classmethod
@@ -248,8 +260,7 @@ class Model(dict):
         通过where条件返回记录
         """
         L = db.select('select * from `%s` %s' % (cls.__table__, where),
-                      *args
-        )
+                      *args)
         return [cls(**d) for d in L]
 
     @classmethod
@@ -257,20 +268,20 @@ class Model(dict):
         """
         返回记录条数
         """
-        return db.select_int('select count(`%s`) from `%s`' % (cls.__primary_key__.name,
-                                                               cls.__table__
-        ))
+        return db.select_int('select count(`%s`) from `%s`' % (
+            cls.__primary_key__.name,
+            cls.__table__))
 
     @classmethod
     def count_by(cls, where, *args):
         """
         返回where筛选的记录条数
         """
-        return db.select_int('select count(`%s`) from `%s` %s' % (cls.__primary_key__.name,
-                                                                  cls.__table__,
-                                                                  where),
-                             *args
-        )
+        return db.select_int('select count(`%s`) from `%s` %s' % (
+            cls.__primary_key__.name,
+            cls.__table__,
+            where),
+                             *args)
 
     def update(self):
         """
@@ -293,8 +304,7 @@ class Model(dict):
         db.update('update `%s` set %s where %s=?' % (self.__table__,
                                                      ','.join(L),
                                                      pk),
-                  *args
-        )
+                  *args)
         return self
 
     def delete(self):
@@ -305,8 +315,7 @@ class Model(dict):
         pk = self.__primary_key__.name
         args = (getattr(self, pk), )
         db.update('delete from `%s` where `%s`=?' % (self.__table__, pk),
-                  *args
-        )
+                  *args)
         return self
 
     def insert(self):

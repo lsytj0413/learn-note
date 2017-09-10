@@ -19,7 +19,9 @@ class Dict(dict):
         try:
             return self[key]
         except KeyError:
-            raise AttributeError(r"'Dict' object has no attribute '{}'".format(key))
+            raise AttributeError(r"'Dict' object has no attribute '{}'".format(
+                key
+            ))
 
     def __setattr__(self, key, value):
         self[key] = value
@@ -41,5 +43,3 @@ def to_unicode(s, encoding='utf-8'):
     将s转换为unicode.
     """
     return s.decode('utf-8')
-
-

@@ -4,7 +4,12 @@
 数据库模块
 """
 
-import threading, time, uuid, functools, logging
+import functools
+import logging
+import threading
+import time
+import uuid
+
 from common import Dict
 
 
@@ -90,7 +95,7 @@ class _DbCtx(threading.local):
         self.transactions = 0
 
     def is_init(self):
-        return not self.connection is None
+        return self.connection is not None
 
     def init(self):
         self.connection = _LasyConnection()
