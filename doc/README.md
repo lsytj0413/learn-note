@@ -9,3 +9,7 @@
 ## 推荐系统 ##
 
 [笔记内容](./recommend.md): 推荐引擎常见的推荐机制.
+
+## devops ##
+
+[笔记内容](./devops.md): devops 的介绍.
