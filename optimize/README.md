@@ -133,5 +133,22 @@ net.ipv4.tcp_keepalive_intvl = 15
 # Determines the number of probes before timing out (reduce from 9 sec to 5 sec)
 net.ipv4.tcp_keepalive_probes = 5
 
-# -------------------------------------------------------------
+```
+
+### limits.conf ###
+
+有些时候需要修改文件句柄的限制数, 首先需要修改系统限制, 在 sysctl.conf 写入:
+
+```
+fs.file-max = 999999
+```
+
+然后编辑 /etc/security/limits.conf 文件:
+
+```
+* soft nofile 65535
+* hard nofile 65535
+# * does not match root on ubuntu
+root soft nofile 65535
+root hard nofile 65535
 ```
