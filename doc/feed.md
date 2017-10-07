@@ -115,3 +115,4 @@ Facebook 的排序(Edge Rank, 现在是机器学习): 亲密度(交互频率以�
 5. [MongoDB Newsfeed Schema Design for Entexis](http://www.waistcode.net/blog/mongodb-newsfeed-schema-design-for-entexis)
 6. [兴趣Feed技术架构与实现](http://www.iteye.com/news/31943)
 7. [微博和知乎中的 feed 流是如何实现的？](https://www.zhihu.com/question/19645686)
+8. [feeding-frenzy-sigmod10-web](./data/feeding-frenzy-sigmod10-web.pdf)

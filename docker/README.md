@@ -168,3 +168,4 @@ sudo docker push registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v1.0.0
 # 参考资料 #
 
 - [Docker简介与应用](./Docker简介与应用.pptx)
+- [有关容器的三大路线之争](./有关容器的三大路线之争.pdf)

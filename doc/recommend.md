@@ -278,18 +278,13 @@
 
 # 参考资料 #
 
-[推荐引擎初探](https://www.ibm.com/developerworks/cn/web/1103_zhaoct_recommstudy1/index.html?ca=drs-)
-
-[携程实时用户行为系统实践](http://www.dataguru.cn/article-11059-1.html)
-
-[深度丨从零搭建推荐体系](http://www.jianshu.com/p/d585b3938dea)
-
-[百分点亿级个性化推荐系统的发展历程和实践架构](http://www.open-open.com/lib/view/open1473732760777.html)
-
-[Netflix公布个性化和推荐系统架构](http://www.infoq.com/cn/news/2013/04/netflix-ml-architecture/)
-
-[达观数据是如何基于用户历史行为进行精准个性化推荐的?](http://www.chinaz.com/news/2017/0620/744324.shtml?qq-pf-to=pcqq.c2c)
-
-[推荐系统不相信眼泪，但此算法会给你些安慰](http://iyao.ren/2017/02/28/itemcf/)
-
-[实时推荐系统的3种方式](http://www.jianshu.com/p/356656ce2901)
+- [推荐引擎初探](https://www.ibm.com/developerworks/cn/web/1103_zhaoct_recommstudy1/index.html?ca=drs-)
+- [携程实时用户行为系统实践](http://www.dataguru.cn/article-11059-1.html)
+- [深度丨从零搭建推荐体系](http://www.jianshu.com/p/d585b3938dea)
+- [百分点亿级个性化推荐系统的发展历程和实践架构](http://www.open-open.com/lib/view/open1473732760777.html)
+- [Netflix公布个性化和推荐系统架构](http://www.infoq.com/cn/news/2013/04/netflix-ml-architecture/)
+- [达观数据是如何基于用户历史行为进行精准个性化推荐的?](http://www.chinaz.com/news/2017/0620/744324.shtml?qq-pf-to=pcqq.c2c)
+- [推荐系统不相信眼泪，但此算法会给你些安慰](http://iyao.ren/2017/02/28/itemcf/)
+- [实时推荐系统的3种方式](http://www.jianshu.com/p/356656ce2901)
+- [Recommender systems:An introduction](./data/Recommender systems:An introduction.pdf)
+- [推荐系统](./data/推荐系统.pdf)

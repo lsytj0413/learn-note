@@ -214,13 +214,9 @@ root hard nofile 65535
 
 # 参考资料 #
 
-[Optimizing servers - Tuning the GNU/Linux Kernel](https://tweaked.io/guide/kernel/)
-
-[docker container optimize](http://blog.csdn.net/wangjia184/article/details/44907233)
-
-[Linux下的IO监控与分析](http://itindex.net/detail/46239-linux-io-%E5%88%86%E6%9E%90)
-
-[JVM performance optimization](https://www.javaworld.com/article/2078623/core-java/jvm-performance-optimization-part-1-a-jvm-technology-primer.html)
-
-[Linux系统优化之网络IO调优](http://yijiu.blog.51cto.com/433846/1559472)
-
+- [Optimizing servers - Tuning the GNU/Linux Kernel](https://tweaked.io/guide/kernel/)
+- [docker container optimize](http://blog.csdn.net/wangjia184/article/details/44907233)
+- [Linux下的IO监控与分析](http://itindex.net/detail/46239-linux-io-%E5%88%86%E6%9E%90)
+- [JVM performance optimization](https://www.javaworld.com/article/2078623/core-java/jvm-performance-optimization-part-1-a-jvm-technology-primer.html)
+- [Linux系统优化之网络IO调优](http://yijiu.blog.51cto.com/433846/1559472)
+- [OptimizationLinux](./OptimizationLinux.pdf)
