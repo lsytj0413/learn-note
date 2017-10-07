@@ -164,3 +164,7 @@ sudo docker tag b9f399c9b482 registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v
 sudo docker login --username=tangying2729959 registry.cn-hangzhou.aliyuncs.com 
 sudo docker push registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v1.0.0
 ```
+
+# 参考资料 #
+
+- [Docker简介与应用](./Docker简介与应用.pptx)

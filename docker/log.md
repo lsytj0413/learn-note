@@ -4,10 +4,7 @@
 
 # 参考资料 #
 
-[爱奇艺基于Docker的容器云之日志实践](http://www.infoq.com/cn/presentations/log-practice-of-iqiyi-containers-cloud-based-on-docker?utm_source=presentations_about_ronqi&utm_medium=link&utm_campaign=ronqi)
-
-[Docker监控及日志采集神器](https://segmentfault.com/a/1190000007595832)
-
-[Docker日志收集最佳实](http://www.cnblogs.com/jingjulianyi/p/6637801.html)
-
-[容器内日志收集方案示例](https://yq.aliyun.com/articles/303)
+- [爱奇艺基于Docker的容器云之日志实践](http://www.infoq.com/cn/presentations/log-practice-of-iqiyi-containers-cloud-based-on-docker?utm_source=presentations_about_ronqi&utm_medium=link&utm_campaign=ronqi)
+- [Docker监控及日志采集神器](https://segmentfault.com/a/1190000007595832)
+- [Docker日志收集最佳实](http://www.cnblogs.com/jingjulianyi/p/6637801.html)
+- [容器内日志收集方案示例](https://yq.aliyun.com/articles/303)
