@@ -61,6 +61,8 @@ sudo chown root /tmp/perf-*.map
 sudo perf script | stackcollapse-perf.pl | flamegraph.pl --color=java --hash > flamegraph.svg
 ```
 
+当对系统范围生成火焰图时可以看到进程使用 CPU 的占比.
+
 在上例中, 也可以在运行 perf record 时指定 pid 来针对某个进程进行采样. 例如:
 
 ```
@@ -126,3 +128,4 @@ stackcollapse-ljp.awk < ./traces.txt | flamegraph.pl > traces.svg
 - [[译]Java火焰图 --Brendan Gregg's Blog](http://colobu.com/2016/08/10/Java-Flame-Graphs/)
 - [CPU Flame Graphs](http://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html#Java)
 - [Java in Flames](https://medium.com/netflix-techblog/java-in-flames-e763b3d32166)
+- [Java Performance Analysis On Linux with Flame Graphs](./JavaOne2016_JavaFlameGraphs.pdf)
