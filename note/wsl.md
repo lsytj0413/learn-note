@@ -127,3 +127,7 @@ fcitx-configtool
 ![快捷鍵配置](./img/fcitx-config-02.png)
 
 然後在 WSL 中即可以使用 LShift+Space 來切換輸入法.
+
+#### 快捷鍵 ####
+
+也可以使用 AutoHotKey 來配置快捷鍵, 可以在 VcXsrv 窗口下屏蔽 Win10 自身的輸入法切換快捷鍵, 在其他窗口中保留 Win10 自身的輸入法切換快捷鍵.
