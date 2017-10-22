@@ -15,3 +15,7 @@
 ```
 alias sudo="sudo env PATH=$PATH"
 ```
+
+## WSL ##
+
+[WSL](./wsl.md) 記錄了一些 WSL 使用過程中的筆記.
