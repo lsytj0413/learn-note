@@ -286,5 +286,5 @@
 - [达观数据是如何基于用户历史行为进行精准个性化推荐的?](http://www.chinaz.com/news/2017/0620/744324.shtml?qq-pf-to=pcqq.c2c)
 - [推荐系统不相信眼泪，但此算法会给你些安慰](http://iyao.ren/2017/02/28/itemcf/)
 - [实时推荐系统的3种方式](http://www.jianshu.com/p/356656ce2901)
-- [Recommender systems:An introduction](./data/Recommender systems:An introduction.pdf)
+- [Recommender systems:An introduction](./data/recommender_systems_An_introduction.pdf)
 - [推荐系统](./data/推荐系统.pdf)
