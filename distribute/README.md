@@ -10,3 +10,4 @@
 - [第二章: 系统模型](./cad/chapter02.md)
 - [第三章: 网络和网络互联](./cad/chapter03.md)
 - [第四章: 进程间通信](./cad/chapter04.md)
+- [第五章: 分布式对象和远程调用](./cad/chapter05.md)
