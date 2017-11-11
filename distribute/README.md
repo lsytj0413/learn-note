@@ -12,4 +12,5 @@
 - [第四章: 进程间通信](./cad/chapter04.md)
 - [第五章: 分布式对象和远程调用](./cad/chapter05.md)
 - [第六章: 操作系统支持](./cad/chapter06.md)
+- [第七章: 安全性](./cad/chapter07.md)
 
