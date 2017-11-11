@@ -22,4 +22,5 @@
 - [第十四章: 复制](./cad/chapter14.md)
 - [第十五章: 分布式多媒体系统](./cad/chapter15.md)
 - [第十六章: 分布式共享内存](./cad/chapter16.md)
+- [第十七章: CORBA实例研究](./cad/chapter17.md)
 
