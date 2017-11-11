@@ -17,4 +17,6 @@
 - [第九章: 命名服务](./cad/chapter09.md)
 - [第十章: 时间和全局状态](./cad/chapter10.md)
 - [第十一章: 协调和协定](./cad/chapter11.md)
+- [第十二章: 事务和并发控制](./cad/chapter12.md)
+- [第十三章: 分布式事务](./cad/chapter13.md)
 
