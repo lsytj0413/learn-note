@@ -21,4 +21,5 @@
 - [第十三章: 分布式事务](./cad/chapter13.md)
 - [第十四章: 复制](./cad/chapter14.md)
 - [第十五章: 分布式多媒体系统](./cad/chapter15.md)
+- [第十六章: 分布式共享内存](./cad/chapter16.md)
 
