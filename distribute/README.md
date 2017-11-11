@@ -19,4 +19,6 @@
 - [第十一章: 协调和协定](./cad/chapter11.md)
 - [第十二章: 事务和并发控制](./cad/chapter12.md)
 - [第十三章: 分布式事务](./cad/chapter13.md)
+- [第十四章: 复制](./cad/chapter14.md)
+- [第十五章: 分布式多媒体系统](./cad/chapter15.md)
 
