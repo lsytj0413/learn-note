@@ -15,4 +15,5 @@
 - [第七章: 安全性](./cad/chapter07.md)
 - [第八章: 分布式文件系统](./cad/chapter08.md)
 - [第九章: 命名服务](./cad/chapter09.md)
+- [第十章: 时间和全局状态](./cad/chapter10.md)
 
