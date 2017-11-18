@@ -9,3 +9,4 @@
 - [第5章: 与HTTP协作的Web服务器](./chapter05.md)
 - [第6章: HTTP首部](./chapter06.md)
 - [第7章: 确保Web安全的HTTPS](./chapter07.md)
+- [第8章: 确认访问用户身份的认证](./chapter08.md)
