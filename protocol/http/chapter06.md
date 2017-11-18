@@ -372,59 +372,139 @@ TE: gzip, deflate;q=0.5
 
 ## 6.5 响应首部字段 ##
 
-### 6.5.1 accept-ranges ###
+### 6.5.1 Accept-Ranges ###
 
-### 6.5.2 age ###
+告知客户端服务器是否能够处理范围请求, 以指定获取服务端某个部分的资源. 可处理时值为 bytes, 否则为 none.
 
-### 6.5.3 etag ###
+### 6.5.2 Age ###
 
-### 6.5.4 location ###
+告知客户端源服务器在多久前创建了响应, 若该服务器是缓存服务器则指缓存后的响应再次发起认证到认证完成的时间值, 代理创建响应时必须加上该字段.
 
-### 6.5.5 proxy-authenticate ###
+### 6.5.3 ETag ###
 
-### 6.5.6 retry-after ###
+告知客户端实体标识. ETag 值有以下两种分类:
 
-### 6.5.7 server ###
+```
+ETag: "xxxx"           # 强 ETag 值, 任何变化都会改变其值
+ETag: W/"xxxx"         # 弱 ETag 值, 发生根本变化时改变
+```
 
-### 6.5.8 vary ###
+### 6.5.4 Location ###
 
-### 6.5.9 www-authenticate ###
+将响应接收方引导至某个与请求 URI 位置不同的资源. 一般配合重定向响应.
+
+### 6.5.5 Proxy-Authenticate ###
+
+把由代理服务器所要求的认证信息发送给客户端.
+
+### 6.5.6 Retry-After ###
+
+告知客户端应该在多久之后再次发送请求. 一般配合 503 响应或 3xx 响应.
+
+### 6.5.7 Server ###
+
+告知客户端当前服务器上安装的 HTTP 服务器应用程序的信息.
+
+### 6.5.8 Vary ###
+
+当代理服务器接收到源服务器返回包含 Vary 指定项的响应之后, 仅对请求中含有相同 Vary 指定首部字段的请求返回缓存.
+
+### 6.5.9 WWW-Authenticate ###
+
+用于 HTTP 访问认证，告知客户端适用于访问请求 URI 所指定资源的认证方案(Basic或Digest), 和带参数提示的质询. 401 响应中肯定包含该字段.
 
 ## 6.6 实体首部字段 ##
 
-### 6.6.1 allow ###
+### 6.6.1 Allow ###
 
-### 6.6.2 content-encoding ###
+用于通知客户端能够支持 RequestURI 指定资源的所有 HTTP 方法, 405响应会将支持的方法写入该字段返回.
 
-### 6.6.3 content-language ###
+### 6.6.2 Content-Encoding ###
 
-### 6.6.4 content-length ###
+告知客户端服务器对实体部分选用的内容编码方式.
 
-### 6.6.5 content-location ###
+### 6.6.3 Content-Language ###
 
-### 6.6.6 content-md5 ###
+告知客户端实体主体使用的自然语言.
 
-### 6.6.7 content-range ###
+### 6.6.4 Content-Length ###
 
-### 6.6.8 content-type ###
+表明实体主体部分的大小, 当对内容编码传输时不再使用该字段.
 
-### 6.6.9 expires ###
+### 6.6.5 Content-Location ###
 
-### 6.6.10 last-modified ###
+给出与报文主体部分相对应的 URI.
+
+### 6.6.6 Content-MD5 ###
+
+用于检查报文主体在传输过程中是否保持完整, 以及确认传输到达.
+
+### 6.6.7 Content-Range ###
+
+针对范围请求返回响应时使用该字段告知客户端作为响应返回的实体的哪个部分符合范围请求.
+
+### 6.6.8 Content-Type ###
+
+指定实体主体内对象的媒体类型.
+
+```
+Content-Type: text/html; charset=UTF-8
+```
+
+### 6.6.9 Expires ###
+
+告知客户端资源失效的日期.
+
+### 6.6.10 Last-Modified ###
+
+指明资源最终修改时间.
 
 ## 6.7 为Cookie服务的首部字段 ##
 
-### 6.7.1 set-cookie ###
+### 6.7.1 Set-Cookie ###
 
-### 6.7.2 cookie ###
+当服务端准备开始管理客户端状态时通过该字段告知客户端各种信息.
+
+```
+Set-Cookie: status=enable; expires=xxx; path=/; domain=.backr.jp;
+```
+
+各字段属性如下:
+
+| 属性 | 说明 |
+|:--|:--|
+| NAME=VALUE | 赋予 Cookie的名称和值, 必须 |
+| expires=DATE | 有效期, 若不指定则默认到浏览器关闭 |
+| path=PATH | 将服务器上的文件目录作为 Cookie 的适用对象, 不指定则默认为文档所在文件目录 |
+| domain=域名 | 作为 Cookie 适用对象的域名, 默认为创建服务器域名 |
+| Secure | 仅在 HTTPS 时发送 |
+| HttpOnly | 使 Cookie 不能被 JS 脚本访问 |
+
+### 6.7.2 Cookie ###
+
+告知服务器从服务器接收到的 Cookie.
+
+```
+Cookie: status=enable
+```
 
 ## 6.8 其他首部字段 ##
 
-### 6.8.1 x-frame-options ###
+### 6.8.1 X-Frame-Options ###
 
-### 6.8.2 x-xss-protection ###
+属于响应首部, 用于控制网站内容在其他 Web 网站的 Frame 标签内显示, 防止点击劫持攻击. 可取值如下:
 
-### 6.8.3 dnt ###
+- DENY: 拒绝
+- SAMEORIGIN: 仅同源域名下页面匹配时许可
 
-### 6.8.4 p3p ###
+### 6.8.2 X-XSS-Protection ###
 
+属于响应首部, 可取值为 0 或 1.
+
+### 6.8.3 DNT ###
+
+属于请求首部, 表示拒绝个人信息被收集, 可取值为 0 或 1.
+
+### 6.8.4 P3P ###
+
+属于响应首部, 用于保护用户隐私.
