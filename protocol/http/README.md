@@ -10,3 +10,4 @@
 - [第6章: HTTP首部](./chapter06.md)
 - [第7章: 确保Web安全的HTTPS](./chapter07.md)
 - [第8章: 确认访问用户身份的认证](./chapter08.md)
+- [第9章: 基于HTTP的功能追加协议](./chapter09.md)
