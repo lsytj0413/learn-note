@@ -165,6 +165,36 @@ sudo docker login --username=tangying2729959 registry.cn-hangzhou.aliyuncs.com
 sudo docker push registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v1.0.0
 ```
 
+## Docker For Win10 ##
+
+在 Win10 之后已经可以在 Windows 上使用 Docker, 只需要在官网下载对应的安装包即可.
+
+### 加速器配置 ###
+
+选择 settings-Daemon 项, 在 Registry mirrors 中加入对应的加速器地址即可.
+
+### 在 WSL 上使用 Docker ###
+
+因为在现阶段 WSL 上不支持运行原生的 Docker, 所以需要在 Win10 上安装 Docker Daemon, 然后将 WSL 上的 Dokcer 命令转发到 Win10 上的 Daemon 即可.
+
+#### 配置 Docker For Windows ####
+
+选择 settings-General 项, 勾选 Expose daemon on tcp://localhost:2375 without TLS 项即可.
+
+#### 在 WSL 上安装 Docker ####
+
+虽然在 WSL 上不能直接运行 Docker Daemon, 但是还是需要安装 Docker client. 直接安装 Docker 即可.
+
+#### 配置 DOCKER_HOST ####
+
+配置环境变量:
+
+```
+export DOCKER_HOST=tcp://127.0.0.1:2375
+```
+
+使其生效, 然后就可以在 WSL 上运行 Docker 的命令.
+
 # 参考资料 #
 
 - [Docker简介与应用](./Docker简介与应用.pptx)
