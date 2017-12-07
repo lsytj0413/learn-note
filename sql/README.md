@@ -2,4 +2,4 @@
 
 ## MySQL ##
 
-- [高性能MySQL](./HighPerformaceMySQL/README.md)
+- [高性能MySQL](./HighPerformanceMySQL/README.md)
