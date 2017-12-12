@@ -373,6 +373,8 @@ $ file /sbin/init
 
 ```
 $ lsb_release -a
+$ cat /proc/version
+$ cat /proc/issue
 ```
 
 #### 查看已加载模块 ####
@@ -682,4 +684,80 @@ $ vim /etc/security/limits.conf
 
 $ vim /etc/rc.local
 ulimit -SHn 65535
+```
+
+### CentOS6 安装软件 ###
+
+#### 配置源 ####
+
+首先备份原有的源列表:
+
+```
+mkdir /opt/centos-yum.bak
+mv /etc/yum.repos.d/* /opt/centos-yum.bak/
+```
+
+然后下载 aliyun 的源文件:
+
+```
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo
+```
+
+最后清空缓存:
+
+```
+yum clean all
+yum makecache
+yum list
+```
+
+安装第三方的 yum 源:
+
+```
+wget http://mirrors.ustc.edu.cn/fedora/epel/6/i386/epel-release-6-8.noarch.rpm
+rpm -ivh epel-release-6-8.noarch.rpm
+```
+
+有可能出现如下错误:
+
+```
+Cannot retrieve metalink for repository: epel. Please verify its path and try again
+```
+
+这时可以尝试执行以下命令来修复:
+
+```
+yum --disablerepo=epel -y update  ca-certificates
+```
+
+#### MongoDB ####
+
+首先编辑 /etc/yum.repos.d/mongodb-org-3.4.repo 文件, 输入以下内容:
+
+```
+[mongodb-org-3.4]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.4/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc
+```
+
+然后执行以下命令安装即可:
+
+```
+yum repolist
+yum install mongodb-org -y
+```
+
+#### Redis ####
+
+```
+yum install redis
+```
+
+#### Nginx ####
+
+```
+yum install nginx
 ```
