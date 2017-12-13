@@ -989,3 +989,286 @@ f.next(); // {value: undefined, done: true}
 在 generator 中每次遇到 yield x; 就会返回一个对象 {value: x, done: true/false}, 然后暂停 generator 函数. 当 done 返回 true 时就不能在继续调用 next 了.
 
 也可以使用 for...of 循环迭代 generator 对象, 这种方式不需要自己判断 done.
+
+## 4 标准对象 ##
+
+在 JavaScript 中可以通过 typeof 操作符获取对象的类型, 并返回一个字符串:
+
+```
+typeof 123; // 'number'
+typeof NaN; // 'number'
+typeof 'str'; // 'string'
+typeof true; // 'boolean'
+typeof undefined; // 'undefined'
+typeof Math.abs; // 'function'
+typeof null; // 'object'
+typeof []; // 'object'
+typeof {}; // 'object'
+```
+
+JavaScript 还提供了 number, boolean 和 string 的包装对象, 包装对象可以使用 new 创建:
+
+```
+typeof new Number(123); // 'object'
+new Number(123) === 123; // false
+
+typeof new Boolean(true); // 'object'
+new Boolean(true) === true; // false
+
+typeof new String('str'); // 'object'
+new String('str') === 'str'; // false
+```
+
+当没有使用 new 关键字时, 它们会把任何数据转换为 number, boolean 和 string 类型.
+
+一般来说在使用这些类型的过程中需要遵守如下规则:
+
+- 不要使用 new 来创建包装对象
+- 用 parseInt 或 parseFloat 来转换任意类型到 number
+- 用 String() 来转换任意类型到 string, 或者直接调用对象的 toString() 方法
+- 通常不必把任意类型转换为 boolean 再判断
+- typeof 操作符可以判断出 number, boolean, string, function 和 undefined
+- 判断 Array 用 Array.isArray
+- 判断 null 用 myVar === null
+- 判断某个全局变量是否存在用 typeof window.myVar === 'undefined'
+- 判断某个局部变量是否存在用 typeof myVar === 'undefined'
+
+需要注意的是, null 和 undefined 对象没有 toString 方法, number 对象调用 toString 会报 SyntaxError, 需要进行如下处理:
+
+```
+123..toString(); // '123', 注意是两个点！
+(123).toString(); // '123'
+```
+
+### 4.1 Date ###
+
+在 JavaScript 中使用 Date 对象来表示日期和时间:
+
+```
+var now = new Date();
+now; // Wed Jun 24 2015 19:49:22 GMT+0800 (CST)
+now.getFullYear(); // 2015, 年份
+now.getMonth(); // 5, 月份，注意月份范围是0~11，5表示六月
+now.getDate(); // 24, 表示24号
+now.getDay(); // 3, 表示星期三
+now.getHours(); // 19, 24小时制
+now.getMinutes(); // 49, 分钟
+now.getSeconds(); // 22, 秒
+now.getMilliseconds(); // 875, 毫秒数
+now.getTime(); // 1435146562875, 以number形式表示的时间戳
+```
+
+也可以使用如下代码创建一个指定时间的 Date:
+
+```
+var d = new Date(2015, 5, 19, 20, 15, 30, 123);
+d; // Fri Jun 19 2015 20:15:30 GMT+0800 (CST)
+
+var d = Date.parse('2015-06-24T19:49:22.875+08:00');
+d; // 1435146562875
+var d = new Date(1435146562875);
+d; // Wed Jun 24 2015 19:49:22 GMT+0800 (CST)
+d.getMonth(); // 5
+```
+
+#### 4.1.1 时区 ####
+
+Date 对象表示的时间总是按浏览器所在时区进行显示, 也可以显示调整后的 UTC 时间:
+
+```
+var d = new Date(1435146562875);
+d.toLocaleString(); // '2015/6/24 下午7:49:22'，本地时间（北京时区+8:00），显示的字符串与操作系统设定的格式有关
+d.toUTCString(); // 'Wed, 24 Jun 2015 11:49:22 GMT'，UTC时间，与本地时间相差8小时
+```
+
+### 4.2 RegExp ###
+
+正则表达式是一种用来匹配字符串的强力武器, 它使用一种描述性的语言来给字符串定义一个规则, 凡是符合规则的字符串就可以认为是匹配的.
+
+在正则表达式中包含以下规则:
+
+- \d: 匹配一个数字
+- \w: 匹配一个字母或数字
+- \s: 匹配一个空格, 包括 Tab 等空白符
+- .: 匹配任意字符
+- *: 匹配任意个字符
+- +: 匹配至少一个字符
+- ?: 匹配至多一个字符
+- {n}: 匹配n个字符
+- {n,m}: 匹配至少n个, 至多m个字符
+
+例如可以使用 \d{3}\s+\d{3,8} 来匹配3个数字加任意个空格再加8个数字.
+
+#### 4.2.1 进阶 ####
+
+可以用 [] 表示匹配的范围, 例如 [a-zA-Z\_\$][0-9a-zA-Z\_\$]* 可以匹配由字母或下划线, $开头, 后接任意个由一个数字, 字母或者下划线, $组成的字符串, 也就是JavaScript允许的变量名.
+
+使用 A|B 可以匹配A或B, 例如 (J|j)ava(S|s)cript可以匹配'JavaScript', 'Javascript', 'javaScript'或者'javascript'.
+
+^ 匹配行的开头, $ 匹配行的结束.
+
+#### 4.2.2 RegExp ####
+
+JavaScript 有两种方式创建一个正则表达式:
+
+- 直接通过 /正则表达式/ 创建
+- 通过 new RegExp('正则表达式') 创建一个 RegExp 对象, 这种方式需要注意转义的问题
+
+```
+var re1 = /ABC\-001/;
+var re2 = new RegExp('ABC\\-001');
+
+re1; // /ABC\-001/
+re2; // /ABC\-001/
+
+var re = /^\d{3}\-\d{3,8}$/;
+re.test('010-12345'); // true
+re.test('010-1234x'); // false
+re.test('010 12345'); // false
+```
+
+可以使用 RegExp 对象的 test 方法来测试给定的字符串是否符合条件.
+
+#### 4.2.3 切分字符串 ####
+
+可以使用正则表达式来更灵活的切分字符串:
+
+```
+'a,b;; c  d'.split(/[\s\,\;]+/); // ['a', 'b', 'c', 'd']
+```
+
+#### 4.2.4 分组 ####
+
+可以使用小括号表示要提取的分组:
+
+```
+var re = /^(\d{3})-(\d{3,8})$/;
+re.exec('010-12345'); // ['010-12345', '010', '12345']
+re.exec('010 12345'); // null
+```
+
+#### 4.2.5 贪婪匹配 ####
+
+正则表达式默认是贪婪匹配, 既是匹配尽可能多的字符. 例如:
+
+```
+var re = /^(\d+)(0*)$/;
+re.exec('102300'); // ['102300', '102300', '']
+```
+
+可以使用加上问号来采用非贪婪匹配:
+
+```
+var re = /^(\d+?)(0*)$/;
+re.exec('102300'); // ['102300', '1023', '00']
+```
+
+#### 4.2.6 全局搜索 ####
+
+JavaScript 中的正则表达式有几个特殊的标志:
+
+- g: 全局匹配, 即可以多次执行 exec 来搜索一个匹配的字符串
+- i: 忽略大小写
+- m: 多行匹配
+
+```
+var s = 'JavaScript, VBScript, JScript and ECMAScript';
+var re=/[a-zA-Z]+Script/g;
+
+// 使用全局匹配:
+re.exec(s); // ['JavaScript']
+re.lastIndex; // 10
+
+re.exec(s); // ['VBScript']
+re.lastIndex; // 20
+
+re.exec(s); // ['JScript']
+re.lastIndex; // 29
+
+re.exec(s); // ['ECMAScript']
+re.lastIndex; // 44
+
+re.exec(s); // null，直到结束仍没有匹配到
+```
+
+### 4.3 JSON ###
+
+在 JSON 中有以下几种数据类型：
+
+- number
+- boolean: 取值为 true 或 false
+- string
+- null
+- array: 采用中括号表示
+- object: 采用大括号表示
+
+JSON 的字符集必须是 UTF-8, 字符串必须用双引号, object 的键也必须用双引号.
+
+#### 4.3.1 序列化 ####
+
+例如针对以下对象:
+
+```
+'use strict';
+
+var xiaoming = {
+    name: '小明',
+    age: 14,
+    gender: true,
+    height: 1.65,
+    grade: null,
+    'middle-school': '\"W3C\" Middle School',
+    skills: ['JavaScript', 'Java', 'Python', 'Lisp']
+};
+```
+
+可以采用以下方式序列化:
+
+```
+JSON.stringify(xiaoming);
+```
+
+该函数接收三个参数, 第二个用于控制如何筛选对象的键值, 例如只输出指定的属性:
+
+```
+JSON.stringify(xiaoming, ['name', 'skills'], '  ');
+```
+
+或者对每个键值对进行预处理:
+
+```
+function convert(key, value) {
+    if (typeof value === 'string') {
+        return value.toUpperCase();
+    }
+    return value;
+}
+
+JSON.stringify(xiaoming, convert, '  ');
+```
+
+也可以给对象定义一个 toJSON() 方法直接返回 JSON 序列化的结果.
+
+第三个参数用于控制输出的缩进.
+
+#### 4.3.2 反序列化 ####
+
+可以使用 JSON.parse 将一个字符串变成一个 JavaScript 对象:
+
+```
+JSON.parse('[1,2,3,true]'); // [1, 2, 3, true]
+JSON.parse('{"name":"小明","age":14}'); // Object {name: '小明', age: 14}
+JSON.parse('true'); // true
+JSON.parse('123.45'); // 123.45
+```
+
+parse 函数还可以接收一个函数, 用来转换解析出的属性:
+
+```
+var obj = JSON.parse('{"name":"小明","age":14}', function (key, value) {
+    if (key === 'name') {
+        return value + '同学';
+    }
+    return value;
+});
+```
