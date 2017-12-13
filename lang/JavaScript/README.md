@@ -1272,3 +1272,260 @@ var obj = JSON.parse('{"name":"小明","age":14}', function (key, value) {
     return value;
 });
 ```
+
+## 5 面向对象编程 ##
+
+JavaScript 不区分类和实例的概念, 而是通过原型(prototype)来实现面向对象编程. 例如:
+
+```
+var Student = {
+    name: 'Robot',
+    height: 1.2,
+    run: function () {
+        console.log(this.name + ' is running...');
+    }
+};
+
+var xiaoming = {
+    name: '小明'
+};
+
+xiaoming.__proto__ = Student;
+```
+
+在代码的最后把 xiaoming 的原型指向了对象 Student, 这样 xiaoming 就仿佛是从 Student 继承下来的. JavaScript 的继承关系只是把对象的原型指向另一个对象.
+
+需要注意的是, 在实际使用中不能直接用 proto 去改变一个对象的原型, 应该使用 Object.create() 方法传入一个原型对象, 并创建一个基于该原型的新对象.
+
+```
+// 原型对象:
+var Student = {
+    name: 'Robot',
+    height: 1.2,
+    run: function () {
+        console.log(this.name + ' is running...');
+    }
+};
+
+function createStudent(name) {
+    // 基于Student原型创建一个新对象:
+    var s = Object.create(Student);
+    // 初始化新对象:
+    s.name = name;
+    return s;
+}
+
+var xiaoming = createStudent('小明');
+xiaoming.run(); // 小明 is running...
+xiaoming.__proto__ === Student; // true
+```
+
+### 5.1 创建对象 ###
+
+JavaScript 对每个创建的对象都会设置一个原型并指向它的原型对象. 当我们用 obj.xxx 访问一个对象的属性时, JavaScript 引擎先在当前对象上查找该属性, 如果没找到就在其原型对象上找, 一直上溯到 Object.prototype, 如果最终也没有找到则返回 undefined.
+
+例如创建一个 Array 对象, 它的原型链是:
+
+```
+var arr = [1, 2, 3];
+arr ----> Array.prototype ----> Object.prototype ----> null
+```
+
+#### 5.1.1 构造函数 ####
+
+JavaScript 中可以使用构造函数方法来创建对象, 先定义一个构造函数:
+
+```
+function Student(name) {
+    this.name = name;
+    this.hello = function () {
+        alert('Hello, ' + this.name + '!');
+    }
+}
+```
+
+然后用关键字 new 来调用这个函数, 并返回一个对象:
+
+```
+var xiaoming = new Student('小明');
+xiaoming.name; // '小明'
+xiaoming.hello(); // Hello, 小明!
+```
+
+需要注意的是, 如果不使用 new 关键字的话, 这个函数会返回 undefined. 新创建的对象的原型链是:
+
+```
+xiaoming ----> Student.prototype ----> Object.prototype ----> null
+```
+
+使用 new Student() 创建的对象还从原型上获取了一个 constructor 属性, 指向 Student 函数本身.
+
+![原型链](./images/image01-01.png)
+
+在上面的例子中还有个问题, 就是这些对象的 hello 函数是两个不同的函数. 要解决这个问题只需要把函数移动到 Student.prototype 上即可:
+
+```
+function Student(name) {
+    this.name = name;
+}
+
+Student.prototype.hello = function () {
+    alert('Hello, ' + this.name + '!');
+};
+```
+
+#### 5.1.2 忘记写 new 怎么办 ####
+
+为了区分普通函数和构造函数，按照约定, 构造函数首字母应该大写, 而普通函数首字母应该小写, 这样一些语法检查工具可以检测漏写的 new.
+
+也可以封装一个函数来负责对象的创建:
+
+```
+function Student(props) {
+    this.name = props.name || '匿名'; // 默认值为'匿名'
+    this.grade = props.grade || 1; // 默认值为1
+}
+
+Student.prototype.hello = function () {
+    alert('Hello, ' + this.name + '!');
+};
+
+function createStudent(props) {
+    return new Student(props || {})
+}
+```
+
+### 5.2 原型继承 ###
+
+在 JavaScript 中由于采用原型继承, 所以无法像 Java 一样来直接扩展一个 Class, 因为根本不存在 Class 这类型.
+
+假设现在要从 Student 中扩展出 PrimaryStudent, 首先如下定义:
+
+```
+function PrimaryStudent(props) {
+    // 调用Student构造函数，绑定this变量:
+    Student.call(this, props);
+    this.grade = props.grade || 1;
+}
+```
+
+但是这样的原型链是:
+
+```
+new PrimaryStudent() ----> PrimaryStudent.prototype ----> Object.prototype ----> null
+```
+
+我们需要把原型链修改为:
+
+```
+new PrimaryStudent() ----> PrimaryStudent.prototype ----> Student.prototype ----> Object.prototype ----> null
+```
+
+我们需要借助一个中间对象来实现正确的原型链, 这个中间对象的原型要指向 Student.prototype.
+
+```
+// PrimaryStudent构造函数:
+function PrimaryStudent(props) {
+    Student.call(this, props);
+    this.grade = props.grade || 1;
+}
+
+// 空函数F:
+function F() {
+}
+
+// 把F的原型指向Student.prototype:
+F.prototype = Student.prototype;
+
+// 把PrimaryStudent的原型指向一个新的F对象，F对象的原型正好指向Student.prototype:
+PrimaryStudent.prototype = new F();
+
+// 把PrimaryStudent原型的构造函数修复为PrimaryStudent:
+PrimaryStudent.prototype.constructor = PrimaryStudent;
+
+// 继续在PrimaryStudent原型（就是new F()对象）上定义方法：
+PrimaryStudent.prototype.getGrade = function () {
+    return this.grade;
+};
+
+// 创建xiaoming:
+var xiaoming = new PrimaryStudent({
+    name: '小明',
+    grade: 2
+});
+xiaoming.name; // '小明'
+xiaoming.grade; // 2
+
+// 验证原型:
+xiaoming.__proto__ === PrimaryStudent.prototype; // true
+xiaoming.__proto__.__proto__ === Student.prototype; // true
+
+// 验证继承关系:
+xiaoming instanceof PrimaryStudent; // true
+xiaoming instanceof Student; // true
+```
+
+新的原型链如下图:
+
+![原型链](./images/image01-02.png)
+
+可以将继承这个动作封装起来:
+
+```
+function inherits(Child, Parent) {
+    var F = function () {};
+    F.prototype = Parent.prototype;
+    Child.prototype = new F();
+    Child.prototype.constructor = Child;
+}
+
+function Student(props) {
+    this.name = props.name || 'Unnamed';
+}
+
+Student.prototype.hello = function () {
+    alert('Hello, ' + this.name + '!');
+}
+
+function PrimaryStudent(props) {
+    Student.call(this, props);
+    this.grade = props.grade || 1;
+}
+
+// 实现原型继承链:
+inherits(PrimaryStudent, Student);
+
+// 绑定其他方法到PrimaryStudent原型:
+PrimaryStudent.prototype.getGrade = function () {
+    return this.grade;
+};
+```
+
+### 5.3 class继承 ###
+
+ES6 中引入了 class 关键字, 目的是让定义类更简单:
+
+```
+class Student {
+    constructor(name) {
+        this.name = name;
+    }
+
+    hello() {
+        alert('Hello, ' + this.name + '!');
+    }
+}
+
+class PrimaryStudent extends Student {
+    constructor(name, grade) {
+        super(name); // 记得用super调用父类的构造方法!
+        this.grade = grade;
+    }
+
+    myGrade() {
+        alert('I am at grade ' + this.grade);
+    }
+}
+```
+
+新的 class 和原有的原型链没有区别, 它的作用是让 JavaScript 引擎去实现原来我们需要自己编写的原型链代码.
