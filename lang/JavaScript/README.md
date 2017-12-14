@@ -1529,3 +1529,67 @@ class PrimaryStudent extends Student {
 ```
 
 新的 class 和原有的原型链没有区别, 它的作用是让 JavaScript 引擎去实现原来我们需要自己编写的原型链代码.
+
+## 8 错误处理 ##
+
+JavaScript 提供了更抽象的错误处理逻辑 try/catch/finally. 实例代码如下:
+
+```
+var r1, r2, s = null;
+try {
+    r1 = s.length; // 此处应产生错误
+    r2 = 100; // 该语句不会执行
+} catch (e) {
+    console.log('出错了：' + e);
+} finally {
+    console.log('finally');
+}
+console.log('r1 = ' + r1); // r1应为undefined
+console.log('r2 = ' + r2); // r2应为undefined
+```
+
+### 错误类型 ###
+
+JavaScript 有一个标准的 Error 对象表示错误，还有从 Error 派生的 TypeError, ReferenceError 等错误对象.
+
+```
+try {
+    ...
+} catch (e) {
+    if (e instanceof TypeError) {
+        alert('Type error!');
+    } else if (e instanceof Error) {
+        alert(e.message);
+    } else {
+        alert('Error: ' + e);
+    }
+}
+```
+
+### 抛出错误 ###
+
+程序可以主动抛出一个错误. JavaScript 允许抛出任意对象, 包括数字, 字符串等, 但是最好还是抛出 Error 对象.
+
+### 8.1 错误传播 ###
+
+如果在一个函数内部发生了错误, 它自身没有捕获, 错误就会被抛到外层调用函数, 如果外层函数也没有捕获, 该错误会一直沿着函数调用链向上抛出, 直到被 JavaScript 引擎捕获, 代码终止执行.
+
+### 8.2 异步错误处理 ###
+
+JavaScript 引擎是一个事件驱动的执行引擎, 代码总是以单线程执行, 而回调函数的执行需要等到下一个满足条件的事件出现后才会被执行.
+
+在这种情况下使用 try 来捕获 setTimeout 的回调函数中发生的异常是无效的:
+
+```
+function printTime() {
+    throw new Error();
+}
+
+try {
+    setTimeout(printTime, 1000);
+    console.log('done');
+} catch (e) {
+    console.log('error');
+}
+```
+
