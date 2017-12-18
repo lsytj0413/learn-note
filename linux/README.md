@@ -761,3 +761,16 @@ yum install redis
 ```
 yum install nginx
 ```
+
+#### Py3 ####
+
+```
+yum list | grep python3
+yum install python34
+
+# 安装 pip3
+yum install python34-devel
+yum install python34-setuptools
+cd /usr/lib/python3.4/site-packages
+python3 easy_install.py pip
+```
