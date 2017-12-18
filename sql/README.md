@@ -1,5 +1,7 @@
 # SQL #
 
+- [MySQL必知必会](./sql10m/README.md)
+
 ## MySQL ##
 
 - [高性能MySQL](./HighPerformanceMySQL/README.md)
