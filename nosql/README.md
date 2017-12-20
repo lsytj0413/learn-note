@@ -25,7 +25,7 @@ mongoimport -d database -c table --file file --type json -u username -p password
 可以使用 mongo 命令连接 MongoDB.
 
 ```
-mongo -u username -p password
+mongo HOST:PORT/DB -u username -p password
 ```
 
 #### mongodump ####
