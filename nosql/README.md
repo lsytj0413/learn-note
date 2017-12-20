@@ -28,6 +28,22 @@ mongoimport -d database -c table --file file --type json -u username -p password
 mongo -u username -p password
 ```
 
+#### mongodump ####
+
+可以使用 mongodump 备份数据库:
+
+```
+mongodump -h HOST -d DB -u USERNAME -p PASSWORD -o DEST
+```
+
+#### mongorestore ####
+
+可以使用 mongorestore 恢复备份的数据库:
+
+```
+mongorestore -h HOST -u USERNAME -p PASSWORD --authenticationDatabase DB DEST
+```
+
 ### 语法 ###
 
 在 MongoDB 中的集合对应 SQL 中的表的概念.
