@@ -680,3 +680,59 @@ u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
 # 保存到数据库：
 u.save()
 ```
+
+## 其他 ##
+
+### slot ###
+
+可以使用 \_\_slot\_\_ 限制实例的属性(只对当前类生效):
+
+```
+class Student(object):
+    __slots__ = ('name', 'age')
+```
+
+### 枚举类 ###
+
+```
+from enum import Enum, unique
+
+@unique
+class Weekday(Enum):
+    Sun = 0
+```
+
+## Python3 ##
+
+### 异步IO ###
+
+#### 协程 ####
+
+Python 对协程的支持是通过 generator 实现的, 来看一个生产者消费者的例子:
+
+```
+def consumer():
+    r = ''
+    while True:
+        n = yield r
+        if not n:
+            return
+        print('[CONSUMER] Consuming %s...' % n)
+        r = '200 OK'
+
+def produce(c):
+    c.send(None)
+    n = 0
+    while n < 5:
+        n = n + 1
+        print('[PRODUCER] Producing %s...' % n)
+        r = c.send(n)
+        print('[PRODUCER] Consumer return: %s' % r)
+    c.close()
+
+c = consumer()
+produce(c)
+```
+
+#### asyncio ####
+
