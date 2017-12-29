@@ -12,7 +12,7 @@
 
 这个庞大的旧系统被拆分为三个核心的微服务, 所有的微服务都是围绕某些业务功能进行组织, 可以独立部署的应用程序.
 
-![image](https://dzone.com/storage/temp/1858094-730f2922-ee20-11e5-8df0-e7b51c668847-2.png)
+![功能服务](https://dzone.com/storage/temp/1858094-730f2922-ee20-11e5-8df0-e7b51c668847-2.png)
 
 ### 帐号服务 ###
 
@@ -56,7 +56,7 @@
 
 在微服务架构中有很多常见的模式来帮助我们的核心服务正常运行, Spring Cloud 提供了许多强大的工具来为 Spring Boot应用程序实现这些模式. 接下来我会简要介绍一下这些基础设施服务.
 
-![image](https://dzone.com/storage/temp/1858172-365c0d94-eefa-11e5-90ad-9d74804ca412-2.png)
+![基础设施服务](https://dzone.com/storage/temp/1858172-365c0d94-eefa-11e5-90ad-9d74804ca412-2.png)
 
 ### 配置服务 ###
 
@@ -154,7 +154,7 @@ spring:
 
 此外, Eureka 提供了一个简单的界面, 在该界面我们可以跟踪运行的服务实例和数量, 界面的地址为: http://localhost:8761
 
-![image](https://dzone.com/storage/temp/1870222-e1431aecb5c24f6cb130e5e04b498e9e.png)
+![Eureka 面板](https://dzone.com/storage/temp/1870222-e1431aecb5c24f6cb130e5e04b498e9e.png)
 
 ### 负载均衡, 断路器和 HTTP客户端 ###
 
@@ -198,7 +198,12 @@ public interface StatisticsServiceClient {
 
 下图描述了在负载下的系统行为:
 
-![image](https://cloud.githubusercontent.com/assets/6069066/14127348/21e6ed40-f628-11e5-9fa4-ed527bf35129.gif)
+![image](https://cloud.githubusercontent.com/assets/6069066/14194375/d9a2dd80-f7be-11e5-8bcc-9a2fce753cfe.png)
+
+| ![image](https://cloud.githubusercontent.com/assets/6069066/14127349/21e90026-f628-11e5-83f1-60108cb33490.gif) | ![image](https://cloud.githubusercontent.com/assets/6069066/14127348/21e6ed40-f628-11e5-9fa4-ed527bf35129.gif) | ![image](https://cloud.githubusercontent.com/assets/6069066/14127346/21b9aaa6-f628-11e5-9bba-aaccab60fd69.gif) | ![image](https://cloud.githubusercontent.com/assets/6069066/14127350/21eafe1c-f628-11e5-8ccd-a6b6873c046a.gif) |
+| --- |--- |--- |--- |
+| 0ms 延迟 | 500毫秒延迟 | 800毫秒延迟 | 1100毫秒延迟 |
+| 系统运行良好, 吞吐量为 22请求/秒, 统计服务中的活动线程较少, 服务响应时间中位置为 50毫秒 | 活动线程数量增加, 有 30-40% 的错误率, 但是断路器依然是关闭的 | 失败的比例大于 50%, 断路器处于半开状态, 在一定的睡眠窗口时间之后将放开一个请求 | 100%的错误率, 断路器处于永久打开状态, 即使超过睡眠时间之后也不会关闭断路器, 因为请求响应太慢 |
 
 ## 日志分析 ##
 
@@ -208,7 +213,7 @@ public interface StatisticsServiceClient {
 
 更高级的安全配置超出了这个简易项目的介绍范围, 如果需要模拟更真实的系统, 可以考虑使用 HTTPS 和 JCE 密钥库来加密微服务密码和配置服务器的属性内容, 参阅[文档](http://cloud.spring.io/spring-cloud-config/spring-cloud-config.html#_security)以了解更详细的信息.
 
-## 自动化的基础设置 ##
+## 自动化的基础设施 ##
 
 部署一个微服务和它的相关依赖的系统, 相比部署一个单体应用要复杂得多, 所以拥有能够自动化的基础设施是非常重要的. 如果采用持续交付方式, 我们可以获得以下好处:
 
@@ -218,7 +223,7 @@ public interface StatisticsServiceClient {
 
 在这个项目中实现的一个简单的持续交付工作流如下:
 
-![image](https://cloud.githubusercontent.com/assets/6069066/14159789/0dd7a7ce-f6e9-11e5-9fbb-a7fe0f4431e3.png)
+![自动化基础设施](https://cloud.githubusercontent.com/assets/6069066/14159789/0dd7a7ce-f6e9-11e5-9fbb-a7fe0f4431e3.png)
 
 在配置中, [Travis CI](https://github.com/sqshq/PiggyMetrics/blob/master/.travis.yml) 为每个成功的 Git push 构建一个标记的镜像, 因此 [Docker Hub](https://hub.docker.com/r/sqshq/) 上的每个微服务总是有最新的镜像, 而旧的镜像使用 Git commit hash 作为标记. 如果需要的话, 可以非常容易的对它们进行部署或回滚.
 
