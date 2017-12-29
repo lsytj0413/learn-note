@@ -156,7 +156,112 @@ spring:
 
 ![image](https://dzone.com/storage/temp/1870222-e1431aecb5c24f6cb130e5e04b498e9e.png)
 
+### 负载均衡, 断路器和 HTTP客户端 ###
 
+Netflix OSS 还提供了其他的功能强大的工具.
+
+#### Ribbon ####
+
+Ribbon 是一个客户端负载均衡器, 它对 HTTP 和 TCP 客户端有很大的控制能力. 与传统的负载均衡器相比, 在 Ribbon 中每个调用都不用额外的通信, 可以直接与所需的服务进行连接.
+
+Ribbon 是开箱即用的, 它与 Spring Cloud 的服务发现集成在一起, 由 Eureka 客户端提供可用的服务器实例列表, 而 Ribbon 在这个列表中进行负载均衡处理.
+
+#### Hystrix ####
+
+Hystrix 是[断路器模式](https://martinfowler.com/bliki/CircuitBreaker.html)的一个实现, 它通过网络访问的延迟和失败来控制对依赖的访问, 其主要目的是防止在微服务的分布式环境中的雪崩现象. 这能够增强系统的容错能力, 有助于系统从错误中尽快恢复.
+
+除了断路器控制之外, Hystrix 中还可以添加一个回退方法, 以便在访问失败的情况下获取一个默认的返回结果.
+
+而且, Hystrix 为每个访问生成执行结果和延迟的度量数据, 我们可以用它来[监控](https://github.com/sqshq/PiggyMetrics#monitor-dashboard)系统的运行状态.
+
+#### Feign ####
+
+Feign 是一个声明式的 HTTP 客户端, 可以和 Hystrix 及 Ribbon 无缝集成. 实际上, 通过添加一个简单的 spring-cloud-starter-feign 依赖和 @EnableFeignClients 注解, 我们就可以拥有一整套的负载均衡器, 断路器和 HTTP 客户端, 并且这些都有合适的随时可用的默认配置.
+
+以下是账户服务中使用 Feign 的一个例子:
+
+```
+@FeignClient(name = "statistics-service")
+public interface StatisticsServiceClient {
+    @RequestMapping(method = RequestMethod.PUT, value = "/statistics/{accountName}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    void updateStatistics(@PathVariable("accountName") String accountName, Account account);
+}
+```
+
+- 我们需要做的只是声明一个接口
+- 可以在 Feign 中使用 Spring MVC 方式的 @RequestMapping
+- 指定需要访问的服务的名称, 或者明确的指定固定的 URL
+
+## 监视仪表板 ##
+
+在这个项目中, 搭载 Hystrix 的每个微服务都通过 Spring Cloud Bus(使用AMQP代理) 向 Terbine 推送指标数据, 监控项目只是一个整合了 [Terbine](https://github.com/Netflix/Turbine) 和 [Hystrix 仪表板](https://github.com/Netflix/Hystrix/tree/master/hystrix-dashboard)的 Spring Boot 应用.
+
+下图描述了在负载下的系统行为:
+
+![image](https://cloud.githubusercontent.com/assets/6069066/14127348/21e6ed40-f628-11e5-9fa4-ed527bf35129.gif)
+
+## 日志分析 ##
+
+当尝试定位分布式环境中的问题时, 集中式日志是非常有用的. Elasticsearch, Logstash 和 Kibana 组成的技术栈可以让你轻松的搜索和分析日志, 利用率和网络活动数据. 在我其他的[项目](https://github.com/sqshq/ELK-docker)中有可用的 Docker 配置.
+
+## 安全 ##
+
+更高级的安全配置超出了这个简易项目的介绍范围, 如果需要模拟更真实的系统, 可以考虑使用 HTTPS 和 JCE 密钥库来加密微服务密码和配置服务器的属性内容, 参阅[文档](http://cloud.spring.io/spring-cloud-config/spring-cloud-config.html#_security)以了解更详细的信息.
+
+## 自动化的基础设置 ##
+
+部署一个微服务和它的相关依赖的系统, 相比部署一个单体应用要复杂得多, 所以拥有能够自动化的基础设施是非常重要的. 如果采用持续交付方式, 我们可以获得以下好处:
+
+- 随时发布的能力
+- 任何构建都能够部署
+- 一次构建, 按需部署
+
+在这个项目中实现的一个简单的持续交付工作流如下:
+
+![image](https://cloud.githubusercontent.com/assets/6069066/14159789/0dd7a7ce-f6e9-11e5-9fbb-a7fe0f4431e3.png)
+
+在配置中, [Travis CI](https://github.com/sqshq/PiggyMetrics/blob/master/.travis.yml) 为每个成功的 Git push 构建一个标记的镜像, 因此 [Docker Hub](https://hub.docker.com/r/sqshq/) 上的每个微服务总是有最新的镜像, 而旧的镜像使用 Git commit hash 作为标记. 如果需要的话, 可以非常容易的对它们进行部署或回滚.
+
+## 如何运行 ##
+
+可以非常简单的运行起整个系统. 我们将启动 8 个 Spring Boot 应用程序, 4 个 MongoDB 实例和 RabbitMq. 请确保机器上有 4GB 的内存, 通过网关, 服务注册, 配置, 认证服务和账户服务, 我们保持服务的正常运行.
+
+### 准备工作 ###
+
+- 安装 Docker 和 Docker Compose
+- 配置以下环境变量: CONFIG\_SERVICE\_PASSWORD, NOTIFICATION\_SERVICE\_PASSWORD, STATISTICS\_SERVICE\_PASSWORD, ACCOUNT\_SERVICE\_PASSWORD, MONGODB\_PASSWORD
+
+### 生产环境模式 ###
+
+在这个模式中, 会从 Docker Hub 上拉取最新的镜像. 只需要拷贝 docker-compose.yml 文件然后使用以下命令运行:
+
+```
+docker-compose up -d
+```
+
+### 开发环境模式 ###
+
+如果你需要构建自己的镜像, 你需要克隆所有的仓库并使用 Maven 构建项目, 然后运行以下命令:
+
+```
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+```
+
+docker-compose.dev.yml 继承了 docker-compose.yml, 可以在本地构建镜像并暴露所有的容器端口以方便开发.
+
+### 重要的端点 ###
+
+- localhost:80 - 网关
+- localhost:8761 - Eureka 面板
+- localhost:9000 - Hystrix 面板
+- localhost:8989 - Turbine 流
+- localhost:15672 - RabbitMq 管理端点
+
+### 备注 ###
+
+所有的 Spring Boot 应用都需要在配置服务运行后才能启动. 我们可以同时启动所有的容器, 因为 Spring Boot 的 fail-fast 属性和 restart: always 的 docker-compose 选项. 这代表所有的从属容器将尝试重新启动, 直到配置服务器启动完成.
+
+此外, 在所有的应用启动之后, 服务发现机制还需要一点时间, 直到所有的 Eureka 服务器和客户端都在本地缓存了相同的元数据, 这大概需要 3 个心跳周期, 每个心跳周期的默认时间是 30 秒.
 
 # 资料 #
 
