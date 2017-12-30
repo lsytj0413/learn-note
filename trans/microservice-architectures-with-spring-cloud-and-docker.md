@@ -16,7 +16,7 @@
 
 ### 帐号服务 ###
 
-包含一般用户输入逻辑和验证: 收入/费用项目, 储蓄和账户设置.
+使用 Spring Cloud 和 Docker 实现微服务架构含一般用户输入逻辑和验证: 收入/费用项目, 储蓄和账户设置.
 
 | METHOD | PATH                | DESCRIPTION                                 | USER AUTHENTICATED | AVALABLE FROM UI |
 | :--    | :--                 | :--                                         | :--                | :--              |
