@@ -106,3 +106,15 @@ db.collection.save(
 ```
 db.table.count({"detail.nameCn": {$exists: true}})
 ```
+
+#### 容量统计 ####
+
+```
+# 统计数据库容量
+db.stats()         # 以字节为单位
+db.stats(1024)     # 以 1024字节为单位
+
+# 统计表容量
+db.table.stats()
+db.table.stats(1024)
+```
