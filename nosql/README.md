@@ -118,3 +118,15 @@ db.stats(1024)     # 以 1024字节为单位
 db.table.stats()
 db.table.stats(1024)
 ```
+
+#### Log Rotate ####
+
+```
+# 使用以下命令启动 mongod
+mongod -v --logpath /var/log/mongodb/server1.log
+# 或者
+mongod -v --logpath /var/log/mongodb/server1.log --logRotate reopen --logappend
+
+# 然后在 mongo client 中执行以下命令:
+db.adminCommand( { logRotate : 1 } )
+```
