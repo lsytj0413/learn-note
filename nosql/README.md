@@ -130,3 +130,55 @@ mongod -v --logpath /var/log/mongodb/server1.log --logRotate reopen --logappend
 # 然后在 mongo client 中执行以下命令:
 db.adminCommand( { logRotate : 1 } )
 ```
+
+#### 创建用户 ####
+
+```
+use xxx;
+db.createUser({user: 'username', pwd: 'password', roles: [{role: 'dbOwner', db: 'xxx'}]})
+
+# 查看用户
+use admin;
+db.system.users.find()
+```
+
+#### 记录慢日志 ####
+
+```
+db.setProfilingLevel(1);
+```
+
+#### mongostat ####
+
+使用 mongostat 命令来监控 mongodb 的运行状况, 首先需要创建一个角色:
+
+```
+use admin;
+db.createRole(
+   {
+     role: "mongostatRole",
+     privileges: [
+       { resource: { cluster: true }, actions: [ "serverStatus" ] }
+     ],
+     roles: []
+   }
+)
+```
+
+然后将角色赋予用户:
+
+```
+db.grantRolesToUser("username",
+[
+    {
+        role: "mongostatRole",
+        db: "admin"
+    }
+])
+```
+
+最后使用以下命令即可:
+
+```
+mongostat -u username -p pwd --authenticationDatabase admin
+```
