@@ -165,6 +165,29 @@ sudo docker login --username=tangying2729959 registry.cn-hangzhou.aliyuncs.com
 sudo docker push registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v1.0.0
 ```
 
+### shell ###
+
+在 Dockerfile 中默认的 shell 是 sh, 如果需要使用 source 之类的命令的话就会出现 **source: not found** 的错误. 这时可以采用以下几种解决方案:
+
+1. 针对命令
+
+```
+RUN /bin/bash -c "source /xxx"
+```
+
+2. 将 sh 替换为 bash
+
+```
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+```
+
+3. Dockerfile 中的 SHELL 指令
+
+```
+# 该指令可以修改默认的 SHELL
+SHELL ["/bin/bash", "-c"]
+```
+
 ## Docker For Win10 ##
 
 在 Win10 之后已经可以在 Windows 上使用 Docker, 只需要在官网下载对应的安装包即可.
