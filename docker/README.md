@@ -165,6 +165,30 @@ sudo docker login --username=tangying2729959 registry.cn-hangzhou.aliyuncs.com
 sudo docker push registry.cn-hangzhou.aliyuncs.com/rapself/fortest:v1.0.0
 ```
 
+### 镜像的导入和导出 ###
+
+某些情况下会存在不能通过 Docker Pull 拉取镜像的问题, 此时可以通过将已有的镜像导出再导入到该主机的方式来解决.
+
+```
+# 首先导出镜像到文件, 如果使用容器ID则会导出容器对应的镜像
+docker save -o OUTFILE IMAGEID...
+# 然后导入镜像文件
+docker load -i OUTFILE
+# 导入的镜像没有 tag, 所以需要使用以下命令打 tag
+docker tag IMAGEID tagname
+```
+
+### 容器的导入和导出 ###
+
+也可以将运行的容器打包成文件, 然后将该文件导入为镜像.
+
+```
+# 将容器打包成文件
+docker export -o OUTFILE CONTAINERID
+# 将文件导入为 IMAGE
+docker import OUTFILE REPO:TAG
+```
+
 ### shell ###
 
 在 Dockerfile 中默认的 shell 是 sh, 如果需要使用 source 之类的命令的话就会出现 **source: not found** 的错误. 这时可以采用以下几种解决方案:
