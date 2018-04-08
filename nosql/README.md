@@ -182,3 +182,13 @@ db.grantRolesToUser("username",
 ```
 mongostat -u username -p pwd --authenticationDatabase admin
 ```
+
+如果出现错误, 可以使用下节的 root 用户在目标数据库执行改命令.
+
+#### root ####
+
+
+```
+use admin;
+db.createUser({user: "root", pwd: "password", roles: ["root"]})
+```
