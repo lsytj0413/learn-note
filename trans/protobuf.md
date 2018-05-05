@@ -354,3 +354,120 @@ repeated MapFieldEntry map_field = N;
 
 ## 包 ##
 
+可以在 .proto 文件中增加可选的 package 指示符来避免在不同 .proto 文件中定义相同名字的消息类型引起的冲突:
+
+```
+pacakge foo.bar;
+message Open{}
+```
+
+```
+message Foo {
+    foo.bar.Open open = 1;
+}
+```
+
+使用 package 之后生成的代码与使用的编程语言相关:
+
+- C++: 使用命名空间来实现 package
+- Java: 使用 Java pacakge, 除非提供了 option java_package 指示符
+- Python: 忽略
+- Ruby: 使用 Ruby 命名空间
+- C#: 使用命名空间, 除非提供了 option\_csharp\_namespace 指示符
+
+### 包和名字解析 ###
+
+protobuf 中的名字解析的和 C++ 中一样.
+
+## 定义服务 ##
+
+如果你需要在 RPC 框架中使用 protobuf 定义的消息类型, 可以在 .proto 文件中定义 RPC 服务, 然后使用 protobuf 编译器来生成对应的代码:
+
+```
+service SearchService {
+   rpc Search(SearchRequest) returns (SearchResponse);
+}
+```
+
+## JSON 映射 ##
+
+proto3 支持 JSON 编码规范. 如果一个值在 JSON 中不存在或者为 null, 它会被序列化为该类型的默认值; 如果该值是默认值, 序列化时默认的情况下会被忽略(以节省空间).
+
+| proto3                 | JSON          | JSON example               | 备注                                                        |
+| :--                    | :--           | :--                        | :--                                                         |
+| message                | object        | {"foobar": v}              | 默认 key 使用小驼峰命名, 可以使用 json_name 选项指定名称    |
+| enum                   | string        | "FOO_BAR"                  |                                                             |
+| map<K,V>               | object        | {"k": v}                   | 所有的key都会转换为字符串                                   |
+| repeated V             | array         | [v...]                     | null 转换为 []                                              |
+| bool                   | true, false   | true, false                |                                                             |
+| string                 | string        |                            |                                                             |
+| bytes                  | base64 string |                            |                                                             |
+| int32, fixed32, uint32 | number        |                            |                                                             |
+| int64, fixed64, uint64 | string        |                            |                                                             |
+| float, double          | number        |                            |                                                             |
+| Any                    | object        | {"@type": "url", "f": v}   | 如果 Any 是一个 JSON, 会转换为 {"@type": xxx, "value": yyy} |
+| Timestamp              | string        | "1972-01-01T10:00:20.021Z" | RFC3339                                                     |
+| Duration               | string        | "1s"                       |                                                             |
+| Struct                 | object        | {...}                      | 见 struct.proto                                             |
+| Wrapper types          | various types | 2, "2"                     |                                                             |
+| FieldMask              | string        |                            | 见 fieldmask.proto                                          |
+| ListValue              | array         |                            |                                                             |
+| Value                  | value         |                            |                                                             |
+| NullValue              | null          |                            |                                                             |
+
+### JSON选项 ###
+
+- 值未默认值的key被忽略
+- 忽略未知字段
+- 可选的字段名
+- 枚举中使用整形值
+
+## 可选配置 ##
+
+所有的配置项可以子啊 google/protobuf/descriptor.proto 查看.
+
+- java\_package: 指定生成的代码的 java package 名称.
+
+```
+option java_package = "com.example.foo";
+```
+
+- java\_multiple\_files: 指定顶层的消息类型, 枚举和服务定义在 package层, 否则默认定义在以 proto 文件名命名的 class 中.
+
+```
+option java\_multiple\_files = true;
+```
+
+- java\_outer\_classname: 指定外层的 class 名称.
+
+```
+option java\_outer\_classname = "Ponycopter";
+```
+
+- optimize\_for: 可以设置为 SPEED, CODE\_SIZE, LITE\_RUNTIME, 影响生成的 c++ 和 java 代码:
+    - SPEED: 默认值, 序列化和反序列化速度优先
+    - CODE\_SIZE: 最小代码量
+    - LITE\_RUNTIME: 使用 libprotobuf-lite 代替 libprotobuf, 缺少某些特性, 常用于手机等平台, 也生成速度优先的代码, 所有消息实现 MessageLite 接口而非 Message 接口
+
+- cc\_enable\_arenas: 对 c++ 使用 arenas 分配器
+- objc\_class\_prefix: 设置 oc 的类前缀
+- deprecated: 指示消息类型被废弃
+
+```
+int32 old_field = 6 [deprecated=true];
+```
+
+### 自定义选项 ###
+
+高级特性, 使用扩展实现.
+
+## 生成代码 ##
+
+使用 protoc 编译器生成代码的命令如下:
+
+```
+protoc --proto_path=IMPORT_PATH --cpp_out=DST_DIR --java_out=DST_DIR --python_out=DST_DIR --go_out=DST_DIR --ruby_out=DST_DIR --objc_out=DST_DIR --csharp_out=DST_DIR path/to/file.proto
+```
+
+- IMPORT\_PATH: 指定包含目录, import 文件时会从该目录进行查找, 默认为当前目录. 可以缩写为 -I=IMPORT_PATH
+- xxx\_out: 指定代码生成目录. 如果以 .zip 或 .jar 结尾则打包到对应的文件.
