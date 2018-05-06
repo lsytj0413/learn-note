@@ -471,3 +471,235 @@ protoc --proto_path=IMPORT_PATH --cpp_out=DST_DIR --java_out=DST_DIR --python_ou
 
 - IMPORT\_PATH: 指定包含目录, import 文件时会从该目录进行查找, 默认为当前目录. 可以缩写为 -I=IMPORT_PATH
 - xxx\_out: 指定代码生成目录. 如果以 .zip 或 .jar 结尾则打包到对应的文件.
+
+## 风格指南 ##
+
+### 消息和字段名称 ###
+
+为消息名称使用驼峰命名, 字段名称使用下划线命名:
+
+```
+message SongServerRequest {
+    string song_name = 1;
+}
+```
+
+### 枚举 ###
+
+为枚举名称使用驼峰命名, 具体字段使用大写的下划线命名:
+
+```
+enum Foo {
+    FIRST_VALUE = 0;
+    SECOND_VALUE = 1;
+}
+```
+
+### 服务 ###
+
+对服务名称和方法名称使用驼峰命名:
+
+```
+service FooService {
+    rpc GetSomething(FooRequest) returns (FooResponse);
+}
+```
+
+## 编码 ##
+
+本节定义二进制格式的 protobuf 序列的编码方式.
+
+### 一个简单的消息 ###
+
+假设有一个消息类型如下:
+
+```
+message Test1 {
+    int32 a  = 1;
+}
+```
+
+假设你在代码中将 a 的值设置为 150, 然后序列化得到的字节如下:
+
+```
+08 96 01
+```
+
+### Base 128 Varints ###
+
+varints 是使用一个或多个字节序列化整形的方法. 在 varints 的每个字节(除了最后一个字节), 都设置有 msb 标志位: 当还有后续字节时设置为 1. 假设有一个数字1, 表示如下:
+
+```
+# 只有一个字节, 不设置 msb
+0000 0001
+```
+
+300 的表示如下:
+
+```
+1010 1100 0000 0010
+# 如何转换为300
+-> 010 1100 000 0010    # 首先去除 msb
+-> 000 0010 010 1100    # 然后以 7bit 为单位进行反转
+-> 100101100            # 然后连接起来求值
+-> 256 + 32 + 8 + 4 = 300
+```
+
+### 结构体 ###
+
+在 protobuf 中, 每一个消息中的 key 包含两个值: 字段标签数字和类型(包含足够的信息来找到值的长度). 可用的类型如下:
+
+| Type | Meaning          | Used For                                                 |
+|  :-- | :--              | :--                                                      |
+|    0 | Varint           | int32, int64, uint32, uint64, sint32, sint64, bool, enum |
+|    1 | 64-bit           | fixed64, sfixed64, double                                |
+|    2 | Length-delimited | string, bytes, embedded messages, packed repeated fields |
+|    3 | Start group      | groups(废弃)                                             |
+|    4 | End group        | groups(废弃)                                             |
+|    5 | 32-bit           | fixed32, sfixed64, float                                 |
+
+每一个 key 的数据都是一个 varint, 值是 (field\_number << 3) | wire\_type. 假设有如下的一个 key:
+
+```
+# 去掉了 msb
+000 1000
+```
+
+取后三位可以得到类型(0), 然后右移三位得到字段签名(1). 从类型可知接下来是一个 varint.
+
+### 更多值类型 ###
+
+#### 有符号整数 ####
+
+对于 sint32 和 sint64 类型, 它们的 wire\_type 也是 0, 但是编码方式和 int32 与 int64 有些不同. 因为它们负数的符号位为1, 会导致即使 -1 这样的数也会占用更多的字节. protobuf 使用 ZigZag 编码方式来处理有符号整数.
+
+对 32 位数, 编码方式如下:
+
+```
+(n << 1) ^ (n >> 31)
+```
+
+对 64 位数, 编码方式如下:
+
+```
+(n << 1) ^ (n >> 63)
+```
+
+即将符号位转换到最低位.
+
+#### 非 varint 数值 ####
+
+对非 varint 数值的处理很简单. double 和 fixed64 的 wire\_type 是 1, 使用固定的 8 字节; float 和 fixed32 的 wire\_type 是 5, 使用固定的 4 字节. 并且它们都使用小端序(Little-endian)存储.
+
+#### 字符串 ####
+
+字符串的 wire\_type 是 2, 表示编码为一个长度加上值的字节表示.
+
+```
+message Test2 {
+  string b = 2;
+}
+```
+
+对于如上的消息, 如果将 b 设置为 "tesing", 得到的字节如下:
+
+```
+12 07 74 65 73 74 69 6e 67
+
+- 12: tag=2, type=2
+- 07: length
+- 剩下的: testing 的 utf-8 编码
+```
+
+#### 内嵌的消息 ####
+
+假设有一个消息定义如下:
+
+```
+message Test3 {
+  Test1 c = 3;
+}
+```
+
+如果将 c.a 设置为 150, 得到的字节如下:
+
+```
+1a 03 08 96 01
+
+- 1a: tag=3, type=2
+- 03: length
+- 剩下的: 即 Test1.a = 150 时的编码
+```
+
+#### 可选和重复元素 ####
+
+在 proto3 中, repeated 元素使用 packed 编码.
+
+在 proto3 中, 对于非 repeated 的字段, 被编码的消息中可能不存在该字段. 正常情况下, 对于非 repeated 的字段编码的结果中只应该含有该字段一次, 但是反序列化时可以处理含有多次的情况: 对于数值类型和字符串类型, 取最后一次出现的值; 对于内嵌的消息类型, 会合并该消息的同一字段(对标量类型去最后一次, 对 repeated 字段连接起来). 这种方式和解析两个消息然后 merge 他们的表现一样:
+
+```
+MyMessage message;
+message.ParseFromString(str1 + str2)
+
+# 等价与
+MyMessage message1, message2;
+message1.ParseFromString(str1);
+message2.ParseFromString(str2);
+message1.MergeFrom(message2);
+```
+
+#### packed repeated 字段 ####
+
+repeated 字段被打包到一个键值对中, 其中 wire\_type 为 2, 每个元素和平时一样编码:
+
+```
+message Test4 {
+  repeated int32 d = 4;
+}
+```
+
+假设将 d 的值设置为 3, 270, 86942, 得到的字节如下:
+
+```
+22 06 03 8E 02 9E A7 05
+
+- 22: tag=4, type=2
+- 06: length
+- 03: 第一个值, 3
+- 8E 02: 第二个值, 270
+- 9E A7 05: 第三个值, 86942
+```
+
+只有原生字段类型的重复字段才能定义为 packed.
+
+### 字段顺序 ###
+
+当消息被序列化时, 已知的字段会按照标签顺序序列化. protobuf 解析器必须能够解析任何顺序的值. 如果有未知的字段, java 和 c++ 会在已知字段全部写入后按照任意顺序写入未知字段, 而 python 会忽略它们.
+
+## 技巧 ##
+
+本节描述一些在 protobuf 中广泛使用的设计模式.
+
+### 流化多个消息 ###
+
+如果想要写入多个消息到一个文件或流中, 需要自己保持消息的开始和结束记录. protobuf 的格式不是自描述的.
+
+### 大数据集 ###
+
+protobuf 不善于处理大型的消息: 通常应该小于 1M.
+
+### 自描述消息 ###
+
+一个 protobuf 的序列化结果不包含该类型的信息: 即不知道是由哪个消息类型序列化而来. 可以创建一个包裹消息, 用来指明该序列化结果的类型:
+
+```
+message SelfDescribingMessage {
+  FileDescriptorSet proto_files = 1;
+  string type_name = 2;
+  bytes message_data = 3;
+}
+```
+
+文件 src/google/protobuf/descriptor.proto 定义了消息类型的描述, protoc 可以通过 --descriptor\_set\_out 选项输出一个 FileDescriptorSet.
+
+通过使用类似 DynamicMessage 的类(C++ 和 Java 可用), 可以操作 SelfDescribingMessage.
