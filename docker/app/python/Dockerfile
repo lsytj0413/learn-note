@@ -17,7 +17,7 @@ RUN apt-get update \
                python-pip \
     # && apt-get remove --purge -y $(apt-mark showauto) \
     && pip install --upgrade pip \
-    && pip install setuptools \
+    && pip install -i https://mirrors.aliyun.com/pypi/simple setuptools \
     && rm -rf /var/lib/apt/lists/*
     # && apt-get autoremove \
     # && apt-get autoclean \
